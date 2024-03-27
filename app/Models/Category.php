@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory, Sluggable, SluggableScopeHelpers;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -19,37 +18,47 @@ class Category extends Model
      */
     protected $fillable = ['name', 'description'];
 
+    /* -------------------------------------------------------------------------- */
+    /*                                   Scopes                                   */
+    /* -------------------------------------------------------------------------- */
+
     /**
-     * Return the sluggable configuration array for this model.
+     * Apply the scope related with name.
      *
-     * @return array
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param string
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function sluggable(): array
+    public function scopeName(Builder $query, $value)
     {
-        return [
-            'slug' => [
-                'source' => 'slugForSave'
-            ]
-        ];
+        $query->where('name', 'LIKE', "%{$value}%");
     }
 
     /**
-     * Return the slug for this model.
+     * Apply the scope related with description.
      *
-     * @return string
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param string
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getSlugForSaveAttribute(): string
+    public function scopeDescription(Builder $query, $value)
     {
-        return Str::uuid();
+        $query->where('description', 'LIKE', "%{$value}%");
     }
 
     /**
-     * Get the route key for the model.
+     * Apply the scope related with search function.
      *
-     * @return string
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param array
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getRouteKeyName()
+    public function scopeSearch(Builder $query, $values)
     {
-        return 'slug';
+        foreach (Str::of($values)->explode(' ') as $value) {
+
+            $query->orWhere('name', 'LIKE', "%{$value}%")
+                ->orWhere('description', 'LIKE', "%{$value}%");
+        }
     }
 }
