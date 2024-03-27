@@ -1,0 +1,108 @@
+<?php
+
+namespace Tests\Feature\Categories;
+
+use Tests\TestCase;
+use App\Models\User;
+use App\Models\Category;
+use Laravel\Sanctum\Sanctum;
+use Database\Seeders\RoleSeeder;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Database\Seeders\categories\CategoriesPermissionsSeeder;
+
+class SortCategoriesTest extends TestCase
+{
+    use RefreshDatabase;
+
+    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
+
+    const MODEL_ALFA_NAME = 'alfa name';
+    const MODEL_BETA_NAME = 'beta name';
+    const MODEL_GAMA_NAME = 'gama name';
+
+    const MODEL_SORT_PARAM_VALUE = 'name';
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        if (!Role::whereName('admin')->exists()) {
+            $this->seed(RoleSeeder::class);
+            $this->seed(CategoriesPermissionsSeeder::class);
+        }
+
+        Sanctum::actingAs(User::factory()->create()->assignRole('admin'));
+    }
+
+    /** @test */
+    public function can_sort_categories_by_name_asc()
+    {
+        Category::factory()->count(3)
+            ->state(new Sequence(
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+            ))
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                'sort' => self::MODEL_SORT_PARAM_VALUE
+            ]
+        );
+
+        $this->jsonApi()->get($url)->assertSeeInOrder([
+            self::MODEL_ALFA_NAME,
+            self::MODEL_BETA_NAME,
+            self::MODEL_GAMA_NAME,
+        ]);
+    }
+
+    /** @test */
+    public function can_sort_categories_by_name_desc()
+    {
+        Category::factory()->count(3)
+            ->state(new Sequence(
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+            ))
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                'sort' => '-' . self::MODEL_SORT_PARAM_VALUE
+            ]
+        );
+
+        $this->jsonApi()->get($url)->assertSeeInOrder([
+            self::MODEL_GAMA_NAME,
+            self::MODEL_BETA_NAME,
+            self::MODEL_ALFA_NAME,
+        ]);
+    }
+
+    /** @test */
+    public function cannot_sort_categories_by_unknown_fields()
+    {
+        Category::factory()->times(3)->create();
+
+        $url = route(self::MODEL_MAIN_ACTION_ROUTE) . '?sort=unknown';
+
+        $response = $this->jsonApi()->get($url);
+
+        $response->assertError(
+            400,
+            [
+                'source' => ['parameter' => 'sort'],
+                'status' => '400',
+                'title' => 'Invalid Query Parameter',
+            ]
+        );
+    }
+}
