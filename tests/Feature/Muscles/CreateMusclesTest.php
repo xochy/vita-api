@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Muscles;
 
-use Tests\TestCase;
+use App\Models\Muscle;
 use App\Models\User;
-use App\Models\Category;
+use Database\Seeders\permissionsSeeders\MusclesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
-class CreateCategoriesTest extends TestCase
+class CreateMusclesTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'muscles';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.store';
 
     const MODEL_ATTRIBUTE_NAME = 'name';
@@ -28,65 +28,64 @@ class CreateCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(MusclesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function guests_users_cannot_create_categories()
+    public function guests_users_cannot_create_muscles()
     {
-        $category = array_filter(Category::factory()->raw());
+        $muscle = array_filter(Muscle::factory()->raw());
 
         $response = $this->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData([
                 'type' => self::MODEL_PLURAL_NAME,
-                'attributes' => $category
+                'attributes' => $muscle
             ])
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unauthorized (401)
         $response->assertStatus(401);
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $category);
+        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $muscle);
     }
 
     /** @test */
-    public function authenticated_users_as_admin_can_create_categories()
+    public function authenticated_users_as_admin_can_create_muscles()
     {
-        $category = array_filter(Category::factory()->raw());
+        $muscle = array_filter(Muscle::factory()->raw());
 
-        $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
-            'attributes' => $category
-        ];
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withData([
+                'type' => self::MODEL_PLURAL_NAME,
+                'attributes' => $muscle
+            ])
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
-        $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
-            ->assertCreated();
+        $response->assertCreated();
 
         $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            self::MODEL_ATTRIBUTE_NAME        => $category[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $category[self::MODEL_ATTRIBUTE_DESCRIPTION],
+            self::MODEL_ATTRIBUTE_NAME        => $muscle[self::MODEL_ATTRIBUTE_NAME],
+            self::MODEL_ATTRIBUTE_DESCRIPTION => $muscle[self::MODEL_ATTRIBUTE_DESCRIPTION],
         ]);
     }
 
     /** @test */
-    public function category_name_is_required()
+    public function muscle_name_is_required()
     {
-        $category = Category::factory()->raw(['name' => '']);
-
-        $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
-            'attributes' => $category
-        ];
+        $muscle = Muscle::factory()->raw([self::MODEL_ATTRIBUTE_NAME => '']);
 
         $response = $this->actingAs($this->user)->jsonApi()
-        ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-        ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withData([
+                'type' => self::MODEL_PLURAL_NAME,
+                'attributes' => $muscle
+            ])
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
         $response->assertError(422, [
@@ -96,18 +95,18 @@ class CreateCategoriesTest extends TestCase
 
         $response->assertSee('data\/attributes\/name');
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $category);
+        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $muscle);
     }
 
     /** @test */
-    public function category_name_must_be_unique()
+    public function muscle_name_must_be_unique()
     {
-        $category = Category::factory()->create();
+        $muscle = Muscle::factory()->create();
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
-            'attributes' => array_filter(Category::factory()->raw([
-                'name' => $category->name
+            'attributes' => array_filter(Muscle::factory()->raw([
+                'name' => $muscle->name
             ]))
         ];
 
@@ -127,17 +126,16 @@ class CreateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function category_description_is_required()
+    public function muscle_description_is_required()
     {
-        $category = Category::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => '']);
-
-        $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
-            'attributes' => $category
-        ];
+        $muscle = Muscle::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => '']);
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withData([
+                'type' => self::MODEL_PLURAL_NAME,
+                'attributes' => $muscle
+            ])
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -148,21 +146,20 @@ class CreateCategoriesTest extends TestCase
 
         $response->assertSee('data\/attributes\/description');
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $category);
+        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $muscle);
     }
 
     /** @test */
-    public function category_description_must_be_a_string()
+    public function muscle_description_must_be_a_string()
     {
-        $category = Category::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => 123]);
-
-        $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
-            'attributes' => $category
-        ];
+        $muscle = Muscle::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => 123]);
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withData([
+                'type' => self::MODEL_PLURAL_NAME,
+                'attributes' => $muscle
+            ])
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -173,6 +170,6 @@ class CreateCategoriesTest extends TestCase
 
         $response->assertSee('data\/attributes\/description');
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $category);
+        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $muscle);
     }
 }

@@ -82,7 +82,7 @@ class SubcategoryPolicy
      */
     public function viewCategory(User $user, Subcategory $subcategory): bool
     {
-        return true;
+        return $user->can('read categories');
     }
 
     /**

@@ -9,11 +9,24 @@ use Illuminate\Auth\Access\Response;
 class MusclePolicy
 {
     /**
+     * Determine whether the user have all permissions.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('superAdmin')) {
+            return true;
+        }
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +34,7 @@ class MusclePolicy
      */
     public function view(User $user, Muscle $muscle): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +42,7 @@ class MusclePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->can('create muscles');
     }
 
     /**
@@ -37,7 +50,7 @@ class MusclePolicy
      */
     public function update(User $user, Muscle $muscle): bool
     {
-        //
+        return $user->can('update muscles');
     }
 
     /**
@@ -45,7 +58,7 @@ class MusclePolicy
      */
     public function delete(User $user, Muscle $muscle): bool
     {
-        //
+        return $user->can('delete muscles');
     }
 
     /**
@@ -53,7 +66,7 @@ class MusclePolicy
      */
     public function restore(User $user, Muscle $muscle): bool
     {
-        //
+        return $user->can('restore muscles');
     }
 
     /**
@@ -61,6 +74,6 @@ class MusclePolicy
      */
     public function forceDelete(User $user, Muscle $muscle): bool
     {
-        //
+        return $user->can('force delete muscles');
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature\Subcategories;
 
 use App\Models\Subcategory;
 use App\Models\User;
+use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -32,6 +33,7 @@ class IncludeCategoryTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
+            $this->seed(CategoriesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
