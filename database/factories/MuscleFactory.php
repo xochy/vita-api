@@ -17,7 +17,8 @@ class MuscleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->unique()->bothify('Muscle-?###'),
+            'description' => fake()->paragraph(),
         ];
     }
 }
