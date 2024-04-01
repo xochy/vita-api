@@ -1,22 +1,21 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Subcategories;
 
-use Tests\TestCase;
+use App\Models\Subcategory;
 use App\Models\User;
-use App\Models\Category;
-use Laravel\Sanctum\Sanctum;
+use Database\Seeders\permissionsSeeders\SubcategoriesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
-use Spatie\Permission\Models\Role;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
-class SortCategoriesTest extends TestCase
+class SortSubcategoriesTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'subcategories';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     const MODEL_ALFA_NAME = 'alfa name';
@@ -33,7 +32,7 @@ class SortCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(SubcategoriesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
@@ -42,7 +41,7 @@ class SortCategoriesTest extends TestCase
     /** @test */
     public function can_sort_categories_by_name_asc()
     {
-        Category::factory()->count(3)
+        Subcategory::factory()->forCategory()->count(3)
             ->state(new Sequence(
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
@@ -66,9 +65,9 @@ class SortCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_sort_categories_by_name_desc()
+    public function can_sort_subcategories_by_name_desc()
     {
-        Category::factory()->count(3)
+        Subcategory::factory()->forCategory()->count(3)
             ->state(new Sequence(
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
@@ -92,9 +91,9 @@ class SortCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function cannot_sort_categories_by_unknown_fields()
+    public function cannot_sort_subcategories_by_unknown_fields()
     {
-        Category::factory()->times(3)->create();
+        Subcategory::factory()->forCategory()->count(3)->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,

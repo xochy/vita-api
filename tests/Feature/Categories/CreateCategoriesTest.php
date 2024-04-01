@@ -8,7 +8,7 @@ use App\Models\Category;
 use Database\Seeders\RoleSeeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\categories\CategoriesPermissionsSeeder;
+use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
 
 class CreateCategoriesTest extends TestCase
 {
@@ -93,6 +93,7 @@ class CreateCategoriesTest extends TestCase
             'source' => ['pointer' => '/data/attributes/name'],
             'detail' => 'The name field is required.'
         ]);
+
         $response->assertSee('data\/attributes\/name');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $category);

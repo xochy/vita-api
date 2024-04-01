@@ -19,6 +19,20 @@ class Category extends Model
     protected $fillable = ['name', 'description'];
 
     /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Define a one-to-many subcategories relationship.
+     *
+     * @return HasMany
+     */
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
+
+    /* -------------------------------------------------------------------------- */
     /*                                   Scopes                                   */
     /* -------------------------------------------------------------------------- */
 

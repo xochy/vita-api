@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
 use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
+use LaravelJsonApi\Laravel\Routing\Relationships;
 use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
 
 Route::get('/user', function (Request $request) {
@@ -11,5 +12,18 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar $server) {
-    $server->resource('categories', JsonApiController::class);
+    // Definitions for Category model
+    $server->resource('categories', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('subcategories');
+        });
+
+    // Definitions for Subcategory model
+    $server->resource('subcategories', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasOne('category');
+        });
+
+    // Definitions for Muscle model
+    $server->resource('muscles', JsonApiController::class);
 });

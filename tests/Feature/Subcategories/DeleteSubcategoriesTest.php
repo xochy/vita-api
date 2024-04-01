@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Subcategories;
 
-use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\SubcategoriesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class DeleteCategoriesTest extends TestCase
+class DeleteSubcategoriesTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'subcategories';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.'. self::MODEL_PLURAL_NAME .'.destroy';
 
     protected User $user;
@@ -25,19 +25,19 @@ class DeleteCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(SubcategoriesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function guests_users_cannot_delete_categories()
+    public function guests_users_cannot_delete_subcategories()
     {
-        $category = Category::factory()->create();
+        $subcategory = Subcategory::factory()->forCategory()->create();
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $category->getRouteKey()));
+            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $subcategory->getRouteKey()));
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -46,18 +46,18 @@ class DeleteCategoriesTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_can_delete_categories()
     {
-        $category = Category::factory()->create();
+        $subcategory = Subcategory::factory()->forCategory()->create();
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $category->getRouteKey()));
+            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $subcategory->getRouteKey()));
 
         // No Content (204)
         $response->assertStatus(204);
         $response->assertNoContent();
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, [
-            'id' => $category->getKey()
+            'id' => $subcategory->getKey()
         ]);
     }
 }

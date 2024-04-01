@@ -9,7 +9,7 @@ use Database\Seeders\RoleSeeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Database\Seeders\categories\CategoriesPermissionsSeeder;
+use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
 
 class FilterCategoriesTest extends TestCase
 {

@@ -2,14 +2,13 @@
 
 namespace Tests\Feature\Categories;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Category;
-use Laravel\Sanctum\Sanctum;
+use App\Models\User;
+use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\categories\CategoriesPermissionsSeeder;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class ListCategoriesTest extends TestCase
 {
@@ -18,6 +17,8 @@ class ListCategoriesTest extends TestCase
     const MODEL_PLURAL_NAME = 'categories';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
+
+    protected User $user;
 
     public function setUp(): void
     {
@@ -28,7 +29,7 @@ class ListCategoriesTest extends TestCase
             $this->seed(CategoriesPermissionsSeeder::class);
         }
 
-        Sanctum::actingAs(User::factory()->create()->assignRole('admin'));
+        $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
@@ -36,7 +37,8 @@ class ListCategoriesTest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $response = $this->jsonApi()->expects(self::MODEL_PLURAL_NAME)
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
         $response->assertFetchedOne($category);
@@ -59,7 +61,8 @@ class ListCategoriesTest extends TestCase
     {
         $categories = Category::factory()->times(3)->create();
 
-        $response = $this->jsonApi()->expects(self::MODEL_PLURAL_NAME)
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany($categories);
