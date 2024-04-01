@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Subcategories;
 
-use Tests\TestCase;
+use App\Models\Subcategory;
 use App\Models\User;
-use App\Models\Category;
+use Database\Seeders\permissionsSeeders\SubcategoriesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
-class UpdateCategoriesTest extends TestCase
+class UpdateSubcategoriesTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'subcategories';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.update';
 
     const MODEL_ATTRIBUTE_NAME = 'name';
@@ -31,20 +31,20 @@ class UpdateCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(SubcategoriesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function guests_users_cannot_update_categories()
+    public function guests_users_cannot_update_subcategories()
     {
-        $category = Category::factory()->create();
+        $subcategory = Subcategory::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
+            'id' => (string) $subcategory->getRouteKey(),
             'attributes' => [
                 self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
@@ -53,20 +53,20 @@ class UpdateCategoriesTest extends TestCase
 
         $response = $this->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $category->getRouteKey()));
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $subcategory->getRouteKey()));
 
         // Unauthorized (401)
         $response->assertStatus(401);
     }
 
     /** @test */
-    public function authenticated_users_as_admin_can_update_categories()
+    public function authenticated_users_as_admin_can_update_subcategories()
     {
-        $category = Category::factory()->create();
+        $subcategory = Subcategory::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
+            'id' => (string) $subcategory->getRouteKey(),
             'attributes' => [
                 self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
@@ -75,70 +75,68 @@ class UpdateCategoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $category->getRouteKey()));
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $subcategory->getRouteKey()));
 
         // Success (200)
         $response->assertStatus(200);
 
         $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $category->getRouteKey(),
+            'id' => $subcategory->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
             self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
         ]);
     }
 
     /** @test */
-    public function can_update_the_category_name_only()
+    public function can_update_the_subcategory_name_only()
     {
-        $category = Category::factory()->create();
+        $subcategory = Subcategory::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
+            'id' => (string) $subcategory->getRouteKey(),
             'attributes' => [
                 self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
             ]
         ];
 
-        $response = $this->actingAs($this->user)
-            ->jsonApi()
+        $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $category->getRouteKey()));
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $subcategory->getRouteKey()));
 
         // Success (200)
         $response->assertStatus(200);
 
         $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $category->getRouteKey(),
+            'id' => $subcategory->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $category->description,
+            self::MODEL_ATTRIBUTE_DESCRIPTION => $subcategory->description,
         ]);
     }
 
     /** @test */
-    public function can_update_the_category_description_only()
+    public function can_update_the_subcategory_description_only()
     {
-        $category = Category::factory()->create();
+        $subcategory = Subcategory::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
+            'id' => (string) $subcategory->getRouteKey(),
             'attributes' => [
                 self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
             ]
         ];
 
-        $response = $this->actingAs($this->user)
-            ->jsonApi()
+        $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $category->getRouteKey()));
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $subcategory->getRouteKey()));
 
         // Success (200)
         $response->assertStatus(200);
 
         $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $category->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => $category->name,
+            'id' => $subcategory->getRouteKey(),
+            self::MODEL_ATTRIBUTE_NAME => $subcategory->name,
             self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
         ]);
     }

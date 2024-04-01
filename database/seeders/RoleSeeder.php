@@ -35,5 +35,13 @@ class RoleSeeder extends Seeder
                 'display_name' => 'Super Administrador',
             ]
         );
+
+        // User role
+        Role::create(
+            [
+                'name'         => 'user',
+                'display_name' => 'Usuario',
+            ]
+        );
     }
 }

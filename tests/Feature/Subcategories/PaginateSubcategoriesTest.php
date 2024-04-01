@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Subcategories;
 
-use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\SubcategoriesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class PaginateCategoriesTest extends TestCase
+class PaginateSubcategoriesTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'subcategories';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     const MODEL_SIZE_PARAM_NAME = 'page[size]';
@@ -28,16 +28,16 @@ class PaginateCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(SubcategoriesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function can_fetch_paginated_categories()
+    public function can_fetch_paginated_subcategories()
     {
-        Category::factory()->times(10)->create();
+        Subcategory::factory()->forCategory()->count(10)->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
@@ -59,25 +59,34 @@ class PaginateCategoriesTest extends TestCase
                 [
                     self::MODEL_NUMBER_PARAM_NAME => 1, self::MODEL_SIZE_PARAM_NAME => 2
                 ]
-            ),
-            'prev'  => route(
+            )
+        ]);
+
+        $response->assertJsonFragment([
+            'prev' => route(
                 self::MODEL_MAIN_ACTION_ROUTE,
                 [
                     self::MODEL_NUMBER_PARAM_NAME => 2, self::MODEL_SIZE_PARAM_NAME => 2
                 ]
-            ),
-            'next'  => route(
+            )
+        ]);
+
+        $response->assertJsonFragment([
+            'next' => route(
                 self::MODEL_MAIN_ACTION_ROUTE,
                 [
                     self::MODEL_NUMBER_PARAM_NAME => 4, self::MODEL_SIZE_PARAM_NAME => 2
                 ]
-            ),
-            'last'  => route(
+            )
+        ]);
+
+        $response->assertJsonFragment([
+            'last' => route(
                 self::MODEL_MAIN_ACTION_ROUTE,
                 [
                     self::MODEL_NUMBER_PARAM_NAME => 5, self::MODEL_SIZE_PARAM_NAME => 2
                 ]
-            ),
+            )
         ]);
     }
 }

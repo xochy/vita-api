@@ -1,12 +1,12 @@
 <?php
 
-namespace Database\Seeders\categories;
+namespace Database\Seeders\permissionsSeeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class CategoriesPermissionsSeeder extends Seeder
+class SubcategoriesPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,14 +17,13 @@ class CategoriesPermissionsSeeder extends Seeder
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
-
-        // Permission for reading categories
+        // Permission for reading subcategories
         Permission::create(
             [
-                'name'         => 'read categories',
-                'display_name' => 'Leer categorías',
+                'name'         => 'read subcategories',
+                'display_name' => 'Leer subcategorías',
                 'action'       => 'read',
-                'subject'      => 'category'
+                'subject'      => 'subcategory'
             ]
         )->syncRoles(
             [
@@ -33,13 +32,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for creating categories
+        // Permission for creating subcategories
         Permission::create(
             [
-                'name'         => 'create categories',
-                'display_name' => 'Crear categorías',
+                'name'         => 'create subcategories',
+                'display_name' => 'Crear subcategorías',
                 'action'       => 'create',
-                'subject'      => 'category'
+                'subject'      => 'subcategory'
             ]
         )->syncRoles(
             [
@@ -48,13 +47,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for updating categories
+        // Permission for updating subcategories
         Permission::create(
             [
-                'name'         => 'update categories',
-                'display_name' => 'Actualizar categorías',
+                'name'         => 'update subcategories',
+                'display_name' => 'Actualizar subcategorías',
                 'action'       => 'update',
-                'subject'      => 'category'
+                'subject'      => 'subcategory'
             ]
         )->syncRoles(
             [
@@ -63,13 +62,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for deleting categories
+        // Permission for deleting subcategories
         Permission::create(
             [
-                'name'         => 'delete categories',
-                'display_name' => 'Eliminar categorías',
+                'name'         => 'delete subcategories',
+                'display_name' => 'Eliminar subcategorías',
                 'action'       => 'delete',
-                'subject'      => 'category'
+                'subject'      => 'subcategory'
             ]
         )->syncRoles(
             [
@@ -78,13 +77,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for restoring categories
+        // Permission for restoring subcategories
         Permission::create(
             [
-                'name'         => 'restore categories',
-                'display_name' => 'Restaurar categorías',
+                'name'         => 'restore subcategories',
+                'display_name' => 'Restaurar subcategorías',
                 'action'       => 'restore',
-                'subject'      => 'category'
+                'subject'      => 'subcategory'
             ]
         )->syncRoles(
             [
@@ -93,13 +92,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for force deleting categories
+        // Permission for force deleting subcategories
         Permission::create(
             [
-                'name'         => 'force delete categories',
-                'display_name' => 'Eliminar permanentemente categorías',
+                'name'         => 'force delete subcategories',
+                'display_name' => 'Eliminar permanentemente subcategorías',
                 'action'       => 'force delete',
-                'subject'      => 'category'
+                'subject'      => 'subcategory'
             ]
         )->syncRoles(
             [
