@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class SubcategoriesPermissionsSeeder extends Seeder
+class WorkoutsPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,13 +17,13 @@ class SubcategoriesPermissionsSeeder extends Seeder
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
-        // Permission for reading subcategories
+        // Permission for reading workouts
         Permission::create(
             [
-                'name'         => 'read subcategories',
-                'display_name' => 'Leer subcategorías',
+                'name'         => 'read workouts',
+                'display_name' => 'Leer entrenamientos',
                 'action'       => 'read',
-                'subject'      => 'subcategory'
+                'subject'      => 'workout'
             ]
         )->syncRoles(
             [
@@ -32,13 +32,13 @@ class SubcategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for creating subcategories
+        // Permission for creating workouts
         Permission::create(
             [
-                'name'         => 'create subcategories',
-                'display_name' => 'Crear subcategorías',
+                'name'         => 'create workouts',
+                'display_name' => 'Crear entrenamientos',
                 'action'       => 'create',
-                'subject'      => 'subcategory'
+                'subject'      => 'workout'
             ]
         )->syncRoles(
             [
@@ -47,13 +47,13 @@ class SubcategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for updating subcategories
+        // Permission for updating workouts
         Permission::create(
             [
-                'name'         => 'update subcategories',
-                'display_name' => 'Actualizar subcategorías',
+                'name'         => 'update workouts',
+                'display_name' => 'Actualizar entrenamientos',
                 'action'       => 'update',
-                'subject'      => 'subcategory'
+                'subject'      => 'workout'
             ]
         )->syncRoles(
             [
@@ -62,13 +62,13 @@ class SubcategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for deleting subcategories
+        // Permission for deleting workouts
         Permission::create(
             [
-                'name'         => 'delete subcategories',
-                'display_name' => 'Eliminar subcategorías',
+                'name'         => 'delete workouts',
+                'display_name' => 'Eliminar entrenamientos',
                 'action'       => 'delete',
-                'subject'      => 'subcategory'
+                'subject'      => 'workout'
             ]
         )->syncRoles(
             [
@@ -77,13 +77,13 @@ class SubcategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for restoring subcategories
+        // Permission for restoring workouts
         Permission::create(
             [
-                'name'         => 'restore subcategories',
-                'display_name' => 'Restaurar subcategorías',
+                'name'         => 'restore workouts',
+                'display_name' => 'Restaurar entrenamientos',
                 'action'       => 'restore',
-                'subject'      => 'subcategory'
+                'subject'      => 'workout'
             ]
         )->syncRoles(
             [
@@ -92,13 +92,13 @@ class SubcategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for force deleting subcategories
+        // Permission for force deleting workouts
         Permission::create(
             [
-                'name'         => 'force delete subcategories',
-                'display_name' => 'Eliminar permanentemente subcategorías',
+                'name'         => 'force delete workouts',
+                'display_name' => 'Eliminar permanentemente entrenamientos',
                 'action'       => 'force delete',
-                'subject'      => 'subcategory'
+                'subject'      => 'workout'
             ]
         )->syncRoles(
             [
