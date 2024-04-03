@@ -36,6 +36,7 @@ class Server extends BaseServer
             Categories\CategorySchema::class,
             Subcategories\SubcategorySchema::class,
             Muscles\MuscleSchema::class,
+            Workouts\WorkoutSchema::class,
         ];
     }
 }
