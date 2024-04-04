@@ -78,7 +78,7 @@ class SubcategoryPolicy
     }
 
     /**
-     * Determine whether the user can view the model category.
+     * Determine whether the user can view the subcategory's category.
      */
     public function viewCategory(User $user, Subcategory $subcategory): bool
     {

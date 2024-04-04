@@ -28,6 +28,9 @@ class MuscleRequest extends ResourceRequest
                 'string',
                 'max:255',
             ],
+            'workouts' => [
+                JsonApiRule::toMany()
+            ],
         ];
     }
 

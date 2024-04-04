@@ -25,11 +25,15 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         });
 
     // Definitions for Muscle model
-    $server->resource('muscles', JsonApiController::class);
+    $server->resource('muscles', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('workouts');
+        });
 
     // Definitions for Workout model
     $server->resource('workouts', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('subcategory');
+            $relationships->hasMany('muscles');
         });
 });

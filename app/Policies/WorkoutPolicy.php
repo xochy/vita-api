@@ -78,10 +78,42 @@ class WorkoutPolicy
     }
 
     /**
-     * Determine whether the user can view the model category.
+     * Determine whether the user can view the workout's category.
      */
     public function viewSubcategory(User $user, Workout $workout): bool
     {
         return $user->can('read subcategories');
+    }
+
+    /**
+     * Determine whether the user can view the workout's muscles.
+     */
+    public function viewMuscles(User $user, Workout $workout): bool
+    {
+        return $user->can('read muscles');
+    }
+
+    /**
+     * Determine whether the user can update the model's muscles relationship.
+     */
+    public function updateMuscles(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can attach muscles to the workout.
+     */
+    public function attachMuscles(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can detach muscles from the workout.
+     */
+    public function detachMuscles(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
     }
 }

@@ -76,4 +76,12 @@ class MusclePolicy
     {
         return $user->can('force delete muscles');
     }
+
+    /**
+     * Determine whether the user can view the muscle's workouts.
+     */
+    public function viewWorkouts(User $user, Muscle $muscle): bool
+    {
+        return $user->can('read workouts');
+    }
 }

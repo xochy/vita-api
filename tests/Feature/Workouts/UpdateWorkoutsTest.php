@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Workouts;
 
+use App\Enums\MusclePriorityEnum;
+use App\Models\Muscle;
 use App\Models\Subcategory;
 use App\Models\User;
 use App\Models\Workout;
@@ -95,7 +97,8 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, ['id' => $workout->getRouteKey(),
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $workout->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
             self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
             self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
@@ -124,7 +127,8 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, ['id' => $workout->getRouteKey(),
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $workout->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
             self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
             self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
@@ -153,7 +157,8 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, ['id' => $workout->getRouteKey(),
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $workout->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME        => $workout->name,
             self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
             self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
@@ -182,7 +187,8 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, ['id' => $workout->getRouteKey(),
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $workout->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME        => $workout->name,
             self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
             self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
@@ -211,7 +217,8 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, ['id' => $workout->getRouteKey(),
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $workout->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME        => $workout->name,
             self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
             self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
@@ -240,7 +247,8 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, ['id' => $workout->getRouteKey(),
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $workout->getRouteKey(),
             self::MODEL_ATTRIBUTE_NAME        => $workout->name,
             self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
             self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
@@ -283,6 +291,146 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
             self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
             self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+        ]);
+    }
+
+    /** @test */
+    public function can_update_the_workout_muscles_only()
+    {
+        $workout = Workout::factory()->for($this->subcategory)->create();
+        $newSubcategory = Subcategory::factory()->forCategory()->create();
+
+        $muscles = Muscle::factory()->count(3)->create();
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'id' => (string) $workout->getRouteKey(),
+            'relationships' => [
+                'subcategory' => [
+                    'data' => [
+                        'type' => 'subcategories',
+                        'id' => (string) $newSubcategory->getRouteKey()
+                    ]
+                ],
+                'muscles' => [
+                    'data' => [
+                        [
+                            'type' => 'muscles',
+                            'id' => (string) $muscles[0]->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::PRINCIPAL
+                                ]
+                            ]
+                        ],
+                        [
+                            'type' => 'muscles',
+                            'id' => (string) $muscles[1]->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::SECONDARY
+                                ]
+                            ]
+
+                        ],
+                        [
+                            'type' => 'muscles',
+                            'id' => (string) $muscles[2]->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::ANTAGONIST
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
+
+        // Success (200)
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('muscle_workout', [
+            'workout_id' => $workout->getRouteKey(),
+            'muscle_id'  => $muscles[0]->getRouteKey(),
+            'priority'   => MusclePriorityEnum::PRINCIPAL
+        ]);
+
+        $this->assertDatabaseHas('muscle_workout', [
+            'workout_id' => $workout->getRouteKey(),
+            'muscle_id'  => $muscles[1]->getRouteKey(),
+            'priority'   => MusclePriorityEnum::SECONDARY
+        ]);
+
+        $this->assertDatabaseHas('muscle_workout', [
+            'workout_id' => $workout->getRouteKey(),
+            'muscle_id'  => $muscles[2]->getRouteKey(),
+            'priority'   => MusclePriorityEnum::ANTAGONIST
+        ]);
+
+        $dataToEdit = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'id' => (string) $workout->getRouteKey(),
+            'relationships' => [
+                'subcategory' => [
+                    'data' => [
+                        'type' => 'subcategories',
+                        'id' => (string) $newSubcategory->getRouteKey()
+                    ]
+                ],
+                'muscles' => [
+                    'data' => [
+                        [
+                            'type' => 'muscles',
+                            'id' => (string) $muscles[0]->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::ANTAGONIST
+                                ]
+                            ]
+                        ],
+                        [
+                            'type' => 'muscles',
+                            'id' => (string) $muscles[1]->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::PRINCIPAL
+                                ]
+                            ]
+
+                        ],
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($dataToEdit)
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
+
+        // Success (200)
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('muscle_workout', [
+            'workout_id' => $workout->getRouteKey(),
+            'muscle_id'  => $muscles[0]->getRouteKey(),
+            'priority'   => MusclePriorityEnum::ANTAGONIST
+        ]);
+
+        $this->assertDatabaseHas('muscle_workout', [
+            'workout_id' => $workout->getRouteKey(),
+            'muscle_id'  => $muscles[1]->getRouteKey(),
+            'priority'   => MusclePriorityEnum::PRINCIPAL
+        ]);
+
+        $this->assertDatabaseMissing('muscle_workout', [
+            'workout_id' => $workout->getRouteKey(),
+            'muscle_id'  => $muscles[2]->getRouteKey(),
+            'priority'   => MusclePriorityEnum::ANTAGONIST
         ]);
     }
 }

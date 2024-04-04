@@ -43,7 +43,7 @@ class IncludeSubcategoryTest extends TestCase
     }
 
     /** @test */
-    public function workouts_can_include_subcategories()
+    public function workouts_can_include_subcategory()
     {
         $workout = Workout::factory()->for($this->subcategory)->create();
 
@@ -62,7 +62,7 @@ class IncludeSubcategoryTest extends TestCase
     }
 
     /** @test */
-    public function workouts_can_fetch_related_subcategories()
+    public function workouts_can_fetch_related_subcategory()
     {
         $workout = Workout::factory()->for($this->subcategory)->create();
 

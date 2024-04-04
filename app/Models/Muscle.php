@@ -19,6 +19,21 @@ class Muscle extends Model
     protected $fillable = ['name', 'description'];
 
     /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Define belongs-to-many workouts relationship.
+     *
+     * @return BelongsToMany
+     */
+    public function workouts()
+    {
+        return $this->belongsToMany(Workout::class)
+            ->withPivot('priority');
+    }
+
+    /* -------------------------------------------------------------------------- */
     /*                                   Scopes                                   */
     /* -------------------------------------------------------------------------- */
 
