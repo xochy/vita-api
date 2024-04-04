@@ -76,4 +76,12 @@ class CategoryPolicy
     {
         return $user->can('force delete categories');
     }
+
+    /**
+     * Determine whether the user can view the category's subcategories.
+     */
+    public function viewSubcategories(User $user, Category $category): bool
+    {
+        return $user->can('read subcategories');
+    }
 }

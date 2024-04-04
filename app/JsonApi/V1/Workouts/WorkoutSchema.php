@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\V1\Workouts;
 
+use App\JsonApi\V1\Helpers\BelongsToMany;
 use App\Models\Workout;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -41,6 +42,7 @@ class WorkoutSchema extends Schema
 
             // Relationships
             BelongsTo::make('subcategory'),
+            BelongsToMany::make('muscles')->fields(['priority'])->fieldsColumns(['priority']),
         ];
     }
 
