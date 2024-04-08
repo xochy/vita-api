@@ -80,7 +80,7 @@ class ListCategoriesTest extends TestCase
                 ]
             ],
             [
-                'type' => 'categories',
+                'type' => self::MODEL_PLURAL_NAME,
                 'id' => $categories[1]->getRouteKey(),
                 'attributes' => [
                     'name'        => $categories[1]->name,
@@ -91,7 +91,7 @@ class ListCategoriesTest extends TestCase
                 ]
             ],
             [
-                'type' => 'categories',
+                'type' => self::MODEL_PLURAL_NAME,
                 'id' => $categories[2]->getRouteKey(),
                 'attributes' => [
                     'name'        => $categories[2]->name,

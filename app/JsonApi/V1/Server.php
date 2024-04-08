@@ -40,6 +40,7 @@ class Server extends BaseServer
             PhysicalConditions\PhysicalConditionSchema::class,
             Subcategories\SubcategorySchema::class,
             Workouts\WorkoutSchema::class,
+            Plans\PlanSchema::class,
         ];
     }
 }
