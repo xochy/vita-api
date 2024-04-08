@@ -1,12 +1,13 @@
 <?php
 
-namespace Database\Seeders\PermissionsSeeders;
+namespace Database\Seeders\permissionsSeeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class CategoriesPermissionsSeeder extends Seeder
+class GoalsPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,13 +18,13 @@ class CategoriesPermissionsSeeder extends Seeder
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
-        // Permission for reading categories
+        // Permission for reading goals
         Permission::create(
             [
-                'name'         => 'read categories',
-                'display_name' => 'Leer categorías',
+                'name'         => 'read goals',
+                'display_name' => 'Leer metas',
                 'action'       => 'read',
-                'subject'      => 'category'
+                'subject'      => 'goal'
             ]
         )->syncRoles(
             [
@@ -32,13 +33,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for creating categories
+        // Permission for creating goals
         Permission::create(
             [
-                'name'         => 'create categories',
-                'display_name' => 'Crear categorías',
+                'name'         => 'create goals',
+                'display_name' => 'Crear metas',
                 'action'       => 'create',
-                'subject'      => 'category'
+                'subject'      => 'goal'
             ]
         )->syncRoles(
             [
@@ -47,13 +48,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for updating categories
+        // Permission for updating goals
         Permission::create(
             [
-                'name'         => 'update categories',
-                'display_name' => 'Actualizar categorías',
+                'name'         => 'update goals',
+                'display_name' => 'Actualizar metas',
                 'action'       => 'update',
-                'subject'      => 'category'
+                'subject'      => 'goal'
             ]
         )->syncRoles(
             [
@@ -62,13 +63,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for deleting categories
+        // Permission for deleting goals
         Permission::create(
             [
-                'name'         => 'delete categories',
-                'display_name' => 'Eliminar categorías',
+                'name'         => 'delete goals',
+                'display_name' => 'Eliminar metas',
                 'action'       => 'delete',
-                'subject'      => 'category'
+                'subject'      => 'goal'
             ]
         )->syncRoles(
             [
@@ -77,13 +78,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for restoring categories
+        // Permission for restoring goals
         Permission::create(
             [
-                'name'         => 'restore categories',
-                'display_name' => 'Restaurar categorías',
+                'name'         => 'restore goals',
+                'display_name' => 'Restaurar metas',
                 'action'       => 'restore',
-                'subject'      => 'category'
+                'subject'      => 'goal'
             ]
         )->syncRoles(
             [
@@ -92,13 +93,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for force deleting categories
+        // Permission for force deleting goals
         Permission::create(
             [
-                'name'         => 'force delete categories',
-                'display_name' => 'Eliminar permanentemente categorías',
+                'name'         => 'force delete goals',
+                'display_name' => 'Eliminar metas permanentemente',
                 'action'       => 'force delete',
-                'subject'      => 'category'
+                'subject'      => 'goal'
             ]
         )->syncRoles(
             [

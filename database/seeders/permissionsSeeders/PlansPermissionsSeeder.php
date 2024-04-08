@@ -1,12 +1,13 @@
 <?php
 
-namespace Database\Seeders\PermissionsSeeders;
+namespace Database\Seeders\permissionsSeeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class CategoriesPermissionsSeeder extends Seeder
+class PlansPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,13 +18,13 @@ class CategoriesPermissionsSeeder extends Seeder
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
-        // Permission for reading categories
+        // Permission for reading plans
         Permission::create(
             [
-                'name'         => 'read categories',
-                'display_name' => 'Leer categorías',
+                'name'         => 'read plans',
+                'display_name' => 'Leer planes',
                 'action'       => 'read',
-                'subject'      => 'category'
+                'subject'      => 'plan'
             ]
         )->syncRoles(
             [
@@ -32,13 +33,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for creating categories
+        // Permission for creating plans
         Permission::create(
             [
-                'name'         => 'create categories',
-                'display_name' => 'Crear categorías',
+                'name'         => 'create plans',
+                'display_name' => 'Crear planes',
                 'action'       => 'create',
-                'subject'      => 'category'
+                'subject'      => 'plan'
             ]
         )->syncRoles(
             [
@@ -47,13 +48,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for updating categories
+        // Permission for updating plans
         Permission::create(
             [
-                'name'         => 'update categories',
-                'display_name' => 'Actualizar categorías',
+                'name'         => 'update plans',
+                'display_name' => 'Actualizar planes',
                 'action'       => 'update',
-                'subject'      => 'category'
+                'subject'      => 'plan'
             ]
         )->syncRoles(
             [
@@ -62,13 +63,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for deleting categories
+        // Permission for deleting plans
         Permission::create(
             [
-                'name'         => 'delete categories',
-                'display_name' => 'Eliminar categorías',
+                'name'         => 'delete plans',
+                'display_name' => 'Eliminar planes',
                 'action'       => 'delete',
-                'subject'      => 'category'
+                'subject'      => 'plan'
             ]
         )->syncRoles(
             [
@@ -77,13 +78,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for restoring categories
+        // Permission for restoring plans
         Permission::create(
             [
-                'name'         => 'restore categories',
-                'display_name' => 'Restaurar categorías',
+                'name'         => 'restore plans',
+                'display_name' => 'Restaurar planes',
                 'action'       => 'restore',
-                'subject'      => 'category'
+                'subject'      => 'plan'
             ]
         )->syncRoles(
             [
@@ -92,13 +93,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for force deleting categories
+        // Permission for force deleting plans
         Permission::create(
             [
-                'name'         => 'force delete categories',
-                'display_name' => 'Eliminar permanentemente categorías',
+                'name'         => 'force delete plans',
+                'display_name' => 'Eliminar permanentemente planes',
                 'action'       => 'force delete',
-                'subject'      => 'category'
+                'subject'      => 'plan'
             ]
         )->syncRoles(
             [

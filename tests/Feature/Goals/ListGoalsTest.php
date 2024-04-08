@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Goals;
 
-use App\Models\Category;
+use App\Models\Goal;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\GoalsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class ListCategoriesTest extends TestCase
+class ListGoalsTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'goals';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
@@ -26,81 +26,81 @@ class ListCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(GoalsPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function it_can_fetch_single_category()
+    public function it_can_fetch_single_goal()
     {
-        $category = Category::factory()->create();
+        $goal = Goal::factory()->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $goal));
 
-        $response->assertFetchedOne($category);
+        $response->assertFetchedOne($goal);
 
         $response->assertFetchedOne([
             'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
+            'id' => (string) $goal->getRouteKey(),
             'attributes' => [
-                'name' => $category->name,
-                'description' => $category->description,
+                'name' => $goal->name,
+                'description' => $goal->description,
             ],
             'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goal)
             ]
         ]);
     }
 
     /** @test */
-    public function can_fetch_all_categories()
+    public function can_fetch_all_goals()
     {
-        $categories = Category::factory()->times(3)->create();
+        $goals = Goal::factory()->count(3)->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-        $response->assertFetchedMany($categories);
+        $response->assertFetchedMany($goals);
 
         $response->assertFetchedMany([
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => $categories[0]->getRouteKey(),
+                'id' => (string) $goals[0]->getRouteKey(),
                 'attributes' => [
-                    'name'        => $categories[0]->name,
-                    'description' => $categories[0]->description,
+                    'name' => $goals[0]->name,
+                    'description' => $goals[0]->description,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[0])
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goals[0])
                 ]
             ],
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => $categories[1]->getRouteKey(),
+                'id' => (string) $goals[1]->getRouteKey(),
                 'attributes' => [
-                    'name'        => $categories[1]->name,
-                    'description' => $categories[1]->description,
+                    'name' => $goals[1]->name,
+                    'description' => $goals[1]->description,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[1])
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goals[1])
                 ]
             ],
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => $categories[2]->getRouteKey(),
+                'id' => (string) $goals[2]->getRouteKey(),
                 'attributes' => [
-                    'name'        => $categories[2]->name,
-                    'description' => $categories[2]->description,
+                    'name' => $goals[2]->name,
+                    'description' => $goals[2]->description,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[2])
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goals[2])
                 ]
-            ],
+            ]
         ]);
     }
 }

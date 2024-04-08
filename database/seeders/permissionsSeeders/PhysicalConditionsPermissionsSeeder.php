@@ -1,13 +1,15 @@
 <?php
 
-namespace Database\Seeders\PermissionsSeeders;
+namespace Database\Seeders\permissionsSeeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class CategoriesPermissionsSeeder extends Seeder
+class PhysicalConditionsPermissionsSeeder extends Seeder
 {
+    const SUBJECT = 'physical condition';
+
     /**
      * Run the database seeds.
      */
@@ -17,13 +19,13 @@ class CategoriesPermissionsSeeder extends Seeder
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
-        // Permission for reading categories
+        // Permission for reading physical conditions
         Permission::create(
             [
-                'name'         => 'read categories',
-                'display_name' => 'Leer categorías',
+                'name'         => 'read physical conditions',
+                'display_name' => 'Leer condiciones físicas',
                 'action'       => 'read',
-                'subject'      => 'category'
+                'subject'      => self::SUBJECT
             ]
         )->syncRoles(
             [
@@ -32,13 +34,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for creating categories
+        // Permission for creating physical conditions
         Permission::create(
             [
-                'name'         => 'create categories',
-                'display_name' => 'Crear categorías',
+                'name'         => 'create physical conditions',
+                'display_name' => 'Crear condiciones físicas',
                 'action'       => 'create',
-                'subject'      => 'category'
+                'subject'      => self::SUBJECT
             ]
         )->syncRoles(
             [
@@ -47,13 +49,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for updating categories
+        // Permission for updating physical conditions
         Permission::create(
             [
-                'name'         => 'update categories',
-                'display_name' => 'Actualizar categorías',
+                'name'         => 'update physical conditions',
+                'display_name' => 'Actualizar condiciones físicas',
                 'action'       => 'update',
-                'subject'      => 'category'
+                'subject'      => self::SUBJECT
             ]
         )->syncRoles(
             [
@@ -62,13 +64,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for deleting categories
+        // Permission for deleting physical conditions
         Permission::create(
             [
-                'name'         => 'delete categories',
-                'display_name' => 'Eliminar categorías',
+                'name'         => 'delete physical conditions',
+                'display_name' => 'Eliminar condiciones físicas',
                 'action'       => 'delete',
-                'subject'      => 'category'
+                'subject'      => self::SUBJECT
             ]
         )->syncRoles(
             [
@@ -77,13 +79,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for restoring categories
+        // Permission for restoring physical conditions
         Permission::create(
             [
-                'name'         => 'restore categories',
-                'display_name' => 'Restaurar categorías',
+                'name'         => 'restore physical conditions',
+                'display_name' => 'Restaurar condiciones físicas',
                 'action'       => 'restore',
-                'subject'      => 'category'
+                'subject'      => self::SUBJECT
             ]
         )->syncRoles(
             [
@@ -92,13 +94,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for force deleting categories
+        // Permission for force deleting physical conditions
         Permission::create(
             [
-                'name'         => 'force delete categories',
-                'display_name' => 'Eliminar permanentemente categorías',
+                'name'         => 'force delete physical conditions',
+                'display_name' => 'Eliminar permanentemente condiciones físicas',
                 'action'       => 'force delete',
-                'subject'      => 'category'
+                'subject'      => self::SUBJECT
             ]
         )->syncRoles(
             [

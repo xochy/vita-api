@@ -1,24 +1,22 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\PhysicalConditions;
 
-use App\Models\Category;
+use App\Models\PhysicalCondition;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\PhysicalConditionsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class FilterCategoriesTest extends TestCase
+class FilterPhysicalConditionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $user;
-
-    const MODEL_SINGLE_NAME = 'category';
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_SINGLE_NAME = 'physical-condition';
+    const MODEL_PLURAL_NAME = 'physical-conditions';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     const MODEL_BETA_NAME = 'beta name';
@@ -40,22 +38,24 @@ class FilterCategoriesTest extends TestCase
     const MODEL_FILTER_UNKNOWN_PARAM_NAME = 'filter[unknown]';
     const MODEL_FILTER_DESCRIPTION_PARAM_NAME = 'filter[description]';
 
+    protected User $user;
+
     public function setUp(): void
     {
         parent::setUp();
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(PhysicalConditionsPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function can_filter_categories_by_name()
+    public function can_filter_physical_conditions_by_name()
     {
-        Category::factory()->count(3)
+        PhysicalCondition::factory()->count(3)
             ->state(new Sequence(
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
@@ -78,9 +78,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_description()
+    public function can_filter_physical_conditions_by_description()
     {
-        Category::factory()->count(3)
+        PhysicalCondition::factory()->count(3)
             ->state(new Sequence(
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
@@ -103,9 +103,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_name_and_description()
+    public function can_filter_physical_conditions_by_name_and_description()
     {
-        Category::factory()->count(3)
+        PhysicalCondition::factory()->count(3)
             ->state(new Sequence(
                 [
                     'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME,
@@ -141,9 +141,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function cannot_filter_categories_by_unknown_filters()
+    public function cannot_filter_physical_conditions_by_unknown_filters()
     {
-        Category::factory()->create();
+        PhysicalCondition::factory()->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
@@ -159,9 +159,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_search_categories_by_name()
+    public function can_search_physical_conditions_by_name()
     {
-        Category::factory()->count(3)
+        PhysicalCondition::factory()->count(3)
             ->state(new Sequence(
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
@@ -184,9 +184,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_search_categories_by_description()
+    public function can_search_physical_conditions_by_description()
     {
-        Category::factory()->count(3)
+        PhysicalCondition::factory()->count(3)
             ->state(new Sequence(
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
@@ -209,9 +209,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_search_categories_by_name_with_multiple_terms()
+    public function can_search_physical_conditions_by_name_with_multiple_terms()
     {
-        Category::factory()->count(3)
+        PhysicalCondition::factory()->count(3)
             ->state(new Sequence(
                 ['name' => self::MODEL_EXTRA_SEARCHING_TERM . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME],

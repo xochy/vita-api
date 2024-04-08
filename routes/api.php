@@ -42,4 +42,16 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('workouts');
         });
+        
+    // Definitions for Frequency model
+    $server->resource('frequencies', JsonApiController::class);
+
+    // Definitions for Goal model
+    $server->resource('goals', JsonApiController::class);
+
+    // Definitions for PhysicalCondition model
+    $server->resource('physical-conditions', JsonApiController::class);
+
+    // Definitions for Plan model
+    $server->resource('plans', JsonApiController::class);
 });

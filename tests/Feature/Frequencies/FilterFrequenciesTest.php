@@ -1,24 +1,24 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Frequencies;
 
-use App\Models\Category;
+use App\Models\Frequency;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\FrequenciesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class FilterCategoriesTest extends TestCase
+class FilterFrequenciesTest extends TestCase
 {
     use RefreshDatabase;
 
     protected User $user;
 
-    const MODEL_SINGLE_NAME = 'category';
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_SINGLE_NAME = 'frequency';
+    const MODEL_PLURAL_NAME = 'frequencies';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     const MODEL_BETA_NAME = 'beta name';
@@ -32,7 +32,6 @@ class FilterCategoriesTest extends TestCase
     const MODEL_PI_NAME = 'pi lambda name';
     const MODEL_JI_NAME = 'ji lambda name';
 
-    const MODEL_EXTRA_SEARCHING_TERM = 'omega';
     const MODEL_MULTIPLE_SEARCH_TERM = self::MODEL_SINGLE_NAME . ' ' . 'lambda';
 
     const MODEL_FILTER_NAME_PARAM_NAME = 'filter[name]';
@@ -46,16 +45,16 @@ class FilterCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function can_filter_categories_by_name()
+    public function can_filter_frequencies_by_name()
     {
-        Category::factory()->count(3)
+        Frequency::factory()->count(3)
             ->state(new Sequence(
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
@@ -78,9 +77,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_description()
+    public function can_filter_frequencies_by_description()
     {
-        Category::factory()->count(3)
+        Frequency::factory()->count(3)
             ->state(new Sequence(
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
@@ -103,9 +102,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_name_and_description()
+    public function can_filter_frequencies_by_name_and_description()
     {
-        Category::factory()->count(3)
+        Frequency::factory()->count(3)
             ->state(new Sequence(
                 [
                     'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME,
@@ -141,9 +140,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function cannot_filter_categories_by_unknown_filters()
+    public function cannot_filter_frequencies_by_unknown_filters()
     {
-        Category::factory()->create();
+        Frequency::factory()->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
@@ -159,9 +158,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_search_categories_by_name()
+    public function can_search_frequencies_by_name()
     {
-        Category::factory()->count(3)
+        Frequency::factory()->count(3)
             ->state(new Sequence(
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
@@ -184,9 +183,9 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_search_categories_by_description()
+    public function can_search_frequencies_by_description()
     {
-        Category::factory()->count(3)
+        Frequency::factory()->count(3)
             ->state(new Sequence(
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
                 ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
@@ -209,11 +208,11 @@ class FilterCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_search_categories_by_name_with_multiple_terms()
+    public function can_search_frequencies_by_name_with_multiple_terms()
     {
-        Category::factory()->count(3)
+        Frequency::factory()->count(3)
             ->state(new Sequence(
-                ['name' => self::MODEL_EXTRA_SEARCHING_TERM . ' ' . self::MODEL_ALFA_NAME],
+                ['name' => self::MODEL_PLURAL_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_JI_NAME],
             ))
