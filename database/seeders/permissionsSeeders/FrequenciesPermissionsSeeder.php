@@ -1,12 +1,12 @@
 <?php
 
-namespace Database\Seeders\PermissionsSeeders;
+namespace Database\Seeders\permissionsSeeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class CategoriesPermissionsSeeder extends Seeder
+class FrequenciesPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,13 +17,13 @@ class CategoriesPermissionsSeeder extends Seeder
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
-        // Permission for reading categories
+        // Permission for reading frequencies
         Permission::create(
             [
-                'name'         => 'read categories',
-                'display_name' => 'Leer categorías',
+                'name'         => 'read frequencies',
+                'display_name' => 'Leer frecuencias',
                 'action'       => 'read',
-                'subject'      => 'category'
+                'subject'      => 'frequency'
             ]
         )->syncRoles(
             [
@@ -32,13 +32,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for creating categories
+        // Permission for creating frequencies
         Permission::create(
             [
-                'name'         => 'create categories',
-                'display_name' => 'Crear categorías',
+                'name'         => 'create frequencies',
+                'display_name' => 'Crear frecuencias',
                 'action'       => 'create',
-                'subject'      => 'category'
+                'subject'      => 'frequency'
             ]
         )->syncRoles(
             [
@@ -47,13 +47,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for updating categories
+        // Permission for updating frequencies
         Permission::create(
             [
-                'name'         => 'update categories',
-                'display_name' => 'Actualizar categorías',
+                'name'         => 'update frequencies',
+                'display_name' => 'Actualizar frecuencias',
                 'action'       => 'update',
-                'subject'      => 'category'
+                'subject'      => 'frequency'
             ]
         )->syncRoles(
             [
@@ -62,13 +62,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for deleting categories
+        // Permission for deleting frequencies
         Permission::create(
             [
-                'name'         => 'delete categories',
-                'display_name' => 'Eliminar categorías',
+                'name'         => 'delete frequencies',
+                'display_name' => 'Eliminar frecuencias',
                 'action'       => 'delete',
-                'subject'      => 'category'
+                'subject'      => 'frequency'
             ]
         )->syncRoles(
             [
@@ -77,13 +77,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for restoring categories
+        // Permission for restoring frequencies
         Permission::create(
             [
-                'name'         => 'restore categories',
-                'display_name' => 'Restaurar categorías',
+                'name'         => 'restore frequencies',
+                'display_name' => 'Restaurar frecuencias',
                 'action'       => 'restore',
-                'subject'      => 'category'
+                'subject'      => 'frequency'
             ]
         )->syncRoles(
             [
@@ -92,13 +92,13 @@ class CategoriesPermissionsSeeder extends Seeder
             ]
         );
 
-        // Permission for force deleting categories
+        // Permission for force deleting frequencies
         Permission::create(
             [
-                'name'         => 'force delete categories',
-                'display_name' => 'Eliminar permanentemente categorías',
+                'name'         => 'force delete frequencies',
+                'display_name' => 'Eliminar permanentemente frecuencias',
                 'action'       => 'force delete',
-                'subject'      => 'category'
+                'subject'      => 'frequency'
             ]
         )->syncRoles(
             [
