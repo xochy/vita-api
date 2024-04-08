@@ -36,4 +36,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('subcategory');
             $relationships->hasMany('muscles');
         });
+
+    // Definitions for Frequency model
+    $server->resource('frequencies', JsonApiController::class);
 });

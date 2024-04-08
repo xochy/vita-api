@@ -37,6 +37,7 @@ class Server extends BaseServer
             Subcategories\SubcategorySchema::class,
             Muscles\MuscleSchema::class,
             Workouts\WorkoutSchema::class,
+            Frequencies\FrequencySchema::class,
         ];
     }
 }
