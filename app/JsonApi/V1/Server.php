@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\V1;
 
+use App\Models\Routine;
 use Illuminate\Support\Facades\Auth;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
@@ -37,6 +38,7 @@ class Server extends BaseServer
             Subcategories\SubcategorySchema::class,
             Muscles\MuscleSchema::class,
             Workouts\WorkoutSchema::class,
+            Routines\RoutineSchema::class,
         ];
     }
 }

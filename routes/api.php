@@ -36,4 +36,10 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('subcategory');
             $relationships->hasMany('muscles');
         });
+
+    // Definitions for Routine model
+    $server->resource('routines', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('workouts');
+        });
 });
