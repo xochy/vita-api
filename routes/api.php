@@ -39,4 +39,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
 
     // Definitions for Frequency model
     $server->resource('frequencies', JsonApiController::class);
+
+    // Definitions for Goal model
+    $server->resource('goals', JsonApiController::class);
 });
