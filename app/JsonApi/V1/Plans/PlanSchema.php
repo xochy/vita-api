@@ -31,7 +31,7 @@ class PlanSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('name'),
+            Str::make('name')->sortable(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
