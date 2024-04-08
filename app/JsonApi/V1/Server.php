@@ -38,6 +38,7 @@ class Server extends BaseServer
             Muscles\MuscleSchema::class,
             Workouts\WorkoutSchema::class,
             Frequencies\FrequencySchema::class,
+            Goals\GoalSchema::class,
         ];
     }
 }
