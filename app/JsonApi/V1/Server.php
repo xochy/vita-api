@@ -34,11 +34,12 @@ class Server extends BaseServer
     {
         return [
             Categories\CategorySchema::class,
-            Subcategories\SubcategorySchema::class,
-            Muscles\MuscleSchema::class,
-            Workouts\WorkoutSchema::class,
             Frequencies\FrequencySchema::class,
             Goals\GoalSchema::class,
+            Muscles\MuscleSchema::class,
+            PhysicalConditions\PhysicalConditionSchema::class,
+            Subcategories\SubcategorySchema::class,
+            Workouts\WorkoutSchema::class,
         ];
     }
 }
