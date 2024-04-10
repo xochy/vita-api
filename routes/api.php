@@ -35,6 +35,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('subcategory');
             $relationships->hasMany('muscles');
+            $relationships->hasMany('routines');
         });
 
     // Definitions for Routine model
@@ -42,7 +43,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('workouts');
         });
-        
+
     // Definitions for Frequency model
     $server->resource('frequencies', JsonApiController::class);
 

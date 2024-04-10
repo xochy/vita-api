@@ -42,7 +42,12 @@ class WorkoutSchema extends Schema
 
             // Relationships
             BelongsTo::make('subcategory'),
-            BelongsToMany::make('muscles')->fields(['priority'])->fieldsColumns(['priority']),
+            BelongsToMany::make('muscles')->fields(
+                [
+                    'priority'
+                ]
+            ),
+            BelongsToMany::make('routines'),
         ];
     }
 
@@ -67,5 +72,4 @@ class WorkoutSchema extends Schema
     {
         return PagePagination::make();
     }
-
 }

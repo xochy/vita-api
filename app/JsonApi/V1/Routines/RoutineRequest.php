@@ -22,6 +22,24 @@ class RoutineRequest extends ResourceRequest
                 'string',
                 'max:255',
             ],
+            'workouts' => [
+                JsonApiRule::toMany()
+            ],
+            'workouts.*.meta.pivot.series' => [
+                'required',
+                'integer',
+                'numeric'
+            ],
+            'workouts.*.meta.pivot.repetitions' => [
+                'required',
+                'integer',
+                'numeric'
+            ],
+            'workouts.*.meta.pivot.time' => [
+                'required',
+                'integer',
+                'numeric'
+            ],
         ];
     }
 

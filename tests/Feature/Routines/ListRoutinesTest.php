@@ -29,7 +29,7 @@ class ListRoutinesTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        $this->user = User::factory()->create()->assignRole('user');
     }
 
     /** @test */

@@ -8,6 +8,7 @@ use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -36,7 +37,11 @@ class RoutineSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            BelongsToMany::make('workouts'),
+            BelongsToMany::make('workouts')->fields(
+                [
+                    'series', 'repetitions', 'time'
+                ]
+            ),
         ];
     }
 
@@ -49,6 +54,8 @@ class RoutineSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            Scope::make('name'),
+            Scope::make('search'),
         ];
     }
 
