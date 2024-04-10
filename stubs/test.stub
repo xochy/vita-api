@@ -20,6 +20,7 @@ class {{ class }} extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
+            // TODO: add seed permissions model class here
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
