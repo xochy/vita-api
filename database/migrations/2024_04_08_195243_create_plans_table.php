@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('goal_id')
+                ->constrained('goals')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('frequency_id')
+                ->constrained('frequencies')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('physical_condition_id')
+                ->constrained('physical_conditions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });

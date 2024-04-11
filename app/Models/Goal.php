@@ -19,6 +19,23 @@ class Goal extends Model
     protected $fillable = ['name', 'description'];
 
     /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Get the plans associated with the goal.
+     *
+     * This function establishes a hasMany relationship between Goal and Plan.
+     * It means that each Goal has many Plans.
+     *
+     * @return HasMany
+     */
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+
+    /* -------------------------------------------------------------------------- */
     /*                                   Scopes                                   */
     /* -------------------------------------------------------------------------- */
 

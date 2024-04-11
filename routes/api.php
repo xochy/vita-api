@@ -54,5 +54,10 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     $server->resource('physical-conditions', JsonApiController::class);
 
     // Definitions for Plan model
-    $server->resource('plans', JsonApiController::class);
+    $server->resource('plans', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasOne('goal');
+            $relationships->hasOne('frequency');
+            $relationships->hasOne('physicalCondition');
+        });
 });

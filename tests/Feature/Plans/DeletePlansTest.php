@@ -15,7 +15,7 @@ class DeletePlansTest extends TestCase
     use RefreshDatabase;
 
     const MODEL_PLURAL_NAME = 'plans';
-    const MODEL_MAIN_ACTION_ROUTE = 'v1.'. self::MODEL_PLURAL_NAME .'.destroy';
+    const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
 
@@ -34,7 +34,9 @@ class DeletePlansTest extends TestCase
     /** @test */
     public function guests_users_cannot_delete_plans()
     {
-        $plan = Plan::factory()->create();
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
 
         $response = $this->jsonApi()
             ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
@@ -46,7 +48,9 @@ class DeletePlansTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_can_delete_plans()
     {
-        $plan = Plan::factory()->create();
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
 
         $response = $this->actingAs($this->user)
             ->jsonApi()

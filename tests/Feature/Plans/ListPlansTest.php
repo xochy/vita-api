@@ -2,6 +2,9 @@
 
 namespace Tests\Feature\Plans;
 
+use App\Models\Frequency;
+use App\Models\Goal;
+use App\Models\PhysicalCondition;
 use App\Models\Plan;
 use App\Models\User;
 use Database\Seeders\permissionsSeeders\PlansPermissionsSeeder;
@@ -35,7 +38,9 @@ class ListPlansTest extends TestCase
     /** @test */
     public function it_can_fetch_single_plan()
     {
-        $plan = Plan::factory()->create();
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
@@ -55,48 +60,50 @@ class ListPlansTest extends TestCase
         ]);
     }
 
-        /** @test */
-        public function can_fetch_all_plans()
-        {
-            $categories = Plan::factory()->times(3)->create();
+    /** @test */
+    public function can_fetch_all_plans()
+    {
+        $plans = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->count(3)->create();
 
-            $response = $this->actingAs($this->user)->jsonApi()
-                ->expects(self::MODEL_PLURAL_NAME)
-                ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-            $response->assertFetchedMany($categories);
+        $response->assertFetchedMany($plans);
 
-            $response->assertFetchedMany([
-                [
-                    'type' => self::MODEL_PLURAL_NAME,
-                    'id' => $categories[0]->getRouteKey(),
-                    'attributes' => [
-                        'name'        => $categories[0]->name,
-                    ],
-                    'links' => [
-                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[0])
-                    ]
+        $response->assertFetchedMany([
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => $plans[0]->getRouteKey(),
+                'attributes' => [
+                    'name' => $plans[0]->name,
                 ],
-                [
-                    'type' => self::MODEL_PLURAL_NAME,
-                    'id' => $categories[1]->getRouteKey(),
-                    'attributes' => [
-                        'name'        => $categories[1]->name,
-                    ],
-                    'links' => [
-                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[1])
-                    ]
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[0])
+                ]
+            ],
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => $plans[1]->getRouteKey(),
+                'attributes' => [
+                    'name' => $plans[1]->name,
                 ],
-                [
-                    'type' => self::MODEL_PLURAL_NAME,
-                    'id' => $categories[2]->getRouteKey(),
-                    'attributes' => [
-                        'name'        => $categories[2]->name,
-                    ],
-                    'links' => [
-                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[2])
-                    ]
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[1])
+                ]
+            ],
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => $plans[2]->getRouteKey(),
+                'attributes' => [
+                    'name' => $plans[2]->name,
                 ],
-            ]);
-        }
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[2])
+                ]
+            ],
+        ]);
+    }
 }

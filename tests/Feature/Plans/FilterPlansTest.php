@@ -52,8 +52,9 @@ class FilterPlansTest extends TestCase
     /** @test */
     public function can_filter_plans_by_name()
     {
-        Plan::factory()->count(3)
-            ->state(new Sequence(
+        Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->count(3)->state(new Sequence(
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
@@ -77,7 +78,9 @@ class FilterPlansTest extends TestCase
     /** @test */
     public function cannot_filter_plans_by_unknown_filters()
     {
-        Plan::factory()->create();
+        Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
@@ -95,8 +98,9 @@ class FilterPlansTest extends TestCase
     /** @test */
     public function can_search_plans_by_name()
     {
-        Plan::factory()->count(3)
-            ->state(new Sequence(
+        Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->count(3)->state(new Sequence(
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],

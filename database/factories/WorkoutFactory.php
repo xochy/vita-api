@@ -18,10 +18,10 @@ class WorkoutFactory extends Factory
     {
         return [
             'name' => fake()->unique()->bothify('Entrenamiento-?###'),
-            'performance' => fake()->paragraph(),
-            'comments' => fake()->paragraph(),
-            'corrections' => fake()->paragraph(),
-            'warnings' => fake()->paragraph(),
+            'performance' => fake()->paragraph(2),
+            'comments' => fake()->paragraph(2),
+            'corrections' => fake()->paragraph(2),
+            'warnings' => fake()->paragraph(2),
         ];
     }
 }

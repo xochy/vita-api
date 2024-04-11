@@ -39,8 +39,9 @@ class SortPlansTest extends TestCase
     /** @test */
     public function can_sort_plans_by_name_asc()
     {
-        Plan::factory()->count(3)
-            ->state(new Sequence(
+        Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->count(3)->state(new Sequence(
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
@@ -65,8 +66,9 @@ class SortPlansTest extends TestCase
     /** @test */
     public function can_sort_plans_by_name_desc()
     {
-        Plan::factory()->count(3)
-            ->state(new Sequence(
+        Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->count(3)->state(new Sequence(
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
                 [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
@@ -91,7 +93,9 @@ class SortPlansTest extends TestCase
     /** @test */
     public function cannot_sort_plans_by_unknown_fields()
     {
-        Plan::factory()->times(3)->create();
+        Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->count(3)->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,

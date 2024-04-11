@@ -18,7 +18,7 @@ class MuscleFactory extends Factory
     {
         return [
             'name' => fake()->unique()->bothify('Muscle-?###'),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
         ];
     }
 }

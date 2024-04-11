@@ -19,6 +19,23 @@ class PhysicalCondition extends Model
     protected $fillable = ['name', 'description'];
 
     /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Get the plans associated with the physical condition.
+     *
+     * This function establishes a hasMany relationship between PhysicalCondition and Plan.
+     * It means that each PhysicalCondition has many Plans.
+     *
+     * @return HasMany
+     */
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+
+    /* -------------------------------------------------------------------------- */
     /*                                   Scopes                                   */
     /* -------------------------------------------------------------------------- */
 

@@ -23,7 +23,10 @@ class Routine extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Define belongs-to-many workouts relationship.
+     * Get the workouts associated with the routine.
+     *
+     * This function establishes a belongsToMany relationship between Routine and Workout.
+     * It means that each Routine belongs to many Workouts.
      *
      * @return BelongsToMany
      */

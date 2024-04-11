@@ -2,7 +2,6 @@
 
 namespace App\JsonApi\V1\Plans;
 
-use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
@@ -21,6 +20,18 @@ class PlanRequest extends ResourceRequest
                 'required',
                 'string',
                 'max:255',
+            ],
+            'goal' => [
+                JsonApiRule::toOne(),
+                'required'
+            ],
+            'frequency' => [
+                JsonApiRule::toOne(),
+                'required'
+            ],
+            'physicalCondition' => [
+                JsonApiRule::toOne(),
+                'required'
             ],
         ];
     }

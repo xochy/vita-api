@@ -23,7 +23,10 @@ class Workout extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Define belongs-to subcategory relationship.
+     * Get the subcategory associated with the workout.
+     *
+     * This function establishes a belongsTo relationship between Workout and Subcategory.
+     * It means that each Workout belongs to one Subcategory.
      *
      * @return BelongsTo
      */
@@ -33,7 +36,10 @@ class Workout extends Model
     }
 
     /**
-     * Define belongs-to-many muscles relationship.
+     * Get the muscles associated with the workout.
+     *
+     * This function establishes a belongsToMany relationship between Workout and Muscle.
+     * It means that each Workout belongs to many Muscles.
      *
      * @return BelongsToMany
      */

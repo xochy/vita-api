@@ -23,7 +23,10 @@ class Muscle extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Define belongs-to-many workouts relationship.
+     * Get the exercises associated with the muscle.
+     *
+     * This function establishes a belongsToMany relationship between Muscle and Exercise.
+     * It means that each Muscle belongs to many Exercises.
      *
      * @return BelongsToMany
      */

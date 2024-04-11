@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->unique()->bothify('Category-?###'),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
         ];
     }
 }

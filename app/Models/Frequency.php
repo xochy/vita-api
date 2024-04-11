@@ -19,6 +19,23 @@ class Frequency extends Model
     protected $fillable = ['name', 'description'];
 
     /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Get the plans associated with the frequency.
+     *
+     * This function establishes a hasMany relationship between Frequency and Plan.
+     * It means that each Frequency has many Plans.
+     *
+     * @return HasMany
+     */
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+
+    /* -------------------------------------------------------------------------- */
     /*                                   Scopes                                   */
     /* -------------------------------------------------------------------------- */
 

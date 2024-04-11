@@ -208,9 +208,18 @@ class FilterMusclesTest extends TestCase
     {
         Muscle::factory()->count(3)
             ->state(new Sequence(
-                ['name' => self::MODEL_PLURAL_NAME . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_JI_NAME],
+                [
+                    'name' => self::MODEL_PLURAL_NAME . ' ' . self::MODEL_ALFA_NAME,
+                    'description' => self::MODEL_ALFA_DESCRIPTION
+                ],
+                [
+                    'name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME,
+                    'description' => self::MODEL_BETA_DESCRIPTION
+                ],
+                [
+                    'name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_JI_NAME,
+                    'description' => self::MODEL_GAMA_DESCRIPTION
+                ],
             ))
             ->create();
 

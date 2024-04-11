@@ -94,7 +94,7 @@ class SubcategoryPolicy
     }
 
     /**
-     * Determine whether the user can attach tags to the model's category relationship.
+     * Determine whether the user can attach subcategory to the model's category relationship.
      */
     public function attachCategory(User $user, Subcategory $subcategory): bool
     {
@@ -102,7 +102,7 @@ class SubcategoryPolicy
     }
 
     /**
-     * Determine whether the user can detach tags from the model's category relationship.
+     * Determine whether the user can detach subcategory from the model's category relationship.
      */
     public function detachCategory(User $user, Subcategory $subcategory): bool
     {
