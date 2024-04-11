@@ -18,7 +18,7 @@ class SubcategoryFactory extends Factory
     {
         return [
             'name' => fake()->unique()->bothify('Subcategory-?###'),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
         ];
     }
 }

@@ -18,7 +18,7 @@ class GoalFactory extends Factory
     {
         return [
             'name' => fake()->unique()->bothify('Meta-?###'),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
         ];
     }
 }

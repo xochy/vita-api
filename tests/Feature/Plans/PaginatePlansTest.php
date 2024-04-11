@@ -37,7 +37,9 @@ class PaginatePlansTest extends TestCase
     /** @test */
     public function can_fetch_paginated_plans()
     {
-        Plan::factory()->times(10)->create();
+        Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->count(10)->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,

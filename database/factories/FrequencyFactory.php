@@ -18,7 +18,7 @@ class FrequencyFactory extends Factory
     {
         return [
             'name' => fake()->unique()->bothify('Frecuencia-?###'),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
         ];
     }
 }

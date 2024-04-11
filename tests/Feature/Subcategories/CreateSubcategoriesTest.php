@@ -79,8 +79,7 @@ class CreateSubcategoriesTest extends TestCase
         ];
 
         $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData($data)
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_SINGLE_NAME)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();

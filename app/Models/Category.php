@@ -23,7 +23,10 @@ class Category extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Define a one-to-many subcategories relationship.
+     * Get the subcategories associated with the category.
+     *
+     * This function establishes a hasMany relationship between Category and Subcategory.
+     * It means that each Category has many Subcategories.
      *
      * @return HasMany
      */

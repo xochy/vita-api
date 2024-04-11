@@ -8,6 +8,8 @@ use Illuminate\Auth\Access\Response;
 
 class PlanPolicy
 {
+    const UPDATE_PLANS_PERMISSION = 'update plans';
+
     /**
      * Determine whether the user have all permissions.
      *
@@ -50,7 +52,7 @@ class PlanPolicy
      */
     public function update(User $user, Plan $plan): bool
     {
-        return $user->can('update plans');
+        return $user->can(self::UPDATE_PLANS_PERMISSION);
     }
 
     /**
@@ -75,5 +77,65 @@ class PlanPolicy
     public function forceDelete(User $user, Plan $plan): bool
     {
         return $user->can('force delete plans');
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                       Policies for Goal relationship                       */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Determine whether the user can view the plan's goal.
+     */
+    public function viewGoal(User $user, Plan $plan): bool
+    {
+        return $user->can('read goals');
+    }
+
+    /**
+     * Determine whether the user can attach plans to the model's goal relationship.
+     */
+    public function attachGoal(User $user, Plan $plan): bool
+    {
+        return $user->can(self::UPDATE_PLANS_PERMISSION);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                     Policies for Frequency relationship                    */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Determine whether the user can view the plan's frequency.
+     */
+    public function viewFrequency(User $user, Plan $plan): bool
+    {
+        return $user->can('read frequencies');
+    }
+
+    /**
+     * Determine whether the user can attach plans to the model's frequency relationship.
+     */
+    public function attachFrequency(User $user, Plan $plan): bool
+    {
+        return $user->can(self::UPDATE_PLANS_PERMISSION);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                Policies for PhysicalCondition relationship                 */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Determine whether the user can view the plan's physicalCondition.
+     */
+    public function viewPhysicalCondition(User $user, Plan $plan): bool
+    {
+        return $user->can('read physical conditions');
+    }
+
+    /**
+     * Determine whether the user can attach plans to the model's physicalCondition relationship.
+     */
+    public function attachPhysicalCondition(User $user, Plan $plan): bool
+    {
+        return $user->can(self::UPDATE_PLANS_PERMISSION);
     }
 }

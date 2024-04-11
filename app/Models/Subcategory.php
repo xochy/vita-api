@@ -21,7 +21,10 @@ class Subcategory extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Define an inverse one-to-one or many category relationship.
+     * Get the category associated with the subcategory.
+     *
+     * This function establishes a belongsTo relationship between Subcategory and Category.
+     * It means that each Subcategory belongs to one Category.
      *
      * @return BelongsTo
      */

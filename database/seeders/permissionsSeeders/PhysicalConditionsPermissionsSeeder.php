@@ -16,6 +16,7 @@ class PhysicalConditionsPermissionsSeeder extends Seeder
     public function run(): void
     {
         // Roles
+        $user           = Role::where('name', 'user')->first();
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
@@ -30,7 +31,8 @@ class PhysicalConditionsPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $user
             ]
         );
 

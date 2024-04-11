@@ -18,7 +18,7 @@ class PhysicalConditionFactory extends Factory
     {
         return [
             'name' => fake()->unique()->bothify('Condición-física-?###'),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
         ];
     }
 }

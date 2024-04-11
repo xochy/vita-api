@@ -2,6 +2,9 @@
 
 namespace Tests\Feature\Plans;
 
+use App\Models\Frequency;
+use App\Models\Goal;
+use App\Models\PhysicalCondition;
 use App\Models\Plan;
 use App\Models\User;
 use Database\Seeders\permissionsSeeders\PlansPermissionsSeeder;
@@ -38,7 +41,9 @@ class UpdatePlansTest extends TestCase
     /** @test */
     public function guests_users_cannot_update_plans()
     {
-        $plan = Plan::factory()->create();
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -57,9 +62,11 @@ class UpdatePlansTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_as_admin_can_update_plans()
+    public function authenticated_users_can_update_plans_name()
     {
-        $plan = Plan::factory()->create();
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -81,4 +88,110 @@ class UpdatePlansTest extends TestCase
             self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
         ]);
     }
+
+    /** @test */
+    public function authenticated_users_can_update_plans_goal()
+    {
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
+
+        $goal = Goal::factory()->create();
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'id' => (string) $plan->getRouteKey(),
+            'relationships' => [
+                'goal' => [
+                    'data' => [
+                        'type' => 'goals',
+                        'id' => (string) $goal->getRouteKey(),
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
+
+        // Success (200)
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $plan->getRouteKey(),
+            'goal_id' => $goal->getRouteKey(),
+        ]);
+    }
+
+    /** @test */
+    public function authenticated_users_can_update_plans_frequency()
+    {
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
+
+        $frequency = Frequency::factory()->create();
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'id' => (string) $plan->getRouteKey(),
+            'relationships' => [
+                'frequency' => [
+                    'data' => [
+                        'type' => 'frequencies',
+                        'id' => (string) $frequency->getRouteKey(),
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
+
+        // Success (200)
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $plan->getRouteKey(),
+            'frequency_id' => $frequency->getRouteKey(),
+        ]);
+    }
+
+    /** @test */
+    public function authenticated_users_can_update_plans_physical_condition()
+    {
+        $plan = Plan::factory()
+            ->forGoal()->forFrequency()->forPhysicalCondition()
+            ->create();
+
+        $physicalCondition = PhysicalCondition::factory()->create();
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'id' => (string) $plan->getRouteKey(),
+            'relationships' => [
+                'physicalCondition' => [
+                    'data' => [
+                        'type' => 'physical-conditions',
+                        'id' => (string) $physicalCondition->getRouteKey(),
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
+
+        // Success (200)
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $plan->getRouteKey(),
+            'physical_condition_id' => $physicalCondition->getRouteKey(),
+        ]);
+    }
+
 }
