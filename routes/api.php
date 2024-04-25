@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WorkoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
@@ -31,7 +32,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         });
 
     // Definitions for Workout model
-    $server->resource('workouts', JsonApiController::class)
+    $server->resource('workouts', WorkoutController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('subcategory');
             $relationships->hasMany('muscles');

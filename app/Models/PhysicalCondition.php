@@ -28,7 +28,7 @@ class PhysicalCondition extends Model
      * This function establishes a hasMany relationship between PhysicalCondition and Plan.
      * It means that each PhysicalCondition has many Plans.
      *
-     * @return HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function plans()
     {
@@ -46,7 +46,7 @@ class PhysicalCondition extends Model
      * @param string
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeName(Builder $query, $value)
+    public function scopeName(Builder $query, $value): void
     {
         $query->where('name', 'LIKE', "%{$value}%");
     }
@@ -58,7 +58,7 @@ class PhysicalCondition extends Model
      * @param string
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeDescription(Builder $query, $value)
+    public function scopeDescription(Builder $query, $value): void
     {
         $query->where('description', 'LIKE', "%{$value}%");
     }
@@ -67,10 +67,10 @@ class PhysicalCondition extends Model
      * Apply the scope related with search function.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param array
+     * @param string
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearch(Builder $query, $values)
+    public function scopeSearch(Builder $query, $values): void
     {
         foreach (Str::of($values)->explode(' ') as $value) {
 

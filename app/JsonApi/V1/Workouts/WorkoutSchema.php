@@ -9,6 +9,7 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -37,6 +38,9 @@ class WorkoutSchema extends Schema
             Str::make('comments'),
             Str::make('corrections'),
             Str::make('warnings'),
+            Str::make('image')->extractUsing(
+                static fn($model) => $model->getFirstMediaUrl()
+            ),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
@@ -60,6 +64,11 @@ class WorkoutSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            Scope::make('name'),
+            Scope::make('performance'),
+            Scope::make('comments'),
+            Scope::make('corrections'),
+            Scope::make('warnings'),
         ];
     }
 

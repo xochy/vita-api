@@ -18,8 +18,6 @@ class WorkoutRequest extends ResourceRequest
      */
     public function rules(): array
     {
-
-
         return [
             'name' => [
                 'required',
@@ -43,6 +41,10 @@ class WorkoutRequest extends ResourceRequest
             'warnings' => [
                 'string',
                 self::MAX_LENGTH,
+            ],
+            'image' => [
+                'image',
+                'max:2048',
             ],
             'subcategory' => [
                 JsonApiRule::toOne()
