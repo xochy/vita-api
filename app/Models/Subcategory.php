@@ -26,7 +26,7 @@ class Subcategory extends Model
      * This function establishes a belongsTo relationship between Subcategory and Category.
      * It means that each Subcategory belongs to one Category.
      *
-     * @return BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category()
     {

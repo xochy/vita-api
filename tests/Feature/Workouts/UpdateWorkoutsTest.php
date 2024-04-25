@@ -7,9 +7,12 @@ use App\Models\Muscle;
 use App\Models\Subcategory;
 use App\Models\User;
 use App\Models\Workout;
-use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
+use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -25,6 +28,9 @@ class UpdateWorkoutsTest extends TestCase
     const MODEL_ATTRIBUTE_COMMENTS = 'comments';
     const MODEL_ATTRIBUTE_CORRECTIONS = 'corrections';
     const MODEL_ATTRIBUTE_WARNINGS = 'warnings';
+    const MODEL_ATTRIBUTE_IMAGE = 'image';
+    const MODEL_ATTRIBUTE_IMAGE_NAME = 'Test.jpg';
+    const MODEL_IMAGE_ROUTE_PATH = 'app/public/1/';
 
     const MODEL_NAME_ATTRIBUTE_VALUE = 'name changed';
     const MODEL_PERFORMANCE_ATTRIBUTE_VALUE = 'performance changed';
@@ -34,6 +40,7 @@ class UpdateWorkoutsTest extends TestCase
 
     protected User $user;
     protected Subcategory $subcategory;
+    protected UploadedFile $file;
 
     public function setUp(): void
     {
@@ -46,6 +53,10 @@ class UpdateWorkoutsTest extends TestCase
 
         $this->user = User::factory()->create()->assignRole('admin');
         $this->subcategory = Subcategory::factory()->forCategory()->create();
+
+        Storage::disk('public')->deleteDirectory('.');
+
+        $this->file = UploadedFile::fake()->image(self::MODEL_ATTRIBUTE_IMAGE_NAME);
     }
 
     /** @test */
@@ -431,6 +442,62 @@ class UpdateWorkoutsTest extends TestCase
             'workout_id' => $workout->getRouteKey(),
             'muscle_id'  => $muscles[2]->getRouteKey(),
             'priority'   => MusclePriorityEnum::ANTAGONIST
+        ]);
+    }
+
+    /** @test */
+    public function can_update_the_workout_image_only()
+    {
+        $workout = Workout::factory()->for($this->subcategory)->create();
+
+        $file = UploadedFile::fake()->image($fileName = 'Test.jpg');
+
+        $workout->addMedia($file)->toMediaCollection();
+
+        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
+
+        $this->assertDatabaseHas('media', [
+            'model_type'      => 'App\Models\Workout',
+            'model_id'        => $workout->getRouteKey(),
+            'collection_name' => 'default',
+            'file_name'       => $fileName,
+        ]);
+
+        $workout->clearMediaCollection();
+
+        // Verify that the image was not saved
+        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'id' => (string) $workout->getRouteKey(),
+            'attributes' => [
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_IMAGE => $this->file,
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
+
+        // Success (200)
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
+            'id' => $workout->getRouteKey(),
+            self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
+            self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
+            self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+        ]);
+
+        $this->assertDatabaseHas('media', [
+            'model_type'      => 'App\Models\Workout',
+            'model_id'        => $workout->getRouteKey(),
+            'collection_name' => 'default',
+            'file_name'       => self::MODEL_ATTRIBUTE_IMAGE_NAME,
         ]);
     }
 }

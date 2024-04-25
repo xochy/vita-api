@@ -28,7 +28,7 @@ class Routine extends Model
      * This function establishes a belongsToMany relationship between Routine and Workout.
      * It means that each Routine belongs to many Workouts.
      *
-     * @return BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function workouts()
     {
@@ -49,7 +49,7 @@ class Routine extends Model
      * @param string
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeName(Builder $query, $value)
+    public function scopeName(Builder $query, $value): void
     {
         $query->where('name', 'LIKE', "%{$value}%");
     }
@@ -58,13 +58,12 @@ class Routine extends Model
      * Apply the scope related with search function.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param array
+     * @param string
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearch(Builder $query, $values)
+    public function scopeSearch(Builder $query, $values): void
     {
         foreach (Str::of($values)->explode(' ') as $value) {
-
             $query->orWhere('name', 'LIKE', "%{$value}%");
         }
     }

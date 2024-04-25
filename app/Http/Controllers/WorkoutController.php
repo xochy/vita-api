@@ -2,65 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\JsonApi\V1\Workouts\WorkoutRequest;
 use App\Models\Workout;
-use App\Http\Requests\StoreWorkoutRequest;
-use App\Http\Requests\UpdateWorkoutRequest;
+use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
 class WorkoutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    use Actions\FetchMany;
+    use Actions\FetchOne;
+    use Actions\Store;
+    use Actions\Update;
+    use Actions\Destroy;
+    use Actions\FetchRelated;
+    use Actions\FetchRelationship;
+    use Actions\UpdateRelationship;
+    use Actions\AttachRelationship;
+    use Actions\DetachRelationship;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function saved(Workout $workout, WorkoutRequest $request): void
     {
-        //
-    }
+        if (!isset($request->data['attributes']['image'])) {
+            return;
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreWorkoutRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Workout $workout)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Workout $workout)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateWorkoutRequest $request, Workout $workout)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Workout $workout)
-    {
-        //
+        $workout
+            ->addMedia($request->data['attributes']['image'])
+            ->toMediaCollection();
     }
 }

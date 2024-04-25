@@ -28,7 +28,7 @@ class Plan extends Model
      * This function establishes a belongsTo relationship between Plan and Goal.
      * It means that each Plan belongs to one Goal.
      *
-     * @return BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function goal()
     {
@@ -41,7 +41,7 @@ class Plan extends Model
      * This function establishes a belongsTo relationship between Plan and Frequency.
      * It means that each Plan belongs to one Frequency.
      *
-     * @return BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function frequency()
     {
@@ -54,7 +54,7 @@ class Plan extends Model
      * This function establishes a belongsTo relationship between Plan and PhysicalCondition.
      * It means that each Plan belongs to one PhysicalCondition.
      *
-     * @return BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function physicalCondition()
     {
@@ -72,7 +72,7 @@ class Plan extends Model
      * @param string
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeName(Builder $query, $value)
+    public function scopeName(Builder $query, $value): void
     {
         $query->where('name', 'LIKE', "%{$value}%");
     }
@@ -81,13 +81,12 @@ class Plan extends Model
      * Apply the scope related with search function.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param array
+     * @param string
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearch(Builder $query, $values)
+    public function scopeSearch(Builder $query, $values): void
     {
         foreach (Str::of($values)->explode(' ') as $value) {
-
             $query->orWhere('name', 'LIKE', "%{$value}%");
         }
     }

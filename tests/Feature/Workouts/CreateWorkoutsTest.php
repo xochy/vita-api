@@ -7,9 +7,12 @@ use App\Models\Muscle;
 use App\Models\Subcategory;
 use App\Models\User;
 use App\Models\Workout;
-use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
+use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -33,6 +36,8 @@ class CreateWorkoutsTest extends TestCase
     const MODEL_ATTRIBUTE_COMMENTS = 'comments';
     const MODEL_ATTRIBUTE_CORRECTIONS = 'corrections';
     const MODEL_ATTRIBUTE_WARNINGS = 'warnings';
+    const MODEL_ATTRIBUTE_IMAGE = 'image';
+    const MODEL_IMAGE_ROUTE_PATH = 'app/public/1/';
 
     protected User $user;
     protected Subcategory $subcategory;
@@ -58,12 +63,18 @@ class CreateWorkoutsTest extends TestCase
         $this->muscle1 = Muscle::factory()->create();
         $this->muscle2 = Muscle::factory()->create();
         $this->muscle3 = Muscle::factory()->create();
+
+        Storage::disk('public')->deleteDirectory('.');
     }
 
     /** @test */
     public function guests_users_cannot_create_workouts()
     {
-        $workout = array_filter(Workout::factory()->raw());
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
+        $workout = array_filter(Workout::factory()->raw([
+            self::MODEL_ATTRIBUTE_IMAGE => $file
+        ]));
 
         $response = $this->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
@@ -77,12 +88,19 @@ class CreateWorkoutsTest extends TestCase
         $response->assertStatus(401);
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
+
+        // Verify that the image was not saved
+        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_admin_can_create_workouts_including_subcategory()
     {
-        $workout = array_filter(Workout::factory()->raw());
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
+        $workout = array_filter(Workout::factory()->raw([
+            self::MODEL_ATTRIBUTE_IMAGE => $file
+        ]));
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -114,12 +132,18 @@ class CreateWorkoutsTest extends TestCase
             self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
             self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
         ]);
+
+        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_admin_can_create_workouts_including_muscles()
     {
-        $workout = array_filter(Workout::factory()->raw());
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
+        $workout = array_filter(Workout::factory()->raw([
+            self::MODEL_ATTRIBUTE_IMAGE => $file
+        ]));
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -175,12 +199,18 @@ class CreateWorkoutsTest extends TestCase
             'workout_id' => $workoutId,
             'priority'   => MusclePriorityEnum::PRINCIPAL
         ]);
+
+        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_admin_can_create_workouts_including_3_muscles()
     {
-        $workout = array_filter(Workout::factory()->raw());
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
+        $workout = array_filter(Workout::factory()->raw([
+            self::MODEL_ATTRIBUTE_IMAGE => $file
+        ]));
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -266,12 +296,18 @@ class CreateWorkoutsTest extends TestCase
             'workout_id' => $workoutId,
             'priority'   => MusclePriorityEnum::ANTAGONIST
         ]);
+
+        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_user_cannot_create_workouts()
     {
-        $workout = array_filter(Workout::factory()->raw());
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
+        $workout = array_filter(Workout::factory()->raw([
+            self::MODEL_ATTRIBUTE_IMAGE => $file
+        ]));
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -303,15 +339,21 @@ class CreateWorkoutsTest extends TestCase
             self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
             self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
         ]);
+
+        // Verify that the image was not saved
+        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function workout_name_is_required()
     {
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
         $workout = array_filter(Workout::factory()->raw(
             [
-                self::MODEL_ATTRIBUTE_NAME => ''
-            ]
+                self::MODEL_ATTRIBUTE_NAME => '',
+                self::MODEL_ATTRIBUTE_IMAGE => $file
+            ],
         ));
 
         $data = [
@@ -341,14 +383,20 @@ class CreateWorkoutsTest extends TestCase
         $response->assertSee('data\/attributes\/name');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
+
+        // Verify that the image was not saved
+        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function workout_performance_is_required()
     {
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
         $workout = array_filter(Workout::factory()->raw(
             [
-                self::MODEL_ATTRIBUTE_PERFORMANCE => ''
+                self::MODEL_ATTRIBUTE_PERFORMANCE => '',
+                self::MODEL_ATTRIBUTE_IMAGE => $file
             ]
         ));
 
@@ -379,16 +427,22 @@ class CreateWorkoutsTest extends TestCase
         $response->assertSee('data\/attributes\/performance');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
+
+        // Verify that the image was not saved
+        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function workouts_can_be_created_only_with_name_and_performance()
     {
+        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
+
         $workout = array_filter(Workout::factory()->raw(
             [
                 self::MODEL_ATTRIBUTE_COMMENTS    => '',
                 self::MODEL_ATTRIBUTE_CORRECTIONS => '',
                 self::MODEL_ATTRIBUTE_WARNINGS    => '',
+                self::MODEL_ATTRIBUTE_IMAGE => $file
             ]
         ));
 
@@ -418,5 +472,7 @@ class CreateWorkoutsTest extends TestCase
             self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
             self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
         ]);
+
+        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 }

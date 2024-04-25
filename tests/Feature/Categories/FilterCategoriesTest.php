@@ -15,8 +15,6 @@ class FilterCategoriesTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $user;
-
     const MODEL_SINGLE_NAME = 'category';
     const MODEL_PLURAL_NAME = 'categories';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
@@ -39,6 +37,8 @@ class FilterCategoriesTest extends TestCase
     const MODEL_FILTER_SEARCH_PARAM_NAME = 'filter[search]';
     const MODEL_FILTER_UNKNOWN_PARAM_NAME = 'filter[unknown]';
     const MODEL_FILTER_DESCRIPTION_PARAM_NAME = 'filter[description]';
+
+    protected User $user;
 
     public function setUp(): void
     {
