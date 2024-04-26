@@ -61,4 +61,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('frequency');
             $relationships->hasOne('physicalCondition');
         });
+
+    // Definitions for User model
+    $server->resource('users', JsonApiController::class);
 });

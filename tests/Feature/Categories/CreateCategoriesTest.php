@@ -59,7 +59,7 @@ class CreateCategoriesTest extends TestCase
         $category = array_filter(Category::factory()->raw());
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $category
         ];
 
