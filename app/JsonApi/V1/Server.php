@@ -43,6 +43,7 @@ class Server extends BaseServer
             Workouts\WorkoutSchema::class,
             Routines\RoutineSchema::class,
             Plans\PlanSchema::class,
+            Users\UserSchema::class,
         ];
     }
 }
