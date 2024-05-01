@@ -16,7 +16,10 @@ class UserRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        return [
+        // Model instance
+        $model = $this->model();
+
+        $rules = [
             'name' => [
                 'required',
                 'string',
@@ -32,17 +35,37 @@ class UserRequest extends ResourceRequest
                 'sometimes',
                 'date',
             ],
+            // If the model exists, the password is not required
             'password' => [
-                'required',
+                $model ? 'filled' : 'required',
                 'string',
                 'min:8',
             ],
-            'password_confirmation' => [
-                'required_with:password',
-                'same:password'
+            'plans' => [
+                JsonApiRule::toMany()
             ],
-
+            'deletedAt' => [
+                'nullable',
+                JsonApiRule::dateTime()
+            ],
         ];
+
+        // when creating, we do expect the password confirmation to always exist
+        if (!$model) {
+            $rules['password_confirmation'] = 'required_with:password|same:password';
+        }
+
+        return $rules;
     }
 
+    public function withValidator($validator)
+    {
+        if ($this->isUpdating()) {
+            $validator->sometimes(
+                'password_confirmation',
+                'required_with:password|same:password',
+                fn ($input) => isset($input['password']),
+            );
+        }
+    }
 }

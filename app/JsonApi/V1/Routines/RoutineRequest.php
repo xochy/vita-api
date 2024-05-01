@@ -22,6 +22,9 @@ class RoutineRequest extends ResourceRequest
                 'string',
                 'max:255',
             ],
+            'plans' => [
+                JsonApiRule::toMany()
+            ],
             'workouts' => [
                 JsonApiRule::toMany()
             ],

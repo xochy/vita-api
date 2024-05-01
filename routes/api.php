@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     // Definitions for Routine model
     $server->resource('routines', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('plans');
             $relationships->hasMany('workouts');
         });
 
@@ -60,8 +62,21 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('goal');
             $relationships->hasOne('frequency');
             $relationships->hasOne('physicalCondition');
+            $relationships->hasMany('routines');
+            $relationships->hasMany('users');
         });
 
     // Definitions for User model
-    $server->resource('users', JsonApiController::class);
+    $server->resource('users', UserController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('plans');
+        })
+        ->actions('auth', function ($actions) {
+            // Login action
+            $actions->post('signin');
+            // Register action
+            $actions->post('signup');
+            // Logout action
+            $actions->post('signout');
+        });
 });

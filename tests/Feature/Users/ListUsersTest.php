@@ -28,7 +28,7 @@ class ListUsersTest extends TestCase
             $this->seed(UsersPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        $this->user = User::factory()->create()->assignRole('superAdmin');
     }
 
     /** @test */

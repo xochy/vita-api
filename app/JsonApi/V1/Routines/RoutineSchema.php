@@ -42,6 +42,8 @@ class RoutineSchema extends Schema
                     'series', 'repetitions', 'time'
                 ]
             ),
+
+            BelongsToMany::make('plans'),
         ];
     }
 

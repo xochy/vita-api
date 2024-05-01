@@ -33,6 +33,12 @@ class PlanRequest extends ResourceRequest
                 JsonApiRule::toOne(),
                 'required'
             ],
+            'routines' => [
+                JsonApiRule::toMany()
+            ],
+            'users' => [
+                JsonApiRule::toMany()
+            ],
         ];
     }
 
