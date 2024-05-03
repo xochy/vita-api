@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\V1\Plans;
 
+use App\JsonApi\V1\Helpers\BelongsToMany;
 use App\Models\Plan;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -40,6 +41,9 @@ class PlanSchema extends Schema
             BelongsTo::make('goal'),
             BelongsTo::make('frequency'),
             BelongsTo::make('physicalCondition'),
+
+            BelongsToMany::make('users'),
+            BelongsToMany::make('routines'),
         ];
     }
 

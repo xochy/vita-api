@@ -20,6 +20,15 @@ class WorkoutController extends Controller
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
 
+    /**
+     * Save the image when the workout is saved. This method is called after the
+     * workout is saved. If the image is not present in the request, it does nothing.
+     *
+     * @param Workout $workout
+     * @param WorkoutRequest $request
+     *
+     * @return void
+     */
     public function saved(Workout $workout, WorkoutRequest $request): void
     {
         if (!isset($request->data['attributes']['image'])) {

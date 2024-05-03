@@ -23,6 +23,19 @@ class Routine extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
+     * Get the plans associated with the routine.
+     *
+     * This function establishes a belongsToMany relationship between Routine and Plan.
+     * It means that each Routine belongs to many Plans.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function plans()
+    {
+        return $this->belongsToMany(Plan::class);
+    }
+
+    /**
      * Get the workouts associated with the routine.
      *
      * This function establishes a belongsToMany relationship between Routine and Workout.

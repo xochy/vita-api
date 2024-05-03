@@ -61,6 +61,32 @@ class Plan extends Model
         return $this->belongsTo(PhysicalCondition::class);
     }
 
+    /**
+     * Get the routines associated with the plan.
+     *
+     * This function establishes a belongsToMany relationship between Plan and Routine.
+     * It means that each Plan belongs to many Routines.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function routines()
+    {
+        return $this->belongsToMany(Routine::class);
+    }
+
+    /**
+     * Get the users associated with the plan.
+     *
+     * This function establishes a belongsToMany relationship between Plan and User.
+     * It means that each Plan belongs to many Users.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     /* -------------------------------------------------------------------------- */
     /*                                   Scopes                                   */
     /* -------------------------------------------------------------------------- */

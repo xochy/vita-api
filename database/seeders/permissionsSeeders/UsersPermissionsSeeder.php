@@ -14,6 +14,7 @@ class UsersPermissionsSeeder extends Seeder
     public function run(): void
     {
         // Roles
+        $userRole       = Role::where('name', 'user')->first();
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
 
@@ -28,7 +29,8 @@ class UsersPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $userRole,
             ]
         );
 
@@ -43,7 +45,8 @@ class UsersPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $userRole,
             ]
         );
 
@@ -58,7 +61,8 @@ class UsersPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $userRole,
             ]
         );
 
@@ -73,7 +77,8 @@ class UsersPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $userRole,
             ]
         );
 
@@ -88,7 +93,8 @@ class UsersPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $userRole,
             ]
         );
 
@@ -103,7 +109,8 @@ class UsersPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $userRole,
             ]
         );
     }
