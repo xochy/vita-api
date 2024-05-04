@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
 class Routine extends Model
@@ -28,9 +29,9 @@ class Routine extends Model
      * This function establishes a belongsToMany relationship between Routine and Plan.
      * It means that each Routine belongs to many Plans.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function plans()
+    public function plans(): BelongsToMany
     {
         return $this->belongsToMany(Plan::class);
     }
@@ -41,9 +42,9 @@ class Routine extends Model
      * This function establishes a belongsToMany relationship between Routine and Workout.
      * It means that each Routine belongs to many Workouts.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function workouts()
+    public function workouts(): BelongsToMany
     {
         return $this->belongsToMany(Workout::class)
             ->withPivot('series', 'repetitions', 'time')

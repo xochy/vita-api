@@ -66,7 +66,7 @@ class SignUpTest extends TestCase
                 'type' => 'users',
                 'attributes' => $user
             ])
-            ->post(route('v1.users.signup'));
+            ->post(route('v1.users.signup'))->dump();
 
         // Unprocessable Entity (422)
         $response->assertError(422, [

@@ -44,6 +44,7 @@ class Server extends BaseServer
             Routines\RoutineSchema::class,
             Plans\PlanSchema::class,
             Users\UserSchema::class,
+            Translations\TranslationSchema::class,
         ];
     }
 }

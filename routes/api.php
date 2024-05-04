@@ -17,6 +17,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     // Definitions for Category model
     $server->resource('categories', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('translations');
             $relationships->hasMany('subcategories');
         });
 
@@ -79,4 +80,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             // Logout action
             $actions->post('signout');
         });
+
+    // Definitions for Translation model
+    $server->resource('translations', JsonApiController::class);
+
 });

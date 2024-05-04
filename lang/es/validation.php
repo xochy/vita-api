@@ -1,7 +1,5 @@
 <?php
 
-const INVALID_ATTRIBUTE_VALUE = 'El :attribute seleccionado es inválido.';
-
 return [
 
     /*
@@ -52,8 +50,8 @@ return [
     'doesnt_start_with' => 'El campo :attribute no debe comenzar con ninguno de los siguientes: :values.',
     'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
     'ends_with' => 'El campo :attribute debe terminar con uno de los siguientes: :values.',
-    'enum' => self::INVALID_ATTRIBUTE_VALUE,
-    'exists' => self::INVALID_ATTRIBUTE_VALUE,
+    'enum' => 'El :attribute seleccionado es inválido.',
+    'exists' => 'El :attribute seleccionado es inválido.',
     'extensions' => 'El campo :attribute debe tener una de las siguientes extensiones: :values.',
     'file' => 'El campo :attribute debe ser un archivo.',
     'filled' => 'El campo :attribute debe tener un valor.',
@@ -71,7 +69,7 @@ return [
     ],
     'hex_color' => 'El campo :attribute debe ser un color hexadecimal válido.',
     'image' => 'El campo :attribute debe ser una imagen.',
-    'in' => self::INVALID_ATTRIBUTE_VALUE,
+    'in' => 'El :attribute seleccionado es inválido.',
     'in_array' => 'El campo :attribute debe existir en :other.',
     'integer' => 'El campo :attribute debe ser un número entero.',
     'ip' => 'El campo :attribute debe ser una dirección IP válida.',
@@ -115,7 +113,7 @@ return [
     'missing_with' => 'El campo :attribute debe estar ausente cuando :values está presente.',
     'missing_with_all' => 'El campo :attribute debe estar ausente cuando :values están presentes.',
     'multiple_of' => 'El campo :attribute debe ser un múltiplo de :value.',
-    'not_in' => self::INVALID_ATTRIBUTE_VALUE,
+    'not_in' => 'El :attribute seleccionado es inválido.',
     'not_regex' => 'El formato del campo :attribute es inválido.',
     'numeric' => 'El campo :attribute debe ser un número.',
     'password' => [

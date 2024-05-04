@@ -1,19 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Categories;
+namespace App\JsonApi\V1\Translations;
 
-use App\Models\Category;
+use App\Models\Translation;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class CategorySchema extends Schema
+class TranslationSchema extends Schema
 {
 
     /**
@@ -21,7 +20,7 @@ class CategorySchema extends Schema
      *
      * @var string
      */
-    public static string $model = Category::class;
+    public static string $model = Translation::class;
 
     /**
      * Get the resource fields.
@@ -32,14 +31,14 @@ class CategorySchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('name')->sortable(),
-            Str::make('description'),
+            Str::make('column'),
+            Str::make('locale'),
+            Str::make('translation'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            HasMany::make('translations'),
-            HasMany::make('subcategories'),
+            MorphTo::make('translationable')->types('categories', 'products')
         ];
     }
 
@@ -52,9 +51,6 @@ class CategorySchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            Scope::make('name'),
-            Scope::make('description'),
-            Scope::make('search'),
         ];
     }
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
 class Muscle extends Model
@@ -28,9 +29,9 @@ class Muscle extends Model
      * This function establishes a belongsToMany relationship between Muscle and Exercise.
      * It means that each Muscle belongs to many Exercises.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function workouts()
+    public function workouts(): BelongsToMany
     {
         return $this->belongsToMany(Workout::class)
             ->withPivot('priority');

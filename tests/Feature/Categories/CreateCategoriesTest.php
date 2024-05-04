@@ -75,7 +75,7 @@ class CreateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function category_name_is_required()
+    public function categories_name_is_required()
     {
         $category = Category::factory()->raw(['name' => '']);
 
@@ -100,7 +100,7 @@ class CreateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function category_name_must_be_unique()
+    public function categories_name_must_be_unique()
     {
         $category = Category::factory()->create();
 
@@ -127,7 +127,7 @@ class CreateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function category_description_is_required()
+    public function categories_description_is_required()
     {
         $category = Category::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => '']);
 
@@ -152,7 +152,7 @@ class CreateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function category_description_must_be_a_string()
+    public function categories_description_must_be_a_string()
     {
         $category = Category::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => 123]);
 
