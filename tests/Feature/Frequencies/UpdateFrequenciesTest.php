@@ -80,11 +80,14 @@ class UpdateFrequenciesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $frequency->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $frequency->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -108,11 +111,14 @@ class UpdateFrequenciesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $frequency->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $frequency->description,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $frequency->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $frequency->description,
+            ]
+        );
     }
 
     /** @test */
@@ -136,11 +142,14 @@ class UpdateFrequenciesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $frequency->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => $frequency->name,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $frequency->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => $frequency->name,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -162,10 +171,13 @@ class UpdateFrequenciesTest extends TestCase
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $frequency->getRouteKey()));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name has already been taken.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name has already been taken.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
     }

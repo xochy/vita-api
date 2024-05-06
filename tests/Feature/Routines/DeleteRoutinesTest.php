@@ -15,7 +15,7 @@ class DeleteRoutinesTest extends TestCase
     use RefreshDatabase;
 
     const MODEL_PLURAL_NAME = 'routines';
-    const MODEL_MAIN_ACTION_ROUTE = 'v1.'. self::MODEL_PLURAL_NAME .'.destroy';
+    const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
 
@@ -56,8 +56,11 @@ class DeleteRoutinesTest extends TestCase
         $response->assertStatus(204);
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing('routines', [
-            'id' => $routine->id,
-        ]);
+        $this->assertDatabaseMissing(
+            'routines',
+            [
+                'id' => $routine->id,
+            ]
+        );
     }
 }

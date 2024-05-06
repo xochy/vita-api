@@ -80,11 +80,14 @@ class UpdateMusclesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $muscle->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $muscle->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -107,11 +110,14 @@ class UpdateMusclesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $muscle->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $muscle->description,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $muscle->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $muscle->description,
+            ]
+        );
     }
 
     /** @test */
@@ -134,11 +140,14 @@ class UpdateMusclesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $muscle->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => $muscle->name,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $muscle->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => $muscle->name,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -160,10 +169,13 @@ class UpdateMusclesTest extends TestCase
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle->getRouteKey()));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name has already been taken.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name has already been taken.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
     }

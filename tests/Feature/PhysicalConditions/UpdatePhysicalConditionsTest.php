@@ -81,11 +81,14 @@ class UpdatePhysicalConditionsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_TABLE_NAME, [
-            'id' => $physicalCondition->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_TABLE_NAME,
+            [
+                'id' => $physicalCondition->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -109,11 +112,14 @@ class UpdatePhysicalConditionsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_TABLE_NAME, [
-            'id' => $physicalCondition->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $physicalCondition->description,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_TABLE_NAME,
+            [
+                'id' => $physicalCondition->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $physicalCondition->description,
+            ]
+        );
     }
 
     /** @test */
@@ -137,11 +143,14 @@ class UpdatePhysicalConditionsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_TABLE_NAME, [
-            'id' => $physicalCondition->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => $physicalCondition->name,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_TABLE_NAME,
+            [
+                'id' => $physicalCondition->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => $physicalCondition->name,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -163,10 +172,13 @@ class UpdatePhysicalConditionsTest extends TestCase
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $physicalCondition->getRouteKey()));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name has already been taken.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name has already been taken.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
     }

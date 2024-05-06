@@ -52,44 +52,39 @@ class PaginateWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_NUMBER_PARAM_NAME)->get($url);
 
-        $response->assertJsonStructure([
-            'links' => ['first', 'prev', 'next', 'last']
-        ]);
+        $response->assertJsonStructure(
+            [
+                'links' => ['first', 'prev', 'next', 'last']
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'first' => route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_NUMBER_PARAM_NAME => 1, self::MODEL_SIZE_PARAM_NAME => 2
-                ]
-            )
-        ]);
-
-        $response->assertJsonFragment([
-            'prev' => route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_NUMBER_PARAM_NAME => 2, self::MODEL_SIZE_PARAM_NAME => 2
-                ]
-            )
-        ]);
-
-        $response->assertJsonFragment([
-            'next' => route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_NUMBER_PARAM_NAME => 4, self::MODEL_SIZE_PARAM_NAME => 2
-                ]
-            )
-        ]);
-
-        $response->assertJsonFragment([
-            'last' => route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_NUMBER_PARAM_NAME => 5, self::MODEL_SIZE_PARAM_NAME => 2
-                ]
-            )
-        ]);
+        $response->assertJsonFragment(
+            [
+                'first' => route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    [
+                        self::MODEL_NUMBER_PARAM_NAME => 1, self::MODEL_SIZE_PARAM_NAME => 2
+                    ]
+                ),
+                'prev'  => route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    [
+                        self::MODEL_NUMBER_PARAM_NAME => 2, self::MODEL_SIZE_PARAM_NAME => 2
+                    ]
+                ),
+                'next'  => route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    [
+                        self::MODEL_NUMBER_PARAM_NAME => 4, self::MODEL_SIZE_PARAM_NAME => 2
+                    ]
+                ),
+                'last'  => route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    [
+                        self::MODEL_NUMBER_PARAM_NAME => 5, self::MODEL_SIZE_PARAM_NAME => 2
+                    ]
+                ),
+            ]
+        );
     }
 }

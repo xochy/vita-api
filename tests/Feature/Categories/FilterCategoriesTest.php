@@ -156,22 +156,28 @@ class FilterCategoriesTest extends TestCase
             ->get($url);
 
         // Bad Request
-        $response->assertError(400, [
-            'title'  => 'Invalid Query Parameter',
-            'detail' => 'Filter parameter unknown is not allowed.',
-            'source' => ['parameter' => 'filter'],
-        ]);
+        $response->assertError(
+            400,
+            [
+                'title'  => 'Invalid Query Parameter',
+                'detail' => 'Filter parameter unknown is not allowed.',
+                'source' => ['parameter' => 'filter'],
+            ]
+        );
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
             ->get($url);
 
         // Bad Request
-        $response->assertError(400, [
-            'title'  => 'Parámetro de Consulta No Válido',
-            'detail' => 'El parámetro de fitro unknown no está permido.',
-            'source' => ['parameter' => 'filter'],
-        ]);
+        $response->assertError(
+            400,
+            [
+                'title'  => 'Parámetro de Consulta No Válido',
+                'detail' => 'El parámetro de fitro unknown no está permido.',
+                'source' => ['parameter' => 'filter'],
+            ]
+        );
     }
 
     /** @test */

@@ -57,12 +57,13 @@ class CreateRoutinesTest extends TestCase
     {
         $routine = array_filter(Routine::factory()->raw());
 
+        $data =  [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $routine
+        ];
+
         $response = $this->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData([
-                'type' => self::MODEL_PLURAL_NAME,
-                'attributes' => $routine
-            ])
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unauthorized (401)
@@ -128,19 +129,25 @@ class CreateRoutinesTest extends TestCase
 
         $routineId = Routine::whereName($routine[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $routineId,
-            self::MODEL_ATTRIBUTE_NAME => $routine[self::MODEL_ATTRIBUTE_NAME]
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $routineId,
+                self::MODEL_ATTRIBUTE_NAME => $routine[self::MODEL_ATTRIBUTE_NAME]
+            ]
+        );
 
         // Verify BelongsToMany relationship with Workout model
-        $this->assertDatabaseHas(self::PIVOT_TABLE_ROUTINE_WORKOUT, [
-            'routine_id'  => $routineId,
-            'workout_id'  => $this->workout1->getRouteKey(),
-            'series'      => 3,
-            'repetitions' => 10,
-            'time'        => 60
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_ROUTINE_WORKOUT,
+            [
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout1->getRouteKey(),
+                'series'      => 3,
+                'repetitions' => 10,
+                'time'        => 60
+            ]
+        );
     }
 
     /** @test */
@@ -200,37 +207,49 @@ class CreateRoutinesTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
-            $routineId = Routine::whereName($routine[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
+        $routineId = Routine::whereName($routine[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $routineId,
-            self::MODEL_ATTRIBUTE_NAME => $routine[self::MODEL_ATTRIBUTE_NAME]
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $routineId,
+                self::MODEL_ATTRIBUTE_NAME => $routine[self::MODEL_ATTRIBUTE_NAME]
+            ]
+        );
 
         // Verify BelongsToMany relationship with Workout model
-        $this->assertDatabaseHas(self::PIVOT_TABLE_ROUTINE_WORKOUT, [
-            'routine_id'  => $routineId,
-            'workout_id'  => $this->workout1->getRouteKey(),
-            'series'      => 3,
-            'repetitions' => 10,
-            'time'        => 60
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_ROUTINE_WORKOUT,
+            [
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout1->getRouteKey(),
+                'series'      => 3,
+                'repetitions' => 10,
+                'time'        => 60
+            ]
+        );
 
-        $this->assertDatabaseHas(self::PIVOT_TABLE_ROUTINE_WORKOUT, [
-            'routine_id'  => $routineId,
-            'workout_id'  => $this->workout2->getRouteKey(),
-            'series'      => 3,
-            'repetitions' => 10,
-            'time'        => 60
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_ROUTINE_WORKOUT,
+            [
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout2->getRouteKey(),
+                'series'      => 3,
+                'repetitions' => 10,
+                'time'        => 60
+            ]
+        );
 
-        $this->assertDatabaseHas(self::PIVOT_TABLE_ROUTINE_WORKOUT, [
-            'routine_id'  => $routineId,
-            'workout_id'  => $this->workout3->getRouteKey(),
-            'series'      => 3,
-            'repetitions' => 10,
-            'time'        => 60
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_ROUTINE_WORKOUT,
+            [
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout3->getRouteKey(),
+                'series'      => 3,
+                'repetitions' => 10,
+                'time'        => 60
+            ]
+        );
     }
 
     /** @test */
@@ -250,14 +269,17 @@ class CreateRoutinesTest extends TestCase
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
-        ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-        ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name field is required.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
 

@@ -46,20 +46,22 @@ class ListWorkoutsTest extends TestCase
 
         $response->assertFetchedOne($workout);
 
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $workout->getRouteKey(),
-            'attributes' => [
-                'name'        => $workout->name,
-                'performance' => $workout->performance,
-                'comments'    => $workout->comments,
-                'corrections' => $workout->corrections,
-                'warnings'    => $workout->warnings,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $workout->getRouteKey(),
+                'attributes' => [
+                    'name'        => $workout->name,
+                    'performance' => $workout->performance,
+                    'comments'    => $workout->comments,
+                    'corrections' => $workout->corrections,
+                    'warnings'    => $workout->warnings,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
+                ]
             ]
-        ]);
+        );
     }
 
     /** @test */
@@ -73,49 +75,51 @@ class ListWorkoutsTest extends TestCase
 
         $response->assertFetchedMany($workouts);
 
-        $response->assertFetchedMany([
+        $response->assertFetchedMany(
             [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $workouts[0]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $workouts[0]->name,
-                    'performance' => $workouts[0]->performance,
-                    'comments'    => $workouts[0]->comments,
-                    'corrections' => $workouts[0]->corrections,
-                    'warnings'    => $workouts[0]->warnings,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $workouts[0]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $workouts[0]->name,
+                        'performance' => $workouts[0]->performance,
+                        'comments'    => $workouts[0]->comments,
+                        'corrections' => $workouts[0]->corrections,
+                        'warnings'    => $workouts[0]->warnings,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[0])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[0])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $workouts[1]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $workouts[1]->name,
-                    'performance' => $workouts[1]->performance,
-                    'comments'    => $workouts[1]->comments,
-                    'corrections' => $workouts[1]->corrections,
-                    'warnings'    => $workouts[1]->warnings,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $workouts[1]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $workouts[1]->name,
+                        'performance' => $workouts[1]->performance,
+                        'comments'    => $workouts[1]->comments,
+                        'corrections' => $workouts[1]->corrections,
+                        'warnings'    => $workouts[1]->warnings,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[1])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[1])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $workouts[2]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $workouts[2]->name,
-                    'performance' => $workouts[2]->performance,
-                    'comments'    => $workouts[2]->comments,
-                    'corrections' => $workouts[2]->corrections,
-                    'warnings'    => $workouts[2]->warnings,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $workouts[2]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $workouts[2]->name,
+                        'performance' => $workouts[2]->performance,
+                        'comments'    => $workouts[2]->comments,
+                        'corrections' => $workouts[2]->corrections,
+                        'warnings'    => $workouts[2]->warnings,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[2])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[2])
-                ]
-            ],
-        ]);
+            ]
+        );
     }
 }

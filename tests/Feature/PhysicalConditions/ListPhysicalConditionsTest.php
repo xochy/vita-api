@@ -43,17 +43,19 @@ class ListPhysicalConditionsTest extends TestCase
 
         $response->assertFetchedOne($physicalCondition);
 
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $physicalCondition->getRouteKey(),
-            'attributes' => [
-                'name' => $physicalCondition->name,
-                'description' => $physicalCondition->description,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $physicalCondition->getRouteKey(),
+                'attributes' => [
+                    'name' => $physicalCondition->name,
+                    'description' => $physicalCondition->description,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
+                ]
             ]
-        ]);
+        );
     }
 
     /** @test */
@@ -67,40 +69,42 @@ class ListPhysicalConditionsTest extends TestCase
 
         $response->assertFetchedMany($physicalConditions);
 
-        $response->assertFetchedMany([
+        $response->assertFetchedMany(
             [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $physicalConditions[0]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $physicalConditions[0]->name,
-                    'description' => $physicalConditions[0]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $physicalConditions[0]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $physicalConditions[0]->name,
+                        'description' => $physicalConditions[0]->description,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[0])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[0])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $physicalConditions[1]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $physicalConditions[1]->name,
-                    'description' => $physicalConditions[1]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $physicalConditions[1]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $physicalConditions[1]->name,
+                        'description' => $physicalConditions[1]->description,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[1])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[1])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $physicalConditions[2]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $physicalConditions[2]->name,
-                    'description' => $physicalConditions[2]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $physicalConditions[2]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $physicalConditions[2]->name,
+                        'description' => $physicalConditions[2]->description,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[2])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[2])
-                ]
-            ],
-        ]);
+            ]
+        );
     }
 }

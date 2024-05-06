@@ -39,12 +39,13 @@ class CreateGoalsTest extends TestCase
     {
         $goal = array_filter(Goal::factory()->raw());
 
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $goal
+        ];
+
         $response = $this->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData([
-                'type' => self::MODEL_PLURAL_NAME,
-                'attributes' => $goal
-            ])
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unauthorized (401)
@@ -68,16 +69,23 @@ class CreateGoalsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            self::MODEL_ATTRIBUTE_NAME        => $goal[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $goal[self::MODEL_ATTRIBUTE_DESCRIPTION],
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME        => $goal[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $goal[self::MODEL_ATTRIBUTE_DESCRIPTION],
+            ]
+        );
     }
 
     /** @test */
     public function goal_name_is_required()
     {
-        $goal = Goal::factory()->raw(['name' => '']);
+        $goal = Goal::factory()->raw(
+            [
+                'name' => ''
+            ]
+        );
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
@@ -85,14 +93,17 @@ class CreateGoalsTest extends TestCase
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
-        ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-        ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name field is required.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
 
@@ -106,9 +117,11 @@ class CreateGoalsTest extends TestCase
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
-            'attributes' => array_filter(Goal::factory()->raw([
-                'name' => $goal->name
-            ]))
+            'attributes' => array_filter(Goal::factory()->raw(
+                [
+                    'name' => $goal->name
+                ]
+            ))
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
@@ -116,10 +129,13 @@ class CreateGoalsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name has already been taken.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name has already been taken.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
 
@@ -129,7 +145,11 @@ class CreateGoalsTest extends TestCase
     /** @test */
     public function goal_description_is_required()
     {
-        $goal = Goal::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => '']);
+        $goal = Goal::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_DESCRIPTION => ''
+            ]
+        );
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
@@ -141,10 +161,13 @@ class CreateGoalsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/description'],
-            'detail' => 'The description field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/description'],
+                'detail' => 'The description field is required.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/description');
 
@@ -154,7 +177,11 @@ class CreateGoalsTest extends TestCase
     /** @test */
     public function goal_description_must_be_a_string()
     {
-        $goal = Goal::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => 123]);
+        $goal = Goal::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_DESCRIPTION => 123
+            ]
+        );
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
@@ -166,10 +193,13 @@ class CreateGoalsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/description'],
-            'detail' => 'The description field must be a string.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/description'],
+                'detail' => 'The description field must be a string.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/description');
 

@@ -55,12 +55,13 @@ class CreatePlansTest extends TestCase
     {
         $plan = array_filter(Plan::factory()->raw());
 
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $plan
+        ];
+
         $response = $this->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData([
-                'type' => self::MODEL_PLURAL_NAME,
-                'attributes' => $plan
-            ])
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unauthorized (401)
@@ -105,20 +106,27 @@ class CreatePlansTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            self::MODEL_ATTRIBUTE_NAME => $plan[self::MODEL_ATTRIBUTE_NAME],
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME => $plan[self::MODEL_ATTRIBUTE_NAME],
 
-            // Relationships
-            'goal_id' => $this->goal->getRouteKey(),
-            'frequency_id' => $this->frequency->getRouteKey(),
-            'physical_condition_id' => $this->physicalCondition->getRouteKey(),
-        ]);
+                // Relationships
+                'goal_id' => $this->goal->getRouteKey(),
+                'frequency_id' => $this->frequency->getRouteKey(),
+                'physical_condition_id' => $this->physicalCondition->getRouteKey(),
+            ]
+        );
     }
 
     /** @test */
     public function plan_name_is_required()
     {
-        $plan = Plan::factory()->raw(['name' => '']);
+        $plan = Plan::factory()->raw(
+            [
+                'name' => ''
+            ]
+        );
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
@@ -150,10 +158,13 @@ class CreatePlansTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name field is required.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
 
@@ -189,10 +200,13 @@ class CreatePlansTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/relationships/goal'],
-            'detail' => 'The goal field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/relationships/goal'],
+                'detail' => 'The goal field is required.'
+            ]
+        );
 
         $response->assertSee('data\/relationships\/goal');
 
@@ -228,10 +242,13 @@ class CreatePlansTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/relationships/frequency'],
-            'detail' => 'The frequency field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/relationships/frequency'],
+                'detail' => 'The frequency field is required.'
+            ]
+        );
 
         $response->assertSee('data\/relationships\/frequency');
 
@@ -267,10 +284,13 @@ class CreatePlansTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/relationships/physicalCondition'],
-            'detail' => 'The physical condition field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/relationships/physicalCondition'],
+                'detail' => 'The physical condition field is required.'
+            ]
+        );
 
         $response->assertSee('data\/relationships\/physicalCondition');
 

@@ -43,17 +43,19 @@ class ListMusclesTest extends TestCase
 
         $response->assertFetchedOne($muscle);
 
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $muscle->getRouteKey(),
-            'attributes' => [
-                'name' => $muscle->name,
-                'description' => $muscle->description,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscle)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $muscle->getRouteKey(),
+                'attributes' => [
+                    'name' => $muscle->name,
+                    'description' => $muscle->description,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscle)
+                ]
             ]
-        ]);
+        );
     }
 
     /** @test */
@@ -67,40 +69,42 @@ class ListMusclesTest extends TestCase
 
         $response->assertFetchedMany($muscles);
 
-        $response->assertFetchedMany([
+        $response->assertFetchedMany(
             [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $muscles[0]->getRouteKey(),
-                'attributes' => [
-                    'name' => $muscles[0]->name,
-                    'description' => $muscles[0]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $muscles[0]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $muscles[0]->name,
+                        'description' => $muscles[0]->description,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscles[0])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscles[0])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $muscles[1]->getRouteKey(),
-                'attributes' => [
-                    'name' => $muscles[1]->name,
-                    'description' => $muscles[1]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $muscles[1]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $muscles[1]->name,
+                        'description' => $muscles[1]->description,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscles[1])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscles[1])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $muscles[2]->getRouteKey(),
-                'attributes' => [
-                    'name' => $muscles[2]->name,
-                    'description' => $muscles[2]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $muscles[2]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $muscles[2]->name,
+                        'description' => $muscles[2]->description,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscles[2])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscles[2])
-                ]
-            ],
-        ]);
+            ]
+        );
     }
 }

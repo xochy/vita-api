@@ -97,8 +97,10 @@ class UpdateUsersTest extends TestCase
 
         // Success (200)
         $response->assertStatus(200)
-            ->assertJsonFragment([
-                'name' => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            ]);
+            ->assertJsonFragment(
+                [
+                    'name' => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                ]
+            );
     }
 }

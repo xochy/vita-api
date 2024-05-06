@@ -52,12 +52,17 @@ class IncludeFrequencyTest extends TestCase
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $plan));
 
         $response->assertSee($plan->frequency->getRouteKey());
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $plan)
-        ]);
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $plan)
-        ]);
+
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $plan)
+            ]
+        );
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $plan)
+            ]
+        );
     }
 
     /** @test */

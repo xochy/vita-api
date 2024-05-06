@@ -40,7 +40,7 @@ class IncludeCategoryTest extends TestCase
     }
 
     /** @test */
-    public function subcategory_can_include_a_category()
+    public function subcategories_can_include_a_category()
     {
         $subcategory = Subcategory::factory()->forCategory()->create();
 
@@ -50,16 +50,22 @@ class IncludeCategoryTest extends TestCase
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $subcategory));
 
         $response->assertSee($subcategory->category->getRouteKey());
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $subcategory)
-        ]);
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $subcategory)
-        ]);
+
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $subcategory)
+            ]
+        );
+
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $subcategory)
+            ]
+        );
     }
 
     /** @test */
-    public function subcategory_can_fetch_related_category()
+    public function subcategories_can_fetch_related_category()
     {
         $subcategory = Subcategory::factory()->forCategory()->create();
 

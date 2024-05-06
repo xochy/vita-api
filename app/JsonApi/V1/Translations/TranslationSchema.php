@@ -38,7 +38,7 @@ class TranslationSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            MorphTo::make('translationable')->types('categories', 'products')
+            MorphTo::make('translationable')->types('categories', 'subcategories')
         ];
     }
 

@@ -40,12 +40,13 @@ class CreatePhysicalConditionsTest extends TestCase
     {
         $physicalCondition = array_filter(PhysicalCondition::factory()->raw());
 
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $physicalCondition
+        ];
+
         $response = $this->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData([
-                'type' => self::MODEL_PLURAL_NAME,
-                'attributes' => $physicalCondition
-            ])
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unauthorized (401)
@@ -69,16 +70,23 @@ class CreatePhysicalConditionsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
-        $this->assertDatabaseHas(self::MODEL_TABLE_NAME, [
-            self::MODEL_ATTRIBUTE_NAME        => $physicalCondition[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $physicalCondition[self::MODEL_ATTRIBUTE_DESCRIPTION],
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_TABLE_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME        => $physicalCondition[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $physicalCondition[self::MODEL_ATTRIBUTE_DESCRIPTION],
+            ]
+        );
     }
 
     /** @test */
     public function physical_condition_name_is_required()
     {
-        $physicalCondition = PhysicalCondition::factory()->raw(['name' => '']);
+        $physicalCondition = PhysicalCondition::factory()->raw(
+            [
+                'name' => ''
+            ]
+        );
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
@@ -86,14 +94,17 @@ class CreatePhysicalConditionsTest extends TestCase
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
-        ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-        ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name field is required.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
 
@@ -107,9 +118,11 @@ class CreatePhysicalConditionsTest extends TestCase
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
-            'attributes' => array_filter(PhysicalCondition::factory()->raw([
-                'name' => $physicalCondition->name
-            ]))
+            'attributes' => array_filter(PhysicalCondition::factory()->raw(
+                [
+                    'name' => $physicalCondition->name
+                ]
+            ))
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
@@ -117,10 +130,13 @@ class CreatePhysicalConditionsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name has already been taken.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name has already been taken.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/name');
 
@@ -130,7 +146,11 @@ class CreatePhysicalConditionsTest extends TestCase
     /** @test */
     public function physical_condition_description_is_required()
     {
-        $physicalCondition = PhysicalCondition::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => '']);
+        $physicalCondition = PhysicalCondition::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_DESCRIPTION => ''
+            ]
+        );
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
@@ -142,10 +162,13 @@ class CreatePhysicalConditionsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/description'],
-            'detail' => 'The description field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/description'],
+                'detail' => 'The description field is required.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/description');
 
@@ -155,7 +178,11 @@ class CreatePhysicalConditionsTest extends TestCase
     /** @test */
     public function physical_condition_description_must_be_a_string()
     {
-        $physicalCondition = PhysicalCondition::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => 123]);
+        $physicalCondition = PhysicalCondition::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_DESCRIPTION => 123
+            ]
+        );
 
         $data = [
             'type'       => self::MODEL_PLURAL_NAME,
@@ -167,10 +194,13 @@ class CreatePhysicalConditionsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/description'],
-            'detail' => 'The description field must be a string.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/description'],
+                'detail' => 'The description field must be a string.'
+            ]
+        );
 
         $response->assertSee('data\/attributes\/description');
 

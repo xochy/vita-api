@@ -20,17 +20,21 @@ class SubcategoryRequest extends ResourceRequest
             'name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:100',
                 Rule::unique('subcategories', 'name')->ignore($this->route('subcategory')),
             ],
             'description' => [
                 'required',
                 'string',
-                'max:255',
+                'max:1000',
             ],
             'category' => [
                 JsonApiRule::toOne()
             ],
+            'tranlations' => [
+                JsonApiRule::toMany()
+            ],
+
 
         ];
     }
