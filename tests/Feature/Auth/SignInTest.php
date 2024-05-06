@@ -43,11 +43,12 @@ class SignInTest extends TestCase
                     'password'    => 'invalid.password',
                 ]
             ])
+            ->withHeader('Locale', 'es')
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
         $response->assertError(400, [
-            'detail' => 'These credentials do not match our records.'
+            'detail' => __('auth.failed')
         ]);
     }
 
@@ -63,11 +64,12 @@ class SignInTest extends TestCase
                     'password'    => 'password',
                 ]
             ])
+            ->withHeader('Locale', 'es')
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
         $response->assertError(400, [
-            'detail' => self::FIELDS_VALIDATIONS_MESSAGE
+            'detail' => __('auth.required')
         ]);
     }
 
@@ -87,7 +89,7 @@ class SignInTest extends TestCase
 
         // Wrong request (400)
         $response->assertError(400, [
-            'detail' => self::FIELDS_VALIDATIONS_MESSAGE
+            'detail' => __('auth.required')
         ]);
     }
 
@@ -107,7 +109,7 @@ class SignInTest extends TestCase
 
         // Wrong request (400)
         $response->assertError(400, [
-            'detail' => self::FIELDS_VALIDATIONS_MESSAGE
+            'detail' => __('auth.required')
         ]);
     }
 
@@ -124,11 +126,14 @@ class SignInTest extends TestCase
                     'password'    => 'password',
                 ]
             ])
+            ->withHeader('Locale', 'es')
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
         $response->assertError(400, [
-            'detail' => 'The email field must be a valid email address.'
+            'detail' => __('validation.email', [
+                'attribute' => __('validation.attributes.email')
+            ])
         ]);
     }
 
@@ -151,7 +156,7 @@ class SignInTest extends TestCase
 
         $this->assertNotNull(
             PersonalAccessToken::findToken($token),
-            'The plain text token is invalid'
+            __('auth.token')
         );
 
         // Success (200)
@@ -170,7 +175,7 @@ class SignInTest extends TestCase
 
         $this->assertNotNull(
             PersonalAccessToken::findToken($token),
-            'The plain text token is invalid'
+            __('auth.token')
         );
 
         $response = $this->jsonApi()
@@ -186,6 +191,9 @@ class SignInTest extends TestCase
             ])
             ->post(route('v1.users.signin'));
 
-        $response->assertStatus(400);
+        // Wrong request (400)
+        $response->assertError(400, [
+            'detail' => __('auth.failed')
+        ]);
     }
 }

@@ -101,7 +101,7 @@ class UserController extends Controller
         } catch (\Exception $th) {
             throw JsonApiException::error([
                 'status' => 400, // Wrong request
-                'detail' => 'One or more required fields are missing.'
+                'detail' => __('auth.required')
             ]);
         }
 
@@ -127,7 +127,7 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 200,
-            'token'  => 'Token deleted successfully',
+            'token'  => __('auth.token_deleted'),
         ]);
     }
 
@@ -159,7 +159,7 @@ class UserController extends Controller
 
         return response()->json([
             'status' => 201,
-            'message' => 'User created successfully',
+            'message' => __('auth.user_created'),
         ], 201);
     }
 

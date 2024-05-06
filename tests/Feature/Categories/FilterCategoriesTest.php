@@ -152,10 +152,26 @@ class FilterCategoriesTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->get($url);
 
         // Bad Request
-        $response->assertStatus(400);
+        $response->assertError(400, [
+            'title'  => 'Invalid Query Parameter',
+            'detail' => 'Filter parameter unknown is not allowed.',
+            'source' => ['parameter' => 'filter'],
+        ]);
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Locale', 'es')
+            ->get($url);
+
+        // Bad Request
+        $response->assertError(400, [
+            'title'  => 'Parámetro de Consulta No Válido',
+            'detail' => 'El parámetro de fitro unknown no está permido.',
+            'source' => ['parameter' => 'filter'],
+        ]);
     }
 
     /** @test */
@@ -214,12 +230,13 @@ class FilterCategoriesTest extends TestCase
         Category::factory()->count(3)
             ->state(new Sequence(
                 ['name' => self::MODEL_EXTRA_SEARCHING_TERM . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' '. self::MODEL_JI_NAME],
+                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME],
+                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME],
             ))
             ->create();
 
-        $url = route(self::MODEL_MAIN_ACTION_ROUTE,
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
             [
                 self::MODEL_FILTER_SEARCH_PARAM_NAME => self::MODEL_MULTIPLE_SEARCH_TERM
             ]
@@ -227,8 +244,8 @@ class FilterCategoriesTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()->get($url)
             ->assertJsonCount(2, 'data')
-            ->assertSee(self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME)
-            ->assertSee(self::MODEL_SINGLE_NAME . ' '. self::MODEL_JI_NAME)
-            ->assertDontSee( self::MODEL_PLURAL_NAME . ' ' . self::MODEL_ALFA_NAME);
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME)
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME)
+            ->assertDontSee(self::MODEL_PLURAL_NAME . ' ' . self::MODEL_ALFA_NAME);
     }
 }
