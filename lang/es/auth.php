@@ -15,5 +15,9 @@ return [
     'failed' => 'Estas credenciales no coinciden con nuestros registros.',
     'password' => 'La contraseña proporcionada es incorrecta.',
     'throttle' => 'Demasiados intentos de inicio de sesión. Por favor, inténtelo de nuevo en :seconds segundos.',
+    'required' => 'Uno o más campos requeridos no se han proporcionado.',
+    'token' => 'El token de texto sin formato no es válido.',
+    'token_deleted' => 'Token eliminado con éxito.',
+    'user_created' => 'Usuario creado con éxito.',
 
 ];
