@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Mutators\WorkoutMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Workout extends Model implements HasMedia
 {
-    use HasFactory;
-    use InteractsWithMedia;
+    use HasFactory, HasSlug, WorkoutMutators, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +24,18 @@ class Workout extends Model implements HasMedia
     protected $fillable = [
         'name', 'performance', 'comments', 'corrections', 'warnings'
     ];
+
+    /**
+     * Get the options for generating the slug.
+     *
+     * @return SlugOptions
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                Relationships                               */
@@ -53,6 +68,19 @@ class Workout extends Model implements HasMedia
             ->withPivot('priority')
             ->using(MuscleWorkout::class)
             ->as('muscle_workout');
+    }
+
+    /**
+     * Get the translations associated with the workout.
+     *
+     * This function establishes a morphMany relationship between Workout and Translation.
+     * It means that each Workout has many Translations.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function translations(): MorphMany
+    {
+        return $this->morphMany(Translation::class, 'translationable');
     }
 
     /* -------------------------------------------------------------------------- */

@@ -46,18 +46,19 @@ class ListPlansTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $plan));
 
-        $response->assertFetchedOne($plan);
-
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $plan->getRouteKey(),
-            'attributes' => [
-                'name' => $plan->name,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plan)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $plan->getRouteKey(),
+                'attributes' => [
+                    'name' => $plan->name,
+                    'slug' => $plan->slug,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plan)
+                ]
             ]
-        ]);
+        );
     }
 
     /** @test */
@@ -71,39 +72,39 @@ class ListPlansTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-        $response->assertFetchedMany($plans);
-
-        $response->assertFetchedMany([
+        $response->assertFetchedMany(
             [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $plans[0]->getRouteKey(),
-                'attributes' => [
-                    'name' => $plans[0]->name,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $plans[0]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $plans[0]->name,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[0])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[0])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $plans[1]->getRouteKey(),
-                'attributes' => [
-                    'name' => $plans[1]->name,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $plans[1]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $plans[1]->name,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[1])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[1])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $plans[2]->getRouteKey(),
-                'attributes' => [
-                    'name' => $plans[2]->name,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $plans[2]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $plans[2]->name,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[2])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plans[2])
-                ]
-            ],
-        ]);
+            ]
+        );
     }
 }

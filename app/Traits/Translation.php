@@ -16,10 +16,12 @@ trait Translation
         $locale = app()->getLocale();
 
         $translation = $this->translations()
-            ->where([
-                ['locale', $locale],
-                ['column', $column]
-            ])
+            ->where(
+                [
+                    ['locale', $locale],
+                    ['column', $column]
+                ]
+            )
             ->first();
 
         return $translation?->translation ?? $default;

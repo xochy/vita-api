@@ -95,9 +95,12 @@ class SoftDeleteUsersTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
-        $this->assertSoftDeleted(self::MODEL_PLURAL_NAME, [
-            'id' => $user->getKey()
-        ]);
+        $this->assertSoftDeleted(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $user->getKey()
+            ]
+        );
     }
 
     /** @test */
@@ -124,13 +127,19 @@ class SoftDeleteUsersTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
-        $this->assertSoftDeleted(self::MODEL_PLURAL_NAME, [
-            'id' => $user->getKey()
-        ]);
+        $this->assertSoftDeleted(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $user->getKey()
+            ]
+        );
 
-        $this->assertDatabaseHas('users', [
-            'id'         => $user->getKey(),
-            'deleted_at' => $date->format('Y-m-d H:i:s')
-        ]);
+        $this->assertDatabaseHas(
+            'users',
+            [
+                'id'         => $user->getKey(),
+                'deleted_at' => $date->format('Y-m-d H:i:s')
+            ]
+        );
     }
 }

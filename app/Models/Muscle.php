@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Mutators\MuscleMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Muscle extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug, MuscleMutators;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +22,18 @@ class Muscle extends Model
      * @var array
      */
     protected $fillable = ['name', 'description'];
+
+    /**
+     * Get the options for generating the slug.
+     *
+     * @return SlugOptions
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                Relationships                               */
@@ -35,6 +51,19 @@ class Muscle extends Model
     {
         return $this->belongsToMany(Workout::class)
             ->withPivot('priority');
+    }
+
+    /**
+     * Get the translations associated with the muscle.
+     *
+     * This function establishes a morphMany relationship between Muscle and Translation.
+     * It means that each Muscle has many Translations.
+     *
+     * @return MorphMany
+     */
+    public function translations(): MorphMany
+    {
+        return $this->morphMany(Translation::class, 'translationable');
     }
 
     /* -------------------------------------------------------------------------- */

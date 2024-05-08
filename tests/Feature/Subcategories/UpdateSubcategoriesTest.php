@@ -80,15 +80,18 @@ class UpdateSubcategoriesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $subcategory->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $subcategory->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
-    public function can_update_the_subcategory_name_only()
+    public function can_update_the_subcategories_name_only()
     {
         $subcategory = Subcategory::factory()->forCategory()->create();
 
@@ -107,15 +110,18 @@ class UpdateSubcategoriesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $subcategory->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $subcategory->description,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $subcategory->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $subcategory->description,
+            ]
+        );
     }
 
     /** @test */
-    public function can_update_the_subcategory_description_only()
+    public function can_update_the_subcategories_description_only()
     {
         $subcategory = Subcategory::factory()->forCategory()->create();
 
@@ -134,10 +140,13 @@ class UpdateSubcategoriesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $subcategory->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => $subcategory->name,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $subcategory->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => $subcategory->name,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 }

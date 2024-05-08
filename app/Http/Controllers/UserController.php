@@ -40,26 +40,32 @@ class UserController extends Controller
         $validator = $this->makeSignInValidator($fields);
 
         if ($validator->stopOnFirstFailure()->fails()) {
-            throw JsonApiException::error([
-                'status' => 400, // Wrong request
-                'detail' => $validator->errors()->first()
-            ]);
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $validator->errors()->first()
+                ]
+            );
         }
 
         try {
             $user = User::where('email', $fields['email'])->firstOrFail();
         } catch (\Exception $e) {
-            throw JsonApiException::error([
-                'status' => 400, // Wrong request
-                'detail' => __('auth.failed')
-            ]);
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => __('auth.failed')
+                ]
+            );
         }
 
         if (!Hash::check($fields['password'], optional($user)->password)) {
-            throw JsonApiException::error([
-                'status' => 400, // Wrong request
-                'detail' => __('auth.failed')
-            ]);
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => __('auth.failed')
+                ]
+            );
         }
 
         return new TokenResponse($user);
@@ -76,11 +82,14 @@ class UserController extends Controller
      */
     private function makeSignInValidator(array $fields): \Illuminate\Validation\Validator
     {
-        return Validator::make($fields, [
-            'email'       => ['required', 'email'],
-            'device_name' => ['required', 'string'],
-            'password'    => ['required', 'string'],
-        ]);
+        return Validator::make(
+            $fields,
+            [
+                'email'       => ['required', 'email'],
+                'device_name' => ['required', 'string'],
+                'password'    => ['required', 'string'],
+            ]
+        );
     }
 
     /**
@@ -99,10 +108,12 @@ class UserController extends Controller
             $deviceName = $request->data['attributes']['device_name'];
             $password   = $request->data['attributes']['password'];
         } catch (\Exception $th) {
-            throw JsonApiException::error([
-                'status' => 400, // Wrong request
-                'detail' => __('auth.required')
-            ]);
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => __('auth.required')
+                ]
+            );
         }
 
         return [
@@ -125,10 +136,12 @@ class UserController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'status' => 200,
-            'token'  => __('auth.token_deleted'),
-        ]);
+        return response()->json(
+            [
+                'status' => 200,
+                'token'  => __('auth.token_deleted'),
+            ]
+        );
     }
 
     /**
@@ -145,22 +158,29 @@ class UserController extends Controller
         $validator = $this->makeSignUpValidator($request->data['attributes']);
 
         if ($validator->stopOnFirstFailure()->fails()) {
-            throw JsonApiException::error([
-                'status' => 422, // Unprocessable Entity
-                'detail' => $validator->errors()->first()
-            ]);
+            throw JsonApiException::error(
+                [
+                    'status' => 422, // Unprocessable Entity
+                    'detail' => $validator->errors()->first()
+                ]
+            );
         }
 
-        User::create([
-            'name'     => $request->data['attributes']['name'],
-            'email'    => $request->data['attributes']['email'],
-            'password' => Hash::make($request->data['attributes']['password']),
-        ]);
+        User::create(
+            [
+                'name'     => $request->data['attributes']['name'],
+                'email'    => $request->data['attributes']['email'],
+                'password' => Hash::make($request->data['attributes']['password']),
+            ]
+        );
 
-        return response()->json([
-            'status' => 201,
-            'message' => __('auth.user_created'),
-        ], 201);
+        return response()->json(
+            [
+                'status' => 201,
+                'message' => __('auth.user_created'),
+            ],
+            201
+        );
     }
 
     /**
@@ -174,11 +194,14 @@ class UserController extends Controller
      */
     private function makeSignUpValidator(array $fields): \Illuminate\Validation\Validator
     {
-        return Validator::make($fields, [
-            'name'                  => ['required', 'string'],
-            'email'                 => ['required', 'email', 'unique:users,email'],
-            'password'              => ['required', 'confirmed'],
-            'password_confirmation' => ['required'],
-        ]);
+        return Validator::make(
+            $fields,
+            [
+                'name'                  => ['required', 'string'],
+                'email'                 => ['required', 'email', 'unique:users,email'],
+                'password'              => ['required', 'confirmed'],
+                'password_confirmation' => ['required'],
+            ]
+        );
     }
 }

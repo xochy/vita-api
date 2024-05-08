@@ -54,20 +54,27 @@ class IncludePlansTest extends TestCase
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $routine)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $routine)
+            ]
+        );
 
         $this->assertDatabaseCount('plan_routine', 1);
 
-        $this->assertDatabaseHas('plan_routine', [
-            'plan_id'    => $routine->plans[0]->id,
-            'routine_id' => $routine->id
-        ]);
+        $this->assertDatabaseHas(
+            'plan_routine',
+            [
+                'plan_id'    => $routine->plans[0]->id,
+                'routine_id' => $routine->id
+            ]
+        );
     }
 
     /** @test */
@@ -94,29 +101,42 @@ class IncludePlansTest extends TestCase
         $response->assertSee($routine->plans[1]->name);
         $response->assertSee($routine->plans[2]->name);
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $routine)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $routine)
+            ]
+        );
 
         $this->assertDatabaseCount('plan_routine', 3);
 
-        $this->assertDatabaseHas('plan_routine', [
-            'plan_id'    => $routine->plans[0]->id,
-            'routine_id' => $routine->id
-        ]);
+        $this->assertDatabaseHas(
+            'plan_routine',
+            [
+                'plan_id'    => $routine->plans[0]->id,
+                'routine_id' => $routine->id
+            ]
+        );
 
-        $this->assertDatabaseHas('plan_routine', [
-            'plan_id'    => $routine->plans[1]->id,
-            'routine_id' => $routine->id
-        ]);
+        $this->assertDatabaseHas(
+            'plan_routine',
+            [
+                'plan_id'    => $routine->plans[1]->id,
+                'routine_id' => $routine->id
+            ]
+        );
 
-        $this->assertDatabaseHas('plan_routine', [
-            'plan_id'    => $routine->plans[2]->id,
-            'routine_id' => $routine->id
-        ]);
+        $this->assertDatabaseHas(
+            'plan_routine',
+            [
+                'plan_id'    => $routine->plans[2]->id,
+                'routine_id' => $routine->id
+            ]
+        );
     }
 }

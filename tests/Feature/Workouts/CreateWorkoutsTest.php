@@ -72,16 +72,19 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw([
-            self::MODEL_ATTRIBUTE_IMAGE => $file
-        ]));
+        $workout = array_filter(Workout::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_IMAGE => $file
+            ]
+        ));
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $workout
+        ];
 
         $response = $this->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData([
-                'type' => self::MODEL_PLURAL_NAME,
-                'attributes' => $workout
-            ])
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unauthorized (401)
@@ -98,9 +101,11 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw([
-            self::MODEL_ATTRIBUTE_IMAGE => $file
-        ]));
+        $workout = array_filter(Workout::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_IMAGE => $file
+            ]
+        ));
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -123,15 +128,18 @@ class CreateWorkoutsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id'             => Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey(),
-            'subcategory_id' => $this->subcategory->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id'             => Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey(),
+                'subcategory_id' => $this->subcategory->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+            ]
+        );
 
         $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
@@ -141,9 +149,11 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw([
-            self::MODEL_ATTRIBUTE_IMAGE => $file
-        ]));
+        $workout = array_filter(Workout::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_IMAGE => $file
+            ]
+        ));
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -183,22 +193,28 @@ class CreateWorkoutsTest extends TestCase
         $workoutId = Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
 
         // Verify BelongsTo relationship with Subcategory model and Workout data
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id'             => $workoutId,
-            'subcategory_id' => $this->subcategory->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id'             => $workoutId,
+                'subcategory_id' => $this->subcategory->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+            ]
+        );
 
         // Verify BelongsToMany relationship with Muscle model
-        $this->assertDatabaseHas(self::PIVOT_TABLE_MUSCLE_WORKOUT, [
-            'muscle_id'  => $this->muscle1->getRouteKey(),
-            'workout_id' => $workoutId,
-            'priority'   => MusclePriorityEnum::PRINCIPAL
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_MUSCLE_WORKOUT,
+            [
+                'muscle_id'  => $this->muscle1->getRouteKey(),
+                'workout_id' => $workoutId,
+                'priority'   => MusclePriorityEnum::PRINCIPAL
+            ]
+        );
 
         $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
@@ -208,9 +224,11 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw([
-            self::MODEL_ATTRIBUTE_IMAGE => $file
-        ]));
+        $workout = array_filter(Workout::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_IMAGE => $file
+            ]
+        ));
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -268,34 +286,46 @@ class CreateWorkoutsTest extends TestCase
         $workoutId = Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
 
         // Verify BelongsTo relationship with Subcategory model and Workout data
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id'             => $workoutId,
-            'subcategory_id' => $this->subcategory->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id'             => $workoutId,
+                'subcategory_id' => $this->subcategory->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+            ]
+        );
 
         // Verify BelongsToMany relationship with Muscle model
-        $this->assertDatabaseHas(self::PIVOT_TABLE_MUSCLE_WORKOUT, [
-            'muscle_id'  => $this->muscle1->getRouteKey(),
-            'workout_id' => $workoutId,
-            'priority'   => MusclePriorityEnum::PRINCIPAL
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_MUSCLE_WORKOUT,
+            [
+                'muscle_id'  => $this->muscle1->getRouteKey(),
+                'workout_id' => $workoutId,
+                'priority'   => MusclePriorityEnum::PRINCIPAL
+            ]
+        );
 
-        $this->assertDatabaseHas(self::PIVOT_TABLE_MUSCLE_WORKOUT, [
-            'muscle_id'  => $this->muscle2->getRouteKey(),
-            'workout_id' => $workoutId,
-            'priority'   => MusclePriorityEnum::SECONDARY
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_MUSCLE_WORKOUT,
+            [
+                'muscle_id'  => $this->muscle2->getRouteKey(),
+                'workout_id' => $workoutId,
+                'priority'   => MusclePriorityEnum::SECONDARY
+            ]
+        );
 
-        $this->assertDatabaseHas(self::PIVOT_TABLE_MUSCLE_WORKOUT, [
-            'muscle_id'  => $this->muscle3->getRouteKey(),
-            'workout_id' => $workoutId,
-            'priority'   => MusclePriorityEnum::ANTAGONIST
-        ]);
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_MUSCLE_WORKOUT,
+            [
+                'muscle_id'  => $this->muscle3->getRouteKey(),
+                'workout_id' => $workoutId,
+                'priority'   => MusclePriorityEnum::ANTAGONIST
+            ]
+        );
 
         $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
@@ -305,9 +335,11 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw([
-            self::MODEL_ATTRIBUTE_IMAGE => $file
-        ]));
+        $workout = array_filter(Workout::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_IMAGE => $file
+            ]
+        ));
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -332,13 +364,16 @@ class CreateWorkoutsTest extends TestCase
         // Forbidden (403)
         $response->assertStatus(403);
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, [
-            self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
-        ]);
+        $this->assertDatabaseMissing(
+            self::MODEL_PLURAL_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+            ]
+        );
 
         // Verify that the image was not saved
         $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
@@ -375,12 +410,13 @@ class CreateWorkoutsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name field is required.'
-        ]);
-
-        $response->assertSee('data\/attributes\/name');
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name field is required.'
+            ]
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -419,12 +455,13 @@ class CreateWorkoutsTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/performance'],
-            'detail' => 'The performance field is required.'
-        ]);
-
-        $response->assertSee('data\/attributes\/performance');
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/performance'],
+                'detail' => 'The performance field is required.'
+            ]
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -442,7 +479,7 @@ class CreateWorkoutsTest extends TestCase
                 self::MODEL_ATTRIBUTE_COMMENTS    => '',
                 self::MODEL_ATTRIBUTE_CORRECTIONS => '',
                 self::MODEL_ATTRIBUTE_WARNINGS    => '',
-                self::MODEL_ATTRIBUTE_IMAGE => $file
+                self::MODEL_ATTRIBUTE_IMAGE       => $file
             ]
         ));
 
@@ -462,16 +499,18 @@ class CreateWorkoutsTest extends TestCase
         ];
 
         $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData($data)
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
-            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))->dump()
             ->assertCreated();
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
+            ]
+        );
 
         $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }

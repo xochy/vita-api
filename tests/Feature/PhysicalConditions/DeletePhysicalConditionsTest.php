@@ -16,7 +16,7 @@ class DeletePhysicalConditionsTest extends TestCase
 
     const MODEL_TABLE_NAME = 'physical_conditions';
     const MODEL_PLURAL_NAME = 'physical-conditions';
-    const MODEL_MAIN_ACTION_ROUTE = 'v1.'. self::MODEL_PLURAL_NAME .'.destroy';
+    const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
 
@@ -57,8 +57,11 @@ class DeletePhysicalConditionsTest extends TestCase
         $response->assertStatus(204);
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing(self::MODEL_TABLE_NAME, [
-            'id' => $physicalCondition->getKey()
-        ]);
+        $this->assertDatabaseMissing(
+            self::MODEL_TABLE_NAME,
+            [
+                'id' => $physicalCondition->getKey()
+            ]
+        );
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Routine;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
@@ -33,6 +34,7 @@ class RoutineSchema extends Schema
         return [
             ID::make(),
             Str::make('name')->sortable(),
+            Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
@@ -42,8 +44,8 @@ class RoutineSchema extends Schema
                     'series', 'repetitions', 'time'
                 ]
             ),
-
             BelongsToMany::make('plans'),
+            HasMany::make('translations'),
         ];
     }
 

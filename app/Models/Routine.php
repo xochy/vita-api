@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Mutators\RoutineMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Routine extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug, RoutineMutators;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +22,18 @@ class Routine extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * Get the options for generating the slug.
+     *
+     * @return SlugOptions
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                Relationships                               */
@@ -50,6 +66,19 @@ class Routine extends Model
             ->withPivot('series', 'repetitions', 'time')
             ->using(RoutineWorkout::class)
             ->as('routine_workout');
+    }
+
+    /**
+     * Get the translations associated with the routine.
+     *
+     * This function establishes a morphMany relationship between Routine and Translation.
+     * It means that each Routine has many Translations.
+     *
+     * @return MorphMany
+     */
+    public function translations(): MorphMany
+    {
+        return $this->morphMany(Translation::class, 'translationable');
     }
 
     /* -------------------------------------------------------------------------- */

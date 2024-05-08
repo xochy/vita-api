@@ -56,11 +56,13 @@ class SortUsersTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
-            ->get($url)->assertSeeInOrder([
-                self::MODEL_ALFA_NAME,
-                self::MODEL_BETA_NAME,
-                self::MODEL_GAMA_NAME,
-            ]);
+            ->get($url)->assertSeeInOrder(
+                [
+                    self::MODEL_ALFA_NAME,
+                    self::MODEL_BETA_NAME,
+                    self::MODEL_GAMA_NAME,
+                ]
+            );
     }
 
     /** @test */
@@ -82,11 +84,13 @@ class SortUsersTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
-            ->get($url)->assertSeeInOrder([
-                self::MODEL_GAMA_NAME,
-                self::MODEL_BETA_NAME,
-                self::MODEL_ALFA_NAME,
-            ]);
+            ->get($url)->assertSeeInOrder(
+                [
+                    self::MODEL_GAMA_NAME,
+                    self::MODEL_BETA_NAME,
+                    self::MODEL_ALFA_NAME,
+                ]
+            );
     }
 
     /** @test */

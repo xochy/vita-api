@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Mutators\PlanMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Plan extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug, PlanMutators;
 
     /**
      * The attributes that are mass assignable.
@@ -17,6 +23,18 @@ class Plan extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * Get the options for generating the slug.
+     *
+     * @return SlugOptions
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                Relationships                               */
@@ -28,9 +46,9 @@ class Plan extends Model
      * This function establishes a belongsTo relationship between Plan and Goal.
      * It means that each Plan belongs to one Goal.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function goal()
+    public function goal(): BelongsTo
     {
         return $this->belongsTo(Goal::class);
     }
@@ -41,9 +59,9 @@ class Plan extends Model
      * This function establishes a belongsTo relationship between Plan and Frequency.
      * It means that each Plan belongs to one Frequency.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function frequency()
+    public function frequency(): BelongsTo
     {
         return $this->belongsTo(Frequency::class);
     }
@@ -54,9 +72,9 @@ class Plan extends Model
      * This function establishes a belongsTo relationship between Plan and PhysicalCondition.
      * It means that each Plan belongs to one PhysicalCondition.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function physicalCondition()
+    public function physicalCondition(): BelongsTo
     {
         return $this->belongsTo(PhysicalCondition::class);
     }
@@ -67,9 +85,9 @@ class Plan extends Model
      * This function establishes a belongsToMany relationship between Plan and Routine.
      * It means that each Plan belongs to many Routines.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function routines()
+    public function routines(): BelongsToMany
     {
         return $this->belongsToMany(Routine::class);
     }
@@ -80,11 +98,24 @@ class Plan extends Model
      * This function establishes a belongsToMany relationship between Plan and User.
      * It means that each Plan belongs to many Users.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Get the translations associated with the plan.
+     *
+     * This function establishes a morphMany relationship between Plan and Translation.
+     * It means that each Plan has many Translations.
+     *
+     * @return MorphMany
+     */
+    public function translations(): MorphMany
+    {
+        return $this->morphMany(Translation::class, 'translationable');
     }
 
     /* -------------------------------------------------------------------------- */
@@ -94,9 +125,9 @@ class Plan extends Model
     /**
      * Apply the scope related with name.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $value
+     * @return void
      */
     public function scopeName(Builder $query, $value): void
     {
@@ -106,9 +137,9 @@ class Plan extends Model
     /**
      * Apply the scope related with search function.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $values
+     * @return void
      */
     public function scopeSearch(Builder $query, $values): void
     {

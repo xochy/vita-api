@@ -40,26 +40,33 @@ class IncludeSubcategoriesTest extends TestCase
     }
 
     /** @test */
-    public function category_can_include_subcategories()
+    public function categories_can_include_subcategories()
     {
         $category = Category::factory()
             ->has(Subcategory::factory())
             ->create();
 
-        $this->actingAs($this->user)->jsonApi()
+        $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
-            ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $category))
-            ->assertSee($category->subcategories[0]->slug)
-            ->assertJsonFragment([
+            ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $category));
+
+        $response->assertSee($category->subcategories[0]->slug);
+
+        $response->assertJsonFragment(
+            [
                 'related' => route(self::MODEL_RELATED_ROUTE, $category)
-            ])
-            ->assertJsonFragment([
+            ]
+        );
+
+        $response->assertJsonFragment(
+            [
                 'self' => route(self::MODEL_SELF_ROUTE, $category)
-            ]);
+            ]
+        );
     }
 
     /** @test */
-    public function category_can_fetch_related_subcategories()
+    public function categories_can_fetch_related_subcategories()
     {
         $subcategories = Subcategory::factory()->count(3);
         $category = Category::factory()
@@ -75,12 +82,16 @@ class IncludeSubcategoriesTest extends TestCase
         $response->assertSee($category->subcategories[1]->name);
         $response->assertSee($category->subcategories[2]->name);
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $category)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $category)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $category)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $category)
+            ]
+        );
     }
 }

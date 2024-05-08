@@ -60,8 +60,11 @@ class DeletePlansTest extends TestCase
         $response->assertStatus(204);
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, [
-            'id' => $plan->getKey()
-        ]);
+        $this->assertDatabaseMissing(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $plan->getKey()
+            ]
+        );
     }
 }

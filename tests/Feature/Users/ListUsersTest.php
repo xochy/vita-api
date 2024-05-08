@@ -40,19 +40,19 @@ class ListUsersTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $user));
 
-        $response->assertFetchedOne($user);
-
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $user->getRouteKey(),
-            'attributes' => [
-                'name' => $user->name,
-                'email' => $user->email,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $user)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $user->getRouteKey(),
+                'attributes' => [
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $user)
+                ]
             ]
-        ]);
+        );
     }
 
     /** @test */
@@ -64,51 +64,53 @@ class ListUsersTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-        $response->assertFetchedMany([
+        $response->assertFetchedMany(
             [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $this->user->getRouteKey(),
-                'attributes' => [
-                    'name' => $this->user->name,
-                    'email' => $this->user->email,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $this->user->getRouteKey(),
+                    'attributes' => [
+                        'name' => $this->user->name,
+                        'email' => $this->user->email,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $this->user)
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $this->user)
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $users[0]->getRouteKey(),
-                'attributes' => [
-                    'name' => $users[0]->name,
-                    'email' => $users[0]->email,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $users[0]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $users[0]->name,
+                        'email' => $users[0]->email,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $users[0])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $users[0])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $users[1]->getRouteKey(),
-                'attributes' => [
-                    'name' => $users[1]->name,
-                    'email' => $users[1]->email,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $users[1]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $users[1]->name,
+                        'email' => $users[1]->email,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $users[1])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $users[1])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $users[2]->getRouteKey(),
-                'attributes' => [
-                    'name' => $users[2]->name,
-                    'email' => $users[2]->email,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $users[2]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $users[2]->name,
+                        'email' => $users[2]->email,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $users[2])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $users[2])
-                ]
-            ],
-        ]);
+            ]
+        );
     }
 }

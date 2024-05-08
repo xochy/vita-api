@@ -52,16 +52,21 @@ class IncludeGoalTest extends TestCase
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $plan));
 
         $response->assertSee($plan->goal->getRouteKey());
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $plan)
-        ]);
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $plan)
-        ]);
+
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $plan)
+            ]
+        );
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $plan)
+            ]
+        );
     }
 
     /** @test */
-    public function plan_can_fetch_related_gola()
+    public function plan_can_fetch_related_goal()
     {
         $plan = Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()

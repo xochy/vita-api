@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('translationable_type');
             $table->bigInteger('translationable_id');
             $table->string('column');
-            $table->string('locale');
+            $table->string('locale', 2);
             $table->text('translation');
             $table->timestamps();
         });

@@ -7,6 +7,7 @@ use App\Models\User;
 use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -33,7 +34,7 @@ class ListCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_fetch_single_category()
+    public function it_can_fetch_single_category(): void
     {
         $category = Category::factory()->create();
 
@@ -41,19 +42,20 @@ class ListCategoriesTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
-        $response->assertFetchedOne($category);
-
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
-            'attributes' => [
-                'name' => $category->name,
-                'description' => $category->description,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $category->getRouteKey(),
+                'attributes' => [
+                    'name'        => $category->name,
+                    'description' => $category->description,
+                    'slug'        => $category->slug,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                ]
             ]
-        ]);
+        );
     }
 
     /** @test */
@@ -65,42 +67,45 @@ class ListCategoriesTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-        $response->assertFetchedMany($categories);
-
-        $response->assertFetchedMany([
+        $response->assertFetchedMany(
             [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $categories[0]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $categories[0]->name,
-                    'description' => $categories[0]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $categories[0]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $categories[0]->name,
+                        'description' => $categories[0]->description,
+                        'slug'        => $categories[0]->slug,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[0])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[0])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $categories[1]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $categories[1]->name,
-                    'description' => $categories[1]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $categories[1]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $categories[1]->name,
+                        'description' => $categories[1]->description,
+                        'slug'        => $categories[1]->slug,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[1])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[1])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => $categories[2]->getRouteKey(),
-                'attributes' => [
-                    'name'        => $categories[2]->name,
-                    'description' => $categories[2]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => $categories[2]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $categories[2]->name,
+                        'description' => $categories[2]->description,
+                        'slug'        => $categories[2]->slug,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[2])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $categories[2])
-                ]
-            ],
-        ]);
+            ]
+        );
     }
 }

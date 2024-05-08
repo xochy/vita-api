@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('comments')->nullable();
             $table->text('corrections')->nullable();
             $table->text('warnings')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

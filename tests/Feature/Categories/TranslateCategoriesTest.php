@@ -59,19 +59,20 @@ class TranslateCategoriesTest extends TestCase
             ->withHeader('Locale', 'es')
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
-        $response->assertFetchedOne($category);
-
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
-            'attributes' => [
-                'name' => self::MODEL_ES_NAME,
-                'description' => $category->description,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $category->getRouteKey(),
+                'attributes' => [
+                    'name'        => self::MODEL_ES_NAME,
+                    'description' => $category->description,
+                    'slug'        => $category->slug,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                ]
             ]
-        ]);
+        );
 
         // Check the app localization is set to 'es'
         $this->assertEquals('es', app()->getLocale());
@@ -100,26 +101,26 @@ class TranslateCategoriesTest extends TestCase
             ->withHeader('Locale', 'es')
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
-        $response->assertFetchedOne($category);
-
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
-            'attributes' => [
-                'name' => $category->name,
-                'description' => self::MODEL_ES_DESCRIPTION,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $category->getRouteKey(),
+                'attributes' => [
+                    'name' => $category->name,
+                    'description' => self::MODEL_ES_DESCRIPTION,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                ]
             ]
-        ]);
+        );
 
         // Check the app localization is set to 'es'
         $this->assertEquals('es', app()->getLocale());
     }
 
     /** @test */
-    public function categories_can_have_name_and_description_translations()
+    public function categories_can_have_translations_for_its_attributes()
     {
         $category = Category::factory(
             [
@@ -148,91 +149,101 @@ class TranslateCategoriesTest extends TestCase
             ->withHeader('Locale', 'es')
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
-        $response->assertFetchedOne($category);
-
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $category->getRouteKey(),
-            'attributes' => [
-                'name' => self::MODEL_ES_NAME,
-                'description' => self::MODEL_ES_DESCRIPTION,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $category->getRouteKey(),
+                'attributes' => [
+                    'name' => self::MODEL_ES_NAME,
+                    'description' => self::MODEL_ES_DESCRIPTION,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                ]
             ]
-        ]);
+        );
 
         // Check the app localization is set to 'es'
         $this->assertEquals('es', app()->getLocale());
     }
 
     /** @test */
-    public function translations_can_be_associated_with_categories()
+    public function translations_can_be_associated_to_categories()
     {
         $category = Category::factory()->create();
 
-        $response = $this->actingAs($this->user)->jsonApi()
-            ->expects('translations')
-            ->withData([
-                'type' => 'translations',
-                'attributes' => [
-                    'locale' => 'es',
-                    'column' => 'name',
-                    'translation' => self::MODEL_ES_NAME,
-                ],
-                'relationships' => [
-                    'translationable' => [
-                        'data' => [
-                            'type' => self::MODEL_PLURAL_NAME,
-                            'id' => (string) $category->getRouteKey(),
-                        ]
+        $data = [
+            'type' => 'translations',
+            'attributes' => [
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME,
+            ],
+            'relationships' => [
+                'translationable' => [
+                    'data' => [
+                        'type' => self::MODEL_PLURAL_NAME,
+                        'id' => (string) $category->getRouteKey(),
                     ]
                 ]
-            ])
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects('translations')->withData($data)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
 
-        $this->assertDatabaseHas('translations', [
-            'locale'               => 'es',
-            'column'               => 'name',
-            'translation'          => self::MODEL_ES_NAME,
-            'translationable_type' => 'App\\Models\\Category',
-            'translationable_id'   => $category->id,
-        ]);
+        $this->assertDatabaseHas(
+            'translations',
+            [
+                'locale'               => 'es',
+                'column'               => 'name',
+                'translation'          => self::MODEL_ES_NAME,
+                'translationable_type' => Category::class,
+                'translationable_id'   => $category->id,
+            ]
+        );
     }
 
     /** @test */
-    public function translations_can_be_updated()
+    public function categories_translations_can_be_updated()
     {
         $category = Category::factory()->create();
 
-        $translation = $category->translations()->create([
-            'locale'      => 'es',
-            'column'      => 'name',
-            'translation' => self::MODEL_ES_NAME,
-        ]);
+        $translation = $category->translations()->create(
+            [
+                'locale'      => 'es',
+                'column'      => 'name',
+                'translation' => self::MODEL_ES_NAME,
+            ]
+        );
+
+        $data = [
+            'type' => 'translations',
+            'id' => (string) $translation->getRouteKey(),
+            'attributes' => [
+                'translation' => 'Espalda baja actualizado',
+            ]
+        ];
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects('translations')
-            ->withData([
-                'type' => 'translations',
-                'id' => (string) $translation->getRouteKey(),
-                'attributes' => [
-                    'translation' => 'Espalda baja actualizado',
-                ]
-            ])
+            ->expects('translations')->withData($data)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('translations', [
-            'id'                    => $translation->id,
-            'locale'                => 'es',
-            'column'                => 'name',
-            'translation'           => 'Espalda baja actualizado',
-            'translationable_type'  => 'App\\Models\\Category',
-            'translationable_id'    => $category->id,
-        ]);
+        $this->assertDatabaseHas(
+            'translations',
+            [
+                'id'                    => $translation->id,
+                'locale'                => 'es',
+                'column'                => 'name',
+                'translation'           => 'Espalda baja actualizado',
+                'translationable_type'  => Category::class,
+                'translationable_id'    => $category->id,
+            ]
+        );
     }
 }
