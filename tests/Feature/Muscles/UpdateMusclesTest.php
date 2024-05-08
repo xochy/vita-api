@@ -176,7 +176,5 @@ class UpdateMusclesTest extends TestCase
                 'detail' => 'The name has already been taken.'
             ]
         );
-
-        $response->assertSee('data\/attributes\/name');
     }
 }

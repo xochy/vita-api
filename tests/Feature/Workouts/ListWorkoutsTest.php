@@ -44,8 +44,6 @@ class ListWorkoutsTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
-        $response->assertFetchedOne($workout);
-
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
@@ -56,6 +54,7 @@ class ListWorkoutsTest extends TestCase
                     'comments'    => $workout->comments,
                     'corrections' => $workout->corrections,
                     'warnings'    => $workout->warnings,
+                    'slug'        => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -73,8 +72,6 @@ class ListWorkoutsTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-        $response->assertFetchedMany($workouts);
-
         $response->assertFetchedMany(
             [
                 [
@@ -86,6 +83,7 @@ class ListWorkoutsTest extends TestCase
                         'comments'    => $workouts[0]->comments,
                         'corrections' => $workouts[0]->corrections,
                         'warnings'    => $workouts[0]->warnings,
+                        'slug'        => $workouts[0]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[0])
@@ -100,6 +98,7 @@ class ListWorkoutsTest extends TestCase
                         'comments'    => $workouts[1]->comments,
                         'corrections' => $workouts[1]->corrections,
                         'warnings'    => $workouts[1]->warnings,
+                        'slug'        => $workouts[1]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[1])
@@ -114,6 +113,7 @@ class ListWorkoutsTest extends TestCase
                         'comments'    => $workouts[2]->comments,
                         'corrections' => $workouts[2]->corrections,
                         'warnings'    => $workouts[2]->warnings,
+                        'slug'        => $workouts[2]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[2])

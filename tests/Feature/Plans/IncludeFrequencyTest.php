@@ -66,7 +66,7 @@ class IncludeFrequencyTest extends TestCase
     }
 
     /** @test */
-    public function plan_can_fetch_related_gola()
+    public function plan_can_fetch_related_frequency()
     {
         $plan = Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()

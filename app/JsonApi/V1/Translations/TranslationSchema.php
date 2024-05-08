@@ -38,7 +38,17 @@ class TranslationSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            MorphTo::make('translationable')->types('categories', 'subcategories')
+            MorphTo::make('translationable')->types(
+                'plans',
+                'goals',
+                'muscles',
+                'workouts',
+                'routines',
+                'categories',
+                'frequencies',
+                'subcategories',
+                'physical-conditions',
+            )
         ];
     }
 
@@ -63,5 +73,4 @@ class TranslationSchema extends Schema
     {
         return PagePagination::make();
     }
-
 }

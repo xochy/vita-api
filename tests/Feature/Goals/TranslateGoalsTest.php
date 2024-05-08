@@ -1,26 +1,26 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Goals;
 
-use App\Models\Category;
+use App\Models\Goal;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\GoalsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class TranslateCategoriesTest extends TestCase
+class TranslateGoalsTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'goals';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
-    const MODEL_ES_NAME = 'Espalda baja';
-    const MODEL_EN_NAME = 'Lower back';
-    const MODEL_ES_DESCRIPTION = 'Descripción de la categoría en español';
-    const MODEL_EN_DESCRIPTION = 'Category description in english';
+    const MODEL_ES_NAME = 'Peso saludable';
+    const MODEL_EN_NAME = 'Healthy weight';
+    const MODEL_ES_DESCRIPTION = 'Se encarga de mantener un peso saludable';
+    const MODEL_EN_DESCRIPTION = 'It is in charge of maintaining a healthy weight';
 
     protected User $user;
 
@@ -30,16 +30,16 @@ class TranslateCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(GoalsPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function categories_can_have_name_translations()
+    public function goals_can_have_name_translations()
     {
-        $category = Category::factory(
+        $goal = Goal::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -57,19 +57,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $goal));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $goal->getRouteKey(),
                 'attributes' => [
                     'name'        => self::MODEL_ES_NAME,
-                    'description' => $category->description,
-                    'slug'        => $category->slug,
+                    'description' => $goal->description,
+                    'slug'        => $goal->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goal)
                 ]
             ]
         );
@@ -79,9 +79,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function categories_can_have_description_translations()
+    public function goals_can_have_description_translations()
     {
-        $category = Category::factory(
+        $goal = Goal::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -99,18 +99,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $goal));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $goal->getRouteKey(),
                 'attributes' => [
-                    'name' => $category->name,
+                    'name'        => $goal->name,
                     'description' => self::MODEL_ES_DESCRIPTION,
+                    'slug'        => $goal->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goal)
                 ]
             ]
         );
@@ -120,9 +121,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function categories_can_have_translations_for_its_attributes()
+    public function goals_can_have_translations_for_its_attributes()
     {
-        $category = Category::factory(
+        $goal = Goal::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -147,18 +148,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $goal));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $goal->getRouteKey(),
                 'attributes' => [
-                    'name' => self::MODEL_ES_NAME,
+                    'name'        => self::MODEL_ES_NAME,
                     'description' => self::MODEL_ES_DESCRIPTION,
+                    'slug'        => $goal->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goal)
                 ]
             ]
         );
@@ -168,9 +170,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function translations_can_be_associated_to_categories()
+    public function translations_can_be_associated_to_goals()
     {
-        $category = Category::factory()->create();
+        $goal = Goal::factory()->create();
 
         $data = [
             'type' => 'translations',
@@ -182,8 +184,8 @@ class TranslateCategoriesTest extends TestCase
             'relationships' => [
                 'translationable' => [
                     'data' => [
-                        'type' => self::MODEL_PLURAL_NAME,
-                        'id' => (string) $category->getRouteKey(),
+                        'type' => 'goals',
+                        'id' => (string) $goal->getRouteKey(),
                     ]
                 ]
             ]
@@ -195,24 +197,22 @@ class TranslateCategoriesTest extends TestCase
 
         $response->assertCreated();
 
-        $this->assertDatabaseHas(
-            'translations',
-            [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME,
-                'translationable_type' => Category::class,
-                'translationable_id'   => $category->id,
-            ]
-        );
+        $this->assertDatabaseHas('translations',
+        [
+            'locale'               => 'es',
+            'column'               => 'name',
+            'translation'          => self::MODEL_ES_NAME,
+            'translationable_type' => Goal::class,
+            'translationable_id'   => $goal->id,
+        ]);
     }
 
     /** @test */
-    public function categories_translations_can_be_updated()
+    public function goals_translations_can_be_updated()
     {
-        $category = Category::factory()->create();
+        $goal = Goal::factory()->create();
 
-        $translation = $category->translations()->create(
+        $translation = $goal->translations()->create(
             [
                 'locale'      => 'es',
                 'column'      => 'name',
@@ -224,7 +224,7 @@ class TranslateCategoriesTest extends TestCase
             'type' => 'translations',
             'id' => (string) $translation->getRouteKey(),
             'attributes' => [
-                'translation' => 'Espalda baja actualizado',
+                'translation' => 'Peso saludable actualizado',
             ]
         ];
 
@@ -240,9 +240,9 @@ class TranslateCategoriesTest extends TestCase
                 'id'                    => $translation->id,
                 'locale'                => 'es',
                 'column'                => 'name',
-                'translation'           => 'Espalda baja actualizado',
-                'translationable_type'  => Category::class,
-                'translationable_id'    => $category->id,
+                'translation'           => 'Peso saludable actualizado',
+                'translationable_type'  => Goal::class,
+                'translationable_id'    => $goal->id,
             ]
         );
     }

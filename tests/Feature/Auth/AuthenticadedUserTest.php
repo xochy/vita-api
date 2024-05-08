@@ -52,8 +52,6 @@ class AuthenticadedUserTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $user));
 
-        $response->assertFetchedOne($user);
-
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,

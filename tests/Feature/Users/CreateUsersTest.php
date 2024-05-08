@@ -124,8 +124,6 @@ class CreateUsersTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/name');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $user);
     }
 
@@ -158,8 +156,6 @@ class CreateUsersTest extends TestCase
                 'detail' => 'The email address field is required.'
             ]
         );
-
-        $response->assertSee('data\/attributes\/email');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $user);
     }
@@ -200,9 +196,6 @@ class CreateUsersTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/password');
-        $response->assertSee('data\/attributes\/password_confirmation');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $user);
     }
 
@@ -235,8 +228,6 @@ class CreateUsersTest extends TestCase
                 'detail' => 'The password confirmation field must match password.'
             ]
         );
-
-        $response->assertSee('data\/attributes\/password_confirmation');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $user);
     }

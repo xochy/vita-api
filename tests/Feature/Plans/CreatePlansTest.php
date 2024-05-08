@@ -166,8 +166,6 @@ class CreatePlansTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/name');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $plan);
     }
 
@@ -207,8 +205,6 @@ class CreatePlansTest extends TestCase
                 'detail' => 'The goal field is required.'
             ]
         );
-
-        $response->assertSee('data\/relationships\/goal');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $plan);
     }
@@ -250,8 +246,6 @@ class CreatePlansTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/relationships\/frequency');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $plan);
     }
 
@@ -291,8 +285,6 @@ class CreatePlansTest extends TestCase
                 'detail' => 'The physical condition field is required.'
             ]
         );
-
-        $response->assertSee('data\/relationships\/physicalCondition');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $plan);
     }

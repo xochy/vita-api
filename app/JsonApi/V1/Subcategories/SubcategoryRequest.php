@@ -31,11 +31,6 @@ class SubcategoryRequest extends ResourceRequest
             'category' => [
                 JsonApiRule::toOne()
             ],
-            'tranlations' => [
-                JsonApiRule::toMany()
-            ],
-
-
         ];
     }
 

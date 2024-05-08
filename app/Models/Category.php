@@ -72,9 +72,9 @@ class Category extends Model
     /**
      * Apply the scope related with name.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $value
+     * @return void
      */
     public function scopeName(Builder $query, $value): void
     {
@@ -84,9 +84,9 @@ class Category extends Model
     /**
      * Apply the scope related with description.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $values
+     * @return void
      */
     public function scopeDescription(Builder $query, $value): void
     {
@@ -96,9 +96,9 @@ class Category extends Model
     /**
      * Apply the scope related with search function.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $values
+     * @return Builder
      */
     public function scopeSearch(Builder $query, $values): void
     {

@@ -1,26 +1,26 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Muscles;
 
-use App\Models\Category;
+use App\Models\Muscle;
+use App\Models\Translation;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\MusclesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class TranslateCategoriesTest extends TestCase
+class TranslateMusclesTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'muscles';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
     const MODEL_ES_NAME = 'Espalda baja';
     const MODEL_EN_NAME = 'Lower back';
-    const MODEL_ES_DESCRIPTION = 'Descripción de la categoría en español';
-    const MODEL_EN_DESCRIPTION = 'Category description in english';
+    const MODEL_ES_DESCRIPTION = 'Descripción del músculo en español';
+    const MODEL_EN_DESCRIPTION = 'Muscle description in english';
 
     protected User $user;
 
@@ -30,16 +30,16 @@ class TranslateCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(MusclesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function categories_can_have_name_translations()
+    public function muscles_can_have_name_translations()
     {
-        $category = Category::factory(
+        $muscle = Muscle::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -57,19 +57,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $muscle->getRouteKey(),
                 'attributes' => [
                     'name'        => self::MODEL_ES_NAME,
-                    'description' => $category->description,
-                    'slug'        => $category->slug,
+                    'description' => $muscle->description,
+                    'slug'        => $muscle->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscle)
                 ]
             ]
         );
@@ -79,9 +79,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function categories_can_have_description_translations()
+    public function muscles_can_have_description_translations()
     {
-        $category = Category::factory(
+        $muscle = Muscle::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -99,18 +99,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $muscle->getRouteKey(),
                 'attributes' => [
-                    'name' => $category->name,
+                    'name'        => $muscle->name,
                     'description' => self::MODEL_ES_DESCRIPTION,
+                    'slug'        => $muscle->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscle)
                 ]
             ]
         );
@@ -120,45 +121,46 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function categories_can_have_translations_for_its_attributes()
+    public function muscles_can_have_translations_for_its_attributes()
     {
-        $category = Category::factory(
+        $muscle = Muscle::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
             ]
         )->hasTranslations(
-            2,
-            new Sequence(
-                [
-                    'locale'      => 'es',
-                    'column'      => 'name',
-                    'translation' => self::MODEL_ES_NAME,
-                ],
-                [
-                    'locale'      => 'es',
-                    'column'      => 'description',
-                    'translation' => self::MODEL_ES_DESCRIPTION,
-                ]
-            )
+            1,
+            [
+                'locale'      => 'es',
+                'column'      => 'name',
+                'translation' => self::MODEL_ES_NAME,
+            ]
+        )->hasTranslations(
+            1,
+            [
+                'locale'      => 'es',
+                'column'      => 'description',
+                'translation' => self::MODEL_ES_DESCRIPTION,
+            ]
         )->create();
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $muscle->getRouteKey(),
                 'attributes' => [
-                    'name' => self::MODEL_ES_NAME,
+                    'name'        => self::MODEL_ES_NAME,
                     'description' => self::MODEL_ES_DESCRIPTION,
+                    'slug'        => $muscle->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscle)
                 ]
             ]
         );
@@ -168,9 +170,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function translations_can_be_associated_to_categories()
+    public function translations_can_be_associated_to_muscles()
     {
-        $category = Category::factory()->create();
+        $muscle = Muscle::factory()->create();
 
         $data = [
             'type' => 'translations',
@@ -183,7 +185,7 @@ class TranslateCategoriesTest extends TestCase
                 'translationable' => [
                     'data' => [
                         'type' => self::MODEL_PLURAL_NAME,
-                        'id' => (string) $category->getRouteKey(),
+                        'id' => (string) $muscle->getRouteKey(),
                     ]
                 ]
             ]
@@ -195,34 +197,32 @@ class TranslateCategoriesTest extends TestCase
 
         $response->assertCreated();
 
-        $this->assertDatabaseHas(
-            'translations',
-            [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME,
-                'translationable_type' => Category::class,
-                'translationable_id'   => $category->id,
-            ]
-        );
+        $this->assertDatabaseHas('translations',
+        [
+            'locale'               => 'es',
+            'column'               => 'name',
+            'translation'          => self::MODEL_ES_NAME,
+            'translationable_id'   => $muscle->id,
+            'translationable_type' => Muscle::class,
+        ]);
     }
 
     /** @test */
-    public function categories_translations_can_be_updated()
+    public function muscles_translations_can_be_updated()
     {
-        $category = Category::factory()->create();
+        $muscle = Muscle::factory()->create();
 
-        $translation = $category->translations()->create(
+        $transaltion = $muscle->translations()->create(
             [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_NAME,
             ]
         );
 
         $data = [
             'type' => 'translations',
-            'id' => (string) $translation->getRouteKey(),
+            'id' => (string) $transaltion->getRouteKey(),
             'attributes' => [
                 'translation' => 'Espalda baja actualizado',
             ]
@@ -230,19 +230,19 @@ class TranslateCategoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
-            ->patch(route('v1.translations.update', $translation));
+            ->patch(route('v1.translations.update', $transaltion));
 
         $response->assertStatus(200);
 
         $this->assertDatabaseHas(
             'translations',
             [
-                'id'                    => $translation->id,
-                'locale'                => 'es',
-                'column'                => 'name',
-                'translation'           => 'Espalda baja actualizado',
-                'translationable_type'  => Category::class,
-                'translationable_id'    => $category->id,
+                'id'                   => $transaltion->id,
+                'locale'               => 'es',
+                'column'               => 'name',
+                'translation'          => 'Espalda baja actualizado',
+                'translationable_id'   => $muscle->id,
+                'translationable_type' => Muscle::class,
             ]
         );
     }

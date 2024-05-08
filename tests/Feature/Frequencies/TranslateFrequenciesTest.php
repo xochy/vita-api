@@ -1,26 +1,26 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Frequencies;
 
-use App\Models\Category;
+use App\Models\Frequency;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\FrequenciesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class TranslateCategoriesTest extends TestCase
+class TranslateFrequenciesTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'frequencies';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
-    const MODEL_ES_NAME = 'Espalda baja';
-    const MODEL_EN_NAME = 'Lower back';
-    const MODEL_ES_DESCRIPTION = 'Descripción de la categoría en español';
-    const MODEL_EN_DESCRIPTION = 'Category description in english';
+    const MODEL_ES_NAME = 'Dos veces por semana';
+    const MODEL_EN_NAME = 'Twice a week';
+    const MODEL_ES_DESCRIPTION = 'El plan consiste en realizar la actividad dos veces por semana';
+    const MODEL_EN_DESCRIPTION = 'The plan consists of performing the activity twice a week';
 
     protected User $user;
 
@@ -30,16 +30,16 @@ class TranslateCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function categories_can_have_name_translations()
+    public function frequencies_can_have_name_translations()
     {
-        $category = Category::factory(
+        $frequency = Frequency::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -57,19 +57,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $frequency));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $frequency->getRouteKey(),
                 'attributes' => [
                     'name'        => self::MODEL_ES_NAME,
-                    'description' => $category->description,
-                    'slug'        => $category->slug,
+                    'description' => $frequency->description,
+                    'slug'        => $frequency->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequency)
                 ]
             ]
         );
@@ -79,9 +79,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function categories_can_have_description_translations()
+    public function frequencies_can_have_description_translations()
     {
-        $category = Category::factory(
+        $frequency = Frequency::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -99,18 +99,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $frequency));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $frequency->getRouteKey(),
                 'attributes' => [
-                    'name' => $category->name,
+                    'name'        => $frequency->name,
                     'description' => self::MODEL_ES_DESCRIPTION,
+                    'slug'        => $frequency->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequency)
                 ]
             ]
         );
@@ -120,9 +121,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function categories_can_have_translations_for_its_attributes()
+    public function frequencies_can_have_translations_for_its_attributes()
     {
-        $category = Category::factory(
+        $frequency = Frequency::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
@@ -147,18 +148,19 @@ class TranslateCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $frequency));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $frequency->getRouteKey(),
                 'attributes' => [
-                    'name' => self::MODEL_ES_NAME,
+                    'name'        => self::MODEL_ES_NAME,
                     'description' => self::MODEL_ES_DESCRIPTION,
+                    'slug'        => $frequency->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequency)
                 ]
             ]
         );
@@ -168,9 +170,9 @@ class TranslateCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function translations_can_be_associated_to_categories()
+    public function translations_can_be_associated_to_frequencies()
     {
-        $category = Category::factory()->create();
+        $frequency = Frequency::factory()->create();
 
         $data = [
             'type' => 'translations',
@@ -182,8 +184,8 @@ class TranslateCategoriesTest extends TestCase
             'relationships' => [
                 'translationable' => [
                     'data' => [
-                        'type' => self::MODEL_PLURAL_NAME,
-                        'id' => (string) $category->getRouteKey(),
+                        'type' => 'frequencies',
+                        'id' => (string) $frequency->getRouteKey(),
                     ]
                 ]
             ]
@@ -201,18 +203,18 @@ class TranslateCategoriesTest extends TestCase
                 'locale'               => 'es',
                 'column'               => 'name',
                 'translation'          => self::MODEL_ES_NAME,
-                'translationable_type' => Category::class,
-                'translationable_id'   => $category->id,
+                'translationable_type' => Frequency::class,
+                'translationable_id'   => $frequency->id,
             ]
         );
     }
 
     /** @test */
-    public function categories_translations_can_be_updated()
+    public function frequencies_translations_can_be_updated()
     {
-        $category = Category::factory()->create();
+        $frequency = Frequency::factory()->create();
 
-        $translation = $category->translations()->create(
+        $translation = $frequency->translations()->create(
             [
                 'locale'      => 'es',
                 'column'      => 'name',
@@ -224,7 +226,7 @@ class TranslateCategoriesTest extends TestCase
             'type' => 'translations',
             'id' => (string) $translation->getRouteKey(),
             'attributes' => [
-                'translation' => 'Espalda baja actualizado',
+                'translation' => 'Dos veces por semana actualizado',
             ]
         ];
 
@@ -240,9 +242,9 @@ class TranslateCategoriesTest extends TestCase
                 'id'                    => $translation->id,
                 'locale'                => 'es',
                 'column'                => 'name',
-                'translation'           => 'Espalda baja actualizado',
-                'translationable_type'  => Category::class,
-                'translationable_id'    => $category->id,
+                'translation'           => 'Dos veces por semana actualizado',
+                'translationable_type'  => Frequency::class,
+                'translationable_id'    => $frequency->id,
             ]
         );
     }

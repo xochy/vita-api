@@ -1,26 +1,26 @@
 <?php
 
-namespace Tests\Feature\Subcategories;
+namespace Tests\Feature\PhysicalConditions;
 
-use App\Models\Subcategory;
+use App\Models\PhysicalCondition;
 use App\Models\User;
-use Database\Seeders\permissionsSeeders\SubcategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\PhysicalConditionsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class TranslateSubcategoryTest extends TestCase
+class TranslatePhysicalConditionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'subcategories';
+    const MODEL_PLURAL_NAME = 'physical-conditions';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
-    const MODEL_ES_NAME = 'Espalda baja';
-    const MODEL_EN_NAME = 'Lower back';
-    const MODEL_ES_DESCRIPTION = 'Descripción de la subcategoría en español';
-    const MODEL_EN_DESCRIPTION = 'Category description in english';
+    const MODEL_ES_NAME = 'Obesidad mórbida';
+    const MODEL_EN_NAME = 'Morbid obesity';
+    const MODEL_ES_DESCRIPTION = 'El usuario tiene obesidad mórbida cuando su IMC es mayor a 40';
+    const MODEL_EN_DESCRIPTION = 'The user has morbid obesity when their BMI is greater than 40';
 
     protected User $user;
 
@@ -30,50 +30,46 @@ class TranslateSubcategoryTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(SubcategoriesPermissionsSeeder::class);
+            $this->seed(PhysicalConditionsPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function subcategories_can_have_name_translations()
+    public function physical_conditions_can_have_name_translations()
     {
-        $subcategory = Subcategory::factory(
+        $physicalCondition = PhysicalCondition::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
             ]
-        )
-            ->forCategory()
-            ->hasTranslations(
-                1,
-                [
-                    'locale'      => 'es',
-                    'column'      => 'name',
-                    'translation' => self::MODEL_ES_NAME,
-                ]
-            )->create();
+        )->hasTranslations(
+            1,
+            [
+                'locale'      => 'es',
+                'column'      => 'name',
+                'translation' => self::MODEL_ES_NAME,
+            ]
+        )->create();
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $subcategory));
-
-        $response->assertFetchedOne($subcategory);
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $subcategory->getRouteKey(),
+                'id' => (string) $physicalCondition->getRouteKey(),
                 'attributes' => [
                     'name'        => self::MODEL_ES_NAME,
-                    'description' => $subcategory->description,
-                    'slug'        => $subcategory->slug,
+                    'description' => $physicalCondition->description,
+                    'slug'        => $physicalCondition->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $subcategory)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
                 ]
             ]
         );
@@ -83,96 +79,88 @@ class TranslateSubcategoryTest extends TestCase
     }
 
     /** @test */
-    public function subcategories_can_have_description_translations()
+    public function physical_conditions_can_have_description_translations()
     {
-        $subcategory = Subcategory::factory(
+        $physicalCondition = PhysicalCondition::factory(
             [
                 'name' => self::MODEL_EN_NAME,
                 'description' => self::MODEL_EN_DESCRIPTION,
             ]
-        )
-            ->forCategory()
-            ->hasTranslations(
-                1,
+        )->hasTranslations(
+            1,
+            [
+                'locale'      => 'es',
+                'column'      => 'description',
+                'translation' => self::MODEL_ES_DESCRIPTION,
+            ]
+        )->create();
+
+        // Make a request with spanish locale
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Locale', 'es')
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition));
+
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $physicalCondition->getRouteKey(),
+                'attributes' => [
+                    'name'        => $physicalCondition->name,
+                    'description' => self::MODEL_ES_DESCRIPTION,
+                    'slug'        => $physicalCondition->slug,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
+                ]
+            ]
+        );
+
+        // Check the app localization is set to 'es'
+        $this->assertEquals('es', app()->getLocale());
+    }
+
+    /** @test */
+    public function physical_conditions_can_have_translations_for_its_attributes()
+    {
+        $physicalCondition = PhysicalCondition::factory(
+            [
+                'name' => self::MODEL_EN_NAME,
+                'description' => self::MODEL_EN_DESCRIPTION,
+            ]
+        )->hasTranslations(
+            2,
+            new Sequence(
+                [
+                    'locale'      => 'es',
+                    'column'      => 'name',
+                    'translation' => self::MODEL_ES_NAME,
+                ],
                 [
                     'locale'      => 'es',
                     'column'      => 'description',
                     'translation' => self::MODEL_ES_DESCRIPTION,
                 ]
-            )->create();
+            )
+        )->create();
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $subcategory));
-
-        $response->assertFetchedOne($subcategory);
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $subcategory->getRouteKey(),
-                'attributes' => [
-                    'name'        => $subcategory->name,
-                    'description' => self::MODEL_ES_DESCRIPTION,
-                    'slug'        => $subcategory->slug,
-                ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $subcategory)
-                ]
-            ]
-        );
-
-        // Check the app localization is set to 'es'
-        $this->assertEquals('es', app()->getLocale());
-    }
-
-    /** @test */
-    public function subcategories_can_have_translations_for_its_attributes()
-    {
-        $subcategory = Subcategory::factory(
-            [
-                'name' => self::MODEL_EN_NAME,
-                'description' => self::MODEL_EN_DESCRIPTION,
-            ]
-        )
-            ->forCategory()
-            ->hasTranslations(
-                2,
-                new Sequence(
-                    [
-                        'locale'      => 'es',
-                        'column'      => 'name',
-                        'translation' => self::MODEL_ES_NAME,
-                    ],
-                    [
-                        'locale'      => 'es',
-                        'column'      => 'description',
-                        'translation' => self::MODEL_ES_DESCRIPTION,
-                    ]
-                )
-            )->create();
-
-        // Make a request with spanish locale
-        $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withHeader('Locale', 'es')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $subcategory));
-
-        $response->assertFetchedOne($subcategory);
-
-        $response->assertFetchedOne(
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $subcategory->getRouteKey(),
+                'id' => (string) $physicalCondition->getRouteKey(),
                 'attributes' => [
                     'name'        => self::MODEL_ES_NAME,
                     'description' => self::MODEL_ES_DESCRIPTION,
-                    'slug'        => $subcategory->slug,
+                    'slug'        => $physicalCondition->slug,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $subcategory)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
                 ]
             ]
         );
@@ -182,9 +170,9 @@ class TranslateSubcategoryTest extends TestCase
     }
 
     /** @test */
-    public function translations_can_be_associated_with_subcategories()
+    public function translations_can_be_associated_to_physical_conditions()
     {
-        $subcategory = Subcategory::factory()->forCategory()->create();
+        $physicalCondition = PhysicalCondition::factory()->create();
 
         $data = [
             'type' => 'translations',
@@ -196,8 +184,8 @@ class TranslateSubcategoryTest extends TestCase
             'relationships' => [
                 'translationable' => [
                     'data' => [
-                        'type' => 'subcategories',
-                        'id' => (string) $subcategory->getRouteKey(),
+                        'type' => 'physical-conditions',
+                        'id' => (string) $physicalCondition->getRouteKey(),
                     ]
                 ]
             ]
@@ -215,18 +203,18 @@ class TranslateSubcategoryTest extends TestCase
                 'locale'               => 'es',
                 'column'               => 'name',
                 'translation'          => self::MODEL_ES_NAME,
-                'translationable_type' => 'App\\Models\\Subcategory',
-                'translationable_id'   => $subcategory->id,
+                'translationable_type' => PhysicalCondition::class,
+                'translationable_id'   => $physicalCondition->id,
             ]
         );
     }
 
     /** @test */
-    public function subcategories_translations_can_be_updated()
+    public function physical_conditions_translations_can_be_updated()
     {
-        $subcategory = Subcategory::factory()->forCategory()->create();
+        $physicalCondition = PhysicalCondition::factory()->create();
 
-        $translation = $subcategory->translations()->create(
+        $translation = $physicalCondition->translations()->create(
             [
                 'locale'      => 'es',
                 'column'      => 'name',
@@ -238,13 +226,12 @@ class TranslateSubcategoryTest extends TestCase
             'type' => 'translations',
             'id' => (string) $translation->getRouteKey(),
             'attributes' => [
-                'translation' => 'Espalda baja actualizado',
+                'translation' => 'Obesidad mórbida actualizada',
             ]
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects('translations')
-            ->withData($data)
+            ->expects('translations')->withData($data)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);
@@ -252,11 +239,12 @@ class TranslateSubcategoryTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => 'Espalda baja actualizado',
-                'translationable_type' => 'App\\Models\\Subcategory',
-                'translationable_id'   => $subcategory->id,
+                'id'                    => $translation->id,
+                'locale'                => 'es',
+                'column'                => 'name',
+                'translation'           => 'Obesidad mórbida actualizada',
+                'translationable_type'  => PhysicalCondition::class,
+                'translationable_id'    => $physicalCondition->id,
             ]
         );
     }

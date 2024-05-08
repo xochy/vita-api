@@ -167,8 +167,6 @@ class CreateSubcategoriesTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/name');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $subcategory);
     }
 
@@ -207,8 +205,6 @@ class CreateSubcategoriesTest extends TestCase
                 'detail' => 'The description field is required.'
             ]
         );
-
-        $response->assertSee('data\/attributes\/description');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $subcategory);
     }

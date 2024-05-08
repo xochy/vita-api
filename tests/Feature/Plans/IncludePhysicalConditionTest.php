@@ -67,7 +67,7 @@ class IncludePhysicalConditionTest extends TestCase
     }
 
     /** @test */
-    public function plan_can_fetch_related_gola()
+    public function plan_can_fetch_related_physical_condition()
     {
         $plan = Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()

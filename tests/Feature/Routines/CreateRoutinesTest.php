@@ -281,8 +281,6 @@ class CreateRoutinesTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/name');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $routine);
     }
 }

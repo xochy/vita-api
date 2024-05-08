@@ -41,15 +41,14 @@ class ListMusclesTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
-        $response->assertFetchedOne($muscle);
-
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $muscle->getRouteKey(),
                 'attributes' => [
-                    'name' => $muscle->name,
+                    'name'        => $muscle->name,
                     'description' => $muscle->description,
+                    'slug'        => $muscle->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $muscle)
@@ -66,8 +65,6 @@ class ListMusclesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
-
-        $response->assertFetchedMany($muscles);
 
         $response->assertFetchedMany(
             [

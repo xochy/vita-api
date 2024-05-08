@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Mutators\FrequencyMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Frequency extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug, FrequencyMutators;
 
     /**
      * The attributes that are mass assignable.
@@ -17,6 +22,18 @@ class Frequency extends Model
      * @var array
      */
     protected $fillable = ['name', 'description'];
+
+    /**
+     * Get the options for generating the slug.
+     *
+     * @return SlugOptions
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     /* -------------------------------------------------------------------------- */
     /*                                Relationships                               */
@@ -28,11 +45,24 @@ class Frequency extends Model
      * This function establishes a hasMany relationship between Frequency and Plan.
      * It means that each Frequency has many Plans.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function plans()
+    public function plans(): HasMany
     {
         return $this->hasMany(Plan::class);
+    }
+
+    /**
+     * Get the translations associated with the frequency.
+     *
+     * This function establishes a morphMany relationship between Frequency and Translation.
+     * It means that each Frequency has many Translations.
+     *
+     * @return MorphMany
+     */
+    public function translations(): MorphMany
+    {
+        return $this->morphMany(Translation::class, 'translationable');
     }
 
     /* -------------------------------------------------------------------------- */
@@ -42,9 +72,9 @@ class Frequency extends Model
     /**
      * Apply the scope related with name.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $value
+     * @return void
      */
     public function scopeName(Builder $query, $value): void
     {
@@ -54,9 +84,9 @@ class Frequency extends Model
     /**
      * Apply the scope related with description.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $value
+     * @return void
      */
     public function scopeDescription(Builder $query, $value): void
     {
@@ -66,9 +96,9 @@ class Frequency extends Model
     /**
      * Apply the scope related with search function.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $builder
+     * @param string $value
+     * @return void
      */
     public function scopeSearch(Builder $query, $values): void
     {

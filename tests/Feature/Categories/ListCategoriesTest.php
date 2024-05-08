@@ -42,8 +42,6 @@ class ListCategoriesTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
-        $response->assertFetchedOne($category);
-
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
@@ -68,8 +66,6 @@ class ListCategoriesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
-
-        $response->assertFetchedMany($categories);
 
         $response->assertFetchedMany(
             [

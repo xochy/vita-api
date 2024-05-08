@@ -41,15 +41,14 @@ class ListPhysicalConditionsTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition));
 
-        $response->assertFetchedOne($physicalCondition);
-
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $physicalCondition->getRouteKey(),
                 'attributes' => [
-                    'name' => $physicalCondition->name,
+                    'name'        => $physicalCondition->name,
                     'description' => $physicalCondition->description,
+                    'slug'        => $physicalCondition->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
@@ -67,8 +66,6 @@ class ListPhysicalConditionsTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-        $response->assertFetchedMany($physicalConditions);
-
         $response->assertFetchedMany(
             [
                 [
@@ -77,6 +74,7 @@ class ListPhysicalConditionsTest extends TestCase
                     'attributes' => [
                         'name'        => $physicalConditions[0]->name,
                         'description' => $physicalConditions[0]->description,
+                        'slug'        => $physicalConditions[0]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[0])
@@ -88,6 +86,7 @@ class ListPhysicalConditionsTest extends TestCase
                     'attributes' => [
                         'name'        => $physicalConditions[1]->name,
                         'description' => $physicalConditions[1]->description,
+                        'slug'        => $physicalConditions[1]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[1])
@@ -99,6 +98,7 @@ class ListPhysicalConditionsTest extends TestCase
                     'attributes' => [
                         'name'        => $physicalConditions[2]->name,
                         'description' => $physicalConditions[2]->description,
+                        'slug'        => $physicalConditions[2]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalConditions[2])

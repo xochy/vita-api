@@ -105,8 +105,6 @@ class CreateGoalsTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/name');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $goal);
     }
 
@@ -136,8 +134,6 @@ class CreateGoalsTest extends TestCase
                 'detail' => 'The name has already been taken.'
             ]
         );
-
-        $response->assertSee('data\/attributes\/name');
 
         $this->assertDatabaseCount(self::MODEL_PLURAL_NAME, 1);
     }
@@ -169,8 +165,6 @@ class CreateGoalsTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/description');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $goal);
     }
 
@@ -200,8 +194,6 @@ class CreateGoalsTest extends TestCase
                 'detail' => 'The description field must be a string.'
             ]
         );
-
-        $response->assertSee('data\/attributes\/description');
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $goal);
     }

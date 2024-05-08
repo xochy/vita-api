@@ -28,9 +28,6 @@ class CategoryRequest extends ResourceRequest
                 'string',
                 'max:1000',
             ],
-            'tranlations' => [
-                JsonApiRule::toMany()
-            ],
         ];
     }
 

@@ -46,14 +46,13 @@ class ListPlansTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $plan));
 
-        $response->assertFetchedOne($plan);
-
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $plan->getRouteKey(),
                 'attributes' => [
                     'name' => $plan->name,
+                    'slug' => $plan->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $plan)
@@ -72,8 +71,6 @@ class ListPlansTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
-
-        $response->assertFetchedMany($plans);
 
         $response->assertFetchedMany(
             [

@@ -418,8 +418,6 @@ class CreateWorkoutsTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/name');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
         // Verify that the image was not saved
@@ -465,8 +463,6 @@ class CreateWorkoutsTest extends TestCase
             ]
         );
 
-        $response->assertSee('data\/attributes\/performance');
-
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
         // Verify that the image was not saved
@@ -483,7 +479,7 @@ class CreateWorkoutsTest extends TestCase
                 self::MODEL_ATTRIBUTE_COMMENTS    => '',
                 self::MODEL_ATTRIBUTE_CORRECTIONS => '',
                 self::MODEL_ATTRIBUTE_WARNINGS    => '',
-                self::MODEL_ATTRIBUTE_IMAGE => $file
+                self::MODEL_ATTRIBUTE_IMAGE       => $file
             ]
         ));
 
@@ -503,10 +499,9 @@ class CreateWorkoutsTest extends TestCase
         ];
 
         $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData($data)
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
-            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))->dump()
             ->assertCreated();
 
         $this->assertDatabaseHas(
