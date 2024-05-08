@@ -75,9 +75,12 @@ class UpdateRoutinesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('routines', [
-            'id' => $routine->id,
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            'routines',
+            [
+                'id' => $routine->id,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 }

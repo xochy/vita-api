@@ -108,14 +108,17 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -138,14 +141,17 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+            ]
+        );
     }
 
     /** @test */
@@ -168,14 +174,17 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout->name,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+            ]
+        );
     }
 
     /** @test */
@@ -198,14 +207,17 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout->name,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-            self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
+                self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+            ]
+        );
     }
 
     /** @test */
@@ -228,14 +240,17 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout->name,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+            ]
+        );
     }
 
     /** @test */
@@ -258,14 +273,17 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout->name,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-            self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
+                self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -294,15 +312,18 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id'             => $workout->getRouteKey(),
-            'subcategory_id' => $newSubcategory->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => $workout->name,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id'             => $workout->getRouteKey(),
+                'subcategory_id' => $newSubcategory->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+            ]
+        );
     }
 
     /** @test */
@@ -365,23 +386,32 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $workout->getRouteKey(),
-            'muscle_id'  => $muscles[0]->getRouteKey(),
-            'priority'   => MusclePriorityEnum::PRINCIPAL
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $workout->getRouteKey(),
+                'muscle_id'  => $muscles[0]->getRouteKey(),
+                'priority'   => MusclePriorityEnum::PRINCIPAL
+            ]
+        );
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $workout->getRouteKey(),
-            'muscle_id'  => $muscles[1]->getRouteKey(),
-            'priority'   => MusclePriorityEnum::SECONDARY
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $workout->getRouteKey(),
+                'muscle_id'  => $muscles[1]->getRouteKey(),
+                'priority'   => MusclePriorityEnum::SECONDARY
+            ]
+        );
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $workout->getRouteKey(),
-            'muscle_id'  => $muscles[2]->getRouteKey(),
-            'priority'   => MusclePriorityEnum::ANTAGONIST
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $workout->getRouteKey(),
+                'muscle_id'  => $muscles[2]->getRouteKey(),
+                'priority'   => MusclePriorityEnum::ANTAGONIST
+            ]
+        );
 
         $dataToEdit = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -426,23 +456,32 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $workout->getRouteKey(),
-            'muscle_id'  => $muscles[0]->getRouteKey(),
-            'priority'   => MusclePriorityEnum::ANTAGONIST
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $workout->getRouteKey(),
+                'muscle_id'  => $muscles[0]->getRouteKey(),
+                'priority'   => MusclePriorityEnum::ANTAGONIST
+            ]
+        );
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $workout->getRouteKey(),
-            'muscle_id'  => $muscles[1]->getRouteKey(),
-            'priority'   => MusclePriorityEnum::PRINCIPAL
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $workout->getRouteKey(),
+                'muscle_id'  => $muscles[1]->getRouteKey(),
+                'priority'   => MusclePriorityEnum::PRINCIPAL
+            ]
+        );
 
-        $this->assertDatabaseMissing('muscle_workout', [
-            'workout_id' => $workout->getRouteKey(),
-            'muscle_id'  => $muscles[2]->getRouteKey(),
-            'priority'   => MusclePriorityEnum::ANTAGONIST
-        ]);
+        $this->assertDatabaseMissing(
+            'muscle_workout',
+            [
+                'workout_id' => $workout->getRouteKey(),
+                'muscle_id'  => $muscles[2]->getRouteKey(),
+                'priority'   => MusclePriorityEnum::ANTAGONIST
+            ]
+        );
     }
 
     /** @test */
@@ -456,12 +495,15 @@ class UpdateWorkoutsTest extends TestCase
 
         $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
 
-        $this->assertDatabaseHas('media', [
-            'model_type'      => 'App\Models\Workout',
-            'model_id'        => $workout->getRouteKey(),
-            'collection_name' => 'default',
-            'file_name'       => $fileName,
-        ]);
+        $this->assertDatabaseHas(
+            'media',
+            [
+                'model_type'      => 'App\Models\Workout',
+                'model_id'        => $workout->getRouteKey(),
+                'collection_name' => 'default',
+                'file_name'       => $fileName,
+            ]
+        );
 
         $workout->clearMediaCollection();
 
@@ -484,20 +526,26 @@ class UpdateWorkoutsTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-            self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
-            self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-            self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
+                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
+                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+            ]
+        );
 
-        $this->assertDatabaseHas('media', [
-            'model_type'      => 'App\Models\Workout',
-            'model_id'        => $workout->getRouteKey(),
-            'collection_name' => 'default',
-            'file_name'       => self::MODEL_ATTRIBUTE_IMAGE_NAME,
-        ]);
+        $this->assertDatabaseHas(
+            'media',
+            [
+                'model_type'      => 'App\Models\Workout',
+                'model_id'        => $workout->getRouteKey(),
+                'collection_name' => 'default',
+                'file_name'       => self::MODEL_ATTRIBUTE_IMAGE_NAME,
+            ]
+        );
     }
 }

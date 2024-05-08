@@ -20,13 +20,13 @@ class CategoryRequest extends ResourceRequest
             'name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:100',
                 Rule::unique('categories', 'name')->ignore($this->route('category')),
             ],
             'description' => [
                 'required',
                 'string',
-                'max:255',
+                'max:1000',
             ],
         ];
     }

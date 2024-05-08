@@ -34,12 +34,14 @@ class TokenResponse implements Responsable
      */
     public function toResponse($request): JsonResponse
     {
-        return response()->json([
-            'status' => 200,
-            'token' => $this->user->createToken(
-                $request->data['attributes']['device_name'],
-                $this->user->permissions->pluck('name')->toArray()
-            )->plainTextToken,
-        ]);
+        return response()->json(
+            [
+                'status' => 200,
+                'token' => $this->user->createToken(
+                    $request->data['attributes']['device_name'],
+                    $this->user->permissions->pluck('name')->toArray()
+                )->plainTextToken,
+            ]
+        );
     }
 }

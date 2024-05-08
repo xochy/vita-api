@@ -41,19 +41,20 @@ class ListFrequenciesTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $frequency));
 
-        $response->assertFetchedOne($frequency);
-
-        $response->assertFetchedOne([
-            'type' => self::MODEL_PLURAL_NAME,
-            'id' => (string) $frequency->getRouteKey(),
-            'attributes' => [
-                'name' => $frequency->name,
-                'description' => $frequency->description,
-            ],
-            'links' => [
-                'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequency)
+        $response->assertFetchedOne(
+            [
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $frequency->getRouteKey(),
+                'attributes' => [
+                    'name'        => $frequency->name,
+                    'description' => $frequency->description,
+                    'slug'        => $frequency->slug,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequency)
+                ]
             ]
-        ]);
+        );
     }
 
     /** @test */
@@ -65,42 +66,45 @@ class ListFrequenciesTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
-        $response->assertFetchedMany($frequencies);
-
-        $response->assertFetchedMany([
+        $response->assertFetchedMany(
             [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $frequencies[0]->getRouteKey(),
-                'attributes' => [
-                    'name' => $frequencies[0]->name,
-                    'description' => $frequencies[0]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $frequencies[0]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $frequencies[0]->name,
+                        'description' => $frequencies[0]->description,
+                        'slug'        => $frequencies[0]->slug,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[0])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[0])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $frequencies[1]->getRouteKey(),
-                'attributes' => [
-                    'name' => $frequencies[1]->name,
-                    'description' => $frequencies[1]->description,
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $frequencies[1]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $frequencies[1]->name,
+                        'description' => $frequencies[1]->description,
+                        'slug'        => $frequencies[1]->slug,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[1])
+                    ]
                 ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[1])
-                ]
-            ],
-            [
-                'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $frequencies[2]->getRouteKey(),
-                'attributes' => [
-                    'name' => $frequencies[2]->name,
-                    'description' => $frequencies[2]->description,
-                ],
-                'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[2])
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $frequencies[2]->getRouteKey(),
+                    'attributes' => [
+                        'name'        => $frequencies[2]->name,
+                        'description' => $frequencies[2]->description,
+                        'slug'        => $frequencies[2]->slug,
+                    ],
+                    'links' => [
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[2])
+                    ]
                 ]
             ]
-        ]);
+        );
     }
 }

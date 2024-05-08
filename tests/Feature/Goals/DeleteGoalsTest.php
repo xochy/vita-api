@@ -17,7 +17,7 @@ class DeleteGoalsTest extends TestCase
     protected User $user;
 
     const MODEL_PLURAL_NAME = 'goals';
-    const MODEL_MAIN_ACTION_ROUTE = 'v1.'. self::MODEL_PLURAL_NAME .'.destroy';
+    const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     public function setUp(): void
     {
@@ -56,8 +56,11 @@ class DeleteGoalsTest extends TestCase
         $response->assertStatus(204);
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, [
-            'id' => $goal->getKey()
-        ]);
+        $this->assertDatabaseMissing(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $goal->getKey()
+            ]
+        );
     }
 }

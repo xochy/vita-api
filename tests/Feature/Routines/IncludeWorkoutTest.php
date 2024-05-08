@@ -59,13 +59,17 @@ class IncludeWorkoutTest extends TestCase
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $routine)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $routine)
+            ]
+        );
     }
 
     /** @test */
@@ -95,13 +99,17 @@ class IncludeWorkoutTest extends TestCase
         $response->assertSee($routine->workouts[1]->name);
         $response->assertSee($routine->workouts[2]->name);
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $routine)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $routine)
+            ]
+        );
     }
 
     /** @test */
@@ -127,33 +135,46 @@ class IncludeWorkoutTest extends TestCase
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $routine)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $routine)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $routine)
+            ]
+        );
 
-        $this->assertDatabaseHas('routine_workout', [
-            'routine_id'  => $routine->id,
-            'series'      => 3,
-            'repetitions' => 10,
-            'time'        => 10
-        ]);
+        $this->assertDatabaseHas(
+            'routine_workout',
+            [
+                'routine_id'  => $routine->id,
+                'series'      => 3,
+                'repetitions' => 10,
+                'time'        => 10
+            ]
+        );
 
-        $this->assertDatabaseHas('routine_workout', [
-            'routine_id'  => $routine->id,
-            'series'      => 5,
-            'repetitions' => 12,
-            'time'        => 15
-        ]);
+        $this->assertDatabaseHas(
+            'routine_workout',
+            [
+                'routine_id'  => $routine->id,
+                'series'      => 5,
+                'repetitions' => 12,
+                'time'        => 15
+            ]
+        );
 
-        $this->assertDatabaseHas('routine_workout', [
-            'routine_id'  => $routine->id,
-            'series'      => 4,
-            'repetitions' => 8,
-            'time'        => 12
-        ]);
+        $this->assertDatabaseHas(
+            'routine_workout',
+            [
+                'routine_id'  => $routine->id,
+                'series'      => 4,
+                'repetitions' => 8,
+                'time'        => 12
+            ]
+        );
     }
 }

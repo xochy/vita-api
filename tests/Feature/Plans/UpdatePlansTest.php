@@ -83,10 +83,13 @@ class UpdatePlansTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $plan->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $plan->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
@@ -118,10 +121,13 @@ class UpdatePlansTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $plan->getRouteKey(),
-            'goal_id' => $goal->getRouteKey(),
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $plan->getRouteKey(),
+                'goal_id' => $goal->getRouteKey(),
+            ]
+        );
     }
 
     /** @test */
@@ -153,10 +159,13 @@ class UpdatePlansTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $plan->getRouteKey(),
-            'frequency_id' => $frequency->getRouteKey(),
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $plan->getRouteKey(),
+                'frequency_id' => $frequency->getRouteKey(),
+            ]
+        );
     }
 
     /** @test */
@@ -188,10 +197,12 @@ class UpdatePlansTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $plan->getRouteKey(),
-            'physical_condition_id' => $physicalCondition->getRouteKey(),
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $plan->getRouteKey(),
+                'physical_condition_id' => $physicalCondition->getRouteKey(),
+            ]
+        );
     }
-
 }

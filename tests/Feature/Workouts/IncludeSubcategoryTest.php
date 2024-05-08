@@ -53,12 +53,17 @@ class IncludeSubcategoryTest extends TestCase
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $workout));
 
         $response->assertSee($workout->subcategory->getRouteKey());
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $workout)
-        ]);
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $workout)
-        ]);
+
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $workout)
+            ]
+        );
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $workout)
+            ]
+        );
     }
 
     /** @test */

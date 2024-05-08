@@ -53,13 +53,17 @@ class IncludePlansTest extends TestCase
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $user)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $user)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $user)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $user)
+            ]
+        );
 
         $this->assertDatabaseCount('plan_user', 1);
     }
@@ -76,13 +80,17 @@ class IncludePlansTest extends TestCase
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $user)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $user)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $user)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $user)
+            ]
+        );
 
         $this->assertDatabaseCount('plan_user', 3);
 
@@ -90,19 +98,28 @@ class IncludePlansTest extends TestCase
         $response->assertSee($user->plans[1]->name);
         $response->assertSee($user->plans[2]->name);
 
-        $this->assertDatabaseHas('plan_user', [
-            'plan_id' => $user->plans[0]->id,
-            'user_id' => $user->id
-        ]);
+        $this->assertDatabaseHas(
+            'plan_user',
+            [
+                'plan_id' => $user->plans[0]->id,
+                'user_id' => $user->id
+            ]
+        );
 
-        $this->assertDatabaseHas('plan_user', [
-            'plan_id' => $user->plans[1]->id,
-            'user_id' => $user->id
-        ]);
+        $this->assertDatabaseHas(
+            'plan_user',
+            [
+                'plan_id' => $user->plans[1]->id,
+                'user_id' => $user->id
+            ]
+        );
 
-        $this->assertDatabaseHas('plan_user', [
-            'plan_id' => $user->plans[2]->id,
-            'user_id' => $user->id
-        ]);
+        $this->assertDatabaseHas(
+            'plan_user',
+            [
+                'plan_id' => $user->plans[2]->id,
+                'user_id' => $user->id
+            ]
+        );
     }
 }

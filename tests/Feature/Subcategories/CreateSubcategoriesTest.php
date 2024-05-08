@@ -44,12 +44,13 @@ class CreateSubcategoriesTest extends TestCase
     {
         $subcategory = array_filter(Subcategory::factory()->raw());
 
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $subcategory
+        ];
+
         $response = $this->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)
-            ->withData([
-                'type' => self::MODEL_PLURAL_NAME,
-                'attributes' => $subcategory
-            ])
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unauthorized (401)
@@ -84,10 +85,13 @@ class CreateSubcategoriesTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            self::MODEL_ATTRIBUTE_NAME        => $subcategory[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $subcategory[self::MODEL_ATTRIBUTE_DESCRIPTION],
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME        => $subcategory[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $subcategory[self::MODEL_ATTRIBUTE_DESCRIPTION],
+            ]
+        );
     }
 
     /** @test */
@@ -118,16 +122,23 @@ class CreateSubcategoriesTest extends TestCase
         // Forbidden (403)
         $response->assertStatus(403);
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, [
-            self::MODEL_ATTRIBUTE_NAME        => $subcategory[self::MODEL_ATTRIBUTE_NAME],
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $subcategory[self::MODEL_ATTRIBUTE_DESCRIPTION],
-        ]);
+        $this->assertDatabaseMissing(
+            self::MODEL_PLURAL_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME        => $subcategory[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $subcategory[self::MODEL_ATTRIBUTE_DESCRIPTION],
+            ]
+        );
     }
 
     /** @test */
-    public function subcategory_name_is_required()
+    public function subcategories_name_is_required()
     {
-        $subcategory = Subcategory::factory()->raw([self::MODEL_ATTRIBUTE_NAME => '']);
+        $subcategory = Subcategory::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_NAME => ''
+            ]
+        );
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -148,20 +159,25 @@ class CreateSubcategoriesTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name field is required.'
-        ]);
-
-        $response->assertSee('data\/attributes\/name');
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name field is required.'
+            ]
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $subcategory);
     }
 
     /** @test */
-    public function subcategory_description_is_required()
+    public function subcategories_description_is_required()
     {
-        $subcategory = Subcategory::factory()->raw([self::MODEL_ATTRIBUTE_DESCRIPTION => '']);
+        $subcategory = Subcategory::factory()->raw(
+            [
+                self::MODEL_ATTRIBUTE_DESCRIPTION => ''
+            ]
+        );
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -182,12 +198,13 @@ class CreateSubcategoriesTest extends TestCase
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/description'],
-            'detail' => 'The description field is required.'
-        ]);
-
-        $response->assertSee('data\/attributes\/description');
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/description'],
+                'detail' => 'The description field is required.'
+            ]
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $subcategory);
     }

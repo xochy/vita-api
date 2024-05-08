@@ -33,133 +33,161 @@ class SignInTest extends TestCase
     {
         User::factory()->create();
 
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'email'       => 'invalid.email@mail.com',
+                'device_name' => 'Android.evice',
+                'password'    => 'invalid.password',
+            ]
+        ];
+
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => [
-                    'email'       => 'invalid.email@mail.com',
-                    'device_name' => 'Android.evice',
-                    'password'    => 'invalid.password',
-                ]
-            ])
+            ->expects('users')->withData($data)
+            ->withHeader('Locale', 'es')
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
-        $response->assertError(400, [
-            'detail' => 'These credentials do not match our records.'
-        ]);
+        $response->assertError(
+            400,
+            [
+                'detail' => __('auth.failed')
+            ]
+        );
     }
 
     /** @test */
     public function email_is_required_for_sign_in()
     {
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'device_name' => 'Android.device',
+                'password'    => 'password',
+            ]
+        ];
+
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => [
-                    'device_name' => 'Android.device',
-                    'password'    => 'password',
-                ]
-            ])
+            ->expects('users')->withData($data)
+            ->withHeader('Locale', 'es')
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
-        $response->assertError(400, [
-            'detail' => self::FIELDS_VALIDATIONS_MESSAGE
-        ]);
+        $response->assertError(
+            400,
+            [
+                'detail' => __('auth.required')
+            ]
+        );
     }
 
     /** @test */
     public function device_name_is_required_for_sign_in()
     {
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'email'    => 'device_email@mail.com',
+                'password' => 'password',
+            ]
+        ];
+
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => [
-                    'email'    => 'device_email@mail.com',
-                    'password' => 'password',
-                ]
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
-        $response->assertError(400, [
-            'detail' => self::FIELDS_VALIDATIONS_MESSAGE
-        ]);
+        $response->assertError(
+            400,
+            [
+                'detail' => __('auth.required')
+            ]
+        );
     }
 
     /** @test */
     public function password_is_required_for_sign_in()
     {
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'email'       => 'testEmail@mail.com',
+                'device_name' => 'AndroidDevice',
+            ]
+        ];
+
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => [
-                    'email'       => 'testEmail@mail.com',
-                    'device_name' => 'AndroidDevice',
-                ]
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
-        $response->assertError(400, [
-            'detail' => self::FIELDS_VALIDATIONS_MESSAGE
-        ]);
+        $response->assertError(
+            400,
+            [
+                'detail' => __('auth.required')
+            ]
+        );
     }
 
     /** @test */
     public function email_must_be_valid_for_sign_in()
     {
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'email'       => 'invalid_email',
+                'device_name' => 'AndroidDevice',
+                'password'    => 'password',
+            ]
+        ];
+
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => [
-                    'email'       => 'invalid_email',
-                    'device_name' => 'AndroidDevice',
-                    'password'    => 'password',
-                ]
-            ])
+            ->expects('users')->withData($data)
+            ->withHeader('Locale', 'es')
             ->post(route('v1.users.signin'));
 
         // Wrong request (400)
-        $response->assertError(400, [
-            'detail' => 'The email field must be a valid email address.'
-        ]);
+        $response->assertError(
+            400,
+            [
+                'detail' => __('validation.email', [
+                    'attribute' => __('validation.attributes.email')
+                ])
+            ]
+        );
     }
 
     /** @test */
     public function users_can_sign_in_with_valid_credentials()
     {
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'email'       => $this->user->email,
+                'device_name' => 'android.device',
+                'password'    => 'password',
+            ]
+        ];
+
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => [
-                    'email'       => $this->user->email,
-                    'device_name' => 'android.device',
-                    'password'    => 'password',
-                ]
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signin'));
 
         $token = $response->json('token');
 
         $this->assertNotNull(
             PersonalAccessToken::findToken($token),
-            'The plain text token is invalid'
+            __('auth.token')
         );
 
         // Success (200)
         $response->assertStatus(200)
-            ->assertJson([
-                'status' => 200,
-                'token'  => $token,
-            ]);
+            ->assertJson(
+                [
+                    'status' => 200,
+                    'token'  => $token,
+                ]
+            );
     }
 
     /** @test */
@@ -168,24 +196,31 @@ class SignInTest extends TestCase
         $user = User::factory()->create();
         $token = $user->createToken($user->name)->plainTextToken;
 
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'email'       => $user->email,
+                'device_name' => 'android.device',
+                'password'    => $user->password,
+            ]
+        ];
+
         $this->assertNotNull(
             PersonalAccessToken::findToken($token),
-            'The plain text token is invalid'
+            __('auth.token')
         );
 
         $response = $this->jsonApi()
             ->withHeader('Authorization', 'Bearer ' . $token)
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => [
-                    'email'       => $user->email,
-                    'device_name' => 'android.device',
-                    'password'    => $user->password,
-                ]
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signin'));
 
-        $response->assertStatus(400);
+        // Wrong request (400)
+        $response->assertError(
+            400,
+            [
+                'detail' => __('auth.failed')
+            ]
+        );
     }
 }

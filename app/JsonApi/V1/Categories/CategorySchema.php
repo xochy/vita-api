@@ -34,10 +34,12 @@ class CategorySchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('description'),
+            Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
+            HasMany::make('translations'),
             HasMany::make('subcategories'),
         ];
     }

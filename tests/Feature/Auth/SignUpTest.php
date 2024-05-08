@@ -32,19 +32,22 @@ class SignUpTest extends TestCase
     /** @test */
     public function guest_users_can_sign_up()
     {
-        $user = array_filter([
-            'name'                  => self::USER_NAME,
-            'email'                 => self::USER_EMAIL,
-            'password'              => self::USER_PASSWORD,
-            'password_confirmation' => self::USER_PASSWORD,
-        ]);
+        $user = array_filter(
+            [
+                'name'                  => self::USER_NAME,
+                'email'                 => self::USER_EMAIL,
+                'password'              => self::USER_PASSWORD,
+                'password_confirmation' => self::USER_PASSWORD,
+            ]
+        );
+
+        $data = [
+            'type' => 'users',
+            'attributes' => $user
+        ];
 
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => $user
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signup'));
 
         // Created (201)
@@ -54,140 +57,176 @@ class SignUpTest extends TestCase
     /** @test */
     public function guest_users_cannot_sign_up_without_name()
     {
-        $user = array_filter([
-            'email'                 => self::USER_EMAIL,
-            'password'              => self::USER_PASSWORD,
-            'password_confirmation' => self::USER_PASSWORD
-        ]);
+        $user = array_filter(
+            [
+                'email'                 => self::USER_EMAIL,
+                'password'              => self::USER_PASSWORD,
+                'password_confirmation' => self::USER_PASSWORD
+            ]
+        );
+
+        $data = [
+            'type' => 'users',
+            'attributes' => $user
+        ];
 
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => $user
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signup'));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'detail' => 'The name field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'detail' => 'The name field is required.'
+            ]
+        );
     }
 
     /** @test */
     public function guest_users_cannot_sign_up_without_email()
     {
-        $user = array_filter([
-            'name'                  => self::USER_NAME,
-            'password'              => self::USER_PASSWORD,
-            'password_confirmation' => self::USER_PASSWORD,
-        ]);
+        $user = array_filter(
+            [
+                'name'                  => self::USER_NAME,
+                'password'              => self::USER_PASSWORD,
+                'password_confirmation' => self::USER_PASSWORD,
+            ]
+        );
+
+        $data = [
+            'type' => 'users',
+            'attributes' => $user
+        ];
 
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => $user
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signup'));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'detail' => 'The email field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'detail' => 'The email address field is required.'
+            ]
+        );
     }
 
     /** @test */
     public function guest_users_cannot_sign_up_with_invalid_email()
     {
-        $user = array_filter([
-            'name'                  => self::USER_NAME,
-            'email'                 => 'invalid_email',
-            'password'              => self::USER_PASSWORD,
-            'password_confirmation' => self::USER_PASSWORD
-        ]);
+        $user = array_filter(
+            [
+                'name'                  => self::USER_NAME,
+                'email'                 => 'invalid_email',
+                'password'              => self::USER_PASSWORD,
+                'password_confirmation' => self::USER_PASSWORD
+            ]
+        );
+
+        $data = [
+            'type' => 'users',
+            'attributes' => $user
+        ];
 
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => $user
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signup'));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'detail' => 'The email field must be a valid email address.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'detail' => 'The email address field must be a valid email address.'
+            ]
+        );
     }
 
     /** @test */
     public function guest_users_cannot_sign_up_with_repeated_email()
     {
-        $user = array_filter([
-            'name'                  => self::USER_NAME,
-            'email'                 => $this->user->email,
-            'password'              => self::USER_PASSWORD,
-            'password_confirmation' => self::USER_PASSWORD
-        ]);
+        $user = array_filter(
+            [
+                'name'                  => self::USER_NAME,
+                'email'                 => $this->user->email,
+                'password'              => self::USER_PASSWORD,
+                'password_confirmation' => self::USER_PASSWORD
+            ]
+        );
+
+        $data = [
+            'type' => 'users',
+            'attributes' => $user
+        ];
 
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => $user
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signup'));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'detail' => 'The email has already been taken.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'detail' => 'The email address has already been taken.'
+            ]
+        );
     }
 
     /** @test */
     public function guest_users_cannot_sign_up_without_password()
     {
-        $user = array_filter([
-            'name'                  => self::USER_NAME,
-            'email'                 => self::USER_EMAIL,
-            'password_confirmation' => self::USER_PASSWORD
-        ]);
+        $user = array_filter(
+            [
+                'name'                  => self::USER_NAME,
+                'email'                 => self::USER_EMAIL,
+                'password_confirmation' => self::USER_PASSWORD
+            ]
+        );
+
+        $data = [
+            'type' => 'users',
+            'attributes' => $user
+        ];
 
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => $user
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signup'));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'detail' => 'The password field is required.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'detail' => 'The password field is required.'
+            ]
+        );
     }
 
     /** @test */
     public function guest_users_cannot_sign_up_without_password_confirmation()
     {
-        $user = array_filter([
-            'name'     => self::USER_NAME,
-            'email'    => self::USER_EMAIL,
-            'password' => self::USER_PASSWORD
-        ]);
+        $user = array_filter(
+            [
+                'name'     => self::USER_NAME,
+                'email'    => self::USER_EMAIL,
+                'password' => self::USER_PASSWORD
+            ]
+        );
+
+        $data = [
+            'type' => 'users',
+            'attributes' => $user
+        ];
 
         $response = $this->jsonApi()
-            ->expects('users')
-            ->withData([
-                'type' => 'users',
-                'attributes' => $user
-            ])
+            ->expects('users')->withData($data)
             ->post(route('v1.users.signup'));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'detail' => 'The password field confirmation does not match.'
-        ]);
+        $response->assertError(
+            422,
+            [
+                'detail' => 'The password field confirmation does not match.'
+            ]
+        );
     }
 }

@@ -41,6 +41,7 @@ class WorkoutSchema extends Schema
             Str::make('image')->extractUsing(
                 static fn($model) => $model->getFirstMediaUrl()
             ),
+            Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
 

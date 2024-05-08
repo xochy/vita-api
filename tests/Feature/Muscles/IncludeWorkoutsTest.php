@@ -50,7 +50,9 @@ class IncludeWorkoutsTest extends TestCase
         $muscle = Muscle::factory()
             ->hasAttached(
                 Workout::factory()->for($this->subcategory),
-                ['priority' => MusclePriorityEnum::PRINCIPAL]
+                [
+                    'priority' => MusclePriorityEnum::PRINCIPAL
+                ]
             )
             ->create();
 
@@ -61,18 +63,25 @@ class IncludeWorkoutsTest extends TestCase
 
         $response->assertSee($muscle->workouts[0]->name);
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $muscle)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $muscle)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $muscle)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $muscle)
+            ]
+        );
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'muscle_id' => $muscle->id,
-            'priority' => MusclePriorityEnum::PRINCIPAL
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'muscle_id' => $muscle->id,
+                'priority' => MusclePriorityEnum::PRINCIPAL
+            ]
+        );
     }
 
     /** @test */
@@ -81,15 +90,21 @@ class IncludeWorkoutsTest extends TestCase
         $muscle = Muscle::factory()
             ->hasAttached(
                 Workout::factory()->for($this->subcategory),
-                ['priority' => MusclePriorityEnum::PRINCIPAL]
+                [
+                    'priority' => MusclePriorityEnum::PRINCIPAL
+                ]
             )
             ->hasAttached(
                 Workout::factory()->for($this->subcategory),
-                ['priority' => MusclePriorityEnum::PRINCIPAL]
+                [
+                    'priority' => MusclePriorityEnum::PRINCIPAL
+                ]
             )
             ->hasAttached(
                 Workout::factory()->for($this->subcategory),
-                ['priority' => MusclePriorityEnum::SECONDARY]
+                [
+                    'priority' => MusclePriorityEnum::SECONDARY
+                ]
             )
             ->create();
 
@@ -102,13 +117,17 @@ class IncludeWorkoutsTest extends TestCase
         $response->assertSee($muscle->workouts[1]->name);
         $response->assertSee($muscle->workouts[2]->name);
 
-        $response->assertJsonFragment([
-            'related' => route(self::MODEL_RELATED_ROUTE, $muscle)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $muscle)
+            ]
+        );
 
-        $response->assertJsonFragment([
-            'self' => route(self::MODEL_SELF_ROUTE, $muscle)
-        ]);
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $muscle)
+            ]
+        );
     }
 
     /** @test */
@@ -117,15 +136,21 @@ class IncludeWorkoutsTest extends TestCase
         $muscle = Muscle::factory()
             ->hasAttached(
                 Workout::factory()->for($this->subcategory),
-                ['priority' => MusclePriorityEnum::PRINCIPAL]
+                [
+                    'priority' => MusclePriorityEnum::PRINCIPAL
+                ]
             )
             ->hasAttached(
                 Workout::factory()->for($this->subcategory),
-                ['priority' => MusclePriorityEnum::SECONDARY]
+                [
+                    'priority' => MusclePriorityEnum::SECONDARY
+                ]
             )
             ->hasAttached(
                 Workout::factory()->for($this->subcategory),
-                ['priority' => MusclePriorityEnum::ANTAGONIST]
+                [
+                    'priority' => MusclePriorityEnum::ANTAGONIST
+                ]
             )
             ->create();
 
@@ -134,22 +159,31 @@ class IncludeWorkoutsTest extends TestCase
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle));
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $muscle->workouts[0]->id,
-            'muscle_id' => $muscle->id,
-            'priority' => MusclePriorityEnum::PRINCIPAL
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $muscle->workouts[0]->id,
+                'muscle_id' => $muscle->id,
+                'priority' => MusclePriorityEnum::PRINCIPAL
+            ]
+        );
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $muscle->workouts[1]->id,
-            'muscle_id' => $muscle->id,
-            'priority' => MusclePriorityEnum::SECONDARY
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $muscle->workouts[1]->id,
+                'muscle_id' => $muscle->id,
+                'priority' => MusclePriorityEnum::SECONDARY
+            ]
+        );
 
-        $this->assertDatabaseHas('muscle_workout', [
-            'workout_id' => $muscle->workouts[2]->id,
-            'muscle_id' => $muscle->id,
-            'priority' => MusclePriorityEnum::ANTAGONIST
-        ]);
+        $this->assertDatabaseHas(
+            'muscle_workout',
+            [
+                'workout_id' => $muscle->workouts[2]->id,
+                'muscle_id' => $muscle->id,
+                'priority' => MusclePriorityEnum::ANTAGONIST
+            ]
+        );
     }
 }

@@ -17,8 +17,9 @@ return new class extends Migration
                 ->constrained('categories')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('name')->unique();
+            $table->string('name', 100)->unique();
             $table->text('description');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

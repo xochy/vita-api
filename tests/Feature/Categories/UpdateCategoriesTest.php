@@ -80,15 +80,18 @@ class UpdateCategoriesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $category->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $category->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
-    public function can_update_the_category_name_only()
+    public function can_update_the_categories_name_only()
     {
         $category = Category::factory()->create();
 
@@ -108,15 +111,18 @@ class UpdateCategoriesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $category->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => $category->description,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $category->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => $category->description,
+            ]
+        );
     }
 
     /** @test */
-    public function can_update_the_category_description_only()
+    public function can_update_the_categories_description_only()
     {
         $category = Category::factory()->create();
 
@@ -136,15 +142,18 @@ class UpdateCategoriesTest extends TestCase
         // Success (200)
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas(self::MODEL_PLURAL_NAME, [
-            'id' => $category->getRouteKey(),
-            self::MODEL_ATTRIBUTE_NAME => $category->name,
-            self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
-        ]);
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $category->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => $category->name,
+                self::MODEL_ATTRIBUTE_DESCRIPTION => self::MODEL_DESCRIPTION_ATTRIBUTE_VALUE,
+            ]
+        );
     }
 
     /** @test */
-    public function cannot_update_the_category_name_if_exists()
+    public function cannot_update_the_categories_name_if_exists()
     {
         $category = Category::factory()->create();
         $category2 = Category::factory()->create();
@@ -162,11 +171,12 @@ class UpdateCategoriesTest extends TestCase
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $category->getRouteKey()));
 
         // Unprocessable Entity (422)
-        $response->assertError(422, [
-            'source' => ['pointer' => '/data/attributes/name'],
-            'detail' => 'The name has already been taken.'
-        ]);
-
-        $response->assertSee('data\/attributes\/name');
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/name'],
+                'detail' => 'The name has already been taken.'
+            ]
+        );
     }
 }

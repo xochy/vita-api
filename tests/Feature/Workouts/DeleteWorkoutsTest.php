@@ -16,7 +16,7 @@ class DeleteWorkoutsTest extends TestCase
     use RefreshDatabase;
 
     const MODEL_PLURAL_NAME = 'workouts';
-    const MODEL_MAIN_ACTION_ROUTE = 'v1.'. self::MODEL_PLURAL_NAME .'.destroy';
+    const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
     protected Subcategory $subcategory;
@@ -59,8 +59,11 @@ class DeleteWorkoutsTest extends TestCase
         $response->assertStatus(204);
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, [
-            'id' => $workout->getKey()
-        ]);
+        $this->assertDatabaseMissing(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workout->getKey()
+            ]
+        );
     }
 }
