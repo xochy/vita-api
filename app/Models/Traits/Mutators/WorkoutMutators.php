@@ -34,7 +34,7 @@ trait WorkoutMutators
     }
 
     /**
-     * Get the comments of the workout.
+     * Get the comments of the workout. If the value is null, return an empty string.
      *
      * @return string
      */
@@ -46,7 +46,7 @@ trait WorkoutMutators
     }
 
     /**
-     * Get the corrections of the workout.
+     * Get the corrections of the workout. If the value is null, return an empty string.
      *
      * @return string
      */
@@ -58,7 +58,7 @@ trait WorkoutMutators
     }
 
     /**
-     * Get the warnings of the workout.
+     * Get the warnings of the workout. If the value is null, return an empty string.
      *
      * @return string
      */
