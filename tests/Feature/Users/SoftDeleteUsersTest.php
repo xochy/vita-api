@@ -130,14 +130,14 @@ class SoftDeleteUsersTest extends TestCase
         $this->assertSoftDeleted(
             self::MODEL_PLURAL_NAME,
             [
-                'id' => $user->getKey()
+                'id' => $user->getRouteKey()
             ]
         );
 
         $this->assertDatabaseHas(
             'users',
             [
-                'id'         => $user->getKey(),
+                'id'         => $user->getRouteKey(),
                 'deleted_at' => $date->format('Y-m-d H:i:s')
             ]
         );

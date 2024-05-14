@@ -93,7 +93,7 @@ class UpdateUsersTest extends TestCase
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user))->dump();
+            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
         // Success (200)
         $response->assertStatus(200)

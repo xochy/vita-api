@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
@@ -72,6 +73,44 @@ class UserController extends Controller
     }
 
     /**
+     * Refresh the token. This method is called when the user tries to refresh the token.
+     * It checks if the token is present in the request. If the token is missing, it throws
+     * a validation exception.
+     *
+     * @param Request $request
+     *
+     * @return TokenResponse
+     */
+    public function refresh(Request $request): TokenResponse
+    {
+        $fields    = $this->validateTokenVerificationFields($request);
+        $validator = $this->makeTokenVerificationValidator($fields);
+
+        if ($validator->stopOnFirstFailure()->fails()) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $validator->errors()->first()
+                ]
+            );
+        }
+
+        try {
+            $token = PersonalAccessToken::findToken($fields['token']);
+            $user = $token->tokenable;
+        } catch (\Exception $e) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => __('auth.token_refresh_failed')
+                ]
+            );
+        }
+
+        return new TokenResponse($user, $fields['token']);
+    }
+
+    /**
      * Make a validator for the sign in request. This method is called when the user tries to sign in.
      * It checks if the required fields are present in the request. If any of the required fields are
      * missing, it throws a validation exception.
@@ -88,6 +127,25 @@ class UserController extends Controller
                 'email'       => ['required', 'email'],
                 'device_name' => ['required', 'string'],
                 'password'    => ['required', 'string'],
+            ]
+        );
+    }
+
+    /**
+     * Verify the token. This method is called when the user tries to verify the token.
+     * It checks if the token is present in the request. If the token is missing, it throws
+     * a validation exception.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Validation\Validator
+     */
+    private function makeTokenVerificationValidator(array $fields): \Illuminate\Validation\Validator
+    {
+        return Validator::make(
+            $fields,
+            [
+                'token' => ['required', 'string'],
             ]
         );
     }
@@ -120,6 +178,33 @@ class UserController extends Controller
             'email'       => $email,
             'device_name' => $deviceName,
             'password'    => $password,
+        ];
+    }
+
+    /**
+     * Validate the token verification request. This method is called when the user tries to verify the token.
+     * It checks if the required fields are present in the request. If any of the required fields are missing,
+     * it throws a validation exception.
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    private function validateTokenVerificationFields(Request $request): array
+    {
+        try {
+            $token = $request->data['attributes']['token'];
+        } catch (\Exception $th) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => __('auth.required')
+                ]
+            );
+        }
+
+        return [
+            'token' => $token,
         ];
     }
 

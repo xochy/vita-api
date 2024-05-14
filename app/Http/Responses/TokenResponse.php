@@ -15,14 +15,20 @@ class TokenResponse implements Responsable
     private $user;
 
     /**
+     * @var string
+     */
+    private $token;
+
+    /**
      * __construct
      *
      * @param User $user
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, string $token = null)
     {
         $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -34,13 +40,24 @@ class TokenResponse implements Responsable
      */
     public function toResponse($request): JsonResponse
     {
+        // If token exists, update the expiration date
+        if ($this->token) {
+            $this->user->tokens()->where('token', hash('sha256', $this->token))
+                ->update(['expires_at' => now()->addDays(5)]);
+        } else {
+            $this->token = $this->user->createToken(
+                $request->data['attributes']['device_name'],
+                $this->user->permissions->pluck('name')->toArray(),
+                now()->addDays(10)
+            )->plainTextToken;
+        }
+
         return response()->json(
             [
                 'status' => 200,
-                'token' => $this->user->createToken(
-                    $request->data['attributes']['device_name'],
-                    $this->user->permissions->pluck('name')->toArray()
-                )->plainTextToken,
+                'token'  => $this->token,
+                'name'   => $this->user->name,
+                'email'  => $this->user->email,
             ]
         );
     }

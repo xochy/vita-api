@@ -161,6 +161,39 @@ class CreateUsersTest extends TestCase
     }
 
     /** @test */
+    public function user_email_must_be_unique()
+    {
+        $user = array_filter(
+            [
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_ATTRIBUTE_NAME_VALUE,
+                self::MODEL_ATTRIBUTE_EMAIL => $this->user->email,
+                self::MODEL_ATTRIBUTE_PASSWORD => 'password',
+                self::MODEL_ATTRIBUTE_PASSWORD_CONFIRMATION => 'password',
+            ]
+        );
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $user
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
+
+        // Unprocessable Entity (422)
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/email'],
+                'detail' => 'The email address has already been taken.'
+            ]
+        );
+
+        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $user);
+    }
+
+    /** @test */
     public function user_password_is_required()
     {
         $user = array_filter(
@@ -226,6 +259,39 @@ class CreateUsersTest extends TestCase
             [
                 'source' => ['pointer' => '/data/attributes/password_confirmation'],
                 'detail' => 'The password confirmation field must match password.'
+            ]
+        );
+
+        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $user);
+    }
+
+    /** @test */
+    public function user_password_must_have_at_least_8_characters()
+    {
+        $user = array_filter(
+            [
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_ATTRIBUTE_NAME_VALUE,
+                self::MODEL_ATTRIBUTE_EMAIL => self::MODEL_ATTRIBUTE_EMAIL_VALUE,
+                self::MODEL_ATTRIBUTE_PASSWORD => 'pass',
+                self::MODEL_ATTRIBUTE_PASSWORD_CONFIRMATION => 'pass',
+            ]
+        );
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $user
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
+
+        // Unprocessable Entity (422)
+        $response->assertError(
+            422,
+            [
+                'source' => ['pointer' => '/data/attributes/password'],
+                'detail' => 'The password field must be at least 8 characters.'
             ]
         );
 

@@ -8,7 +8,9 @@ use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\SoftDelete;
+use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\WithTrashed;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
@@ -40,6 +42,12 @@ class UserSchema extends Schema
             DateTime::make('emailVerifiedAt')->sortable(),
             Str::make('password')->hidden(),
             Str::make('password_confirmation')->hidden(),
+            Number::make('age')->sortable(),
+            Str::make('gender')->sortable(),
+            Str::make('system'),
+            Number::make('weight')->sortable(),
+            Number::make('height')->sortable(),
+            Str::make('bmi')->sortable()->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
             SoftDelete::make('deletedAt'),
@@ -58,7 +66,9 @@ class UserSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            WithTrashed::make('with-trashed')
+            WithTrashed::make('with-trashed'),
+
+            Scope::make('name'),
         ];
     }
 

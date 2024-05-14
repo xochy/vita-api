@@ -70,7 +70,7 @@ class Category extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Apply the scope related with name.
+     * Scope a query to only include users with a given name.
      *
      * @param Builder $builder
      * @param string $value
@@ -82,7 +82,7 @@ class Category extends Model
     }
 
     /**
-     * Apply the scope related with description.
+     * Scope a query to only include users with a given description.
      *
      * @param Builder $builder
      * @param string $values
@@ -94,7 +94,7 @@ class Category extends Model
     }
 
     /**
-     * Apply the scope related with search function.
+     * Scope a query to only include users with a given search term.
      *
      * @param Builder $builder
      * @param string $values
