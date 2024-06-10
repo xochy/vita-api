@@ -19,5 +19,6 @@ return [
     'token' => 'El token de texto sin formato no es válido.',
     'token_deleted' => 'Token eliminado con éxito.',
     'user_created' => 'Usuario creado con éxito.',
+    'token_refresh_failed' => 'No se pudo refrescar el token.',
 
 ];

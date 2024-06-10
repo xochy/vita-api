@@ -50,6 +50,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Personal Access Token Expiration
+    |--------------------------------------------------------------------------
+    |
+    | This value controls the number of minutes until an issued personal access
+    | token will be considered expired. Personal access tokens are typically
+    | long-lived tokens that can be used between multiple requests.
+    |
+    */
+
+    'ac_expiration' => 60,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sanctum Expiration
+    |--------------------------------------------------------------------------
+    |
+    | This value controls the number of minutes until an issued token will be
+    | considered expired. This will override any values set in the token's
+    | "expires_at" attribute, but first-party sessions are not affected.
+    |
+    */
+    
+    'rt_expiration' => 7 * 24 * 60,
+
+    /*
+    |--------------------------------------------------------------------------
     | Token Prefix
     |--------------------------------------------------------------------------
     |

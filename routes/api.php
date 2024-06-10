@@ -79,6 +79,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $actions->post('signup');
             // Logout action
             $actions->post('signout');
+            // Refresh token action
+            $actions->post('refresh');
         });
 
     // Definitions for Translation model

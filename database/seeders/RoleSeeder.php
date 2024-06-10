@@ -20,19 +20,19 @@ class RoleSeeder extends Seeder
         /*                            Roles specifications                            */
         /* -------------------------------------------------------------------------- */
 
-        // Admin role
-        Role::create(
-            [
-                'name'         => 'admin',
-                'display_name' => 'Administrador',
-            ]
-        );
-
         // Super admin role
         Role::create(
             [
                 'name'         => 'superAdmin',
                 'display_name' => 'Super Administrador',
+            ]
+        );
+        
+        // Admin role
+        Role::create(
+            [
+                'name'         => 'admin',
+                'display_name' => 'Administrador',
             ]
         );
 

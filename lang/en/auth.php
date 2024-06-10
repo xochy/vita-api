@@ -19,5 +19,6 @@ return [
     'token' => 'The plain text token is invalid.',
     'token_deleted' => 'Token deleted successfully.',
     'user_created' => 'User created successfully.',
+    'token_refresh_failed' => 'Failed to refresh token.',
 
 ];

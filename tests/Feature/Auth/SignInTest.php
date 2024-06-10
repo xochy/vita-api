@@ -37,7 +37,7 @@ class SignInTest extends TestCase
             'type' => 'users',
             'attributes' => [
                 'email'       => 'invalid.email@mail.com',
-                'device_name' => 'Android.evice',
+                'device_name' => 'Android.device',
                 'password'    => 'invalid.password',
             ]
         ];

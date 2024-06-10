@@ -2,13 +2,16 @@
 
 namespace App\JsonApi\V1\Users;
 
+use App\Enums\GenderEnum;
+use App\Enums\MeasurementSystemEnum;
+use App\Rules\RealDoubleRule;
+use App\Rules\RealIntegerRule;
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
 class UserRequest extends ResourceRequest
 {
-
     /**
      * Get the validation rules for the resource.
      *
@@ -18,6 +21,12 @@ class UserRequest extends ResourceRequest
     {
         // Model instance
         $model = $this->model();
+
+        $minWeight = app()->getLocale() === 'es' ? 10 : 50;
+        $maxWeight = app()->getLocale() === 'es' ? 200 : 400;
+
+        $minHeight = app()->getLocale() === 'es' ? 0.5 : 1.5;
+        $maxHeight = app()->getLocale() === 'es' ? 2.5 : 8.5;
 
         $rules = [
             'name' => [
@@ -40,6 +49,28 @@ class UserRequest extends ResourceRequest
                 $model ? 'filled' : 'required',
                 'string',
                 'min:8',
+            ],
+            'age' => [
+                'nullable',
+                new RealIntegerRule(10, 80),
+            ],
+            'gender' => [
+                'nullable',
+                'string',
+                Rule::in(GenderEnum::getAllValues()),
+            ],
+            'system' => [
+                'nullable',
+                'string',
+                Rule::in(MeasurementSystemEnum::getAllValues()),
+            ],
+            'weight' => [
+                'nullable',
+                new RealDoubleRule(2, $minWeight, $maxWeight),
+            ],
+            'height' => [
+                'nullable',
+                new RealDoubleRule(2, $minHeight, $maxHeight),
             ],
             'plans' => [
                 JsonApiRule::toMany()
