@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersPermissionsSeeder::class);
         $this->call(UserSeeder::class);
 
+        $this->call(GoalSeeder::class);
+        $this->call(FrequencySeeder::class);
         $this->call(PhysicalConditionSeeder::class);
     }
 }
