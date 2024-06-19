@@ -20,5 +20,11 @@ return [
     'token_deleted' => 'Token deleted successfully.',
     'user_created' => 'User created successfully.',
     'token_refresh_failed' => 'Failed to refresh token.',
+    'token_refreshed' => 'Token refreshed successfully.',
+    'token_verified' => 'Token verified successfully.',
+    'token_verification_failed' => 'Failed to verify token.',
+    'token_expired' => 'Token expired.',
+    'token_invalid' => 'Token is invalid.',
+    'token_not_provided' => 'Token not provided.',
 
 ];

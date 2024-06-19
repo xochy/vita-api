@@ -25,14 +25,16 @@ class RoleSeeder extends Seeder
             [
                 'name'         => 'superAdmin',
                 'display_name' => 'Super Administrador',
+                'default'      => true,
             ]
         );
-        
+
         // Admin role
         Role::create(
             [
                 'name'         => 'admin',
                 'display_name' => 'Administrador',
+                'default'      => true,
             ]
         );
 
@@ -41,6 +43,7 @@ class RoleSeeder extends Seeder
             [
                 'name'         => 'user',
                 'display_name' => 'Usuario',
+                'default'      => true,
             ]
         );
     }

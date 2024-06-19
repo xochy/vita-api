@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Category;
 use App\Models\User;
+use Carbon\Carbon;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -12,7 +14,13 @@ class RefreshTokenTest extends TestCase
 {
     use RefreshDatabase;
 
+    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
+
     protected User $user;
+    protected Carbon $pastDay;
+    protected Carbon $tomorrowDay;
+    protected array $permissions;
 
     public function setUp(): void
     {
@@ -23,54 +31,66 @@ class RefreshTokenTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
+
+        $this->pastDay = now()->subDays(1);
+        $this->tomorrowDay = now()->addDays(1);
+        $this->permissions = $this->user->getAllPermissions()->pluck('name')->toArray();
     }
 
     /** @test */
-    public function guest_users_cannot_refresh_tokens()
+    public function can_make_request_with_valid_token_expired_date()
     {
-        $data = [
-            'type' => 'users',
-            'attributes' => [
-                'token'       => 'invalid.token',
-                'device_name' => 'Android.device',
-            ]
-        ];
+        $token = $this->user->createToken(
+            'test',
+            $this->permissions,
+            $this->tomorrowDay
+        )
+            ->plainTextToken;
 
-        $response = $this->jsonApi()->withData($data)
-            ->post(route('v1.users.refresh'));
+        $category = Category::factory()->create();
 
-        // Wrong request (400)
-        $response->assertError(
-            400,
+        $response = $this->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', 'Bearer ' . $token)
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+
+        $response->assertFetchedOne(
             [
-                'detail' => __('auth.token_refresh_failed')
+                'type' => self::MODEL_PLURAL_NAME,
+                'id' => (string) $category->getRouteKey(),
+                'attributes' => [
+                    'name'        => $category->name,
+                    'description' => $category->description,
+                    'slug'        => $category->slug,
+                ],
+                'links' => [
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                ]
             ]
         );
     }
 
     /** @test */
-    public function authenticated_users_can_refresh_tokens()
+    public function cannot_make_request_with_invalid_token_expired_date()
     {
-        $token = $this->user->createToken('test')->plainTextToken;
+        $token = $this->user->createToken(
+            'test',
+            $this->permissions,
+            $this->pastDay
+        )
+            ->plainTextToken;
 
-        $data = [
-            'type' => 'users',
-            'attributes' => [
-                'token'       => $token,
-                'device_name' => 'Android.device',
+        $category = Category::factory()->create();
 
-            ]
-        ];
+        $response = $this->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', 'Bearer ' . $token)
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
-        $response = $this->jsonApi()->withData($data)
-            ->post(route('v1.users.refresh'));
-
-        $response->assertJson(
+        $response->assertError(
+            400,
             [
-                'status' => 200,
-                'token'  => $token,
-                'name'   => $this->user->name,
-                'email'  => $this->user->email,
+                'detail' => __('auth.token_expired')
             ]
         );
     }

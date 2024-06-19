@@ -40,6 +40,8 @@ class TokenResponse implements Responsable
      */
     public function toResponse($request): JsonResponse
     {
+        $permissions = $this->user->getAllPermissions()->pluck('name')->toArray();
+
         // If token exists, update the expiration date
         if ($this->token) {
             $this->user->tokens()->where('token', hash('sha256', $this->token))
@@ -47,17 +49,20 @@ class TokenResponse implements Responsable
         } else {
             $this->token = $this->user->createToken(
                 $request->data['attributes']['device_name'],
-                $this->user->permissions->pluck('name')->toArray(),
+                $permissions,
                 now()->addDays(10)
             )->plainTextToken;
         }
 
+        $permissionsPayload = encryptPayload(json_encode($permissions));
+
         return response()->json(
             [
-                'status' => 200,
-                'token'  => $this->token,
-                'name'   => $this->user->name,
-                'email'  => $this->user->email,
+                'status'      => 200,
+                'token'       => $this->token,
+                'name'        => $this->user->name,
+                'email'       => $this->user->email,
+                'permissions' => $permissionsPayload,
             ]
         );
     }
