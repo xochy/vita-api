@@ -3,8 +3,10 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use Database\Seeders\permissionsSeeders\UsersPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Crypt;
 use Spatie\Permission\Models\Role;
 use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;
@@ -23,6 +25,7 @@ class SignInTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
+            $this->seed(UsersPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
@@ -221,6 +224,30 @@ class SignInTest extends TestCase
             [
                 'detail' => __('auth.failed')
             ]
+        );
+    }
+
+    /** @test */
+    public function sign_in_response_can_have_permissions()
+    {
+        $data = [
+            'type' => 'users',
+            'attributes' => [
+                'email'       => $this->user->email,
+                'device_name' => 'android.device',
+                'password'    => 'password',
+            ]
+        ];
+
+        $response = $this->jsonApi()
+            ->expects('users')->withData($data)
+            ->post(route('v1.users.signin'));
+
+        $permissionsPayload = $response->json('permissions');
+        $permissions = decryptPayload($permissionsPayload);
+
+        $this->assertTrue(
+            $this->user->can(json_decode($permissions))
         );
     }
 }

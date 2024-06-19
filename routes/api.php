@@ -85,5 +85,4 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
 
     // Definitions for Translation model
     $server->resource('translations', JsonApiController::class);
-
 });

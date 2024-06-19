@@ -28,8 +28,6 @@ class SoftDeleteUsersTest extends TestCase
             $this->seed(RoleSeeder::class);
             $this->seed(UsersPermissionsSeeder::class);
         }
-
-        $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
@@ -58,6 +56,7 @@ class SoftDeleteUsersTest extends TestCase
     /** @test */
     public function authenticated_users_cannot_soft_delete_other_users()
     {
+        $admin = User::factory()->create()->assignRole('admin');
         $user = User::factory()->create()->assignRole('user');
 
         $data = [
@@ -68,7 +67,7 @@ class SoftDeleteUsersTest extends TestCase
             ]
         ];
 
-        $response = $this->actingAs($this->user)->jsonApi()
+        $response = $this->actingAs($admin)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
