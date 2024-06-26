@@ -45,6 +45,8 @@ class Server extends BaseServer
             Plans\PlanSchema::class,
             Users\UserSchema::class,
             Translations\TranslationSchema::class,
+            Roles\RoleSchema::class,
+            Permissions\PermissionSchema::class,
         ];
     }
 }

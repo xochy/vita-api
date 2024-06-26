@@ -165,7 +165,7 @@ class UserController extends Controller
             $email      = $request->data['attributes']['email'];
             $deviceName = $request->data['attributes']['device_name'];
             $password   = $request->data['attributes']['password'];
-        } catch (\Exception $th) {
+        } catch (\Exception $e) {
             throw JsonApiException::error(
                 [
                     'status' => 400, // Wrong request
@@ -194,7 +194,7 @@ class UserController extends Controller
     {
         try {
             $token = $request->data['attributes']['token'];
-        } catch (\Exception $th) {
+        } catch (\Exception $e) {
             throw JsonApiException::error(
                 [
                     'status' => 400, // Wrong request

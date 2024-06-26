@@ -229,6 +229,7 @@ return [
         'username'              => 'usuario',
         'weight'                => 'peso',
         'year'                  => 'año',
+        'display_name'          => 'nombre de visualización',
     ],
 
 ];
