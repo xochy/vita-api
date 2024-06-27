@@ -90,6 +90,9 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
 
     // Definitions for Role model
     $server->resource('roles', RoleController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('permissions');
+        })
         ->actions('manage', function ($actions) {
             // Create action
             $actions->post('createRole');
@@ -101,6 +104,9 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
 
     // Definitions for Permission model
     $server->resource('permissions', PermissionController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('roles');
+        })
         ->actions('manage', function ($actions) {
             // Create action
             $actions->post('createPermission');

@@ -102,7 +102,7 @@ class RoleController extends Controller
 
         try {
             $role->update();
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             throw JsonApiException::error(
                 [
                     'status' => 400, // Wrong request
@@ -145,7 +145,7 @@ class RoleController extends Controller
         try {
             $role->delete();
             return response()->json(null, 204); // No Content
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             throw JsonApiException::error(
                 [
                     'status' => 400, // Wrong request

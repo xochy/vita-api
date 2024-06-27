@@ -67,6 +67,92 @@ class PermissionController extends Controller
     }
 
     /**
+     * Update the permission with the given values.
+     *
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function updatePermission(Request $request): JsonResponse
+    {
+        if ($request->user()->cannot('update permissions')) {
+            throw JsonApiException::error(
+                [
+                    'status' => 403, // Forbidden
+                    'detail' => __('permissions.cannot_update')
+                ]
+            );
+        }
+
+        $fields = $this->validatePermissionFields($request);
+        $validator = $this->makePermissionFiledsValidator($fields);
+
+        if ($validator->stopOnFirstFailure()->fails()) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $validator->errors()->first()
+                ]
+            );
+        }
+
+        $permission = Permission::find($fields['id']);
+
+        $permission->update(
+            [
+                'name'         => $fields['name'],
+                'display_name' => $fields['display_name'],
+                'action'       => $fields['action'],
+                'subject'      => $fields['subject']
+            ]
+        );
+
+        return response()->json(null, 200); // Success
+    }
+
+    /**
+     * Delete the permission with the given id.
+     *
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function deletePermission(Request $request): JsonResponse
+    {
+        if ($request->user()->cannot('delete permissions')) {
+            throw JsonApiException::error(
+                [
+                    'status' => 403, // Forbidden
+                    'detail' => __('permissions.cannot_delete')
+                ]
+            );
+        }
+
+        $permission = Permission::find(array_key_first($request->query()));
+
+        if (!$permission) {
+            throw JsonApiException::error(
+                [
+                    'status' => 404, // Not found
+                    'detail' => __('permissions.not_found')
+                ]
+            );
+        }
+
+        try {
+            $permission->delete();
+            return response()->json(null, 204); // No Content
+        } catch (\Exception $e) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => __('permissions.delete_failed')
+                ]
+            );
+        }
+    }
+
+    /**
      * Validate if the request has the required fields. If not, it throws an exception.
      *
      * @param Request $request
