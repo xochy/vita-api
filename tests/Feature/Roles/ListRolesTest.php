@@ -45,7 +45,9 @@ class ListRolesTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $role->getRouteKey(),
                 'attributes' => [
-                    'name' => $role->name,
+                    'name'         => $role->name,
+                    'display_name' => $role->display_name,
+                    'default'      => $role->default,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $role)
@@ -69,7 +71,9 @@ class ListRolesTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $role->getRouteKey(),
                     'attributes' => [
-                        'name' => $role->name,
+                        'name'         => $role->name,
+                        'display_name' => $role->display_name,
+                        'default'      => $role->default,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $role)

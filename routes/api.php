@@ -100,6 +100,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $actions->patch('updateRole');
             // Delete action
             $actions->delete('deleteRole');
+            // Flat list
+            $actions->get('flatList');
         });
 
     // Definitions for Permission model
@@ -114,5 +116,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $actions->patch('updatePermission');
             // Delete action
             $actions->delete('deletePermission');
+            // Flat list
+            $actions->get('flatList');
         });
 });

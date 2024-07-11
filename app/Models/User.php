@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\Mutators\UserMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -63,15 +64,20 @@ class User extends Authenticatable
     /*                                Relationships                               */
     /* -------------------------------------------------------------------------- */
 
+    public function relatedRoles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
+    }
+
     /**
      * Get the plans associated with the user.
      *
      * This function establishes a belongsToMany relationship between User and Plan.
      * It means that each User belongs to many Plans.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function plans()
+    public function plans(): BelongsToMany
     {
         return $this->belongsToMany(Plan::class);
     }

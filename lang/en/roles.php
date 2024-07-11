@@ -19,4 +19,6 @@ return [
     'cannot_delete'   => 'Cannot delete the role.',
     'cannot_create'   => 'Cannot create the role.',
     'cannot_find'     => 'Cannot find the role.',
+    'cannot_read'     => 'Cannot read the role.',
+    'cannot_list'     => 'Cannot list the roles.',
 ];

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -23,6 +24,37 @@ class RoleController extends Controller
     use Actions\UpdateRelationship;
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
+
+    /**
+     * Get the list of roles in a flat format including only name and id.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function flatList(Request $request): JsonResponse
+    {
+        if ($request->user()->cannot('read roles')) {
+            throw JsonApiException::error(
+                [
+                    'status' => 403, // Forbidden
+                    'detail' => __('roles.cannot_list')
+                ]
+            );
+        }
+
+        $roles = Role::all();
+
+        $data = $roles->map(function ($role) {
+            return [
+                'id'           => $role->id,
+                'name'         => $role->name,
+                'display_name' => $role->display_name
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
 
     /**
      * Create a new role with the given values.
@@ -54,15 +86,28 @@ class RoleController extends Controller
             );
         }
 
-        Role::create(
+        $role = Role::create(
             [
                 'name'         => $fields['name'],
                 'display_name' => $fields['display_name'],
-                'default'      => false
+                'default'      => false,
+                'guard_name'   => 'web',
             ]
         );
 
-        return response()->json(null, 201); // Created
+        $this->syncPermissions($role, $request);
+
+        return response()->json([
+            'data' => [
+                'type' => 'roles',
+                'id' => $role->id,
+                'attributes' => [
+                    'name'         => $role->name,
+                    'display_name' => $role->display_name,
+                    'default'      => $role->default
+                ]
+            ]
+        ], 201); // Created
     }
 
     /**
@@ -107,6 +152,39 @@ class RoleController extends Controller
                 [
                     'status' => 400, // Wrong request
                     'detail' => __('roles.update_failed')
+                ]
+            );
+        }
+    }
+
+    /**
+     * Sync the permissions of the role with the given request.
+     *
+     * @param Role $role
+     * @param Request $request
+     *
+     * @return void
+     */
+    private function syncPermissions(Role $role, Request $request): void
+    {
+        try {
+            if (!isset($request->data['relationships']['permissions']['data'])) {
+                return;
+            }
+
+            $data = $request->data['relationships']['permissions']['data'];
+            $permissions = [];
+
+            foreach ($data as $permission) {
+                $permissions[] = Permission::find($permission['id']);
+            }
+
+            $role->syncPermissions($permissions);
+        } catch (\Throwable $th) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $th->getMessage()
                 ]
             );
         }

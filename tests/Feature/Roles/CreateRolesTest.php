@@ -223,4 +223,56 @@ class CreateRolesTest extends TestCase
             ]
         );
     }
+
+    /** @test */
+    public function role_can_be_created_with_permissions()
+    {
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => [
+                self::MODEL_ATTRIBUTE_NAME => 'Developer',
+                self::MODEL_ATTRIBUTE_DISPLAY_NAME => 'Desarrollador',
+            ],
+            'relationships' => [
+                'permissions' => [
+                    'data' => [
+                        ['id' => 1, 'type' => 'permissions'],
+                        ['id' => 2, 'type' => 'permissions'],
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
+
+        // Created (201)
+        $response->assertCreated();
+
+        $this->assertDatabaseHas(
+            'roles',
+            [
+                'name'         => 'Developer',
+                'display_name' => 'Desarrollador',
+                'default'      => false
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'role_has_permissions',
+            [
+                'role_id' => Role::whereName('Developer')->first()->id,
+                'permission_id' => 1
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'role_has_permissions',
+            [
+                'role_id' => Role::whereName('Developer')->first()->id,
+                'permission_id' => 2
+            ]
+        );
+    }
 }

@@ -19,4 +19,5 @@ return [
     'cannot_delete'   => 'No se puede eliminar el permiso.',
     'cannot_create'   => 'No se puede crear el permiso.',
     'cannot_find'     => 'No se puede encontrar el permiso.',
+    'cannot_list'     => 'No se pueden listar los permisos.',
 ];

@@ -297,4 +297,67 @@ class CreateUsersTest extends TestCase
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $user);
     }
+
+    /** @test */
+    public function user_can_be_created_with_role()
+    {
+        $user = array_filter(
+            [
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_ATTRIBUTE_NAME_VALUE,
+                self::MODEL_ATTRIBUTE_EMAIL => self::MODEL_ATTRIBUTE_EMAIL_VALUE,
+                self::MODEL_ATTRIBUTE_PASSWORD => 'password',
+                self::MODEL_ATTRIBUTE_PASSWORD_CONFIRMATION => 'password',
+            ]
+        );
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $user,
+            'relationships' => [
+                'roles' => [
+                    'data' => [
+                        [
+                            'type' => 'roles',
+                            'id' => (string) Role::whereName('user')->first()->id
+                        ],
+                        [
+                            'type' => 'roles',
+                            'id' => (string) Role::whereName('admin')->first()->id
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
+            ->assertCreated();
+
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                self::MODEL_ATTRIBUTE_NAME => $user[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_EMAIL => $user[self::MODEL_ATTRIBUTE_EMAIL],
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'model_has_roles',
+            [
+                'model_id' => User::whereEmail($user[self::MODEL_ATTRIBUTE_EMAIL])->first()->id,
+                'model_type' => User::class,
+                'role_id' => Role::whereName('user')->first()->id
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'model_has_roles',
+            [
+                'model_id' => User::whereEmail($user[self::MODEL_ATTRIBUTE_EMAIL])->first()->id,
+                'model_type' => User::class,
+                'role_id' => Role::whereName('admin')->first()->id
+            ]
+        );
+    }
 }

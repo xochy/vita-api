@@ -24,6 +24,30 @@ class PermissionController extends Controller
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
 
+    public function flatList(Request $request): JsonResponse
+    {
+        if ($request->user()->cannot('read permissions')) {
+            throw JsonApiException::error(
+                [
+                    'status' => 403, // Forbidden
+                    'detail' => __('permissions.cannot_list')
+                ]
+            );
+        }
+
+        $permissions = Permission::all();
+
+        $data = $permissions->map(function ($permission) {
+            return [
+                'id'           => $permission->id,
+                'name'         => $permission->name,
+                'display_name' => $permission->display_name
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+
     /**
      * Create a new permission with the given values.
      *

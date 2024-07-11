@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\PersonalAccessToken;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -288,5 +289,18 @@ class UserController extends Controller
                 'password_confirmation' => ['required'],
             ]
         );
+    }
+
+    public function saved(User $user, Request $request): void
+    {
+        if (!isset($request->data['relationships']['roles']['data'])) {
+            return;
+        }
+
+        $data = $request->data['relationships']['roles']['data'];
+        $roleIds = array_column($data, 'id');
+        $rolesNames = Role::whereIn('id', $roleIds)->pluck('name')->toArray();
+
+        $user->syncRoles($rolesNames);
     }
 }

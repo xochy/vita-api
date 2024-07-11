@@ -31,6 +31,8 @@ class RoleSchema extends Schema
         return [
             ID::make(),
             Str::make('name')->sortable(),
+            Str::make('display_name'),
+            Str::make('default')->readOnly(),
             // DateTime::make('createdAt')->sortable()->readOnly(),
             // DateTime::make('updatedAt')->sortable()->readOnly(),
 
