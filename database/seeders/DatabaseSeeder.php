@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\permissionsSeeders\PermissionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PhysicalConditionsPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\RolesPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\UsersPermissionsSeeder;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
 
         $this->call(UsersPermissionsSeeder::class);
+        $this->call(RolesPermissionsSeeder::class);
+        $this->call(PermissionsPermissionsSeeder::class);
         $this->call(UserSeeder::class);
 
         $this->call(GoalSeeder::class);

@@ -41,7 +41,7 @@ class RealDoubleRule implements ValidationRule
 
             return;
         }
-        
+
         // Validate if the value is within the min and max range
         if ($value < $this->min || $value > $this->max) {
             $fail(__('validation.real_double_range', [

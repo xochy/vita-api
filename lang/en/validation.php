@@ -193,12 +193,14 @@ return [
     */
 
     'attributes' => [
-        'age'    => 'age',
-        'email'  => 'email address',
-        'gender' => 'gender',
-        'height' => 'height',
-        'system' => 'measurement system',
-        'weight' => 'weight',
+        'name'         => 'name',
+        'age'          => 'age',
+        'email'        => 'email address',
+        'gender'       => 'gender',
+        'height'       => 'height',
+        'system'       => 'measurement system',
+        'weight'       => 'weight',
+        'display_name' => 'display name',
     ],
 
 ];

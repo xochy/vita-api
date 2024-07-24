@@ -9,6 +9,7 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\MorphToMany;
 use LaravelJsonApi\Eloquent\Fields\SoftDelete;
 use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
@@ -54,6 +55,8 @@ class UserSchema extends Schema
 
             // Relationships
             BelongsToMany::make('plans'),
+            BelongsToMany::make('roles'),
+            BelongsToMany::make('relatedRoles')->type('roles'),
         ];
     }
 
@@ -81,5 +84,4 @@ class UserSchema extends Schema
     {
         return PagePagination::make();
     }
-
 }

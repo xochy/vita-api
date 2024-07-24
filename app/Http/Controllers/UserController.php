@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\PersonalAccessToken;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -165,7 +166,7 @@ class UserController extends Controller
             $email      = $request->data['attributes']['email'];
             $deviceName = $request->data['attributes']['device_name'];
             $password   = $request->data['attributes']['password'];
-        } catch (\Exception $th) {
+        } catch (\Exception $e) {
             throw JsonApiException::error(
                 [
                     'status' => 400, // Wrong request
@@ -194,7 +195,7 @@ class UserController extends Controller
     {
         try {
             $token = $request->data['attributes']['token'];
-        } catch (\Exception $th) {
+        } catch (\Exception $e) {
             throw JsonApiException::error(
                 [
                     'status' => 400, // Wrong request
@@ -288,5 +289,18 @@ class UserController extends Controller
                 'password_confirmation' => ['required'],
             ]
         );
+    }
+
+    public function saved(User $user, Request $request): void
+    {
+        if (!isset($request->data['relationships']['roles']['data'])) {
+            return;
+        }
+
+        $data = $request->data['relationships']['roles']['data'];
+        $roleIds = array_column($data, 'id');
+        $rolesNames = Role::whereIn('id', $roleIds)->pluck('name')->toArray();
+
+        $user->syncRoles($rolesNames);
     }
 }

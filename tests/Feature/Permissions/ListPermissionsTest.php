@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Permissions;
 
-use App\Models\Category;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\PermissionsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class ListCategoriesTest extends TestCase
+class ListPermissionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'permissions';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
@@ -26,58 +26,61 @@ class ListCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(PermissionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        $this->user = User::factory()->create()->assignRole('superAdmin');
     }
 
     /** @test */
-    public function it_can_fetch_single_category(): void
+    public function it_can_fetch_single_permission()
     {
-        $category = Category::factory()->create();
+        $permission = Permission::create(
+            [
+                'name'         => 'edit articles',
+                'display_name' => 'Editar artículos',
+                'action'       => 'edit',
+                'subject'      => 'article'
+            ]
+        );
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
+            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $permission));
 
         $response->assertFetchedOne(
             [
                 'type' => self::MODEL_PLURAL_NAME,
-                'id' => (string) $category->getRouteKey(),
+                'id' => (string) $permission->getRouteKey(),
                 'attributes' => [
-                    'name'        => $category->name,
-                    'description' => $category->description,
-                    'slug'        => $category->slug,
+                    'name' => $permission->name,
                 ],
                 'links' => [
-                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                    'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $permission)
                 ]
             ]
         );
     }
 
     /** @test */
-    public function can_fetch_all_categories()
+    public function it_can_fetch_all_permissions()
     {
-        $categories = Category::factory()->times(3)->create();
+        $permissions = Permission::all();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
-            $categories->map(
-                fn (Category $category) => [
+            $permissions->map(
+                fn (Permission $permission) => [
                     'type' => self::MODEL_PLURAL_NAME,
-                    'id' => (string) $category->getRouteKey(),
+                    'id' => (string) $permission->getRouteKey(),
                     'attributes' => [
-                        'name'        => $category->name,
-                        'description' => $category->description,
-                        'slug'        => $category->slug,
+                        'name' => $permission->name,
                     ],
                     'links' => [
-                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $category)
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $permission)
                     ]
                 ]
             )->all()

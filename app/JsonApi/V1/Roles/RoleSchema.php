@@ -1,26 +1,25 @@
 <?php
 
-namespace App\JsonApi\V1\Categories;
+namespace App\JsonApi\V1\Roles;
 
-use App\Models\Category;
+use App\Models\Role;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class CategorySchema extends Schema
+class RoleSchema extends Schema
 {
     /**
      * The model the schema corresponds to.
      *
      * @var string
      */
-    public static string $model = Category::class;
+    public static string $model = Role::class;
 
     /**
      * Get the resource fields.
@@ -32,14 +31,12 @@ class CategorySchema extends Schema
         return [
             ID::make(),
             Str::make('name')->sortable(),
-            Str::make('description'),
-            Str::make('slug')->readOnly(),
-            DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('updatedAt')->sortable()->readOnly(),
+            Str::make('display_name'),
+            Str::make('default')->readOnly(),
+            // DateTime::make('createdAt')->sortable()->readOnly(),
+            // DateTime::make('updatedAt')->sortable()->readOnly(),
 
-            // Relationships
-            HasMany::make('translations'),
-            HasMany::make('subcategories'),
+            BelongsToMany::make('permissions'),
         ];
     }
 
@@ -52,9 +49,6 @@ class CategorySchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            Scope::make('name'),
-            Scope::make('description'),
-            Scope::make('search'),
         ];
     }
 

@@ -34,7 +34,7 @@ class ListUsersTest extends TestCase
     /** @test */
     public function it_can_fetch_single_user()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create()->assignRole('user');
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
