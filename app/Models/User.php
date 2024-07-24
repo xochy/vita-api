@@ -16,16 +16,22 @@ use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasSlug, Notifiable, HasRoles,
-        SoftDeletes, UserMutators;
+    use HasApiTokens,
+        HasFactory,
+        HasSlug,
+        Notifiable,
+        HasRoles,
+        SoftDeletes,
+        UserMutators;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'email', 'password', 'age',
-        'gender', 'system', 'weight', 'height'
+    protected $fillable = [
+        'name', 'email', 'password', 'age',
+        'gender', 'system', 'weight', 'height', 'deleted_at'
     ];
 
     /**
@@ -45,6 +51,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'weight' => 'float',
+            'height' => 'float',
         ];
     }
 
@@ -53,7 +61,7 @@ class User extends Authenticatable
      *
      * @return SlugOptions
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
