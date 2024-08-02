@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Chest day",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "D\u00eda de pecho"
+            }
+        ],
+        "workouts": [
+            {
+                "workout": "Bench press",
+                "series": 4,
+                "repetitions": 8,
+                "time": 12
+            },
+            {
+                "workout": "Incline bench press",
+                "series": 4,
+                "repetitions": 8,
+                "time": 15
+            },
+            {
+                "workout": "Dumbbell flyes",
+                "series": 4,
+                "repetitions": 10,
+                "time": 10
+            }
+        ]
+    }
+]

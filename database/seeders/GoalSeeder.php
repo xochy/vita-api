@@ -21,17 +21,13 @@ class GoalSeeder extends Seeder
             $goals = json_decode($goalsJson, true);
 
             foreach ($goals as $goalData) {
-                $goal = Goal::create([
-                    'name' => $goalData['name'],
-                    'description' => $goalData['description'],
-                ]);
+                $translations = $goalData['translations'];
+                unset($goalData['translations']);
 
-                foreach ($goalData['translations'] as $translation) {
-                    $goal->translations()->create([
-                        'locale' => $translation['locale'],
-                        'column' => $translation['column'],
-                        'translation' => $translation['translation'],
-                    ]);
+                $goal = Goal::factory($goalData)->create();
+
+                foreach ($translations as $translationData) {
+                    $goal->translations()->create($translationData);
                 }
             }
         });

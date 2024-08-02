@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Routine;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class RoutineSeeder extends Seeder
 {
@@ -16,34 +17,8 @@ class RoutineSeeder extends Seeder
         DB::transaction(function () {
             DB::table('routines')->delete();
 
-            $routines = [
-                [
-                    'name' => 'Chest day',
-                    'translations' => [
-                        ['locale' => 'es', 'column' => 'name', 'translation' => 'Día de pecho'],
-                    ],
-                    'workouts' => [
-                        [
-                            'workout' => 'Bench press',
-                            'series' => 4,
-                            'repetitions' => 8,
-                            'time' => 12,
-                        ],
-                        [
-                            'workout' => 'Incline bench press',
-                            'series' => 4,
-                            'repetitions' => 8,
-                            'time' => 15,
-                        ],
-                        [
-                            'workout' => 'Dumbbell flyes',
-                            'series' => 4,
-                            'repetitions' => 10,
-                            'time' => 10,
-                        ],
-                    ],
-                ],
-            ];
+            $routinesJson = File::get(database_path('seeders/json/routines.json'));
+            $routines = json_decode($routinesJson, true);
 
             foreach ($routines as $routineData) {
                 $translations = $routineData['translations'];

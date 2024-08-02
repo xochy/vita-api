@@ -26,8 +26,15 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->call(CategorySeeder::class);
-        $this->call(SubcategorySeeder::class);
+        $this->call(
+            [
+                CategorySeeder::class,
+                SubcategorySeeder::class
+            ]
+        );
+
+        $this->call(MuscleSeeder::class);
+
         $this->call(WorkoutSeeder::class);
         $this->call(RoutineSeeder::class);
 

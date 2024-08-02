@@ -1,0 +1,177 @@
+[
+    {
+        "name": "Bench press",
+        "performance": "Lie flat on a bench, grip the barbell slightly wider than shoulder-width, lower it to your chest, then press it back up.",
+        "comments": "Fundamental for building chest strength and mass.",
+        "corrections": "Keep your feet flat on the floor and your lower back slightly arched.",
+        "warnings": "Avoid bouncing the bar off your chest to prevent injury.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Press de banca"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Acu\u00e9stese en un banco, agarre la barra ligeramente m\u00e1s ancha que el ancho de los hombros, b\u00e1jela al pecho y luego presi\u00f3nela hacia arriba."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Fundamental para construir fuerza y masa en el pecho."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Mantenga los pies planos en el suelo y la parte baja de la espalda ligeramente arqueada."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite rebotar la barra en el pecho para prevenir lesiones."
+            }
+        ],
+        "subcategory": "Pectoralis Major"
+    },
+    {
+        "name": "Incline bench press",
+        "performance": "Set the bench to a 30-45 degree incline, perform a press similar to the flat bench press.",
+        "comments": "Emphasizes the upper chest.",
+        "corrections": "Ensure the bar path is directly above the upper chest.",
+        "warnings": "Maintain control to avoid shoulder strain.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Press de banca inclinado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Ajuste el banco a una inclinaci\u00f3n de 30-45 grados, realice una prensa similar a la prensa de banco plana."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "\u00c9nfasis en la parte superior del pecho."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Aseg\u00farese de que la trayectoria de la barra est\u00e9 directamente sobre la parte superior del pecho."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Mantenga el control para evitar la tensi\u00f3n en los hombros."
+            }
+        ],
+        "subcategory": "Pectoralis Major"
+    },
+    {
+        "name": "Dumbbell flyes",
+        "performance": "Lie on a flat bench, hold dumbbells above your chest with palms facing each other, lower them in an arc until they are level with your chest, then return to the starting position.",
+        "comments": "Stretches and targets the chest muscles.",
+        "corrections": "Keep a slight bend in your elbows to reduce stress on the shoulder joint.",
+        "warnings": "Do not go too low to avoid shoulder injuries.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Vuelos con mancuernas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Acu\u00e9stese en un banco plano, sostenga las mancuernas sobre el pecho con las palmas hacia arriba entre s\u00ed, b\u00e1jelas en un arco hasta que est\u00e9n a la altura del pecho, luego regrese a la posici\u00f3n inicial."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Estira y apunta a los m\u00fasculos del pecho."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Mantenga una ligera flexi\u00f3n en los codos para reducir el estr\u00e9s en la articulaci\u00f3n del hombro."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "No baje demasiado para evitar lesiones en el hombro."
+            }
+        ],
+        "subcategory": "Pectoralis Major"
+    },
+    {
+        "name": "Push-ups",
+        "performance": "Start in a plank position, lower your body until your chest nearly touches the floor, then push back up.",
+        "comments": "Versatile and can be done anywhere.",
+        "corrections": "Maintain a straight line from head to heels.",
+        "warnings": "Avoid letting your hips sag to prevent lower back strain.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Flexiones"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Comience en una posici\u00f3n de plancha, baje el cuerpo hasta que el pecho casi toque el suelo, luego empuje hacia arriba."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Vers\u00e1til y se puede hacer en cualquier lugar."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Mantenga una l\u00ednea recta desde la cabeza hasta los talones."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite que sus caderas se hundan para evitar la tensi\u00f3n en la parte baja de la espalda."
+            }
+        ],
+        "subcategory": "Pectoralis Major"
+    },
+    {
+        "name": "Chest dips",
+        "performance": "Use parallel bars, lean forward slightly, lower your body until your shoulders are below your elbows, then press back up.",
+        "comments": "Effective for lower chest development.",
+        "corrections": "Keep your elbows slightly flared to focus on the chest.",
+        "warnings": "Avoid excessive forward lean to protect your shoulders.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Fondos de pecho"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Use barras paralelas, incl\u00ednese ligeramente hacia adelante, baje el cuerpo hasta que los hombros est\u00e9n por debajo de los codos, luego presione hacia arriba."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Efectivo para el desarrollo del pecho inferior."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Mantenga los codos ligeramente abiertos para enfocarse en el pecho."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite inclinarse demasiado hacia adelante para proteger sus hombros."
+            }
+        ],
+        "subcategory": "Pectoralis Major"
+    }
+]
