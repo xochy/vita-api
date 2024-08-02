@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Workouts;
 
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
@@ -22,7 +22,7 @@ class PaginateWorkoutsTest extends TestCase
     const MODEL_NUMBER_PARAM_NAME = 'page[number]';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
     public function setUp(): void
     {
@@ -34,13 +34,13 @@ class PaginateWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
     }
 
     /** @test */
     public function can_fetch_paginated_workouts()
     {
-        Workout::factory()->for($this->subcategory)->count(10)->create();
+        Workout::factory()->for($this->category)->count(10)->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,

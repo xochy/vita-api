@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Workouts;
 
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
@@ -55,7 +55,7 @@ class FilterWorkoutsTest extends TestCase
     const MODEL_FILTER_WARNINGS_PARAM_NAME = 'filter[warnings]';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
     public function setUp(): void
     {
@@ -67,13 +67,13 @@ class FilterWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
     }
 
     /** @test */
     public function can_filter_workouts_by_name()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
+        Workout::factory()->for($this->category)->count(3)
             ->state(new Sequence(
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
                 ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
@@ -98,7 +98,7 @@ class FilterWorkoutsTest extends TestCase
     /** @test */
     public function can_filter_categories_by_performance()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
+        Workout::factory()->for($this->category)->count(3)
             ->state(new Sequence(
                 ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE],
                 ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE],
@@ -123,7 +123,7 @@ class FilterWorkoutsTest extends TestCase
     /** @test */
     public function can_filter_categories_by_comments()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
+        Workout::factory()->for($this->category)->count(3)
             ->state(new Sequence(
                 ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS],
                 ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS],
@@ -148,7 +148,7 @@ class FilterWorkoutsTest extends TestCase
     /** @test */
     public function can_filter_categories_by_corrections()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
+        Workout::factory()->for($this->category)->count(3)
             ->state(new Sequence(
                 ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS],
                 ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS],
@@ -173,7 +173,7 @@ class FilterWorkoutsTest extends TestCase
     /** @test */
     public function can_filter_categories_by_warnings()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
+        Workout::factory()->for($this->category)->count(3)
             ->state(new Sequence(
                 ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS],
                 ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS],

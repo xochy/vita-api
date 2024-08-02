@@ -39,7 +39,6 @@ class Server extends BaseServer
             Goals\GoalSchema::class,
             Muscles\MuscleSchema::class,
             PhysicalConditions\PhysicalConditionSchema::class,
-            Subcategories\SubcategorySchema::class,
             Workouts\WorkoutSchema::class,
             Routines\RoutineSchema::class,
             Plans\PlanSchema::class,

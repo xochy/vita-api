@@ -46,7 +46,7 @@ class WorkoutSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            BelongsTo::make('subcategory'),
+            BelongsTo::make('category'),
             BelongsToMany::make('muscles')->fields(
                 [
                     'priority'

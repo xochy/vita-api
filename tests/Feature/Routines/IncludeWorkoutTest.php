@@ -3,7 +3,7 @@
 namespace Tests\Feature\Routines;
 
 use App\Models\Routine;
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\RoutinesPermissionsSeeder;
@@ -28,7 +28,7 @@ class IncludeWorkoutTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
 
     public function setUp(): void
@@ -41,7 +41,7 @@ class IncludeWorkoutTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
     }
 
     /** @test */
@@ -49,7 +49,7 @@ class IncludeWorkoutTest extends TestCase
     {
         $routine = Routine::factory()
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 ['series' => 3, 'repetitions' => 10, 'time' => 10]
             )
             ->create();
@@ -77,15 +77,15 @@ class IncludeWorkoutTest extends TestCase
     {
         $routine = Routine::factory()
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 ['series' => 3, 'repetitions' => 10, 'time' => 10]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 ['series' => 5, 'repetitions' => 12, 'time' => 15]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 ['series' => 4, 'repetitions' => 8, 'time' => 12]
             )
             ->create();
@@ -117,15 +117,15 @@ class IncludeWorkoutTest extends TestCase
     {
         $routine = Routine::factory()
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 ['series' => 3, 'repetitions' => 10, 'time' => 10]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 ['series' => 5, 'repetitions' => 12, 'time' => 15]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 ['series' => 4, 'repetitions' => 8, 'time' => 12]
             )
             ->create();

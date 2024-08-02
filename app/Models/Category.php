@@ -40,16 +40,16 @@ class Category extends Model
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Get the subcategories associated with the category.
+     * Get the workouts associated with the category.
      *
-     * This function establishes a hasMany relationship between Category and Subcategory.
-     * It means that each Category has many Subcategories.
+     * This function establishes a hasMany relationship between Category and Workout.
+     * It means that each Category has many Workouts.
      *
      * @return HasMany
      */
-    public function subcategories(): HasMany
+    public function workouts(): HasMany
     {
-        return $this->hasMany(Subcategory::class);
+        return $this->hasMany(Workout::class);
     }
 
     /**

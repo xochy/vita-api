@@ -3,20 +3,20 @@
 namespace Tests\Feature\Categories;
 
 use App\Models\Category;
-use App\Models\Subcategory;
+use App\Models\Workout;
 use App\Models\User;
-use Database\Seeders\permissionsSeeders\SubcategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class IncludeSubcategoriesTest extends TestCase
+class IncludeworkoutsTest extends TestCase
 {
     use RefreshDatabase;
 
     const MODEL_PLURAL_NAME = 'categories';
-    const MODEL_INCLUDE_RELATIONSHIP_NAME = 'subcategories';
+    const MODEL_INCLUDE_RELATIONSHIP_NAME = 'workouts';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
 
     const MODEL_RELATED_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME
@@ -33,24 +33,24 @@ class IncludeSubcategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(SubcategoriesPermissionsSeeder::class);
+            $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function categories_can_include_subcategories()
+    public function categories_can_include_workouts()
     {
         $category = Category::factory()
-            ->has(Subcategory::factory())
+            ->has(Workout::factory())
             ->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $category));
 
-        $response->assertSee($category->subcategories[0]->slug);
+        $response->assertSee($category->workouts[0]->slug);
 
         $response->assertJsonFragment(
             [
@@ -66,11 +66,11 @@ class IncludeSubcategoriesTest extends TestCase
     }
 
     /** @test */
-    public function categories_can_fetch_related_subcategories()
+    public function categories_can_fetch_related_workouts()
     {
-        $subcategories = Subcategory::factory()->count(3);
+        $workouts = Workout::factory()->count(3);
         $category = Category::factory()
-            ->has($subcategories)
+            ->has($workouts)
             ->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
@@ -78,9 +78,9 @@ class IncludeSubcategoriesTest extends TestCase
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $category));
 
-        $response->assertSee($category->subcategories[0]->name);
-        $response->assertSee($category->subcategories[1]->name);
-        $response->assertSee($category->subcategories[2]->name);
+        $response->assertSee($category->workouts[0]->name);
+        $response->assertSee($category->workouts[1]->name);
+        $response->assertSee($category->workouts[2]->name);
 
         $response->assertJsonFragment(
             [

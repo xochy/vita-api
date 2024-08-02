@@ -46,7 +46,7 @@ class WorkoutRequest extends ResourceRequest
                 'image',
                 'max:2048',
             ],
-            'subcategory' => [
+            'category' => [
                 JsonApiRule::toOne()
             ],
             'muscles' => [

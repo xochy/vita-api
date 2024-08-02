@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Workouts;
 
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
@@ -20,7 +20,7 @@ class ListWorkoutsTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
     public function setUp(): void
     {
@@ -32,13 +32,13 @@ class ListWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
     }
 
     /** @test */
     public function it_can_fetch_single_workout()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->for($this->category)->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
@@ -66,7 +66,7 @@ class ListWorkoutsTest extends TestCase
     /** @test */
     public function can_fetch_all_workouts()
     {
-        $workouts = Workout::factory()->for($this->subcategory)->count(3)->create();
+        $workouts = Workout::factory()->for($this->category)->count(3)->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)

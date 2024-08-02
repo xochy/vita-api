@@ -4,7 +4,7 @@ namespace Tests\Feature\Muscles;
 
 use App\Enums\MusclePriorityEnum;
 use App\Models\Muscle;
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
@@ -29,7 +29,7 @@ class IncludeWorkoutsTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
     public function setUp(): void
     {
@@ -41,7 +41,7 @@ class IncludeWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
     }
 
     /** @test */
@@ -49,7 +49,7 @@ class IncludeWorkoutsTest extends TestCase
     {
         $muscle = Muscle::factory()
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 [
                     'priority' => MusclePriorityEnum::PRINCIPAL
                 ]
@@ -89,19 +89,19 @@ class IncludeWorkoutsTest extends TestCase
     {
         $muscle = Muscle::factory()
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 [
                     'priority' => MusclePriorityEnum::PRINCIPAL
                 ]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 [
                     'priority' => MusclePriorityEnum::PRINCIPAL
                 ]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 [
                     'priority' => MusclePriorityEnum::SECONDARY
                 ]
@@ -135,19 +135,19 @@ class IncludeWorkoutsTest extends TestCase
     {
         $muscle = Muscle::factory()
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 [
                     'priority' => MusclePriorityEnum::PRINCIPAL
                 ]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 [
                     'priority' => MusclePriorityEnum::SECONDARY
                 ]
             )
             ->hasAttached(
-                Workout::factory()->for($this->subcategory),
+                Workout::factory()->for($this->category),
                 [
                     'priority' => MusclePriorityEnum::ANTAGONIST
                 ]

@@ -32,7 +32,7 @@
                 "translation": "Evite rebotar la barra en el pecho para prevenir lesiones."
             }
         ],
-        "subcategory": "Pectoralis Major"
+        "category": "Pectoralis Major"
     },
     {
         "name": "Incline bench press",
@@ -67,7 +67,7 @@
                 "translation": "Mantenga el control para evitar la tensi\u00f3n en los hombros."
             }
         ],
-        "subcategory": "Pectoralis Major"
+        "category": "Pectoralis Major"
     },
     {
         "name": "Dumbbell flyes",
@@ -102,7 +102,7 @@
                 "translation": "No baje demasiado para evitar lesiones en el hombro."
             }
         ],
-        "subcategory": "Pectoralis Major"
+        "category": "Pectoralis Major"
     },
     {
         "name": "Push-ups",
@@ -137,7 +137,7 @@
                 "translation": "Evite que sus caderas se hundan para evitar la tensi\u00f3n en la parte baja de la espalda."
             }
         ],
-        "subcategory": "Pectoralis Major"
+        "category": "Pectoralis Major"
     },
     {
         "name": "Chest dips",
@@ -172,6 +172,6 @@
                 "translation": "Evite inclinarse demasiado hacia adelante para proteger sus hombros."
             }
         ],
-        "subcategory": "Pectoralis Major"
+        "category": "Pectoralis Major"
     }
 ]

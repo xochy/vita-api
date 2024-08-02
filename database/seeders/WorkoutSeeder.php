@@ -26,17 +26,17 @@ class WorkoutSeeder extends Seeder
                 $translations = $workoutData['translations'];
                 unset($workoutData['translations']);
 
-                $subcategory = $workoutData['subcategory'];
-                unset($workoutData['subcategory']);
+                $category = $workoutData['category'];
+                unset($workoutData['category']);
 
-                $subcategoryId = DB::table('subcategories')
-                    ->where('name', $subcategory)
+                $categoryId = DB::table('categories')
+                    ->where('name', $category)
                     ->value('id');
 
                 $workout = Workout::factory()->create(array_merge(
                     $workoutData,
                     [
-                        'subcategory_id' => $subcategoryId
+                        'category_id' => $categoryId
                     ]
                 ));
 

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('workouts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('subcategory_id')
-                ->constrained()
+            $table->foreignId('category_id')
+                ->constrained('categories')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('name')->unique();

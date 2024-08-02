@@ -3,7 +3,7 @@
 namespace Tests\Feature\Routines;
 
 use App\Models\Routine;
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\RoutinesPermissionsSeeder;
@@ -27,7 +27,7 @@ class CreateRoutinesTest extends TestCase
     const MODEL_ATTRIBUTE_NAME = 'name';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
     // For making relationship test with 3 workouts
     protected Workout $workout1;
@@ -44,12 +44,12 @@ class CreateRoutinesTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('user');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
 
         // For making relationship test with 3 muscles
-        $this->workout1 = Workout::factory()->for($this->subcategory)->create();
-        $this->workout2 = Workout::factory()->for($this->subcategory)->create();
-        $this->workout3 = Workout::factory()->for($this->subcategory)->create();
+        $this->workout1 = Workout::factory()->for($this->category)->create();
+        $this->workout2 = Workout::factory()->for($this->category)->create();
+        $this->workout3 = Workout::factory()->for($this->category)->create();
     }
 
     /** @test */

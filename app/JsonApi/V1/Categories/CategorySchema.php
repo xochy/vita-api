@@ -38,8 +38,8 @@ class CategorySchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
+            HasMany::make('workouts'),
             HasMany::make('translations'),
-            HasMany::make('subcategories'),
         ];
     }
 

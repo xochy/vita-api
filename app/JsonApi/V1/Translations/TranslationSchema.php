@@ -46,7 +46,6 @@ class TranslationSchema extends Schema
                 'routines',
                 'categories',
                 'frequencies',
-                'subcategories',
                 'physical-conditions',
             )
         ];

@@ -4,7 +4,7 @@ namespace Tests\Feature\Workouts;
 
 use App\Enums\MusclePriorityEnum;
 use App\Models\Muscle;
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\RoleSeeder;
@@ -28,7 +28,7 @@ class IncludeMusclesTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
     public function setUp(): void
     {
@@ -39,14 +39,14 @@ class IncludeMusclesTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
     }
 
     /** @test */
     public function workouts_can_include_muscles()
     {
         $workout = Workout::factory()
-            ->for($this->subcategory)
+            ->for($this->category)
             ->hasAttached(
                 Muscle::factory(),
                 [
@@ -87,7 +87,7 @@ class IncludeMusclesTest extends TestCase
     public function workouts_can_fetch_related_muscles()
     {
         $workout = Workout::factory()
-            ->for($this->subcategory)
+            ->for($this->category)
             ->hasAttached(
                 Muscle::factory(),
                 [
@@ -134,7 +134,7 @@ class IncludeMusclesTest extends TestCase
     public function workouts_can_include_muscles_with_different_priorities()
     {
         $workout = Workout::factory()
-            ->for($this->subcategory)
+            ->for($this->category)
             ->hasAttached(
                 Muscle::factory(),
                 [

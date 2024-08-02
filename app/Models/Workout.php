@@ -6,6 +6,8 @@ use App\Models\Traits\Mutators\WorkoutMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -30,7 +32,7 @@ class Workout extends Model implements HasMedia
      *
      * @return SlugOptions
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -42,16 +44,16 @@ class Workout extends Model implements HasMedia
     /* -------------------------------------------------------------------------- */
 
     /**
-     * Get the subcategory associated with the workout.
+     * Get the category associated with the workout.
      *
-     * This function establishes a belongsTo relationship between Workout and Subcategory.
-     * It means that each Workout belongs to one Subcategory.
+     * This function establishes a belongsTo relationship between workout and category.
+     * It means that each workout belongs to one category.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function subcategory()
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Subcategory::class);
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -60,9 +62,9 @@ class Workout extends Model implements HasMedia
      * This function establishes a belongsToMany relationship between Workout and Muscle.
      * It means that each Workout belongs to many Muscles.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function muscles()
+    public function muscles(): BelongsToMany
     {
         return $this->belongsToMany(Muscle::class)
             ->withPivot('priority')
@@ -76,7 +78,7 @@ class Workout extends Model implements HasMedia
      * This function establishes a morphMany relationship between Workout and Translation.
      * It means that each Workout has many Translations.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function translations(): MorphMany
     {
