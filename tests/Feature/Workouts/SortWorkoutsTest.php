@@ -26,7 +26,6 @@ class SortWorkoutsTest extends TestCase
     const MODEL_SORT_PARAM_VALUE = 'name';
 
     protected User $user;
-    protected Category $category;
 
     public function setUp(): void
     {
@@ -38,18 +37,19 @@ class SortWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->category = Category::factory()->create();
     }
 
     /** @test */
     public function can_sort_workouts_by_name_asc()
     {
-        Workout::factory()->for($this->category)->count(3)
-            ->state(new Sequence(
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
-            ))
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+                )
+            )
             ->create();
 
         $url = route(
@@ -72,12 +72,14 @@ class SortWorkoutsTest extends TestCase
     /** @test */
     public function can_sort_workouts_by_name_desc()
     {
-        Workout::factory()->for($this->category)->count(3)
-            ->state(new Sequence(
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
-            ))
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+                )
+            )
             ->create();
 
         $url = route(
@@ -100,7 +102,7 @@ class SortWorkoutsTest extends TestCase
     /** @test */
     public function cannot_sort_workouts_by_unknown_fields()
     {
-        Workout::factory()->for($this->category)->count(3)->create();
+        Workout::factory()->forCategory()->count(3)->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VariationController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     $server->resource('muscles', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('workouts');
+            $relationships->hasMany('variations');
         });
 
     // Definitions for Workout model
@@ -35,6 +37,13 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('category');
             $relationships->hasMany('muscles');
             $relationships->hasMany('routines');
+        });
+
+    // Definitions for Variation model
+    $server->resource('variations', VariationController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasOne('workout');
+            $relationships->hasMany('muscles');
         });
 
     // Definitions for Routine model

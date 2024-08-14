@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -35,6 +36,7 @@ class IncludeCategoryTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
+            $this->seed(WorkoutsPermissionsSeeder::class);
             $this->seed(CategoriesPermissionsSeeder::class);
         }
 

@@ -20,6 +20,7 @@ class WorkoutFactory extends Factory
     public function definition(): array
     {
         return [
+            'group' => fake()->randomElement(['Free weights', 'Other exercises', 'Machines']),
             'name' => fake()->unique()->bothify('Entrenamiento-?###'),
             'performance' => fake()->paragraph(2),
             'comments' => fake()->paragraph(2),

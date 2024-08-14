@@ -19,6 +19,11 @@ class WorkoutRequest extends ResourceRequest
     public function rules(): array
     {
         return [
+            'group' => [
+                'required',
+                'string',
+                Rule::in(['Free weights', 'Other exercises', 'Machines']),
+            ],
             'name' => [
                 'required',
                 'string',

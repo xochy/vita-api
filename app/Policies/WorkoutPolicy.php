@@ -26,7 +26,7 @@ class WorkoutPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('read workouts');
     }
 
     /**
@@ -34,7 +34,7 @@ class WorkoutPolicy
      */
     public function view(User $user, Workout $workout): bool
     {
-        return true;
+        return $user->can('read workouts');
     }
 
     /**

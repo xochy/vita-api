@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('workout_id')->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->enum('priority', ['principal', 'secondary', 'antagonist']);
+            $table->enum('priority', ['Principal', 'Secondary', 'Antagonist']);
         });
     }
 

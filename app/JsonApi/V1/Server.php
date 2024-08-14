@@ -46,6 +46,7 @@ class Server extends BaseServer
             Translations\TranslationSchema::class,
             Roles\RoleSchema::class,
             Permissions\PermissionSchema::class,
+            Variations\VariationSchema::class,
         ];
     }
 }

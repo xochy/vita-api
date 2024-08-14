@@ -19,7 +19,6 @@ class DeleteWorkoutsTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
-    protected Category $category;
 
     public function setUp(): void
     {
@@ -31,13 +30,12 @@ class DeleteWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->category = Category::factory()->create();
     }
 
     /** @test */
     public function guests_users_cannot_delete_workouts()
     {
-        $workout = Workout::factory()->for($this->category)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $response = $this->jsonApi()
             ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
@@ -49,7 +47,7 @@ class DeleteWorkoutsTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_can_delete_workouts()
     {
-        $workout = Workout::factory()->for($this->category)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $response = $this->actingAs($this->user)
             ->jsonApi()

@@ -31,6 +31,9 @@ class MuscleRequest extends ResourceRequest
             'workouts' => [
                 JsonApiRule::toMany()
             ],
+            'variations' => [
+                JsonApiRule::toMany()
+            ],
         ];
     }
 

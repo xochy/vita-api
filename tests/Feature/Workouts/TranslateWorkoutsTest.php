@@ -30,7 +30,6 @@ class TranslateWorkoutsTest extends TestCase
     const MODEL_EN_WARNINGS = 'Lower back warnings';
 
     protected User $user;
-    protected Category $category;
 
     public function setUp(): void
     {
@@ -42,7 +41,6 @@ class TranslateWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->category = Category::factory()->create();
     }
 
     /** @test */
@@ -56,7 +54,7 @@ class TranslateWorkoutsTest extends TestCase
                 'corrections' => self::MODEL_EN_CORRECTIONS,
                 'warnings'    => self::MODEL_EN_WARNINGS,
             ]
-        )->for($this->category)
+        )->forCategory()
             ->hasTranslations(
                 1,
                 [
@@ -105,7 +103,7 @@ class TranslateWorkoutsTest extends TestCase
                 'corrections' => self::MODEL_EN_CORRECTIONS,
                 'warnings'    => self::MODEL_EN_WARNINGS,
             ]
-        )->for($this->category)
+        )->forCategory()
             ->hasTranslations(
                 1,
                 [
@@ -154,7 +152,7 @@ class TranslateWorkoutsTest extends TestCase
                 'corrections' => self::MODEL_EN_CORRECTIONS,
                 'warnings'    => self::MODEL_EN_WARNINGS,
             ]
-        )->for($this->category)
+        )->forCategory()
             ->hasTranslations(
                 1,
                 [
@@ -203,7 +201,7 @@ class TranslateWorkoutsTest extends TestCase
                 'corrections' => self::MODEL_EN_CORRECTIONS,
                 'warnings'    => self::MODEL_EN_WARNINGS,
             ]
-        )->for($this->category)
+        )->forCategory()
             ->hasTranslations(
                 1,
                 [
@@ -252,7 +250,7 @@ class TranslateWorkoutsTest extends TestCase
                 'corrections' => self::MODEL_EN_CORRECTIONS,
                 'warnings'    => self::MODEL_EN_WARNINGS,
             ]
-        )->for($this->category)
+        )->forCategory()
             ->hasTranslations(
                 1,
                 [
@@ -301,7 +299,7 @@ class TranslateWorkoutsTest extends TestCase
                 'corrections' => self::MODEL_EN_CORRECTIONS,
                 'warnings'    => self::MODEL_EN_WARNINGS,
             ]
-        )->for($this->category)
+        )->forCategory()
             ->hasTranslations(
                 5,
                 new Sequence(
@@ -364,7 +362,7 @@ class TranslateWorkoutsTest extends TestCase
     /** @test */
     public function translations_can_be_associated_to_workouts()
     {
-        $workout = Workout::factory()->for($this->category)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => 'translations',
@@ -404,7 +402,7 @@ class TranslateWorkoutsTest extends TestCase
     /** @test */
     public function workouts_translations_can_be_updated()
     {
-        $workout = Workout::factory()->for($this->category)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $translation = $workout->translations()->create(
             [

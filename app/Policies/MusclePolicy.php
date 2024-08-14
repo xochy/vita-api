@@ -84,4 +84,12 @@ class MusclePolicy
     {
         return $user->can('read workouts');
     }
+
+    /**
+     * Determine whether the user can view the muscle's workouts.
+     */
+    public function viewVariations(User $user, Muscle $muscle): bool
+    {
+        return $user->can('read variations');
+    }
 }

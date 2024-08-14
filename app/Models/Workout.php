@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -24,7 +25,12 @@ class Workout extends Model implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'performance', 'comments', 'corrections', 'warnings'
+        'group',
+        'name',
+        'performance',
+        'comments',
+        'corrections',
+        'warnings'
     ];
 
     /**
@@ -92,11 +98,11 @@ class Workout extends Model implements HasMedia
     /**
      * Apply the scope related with name.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param string $value
+     * @return void
      */
-    public function scopeName(Builder $query, $value): void
+    public function scopeName(Builder $query, string $value): void
     {
         $query->where('name', 'LIKE', "%{$value}%");
     }
@@ -104,11 +110,11 @@ class Workout extends Model implements HasMedia
     /**
      * Apply the scope related with performance.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param string $value
+     * @return void
      */
-    public function scopePerformance(Builder $query, $value): void
+    public function scopePerformance(Builder $query, string $value): void
     {
         $query->where('performance', 'LIKE', "%{$value}%");
     }
@@ -116,11 +122,11 @@ class Workout extends Model implements HasMedia
     /**
      * Apply the scope related with comments.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param string $value
+     * @return void
      */
-    public function scopeComments(Builder $query, $value): void
+    public function scopeComments(Builder $query, string $value): void
     {
         $query->where('comments', 'LIKE', "%{$value}%");
     }
@@ -128,11 +134,11 @@ class Workout extends Model implements HasMedia
     /**
      * Apply the scope related with corrections.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param string $value
+     * @return void
      */
-    public function scopeCorrections(Builder $query, $value): void
+    public function scopeCorrections(Builder $query, string $value): void
     {
         $query->where('corrections', 'LIKE', "%{$value}%");
     }
@@ -140,12 +146,31 @@ class Workout extends Model implements HasMedia
     /**
      * Apply the scope related with warnings.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param string $value
+     * @return void
      */
-    public function scopeWarnings(Builder $query, $value): void
+    public function scopeWarnings(Builder $query, string $value): void
     {
         $query->where('warnings', 'LIKE', "%{$value}%");
+    }
+
+    /**
+     * Scope a query to only include users with a given search term.
+     *
+     * @param Builder $query
+     * @param string $values
+     * @return void
+     */
+    public function scopeSearch(Builder $query, string $values): void
+    {
+        foreach (Str::of($values)->explode(' ') as $value) {
+
+            $query->orWhere('name', 'LIKE', "%{$value}%")
+                ->orWhere('performance', 'LIKE', "%{$value}%")
+                ->orWhere('comments', 'LIKE', "%{$value}%")
+                ->orWhere('corrections', 'LIKE', "%{$value}%")
+                ->orWhere('warnings', 'LIKE', "%{$value}%");
+        }
     }
 }

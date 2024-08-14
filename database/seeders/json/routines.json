@@ -19,13 +19,19 @@
                 "workout": "Incline bench press",
                 "series": 4,
                 "repetitions": 8,
-                "time": 15
+                "time": 12
             },
             {
-                "workout": "Dumbbell flyes",
+                "workout": "Decline bench press",
                 "series": 4,
-                "repetitions": 10,
-                "time": 10
+                "repetitions": 8,
+                "time": 12
+            },
+            {
+                "workout": "Dumbbell press",
+                "series": 4,
+                "repetitions": 8,
+                "time": 12
             }
         ]
     }

@@ -32,18 +32,18 @@
         ]
     },
     {
-        "name": "Shoulders",
-        "description": "Shoulder exercises typically involve movements that target the deltoid muscles, which include the anterior (front), lateral (side), and posterior (rear) deltoids. Common exercises include shoulder presses, lateral raises, and front raises to develop strength and size.",
+        "name": "Neck and shoulders",
+        "description": "Neck and shoulder exercises target the muscles of the neck, shoulders, and upper back, including the trapezius, deltoids, and levator scapulae. These exercises help improve posture, reduce neck and shoulder pain, and enhance upper body strength.",
         "translations": [
             {
                 "locale": "es",
                 "column": "name",
-                "translation": "Hombros"
+                "translation": "Cuello y hombros"
             },
             {
                 "locale": "es",
                 "column": "description",
-                "translation": "Los ejercicios de hombros suelen implicar movimientos que apuntan a los m\u00fasculos deltoides, que incluyen los deltoides anterior (frontal), lateral (lateral) y posterior (trasero). Los ejercicios comunes incluyen prensas de hombros, elevaciones laterales y elevaciones frontales para desarrollar fuerza y tama\u00f1o."
+                "translation": "Los ejercicios de cuello y hombros apuntan a los m\u00fasculos del cuello, hombros y espalda alta, incluidos el trapecio, los deltoides y el elevador de la esc\u00e1pula. Estos ejercicios ayudan a mejorar la postura, reducir el dolor de cuello y hombros y mejorar la fuerza del cuerpo superior."
             }
         ]
     },
@@ -96,38 +96,6 @@
         ]
     },
     {
-        "name": "Adominals",
-        "description": "Abdominals exercises primarily target the rectus abdominis, which creates the \u201csix-pack\u201d appearance, and the obliques, which are located on the sides of the torso. They help improve core strength and stability.",
-        "translations": [
-            {
-                "locale": "es",
-                "column": "name",
-                "translation": "Abdominales"
-            },
-            {
-                "locale": "es",
-                "column": "description",
-                "translation": "Los ejercicios de abdominales se dirigen principalmente al recto abdominal, que crea la apariencia de \"seis paquetes\", y a los oblicuos, que se encuentran en los lados del torso. Ayudan a mejorar la fuerza y la estabilidad del n\u00facleo."
-            }
-        ]
-    },
-    {
-        "name": "Obliques",
-        "description": "Oblique exercises target the muscles on the sides of the abdomen, including the internal and external obliques. They enhance rotational movement and core stability, contributing to a more defined waistline and improved overall core strength.",
-        "translations": [
-            {
-                "locale": "es",
-                "column": "name",
-                "translation": "Oblicuos"
-            },
-            {
-                "locale": "es",
-                "column": "description",
-                "translation": "Los ejercicios de oblicuos se dirigen a los m\u00fasculos de los lados del abdomen, incluidos los oblicuos internos y externos. Mejoran el movimiento rotacional y la estabilidad del n\u00facleo, contribuyendo a una l\u00ednea de cintura m\u00e1s definida y una fuerza central general mejorada."
-            }
-        ]
-    },
-    {
         "name": "Legs",
         "description": "Leg exercises typically target the quadriceps, hamstrings, calves, and glutes, including movements like squats, lunges, deadlifts, and calf raises. These exercises help build strength, improve stability, and enhance overall lower body performance.",
         "translations": [
@@ -144,18 +112,18 @@
         ]
     },
     {
-        "name": "Traps",
-        "description": "Trap exercises typically target the upper back muscles, including the trapezius, which help in elevating, retracting, and rotating the shoulder blades. Common exercises include shrugs and upright rows, focusing on strengthening and building the muscle around the neck and upper back.",
+        "name": "Abdomen and lower back",
+        "description": "Abdominal and lower back exercises target the core muscles, including the rectus abdominis, obliques, and erector spinae, to improve core strength, stability, and posture. Common exercises include planks, crunches, and back extensions.",
         "translations": [
             {
                 "locale": "es",
                 "column": "name",
-                "translation": "Trapecios"
+                "translation": "Abdomen y parte baja de la espalda"
             },
             {
                 "locale": "es",
                 "column": "description",
-                "translation": "Los ejercicios de trampas suelen apuntar a los m\u00fasculos de la espalda alta, incluido el trapecio, que ayudan a elevar, retraer y rotar las esc\u00e1pulas. Los ejercicios comunes incluyen encogimientos de hombros y filas verticales, centr\u00e1ndose en fortalecer y construir el m\u00fasculo alrededor del cuello y la espalda alta."
+                "translation": "Los ejercicios abdominales y de la parte baja de la espalda apuntan a los m\u00fasculos centrales, incluidos el recto abdominal, los oblicuos y el erector de la columna, para mejorar la fuerza central, la estabilidad y la postura. Los ejercicios comunes incluyen planchas, abdominales y extensiones de espalda."
             }
         ]
     }

@@ -40,6 +40,7 @@ class MuscleSchema extends Schema
 
             // Relationships
             BelongsToMany::make('workouts'),
+            BelongsToMany::make('variations'),
         ];
     }
 

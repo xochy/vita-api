@@ -112,7 +112,7 @@
         ]
     },
     {
-        "name": "Pectoralis Major",
+        "name": "Pectoralis major",
         "description": "The large and upper chest muscle responsible for push and arm adduction movements. It is commonly worked with exercises like bench press and push-ups.",
         "translations": [
             {
@@ -124,6 +124,54 @@
                 "locale": "es",
                 "column": "description",
                 "translation": "El músculo grande y superior del pecho responsable de los movimientos de empuje y aducción del brazo."
+            }
+        ]
+    },
+    {
+        "name": "Pectoralis major (clavicular area)",
+        "description": "The clavicular area of the pectoralis major is the upper part of the chest muscle. It is commonly worked with exercises like incline bench press and dumbbell flyes.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectoral Mayor (área clavicular)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El área clavicular del pectoral mayor es la parte superior del músculo del pecho. Comúnmente se trabaja con ejercicios como press de banca inclinado y vuelos con mancuernas."
+            }
+        ]
+    },
+    {
+        "name": "Pectoralis major (lower part)",
+        "description": "The lower part of the pectoralis major is the lower part of the chest muscle. It is commonly worked with exercises like decline bench press and cable crossovers.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectoral Mayor (parte inferior)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "La parte inferior del pectoral mayor es la parte inferior del músculo del pecho. Comúnmente se trabaja con ejercicios como press de banca declinado y cruces de cables."
+            }
+        ]
+    },
+    {
+        "name": "Pectoralis minor",
+        "description": "The small and lower chest muscle responsible for shoulder blade movements. It is commonly worked with exercises like push-ups and dips.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectoral Menor"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El pequeño y bajo músculo del pecho responsable de los movimientos de la escápula."
             }
         ]
     },
@@ -160,6 +208,22 @@
         ]
     },
     {
+        "name": "Deltoids (exterior)",
+        "description": "The exterior deltoid is the outer part of the deltoid muscle. It is commonly worked with exercises like lateral raises and upright rows.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides (exterior)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El deltoides exterior es la parte externa del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones laterales y filas verticales."
+            }
+        ]
+    },
+    {
         "name": "Deltoids (lateral)",
         "description": "The lateral deltoid is the middle part of the deltoid muscle. It is commonly worked with exercises like lateral raises and upright rows.",
         "translations": [
@@ -188,6 +252,22 @@
                 "locale": "es",
                 "column": "description",
                 "translation": "El deltoides posterior es la parte trasera del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones laterales posteriores y tirones de cara."
+            }
+        ]
+    },
+    {
+        "name": "Deltoids (medial)",
+        "description": "The medial deltoid is the side part of the deltoid muscle. It is commonly worked with exercises like lateral raises and upright rows.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides (medial)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El deltoides medio es la parte lateral del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones laterales y filas verticales."
             }
         ]
     },
@@ -224,7 +304,7 @@
         ]
     },
     {
-        "name": "Latissimus Dorsi",
+        "name": "Latissimus dorsi",
         "description": "The latissimus dorsi muscle, commonly known as the lats, is located on the back. It is responsible for shoulder adduction, extension, and internal rotation.",
         "translations": [
             {
@@ -256,6 +336,38 @@
         ]
     },
     {
+        "name": "Teres",
+        "description": "The teres major and teres minor muscles are located on the back of the shoulder. They help with shoulder adduction and internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Teres"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos teres mayor y teres menor se encuentran en la parte trasera del hombro. Ayudan con la aducción y rotación interna del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Teres major",
+        "description": "The teres major muscle is located on the back of the shoulder. It helps with shoulder adduction and internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Teres mayor"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo teres mayor se encuentra en la parte trasera del hombro. Ayuda con la aducción y rotación interna del hombro."
+            }
+        ]
+    },
+    {
         "name": "Coracobrachialis",
         "description": "The coracobrachialis muscle is located in the upper arm. It helps with shoulder flexion and adduction.",
         "translations": [
@@ -268,6 +380,54 @@
                 "locale": "es",
                 "column": "description",
                 "translation": "El músculo coracobraquial se encuentra en el brazo. Ayuda con la flexión y aducción del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Serratus",
+        "description": "The serratus muscle is located on the side of the chest. It helps with scapular protraction and shoulder abduction.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Serrato"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo serrato se encuentra en el costado del pecho. Ayuda con la protracción escapular y la abducción del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Serratus anterior",
+        "description": "The serratus anterior muscle is located on the side of the chest. It helps with scapular protraction and shoulder abduction.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Serrato anterior"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo serrato anterior se encuentra en el costado del pecho. Ayuda con la protracción escapular y la abducción del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Subscapularis",
+        "description": "The subscapularis muscle is located on the front of the shoulder blade. It helps with shoulder internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Subescapular"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo subescapular se encuentra en la parte delantera de la escápula. Ayuda con la rotación interna del hombro."
             }
         ]
     }

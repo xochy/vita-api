@@ -88,11 +88,11 @@ class Routine extends Model
     /**
      * Apply the scope related with name.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param string $value
+     * @return void
      */
-    public function scopeName(Builder $query, $value): void
+    public function scopeName(Builder $query, string $value): void
     {
         $query->where('name', 'LIKE', "%{$value}%");
     }
@@ -100,11 +100,11 @@ class Routine extends Model
     /**
      * Apply the scope related with search function.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param string
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param string $values
+     * @return void
      */
-    public function scopeSearch(Builder $query, $values): void
+    public function scopeSearch(Builder $query, string $values): void
     {
         foreach (Str::of($values)->explode(' ') as $value) {
             $query->orWhere('name', 'LIKE', "%{$value}%");

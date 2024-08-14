@@ -1,0 +1,605 @@
+[
+    {
+        "name": "Close grip/Hands together",
+        "performance": "The motion is similar, but keep your hands approximately 20 cm apart. This adjustment shifts some of the workload from the chest muscles to the triceps. If you have wrist issues, avoid this exercise, and opt for a lighter weight compared to the standard version.",
+        "muscles": [
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Pectorals"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Agarre cerrado/Manos juntas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "El movimiento es similar, pero mantenga las manos aproximadamente a 20 cm de distancia. Este ajuste desplaza parte de la carga de trabajo de los m\u00fasculos pectorales a los tr\u00edceps. Si tiene problemas de mu\u00f1eca, evite este ejercicio y opte por un peso m\u00e1s ligero en comparaci\u00f3n con la versi\u00f3n est\u00e1ndar."
+            }
+        ],
+        "workout": "Bench press"
+    },
+    {
+        "name": "Wide grip/Hands apart",
+        "performance": "The primary distinction lies in the increased distance between the hands. This adjustment shifts some of the workload to the deltoid muscles, reducing the strain on the triceps. As a result, the range of motion is slightly reduced. In theory, this variation can aid in broadening the chest. It is beneficial to take a deep breath while lowering the bar.",
+        "muscles": [
+            {
+                "name": "Pectorals"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Agarre amplio/Manos separadas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "La principal distinci\u00f3n radica en la mayor distancia entre las manos. Este ajuste desplaza parte de la carga de trabajo a los m\u00fasculos deltoides, reduciendo la tensi\u00f3n en los tr\u00edceps. Como resultado, el rango de movimiento se reduce ligeramente. En teor\u00eda, esta variaci\u00f3n puede ayudar a ensanchar el pecho. Es beneficioso tomar una respiraci\u00f3n profunda al bajar la barra."
+            }
+        ],
+        "workout": "Bench press"
+    },
+    {
+        "name": "Close grip with elbows in",
+        "performance": "The method is similar to the close grip press, but here the elbows remain near the body, and the bar is lowered toward the lower ribs. This adjustment transfers some of the effort from the chest muscle, as seen in the standard exercise, to the shoulders and triceps. Essentially, it's a more intense version of the 'French press.'",
+        "muscles": [
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Pectorals"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Agarre cerrado con codos adentro"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "El m\u00e9todo es similar al press de agarre cerrado, pero aqu\u00ed los codos permanecen cerca del cuerpo y la barra se baja hacia las costillas inferiores. Este ajuste transfiere parte del esfuerzo del m\u00fasculo pectoral, como se ve en el ejercicio est\u00e1ndar, a los hombros y tr\u00edceps. B\u00e1sicamente, es una versi\u00f3n m\u00e1s intensa del 'French press'."
+            }
+        ],
+        "workout": "Bench press"
+    },
+    {
+        "name": "With dumbbells",
+        "performance": "Position the bench as you would for the standard exercise and lie down, holding the dumbbells either on your thighs or on the ground. The lifting motion is similar to using a barbell, but you can bring the weights closer together as you reach the top of the movement. This theoretically targets the area near the sternum more, though the effect is minimal since the entire muscle contracts, as there are no separate attachments between the middle and outer sections. Nevertheless, this movement feels more natural. Performing the incline bench press with dumbbells allows for a greater range of motion, which can enhance flexibility. However, it's important to reduce the weight to avoid injury. The main drawback is that the weight used is generally less than with a barbell because of the effort needed to get into position from a lower starting point, instead of lifting the weight from a rack. Additionally, as your muscles tire, especially your triceps, there's a higher chance of instability toward the end of each set.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (clavicular area)"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con mancuernas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Coloque el banco como lo har\u00eda para el ejercicio est\u00e1ndar y acu\u00e9stese, sosteniendo las mancuernas en los muslos o en el suelo. El movimiento de levantamiento es similar al uso de una barra, pero puede acercar las pesas entre s\u00ed al llegar a la parte superior del movimiento. Esto te\u00f3ricamente apunta m\u00e1s a la zona cercana al estern\u00f3n, aunque el efecto es m\u00ednimo ya que todo el m\u00fasculo se contrae, ya que no hay accesorios separados entre las secciones media y exterior. Sin embargo, este movimiento se siente m\u00e1s natural. Realizar el press de banca inclinado con mancuernas permite un mayor rango de movimiento, lo que puede mejorar la flexibilidad. Sin embargo, es importante reducir el peso para evitar lesiones. El principal inconveniente es que el peso utilizado generalmente es menor que con una barra debido al esfuerzo necesario para colocarse en posici\u00f3n desde un punto de partida m\u00e1s bajo, en lugar de levantar el peso desde un soporte. Adem\u00e1s, a medida que sus m\u00fasculos se cansan, especialmente sus tr\u00edceps, hay una mayor probabilidad de inestabilidad hacia el final de cada serie."
+            }
+        ],
+        "workout": "Incline bench press"
+    },
+    {
+        "name": "With dumbbells and outward twist",
+        "performance": "Similar to the incline press with dumbbells, but with a twist: as you lift the weights, rotate your thumbs outward to create an external rotation of the entire arm, not just the forearm. This adjustment is meant to enhance the final contraction of the chest muscle, specifically the sternocostal part, but it might not be highly effective since the rotation often happens only after the weights are lifted, involving just the forearm. Because the chest muscle primarily engages in internal rather than external rotation, this exercise doesn’t target the pectorals as intended. It's generally not advisable for heavy sets or beginners. Overall, these twist variations are not considered essential.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (clavicular area)"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            },
+            {
+                "name": "Deltoids (exterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con mancuernas y giro hacia afuera"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Similar al press inclinado con mancuernas, pero con un giro: a medida que levanta los pesos, gire los pulgares hacia afuera para crear una rotaci\u00f3n externa de todo el brazo, no solo del antebrazo. Este ajuste est\u00e1 destinado a mejorar la contracci\u00f3n final del m\u00fasculo pectoral, espec\u00edficamente la parte esternocostal, pero puede que no sea muy efectivo ya que la rotaci\u00f3n a menudo ocurre solo despu\u00e9s de que se levantan los pesos, involucrando solo el antebrazo. Debido a que el m\u00fasculo pectoral se compromete principalmente en la rotaci\u00f3n interna en lugar de la externa, este ejercicio no apunta a los pectorales como se pretend\u00eda. Generalmente no es recomendable para series pesadas o principiantes. En general, estas variaciones de giro no se consideran esenciales."
+            }
+        ],
+        "workout": "Incline bench press"
+    },
+    {
+        "name": "With dumbbells",
+        "performance": "The setup for this exercise mirrors that of the barbell press, but you must lie down while gripping the dumbbells with your arms bent, unless someone is assisting you by handing you the weights. Alongside the earlier mentioned disadvantages, using dumbbells requires you to handle the weights in this somewhat awkward position at the start and end of each set. However, it does provide a greater range of motion. Given this, it’s recommended to avoid performing heavy sets and to seek help when needed.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (lower part)"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con mancuernas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "La configuraci\u00f3n de este ejercicio refleja la del press de banca con barra, pero debe acostarse mientras sostiene las mancuernas con los brazos doblados, a menos que alguien lo est\u00e9 ayudando entreg\u00e1ndole los pesos. Junto con las desventajas mencionadas anteriormente, usar mancuernas requiere que maneje los pesos en esta posici\u00f3n algo inc\u00f3moda al comienzo y al final de cada serie. Sin embargo, proporciona un mayor rango de movimiento. Dado esto, se recomienda evitar realizar series pesadas y buscar ayuda cuando sea necesario."
+            }
+        ],
+        "workout": "Decline bench press"
+    },
+    {
+        "name": "With dumbbells and outward twist",
+        "performance": "The approach is similar to the decline dumbbell press but involves turning the thumbs outward. This rotation is intended to increase contraction in the lower portion of the chest, but its effectiveness may be limited. It's not advisable to use heavy weights for this exercise.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (lower part)"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con mancuernas y giro hacia adentro"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "El enfoque es similar al press de banca declinado con mancuernas, pero implica girar los pulgares hacia afuera. Esta rotaci\u00f3n est\u00e1 destinada a aumentar la contracci\u00f3n en la parte inferior del pecho, pero su efectividad puede ser limitada. No es aconsejable usar pesas pesadas para este ejercicio."
+            }
+        ],
+        "workout": "Decline bench press"
+    },
+    {
+        "name": "With outward twist",
+        "performance": "In essence, this exercise is similar to the fundamental variation but incorporates rotating the thumbs outward and the pinkies inward to bring them closer together at the end of the motion. This rotation aims to enhance the final contraction in the sternal region of the muscle. However, the twist typically only affects the forearm, and the chest muscle experiences minimal resistance against gravity at the end of the lift, which can reduce the effectiveness of the exercise.",
+        "muscles": [
+            {
+                "name": "Pectoralis major"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con giro hacia afuera"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "En esencia, este ejercicio es similar a la variaci\u00f3n fundamental pero incorpora la rotaci\u00f3n de los pulgares hacia afuera y los me\u00f1iques hacia adentro para acercarlos al final del movimiento. Esta rotaci\u00f3n tiene como objetivo mejorar la contracci\u00f3n final en la regi\u00f3n esternal del m\u00fasculo. Sin embargo, el giro t\u00edpicamente solo afecta al antebrazo y el m\u00fasculo pectoral experimenta una resistencia m\u00ednima contra la gravedad al final del levantamiento, lo que puede reducir la efectividad del ejercicio."
+            }
+        ],
+        "workout": "Dumbbell press"
+    },
+    {
+        "name": "With Palms facing in",
+        "performance": "This method is similar to the fundamental exercise, except that the hands are positioned facing one another (knuckles facing outward) throughout the movement. Ideally, this should lead to an increased expansion of the chest, similar to 'heavy flyes', though the resistance is typically less. However, many individuals only rotate the forearms rather than the entire arm, which may not engage the pectoral muscles effectively.",
+        "muscles": [
+            {
+                "name": "Pectoralis major"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con palmas enfrentadas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Este m\u00e9todo es similar al ejercicio fundamental, excepto que las manos se colocan una frente a la otra (nudillos hacia afuera) durante todo el movimiento. Idealmente, esto deber\u00eda conducir a una mayor expansi\u00f3n del pecho, similar a las 'flyes pesadas', aunque la resistencia suele ser menor. Sin embargo, muchas personas solo rotan los antebrazos en lugar de todo el brazo, lo que puede no comprometer efectivamente los m\u00fasculos pectorales."
+            }
+        ],
+        "workout": "Dumbbell press"
+    },
+    {
+        "name": "Incline",
+        "performance": "Fundamentally, the method applied remains similar to that of the standard exercise but performed on a bench inclined between 30° and 45°. Naturally, the upper fibers are primarily engaged, though the other fibers also play a role.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (clavicular area)"
+            },
+            {
+                "name": "Serratus anterior"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Inclinado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Fundamentalmente, el m\u00e9todo aplicado sigue siendo similar al del ejercicio est\u00e1ndar pero se realiza en un banco inclinado entre 30\u00b0 y 45\u00b0. Naturalmente, las fibras superiores se comprometen principalmente, aunque las otras fibras tambi\u00e9n juegan un papel."
+            }
+        ],
+        "workout": "Flyes / Dummbell flyes"
+    },
+    {
+        "name": "Decline",
+        "performance": "Similar to the basic exercise, this variation is performed on a bench set at a decline angle of 20° to 40°. Unlike incline flyes, this position emphasizes the lower fibers of the chest muscles.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (lower part)"
+            },
+            {
+                "name": "Serratus anterior"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Declinado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Similar al ejercicio b\u00e1sico, esta variaci\u00f3n se realiza en un banco colocado en un \u00e1ngulo de declive de 20\u00b0 a 40\u00b0. A diferencia de las flyes inclinadas, esta posici\u00f3n enfatiza las fibras inferiores de los m\u00fasculos pectorales."
+            }
+        ],
+        "workout": "Flyes / Dummbell flyes"
+    },
+    {
+        "name": "Crossover",
+        "performance": "The approach is similar to the basic exercise, but with an added twist where the hands cross at the end of the motion. This modification enhances the final contraction of the chest muscles, though gravity's effect is no longer a factor. The goal is to achieve a full contraction and, in theory, to engage the sternal portion of the chest muscles more effectively. However, due to the reasons mentioned, this theoretical benefit may not be fully realized in practice. To maximize this additional contraction, it is recommended to perform the movement using cables.",
+        "muscles": [
+            {
+                "name": "Pectoralis major"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            },
+            {
+                "name": "Serratus anterior"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Cruzado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "El enfoque es similar al ejercicio b\u00e1sico, pero con un giro adicional en el que las manos se cruzan al final del movimiento. Esta modificaci\u00f3n mejora la contracci\u00f3n final de los m\u00fasculos pectorales, aunque el efecto de la gravedad ya no es un factor. El objetivo es lograr una contracci\u00f3n completa y, en teor\u00eda, comprometer m\u00e1s efectivamente la porci\u00f3n esternal de los m\u00fasculos pectorales. Sin embargo, debido a las razones mencionadas, este beneficio te\u00f3rico puede no realizarse completamente en la pr\u00e1ctica. Para maximizar esta contracci\u00f3n adicional, se recomienda realizar el movimiento utilizando cables."
+            }
+        ],
+        "workout": "Flyes / Dummbell flyes"
+    },
+    {
+        "name": "Decline",
+        "performance": "In this method, the movement remains consistent, but the feet are positioned on a bench or step. This variation emphasizes the upper section of the pectoral muscle (clavicular area) and the central part more intensively.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (clavicular area)"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Declinado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "En este m\u00e9todo, el movimiento permanece constante, pero los pies se colocan en un banco o escal\u00f3n. Esta variaci\u00f3n enfatiza m\u00e1s intensamente la secci\u00f3n superior del m\u00fasculo pectoral (zona clavicular) y la parte central."
+            }
+        ],
+        "workout": "Push-ups"
+    },
+    {
+        "name": "Incline",
+        "performance": "This technique mirrors the one in variant 6.2, except with your feet placed on the floor and your hands on a bench or step. It focuses more on the lower and central regions of the pectoral muscle in this version.",
+        "muscles": [
+            {
+                "name": "Pectoralis major"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Inclinado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Esta t\u00e9cnica refleja la de la variante 6.2, excepto con los pies colocados en el suelo y las manos en un banco o escal\u00f3n. Se enfoca m\u00e1s en las regiones inferior y central del m\u00fasculo pectoral en esta versi\u00f3n."
+            }
+        ],
+        "workout": "Push-ups"
+    },
+    {
+        "name": "Against a wall",
+        "performance": "The motion remains identical, but this variation is performed against a wall. It's a simple exercise suitable for beginners or as a warm-up. To maintain continuous tension, ensure the movement is slow and controlled. The challenge increases as you position your feet further away from the wall.",
+        "muscles": [
+            {
+                "name": "Serratus"
+            },
+            {
+                "name": "Subscapularis"
+            },
+            {
+                "name": "Pectorals"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Contra una pared"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "El movimiento sigue siendo id\u00e9ntico, pero esta variaci\u00f3n se realiza contra una pared. Es un ejercicio sencillo adecuado para principiantes o como calentamiento. Para mantener la tensi\u00f3n continua, aseg\u00farese de que el movimiento sea lento y controlado. El desaf\u00edo aumenta a medida que posiciona los pies m\u00e1s lejos de la pared."
+            }
+        ],
+        "workout": "Push-ups"
+    },
+    {
+        "name": "Elbows Straight",
+        "performance": "Start in the same position as the standard exercise, but keep your elbows straight throughout. Focus on using your shoulders to push against the ground, creating a slight curve in your spine. The range of motion is minimal—about an inch—but it effectively targets the serratus and subscapularis muscles. This variation tends to feel more comfortable when performed on a barbell bench press.",
+        "muscles": [
+            {
+                "name": "Serratus"
+            },
+            {
+                "name": "Subscapularis"
+            },
+            {
+                "name": "Pectorals"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Codos rectos"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Comience en la misma posici\u00f3n que el ejercicio est\u00e1ndar, pero mantenga los codos rectos en todo momento. Conc\u00e9ntrese en usar los hombros para empujar contra el suelo, creando una ligera curva en la columna vertebral. El rango de movimiento es m\u00ednimo, aproximadamente una pulgada, pero se dirige eficazmente a los m\u00fasculos serratos y subescapulares. Esta variaci\u00f3n tiende a sentirse m\u00e1s c\u00f3moda cuando se realiza en un press de banca con barra."
+            }
+        ],
+        "workout": "Push-ups"
+    },
+    {
+        "name": "With weights",
+        "performance": "The movement and technique are consistent with the basic version of the exercise. The key difference is that you add extra resistance by attaching a weight to your waist or belt, or by holding a dumbbell between your feet. If you use added weight, it's even more crucial to follow the safety measures recommended for the standard exercise, as the increased load raises the risk of injury to the muscles involved. Therefore, it’s recommended to slow down the pace and increase the number of repetitions rather than adding more weight. There are machines available (for both dips and pull-ups) that include a weighted plate connected to a cable system designed to attach to your belt, but these machines are not widely used. The same safety considerations for using free weights apply here as well.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (lower part)"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            },
+            {
+                "name": "Pectoralis minor"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con pesas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "El movimiento y la t\u00e9cnica son consistentes con la versi\u00f3n b\u00e1sica del ejercicio. La diferencia clave es que agrega resistencia adicional al adjuntar un peso a su cintura o cintur\u00f3n, o al sostener una mancuerna entre los pies. Si usa peso adicional, es a\u00fan m\u00e1s crucial seguir las medidas de seguridad recomendadas para el ejercicio est\u00e1ndar, ya que la carga aumentada eleva el riesgo de lesiones en los m\u00fasculos involucrados. Por lo tanto, se recomienda reducir la velocidad y aumentar el n\u00famero de repeticiones en lugar de agregar m\u00e1s peso. Hay m\u00e1quinas disponibles (tanto para fondos como para dominadas) que incluyen una placa con peso conectada a un sistema de cables dise\u00f1ado para adjuntarse a su cintur\u00f3n, pero estas m\u00e1quinas no se utilizan ampliamente. Las mismas consideraciones de seguridad para el uso de pesas libres se aplican aqu\u00ed tambi\u00e9n."
+            }
+        ],
+        "workout": "Parallel dips"
+    },
+    {
+        "name": "Body straight",
+        "performance": "In this variation, the downward movement is more vertical, and the torso remains upright rather than leaning forward. This adjustment places greater emphasis on the triceps, while still effectively engaging the lower portion of the chest muscles.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (lower part)"
+            },
+            {
+                "name": "Triceps"
+            },
+            {
+                "name": "Deltoids (anterior)"
+            },
+            {
+                "name": "Pectoralis minor"
+            },
+            {
+                "name": "Latissimus dorsi"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Cuerpo recto"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "En esta variaci\u00f3n, el movimiento hacia abajo es m\u00e1s vertical y el torso permanece erguido en lugar de inclinarse hacia adelante. Este ajuste pone mayor \u00e9nfasis en los tr\u00edceps, mientras compromete efectivamente la parte inferior de los m\u00fasculos pectorales."
+            }
+        ],
+        "workout": "Parallel dips"
+    },
+    {
+        "name": "WIth barbell",
+        "performance": "Hold a short barbell with an overhand grip (palms facing down) and execute the same movement you would with a dumbbell. This variation is less stable than the standard exercise, so be cautious as there is a higher risk of losing your balance.",
+        "muscles": [
+            {
+                "name": "Pectoralis major"
+            },
+            {
+                "name": "Latissimus dorsi"
+            },
+            {
+                "name": "Teres major"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Con barra"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Sostenga una barra corta con un agarre en pronaci\u00f3n (palmas hacia abajo) y ejecute el mismo movimiento que har\u00eda con una mancuerna. Esta variaci\u00f3n es menos estable que el ejercicio est\u00e1ndar, as\u00ed que tenga cuidado ya que hay un mayor riesgo de perder el equilibrio."
+            }
+        ],
+        "workout": "Dumbbell pullover"
+    },
+    {
+        "name": "Crossed bench",
+        "performance": "In this variation, you'll lift your hips so that your glutes are off the ground, and your upper body rests on a bench that is positioned perpendicular to your body. It's important to find your balance before starting the exercise with the dumbbell. This position allows for a deeper stretch if you slightly lower your hips, but be cautious not to overextend. Start with the dumbbell positioned on the bench to one side of your head and place it back there when you finish each set (or get assistance from a partner). This version of the exercise is better suited for experienced athletes.",
+        "muscles": [
+            {
+                "name": "Pectoralis major"
+            },
+            {
+                "name": "Latissimus dorsi"
+            },
+            {
+                "name": "Teres major"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Banco cruzado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "En esta variaci\u00f3n, levantar\u00e1 las caderas para que sus gl\u00fateos no toquen el suelo y su parte superior del cuerpo descanse en un banco que est\u00e1 posicionado perpendicular a su cuerpo. Es importante encontrar su equilibrio antes de comenzar el ejercicio con la mancuerna. Esta posici\u00f3n permite un estiramiento m\u00e1s profundo si baja ligeramente las caderas, pero tenga cuidado de no sobrepasarse. Comience con la mancuerna posicionada en el banco a un lado de su cabeza y col\u00f3quela all\u00ed cuando termine cada serie (o reciba ayuda de un compa\u00f1ero). Esta versi\u00f3n del ejercicio es m\u00e1s adecuada para atletas experimentados."
+            }
+        ],
+        "workout": "Dumbbell pullover"
+    },
+    {
+        "name": "Two hands alternating",
+        "performance": "The form remains the same as the basic version (with the bench either aligned or set crosswise), but here you will use two dumbbells alternately. This allows for focused activation of each side, although this variation is technically more challenging. Overall, it doesn’t provide a significant advantage over the standard exercise.",
+        "muscles": [
+            {
+                "name": "Pectoralis major"
+            },
+            {
+                "name": "Latissimus dorsi"
+            },
+            {
+                "name": "Teres major"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Dos manos alternas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "La forma sigue siendo la misma que la versi\u00f3n b\u00e1sica (con el banco alineado o colocado transversalmente), pero aqu\u00ed usar\u00e1 dos mancuernas alternativamente. Esto permite una activaci\u00f3n enfocada de cada lado, aunque esta variaci\u00f3n es t\u00e9cnicamente m\u00e1s desafiante. En general, no proporciona una ventaja significativa sobre el ejercicio est\u00e1ndar."
+            }
+        ],
+        "workout": "Dumbbell pullover"
+    }
+]

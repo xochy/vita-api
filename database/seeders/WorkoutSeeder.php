@@ -23,6 +23,9 @@ class WorkoutSeeder extends Seeder
             $workouts = json_decode($workoutsJson, true);
 
             foreach ($workouts as $workoutData) {
+                $muscles = $workoutData['muscles'];
+                unset($workoutData['muscles']);
+
                 $translations = $workoutData['translations'];
                 unset($workoutData['translations']);
 
@@ -39,6 +42,16 @@ class WorkoutSeeder extends Seeder
                         'category_id' => $categoryId
                     ]
                 ));
+
+                foreach ($muscles as $muscle) {
+                    $muscleId = DB::table('muscles')
+                        ->where('name', $muscle['name'])
+                        ->value('id');
+
+                    $workout->muscles()->attach($muscleId, [
+                        'priority' => $muscle['priority']
+                    ]);
+                }
 
                 foreach ($translations as $translation) {
                     $workout->translations()->create($translation);

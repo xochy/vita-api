@@ -16,6 +16,7 @@ class MusclesPermissionsSeeder extends Seeder
         // Roles
         $adminRole      = Role::where('name', 'admin')->first();
         $superAdminRole = Role::where('name', 'superAdmin')->first();
+        $user           = Role::where('name', 'user')->first();
 
         // Permission for reading muscles
         Permission::create(
@@ -28,7 +29,8 @@ class MusclesPermissionsSeeder extends Seeder
         )->syncRoles(
             [
                 $superAdminRole,
-                $adminRole
+                $adminRole,
+                $user
             ]
         );
 

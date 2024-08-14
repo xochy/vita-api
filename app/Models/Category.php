@@ -72,11 +72,11 @@ class Category extends Model
     /**
      * Scope a query to only include users with a given name.
      *
-     * @param Builder $builder
+     * @param Builder $query
      * @param string $value
      * @return void
      */
-    public function scopeName(Builder $query, $value): void
+    public function scopeName(Builder $query, string $value): void
     {
         $query->where('name', 'LIKE', "%{$value}%");
     }
@@ -84,11 +84,11 @@ class Category extends Model
     /**
      * Scope a query to only include users with a given description.
      *
-     * @param Builder $builder
-     * @param string $values
+     * @param Builder $query
+     * @param string $value
      * @return void
      */
-    public function scopeDescription(Builder $query, $value): void
+    public function scopeDescription(Builder $query, string $value): void
     {
         $query->where('description', 'LIKE', "%{$value}%");
     }
@@ -96,11 +96,11 @@ class Category extends Model
     /**
      * Scope a query to only include users with a given search term.
      *
-     * @param Builder $builder
+     * @param Builder $query
      * @param string $values
-     * @return Builder
+     * @return void
      */
-    public function scopeSearch(Builder $query, $values): void
+    public function scopeSearch(Builder $query, string $values): void
     {
         foreach (Str::of($values)->explode(' ') as $value) {
 
