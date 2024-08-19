@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class UserSeeder extends Seeder
 {
@@ -13,39 +15,58 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::query()->delete();
+        DB::transaction(function () {
+            $this->deleteExistingUsers();
+            $users = $this->getUsersFromJson();
 
-        // Create a new user with superAdmin role
-        $user = new User([
-            'name'              => 'Super Admin',
-            'email'             => 'superadmin@mail.com',
-            'email_verified_at' => now(),
-            'password'          => bcrypt('password'),
-        ]);
+            foreach ($users as $userData) {
+                $this->processUser($userData);
+            }
+        });
+    }
 
-        $user->save();
-        $user->assignRole('superAdmin');
+    private function deleteExistingUsers(): void
+    {
+        DB::table('users')->delete();
+    }
 
-        // Create a new user with admin role
-        $user = new User([
-            'name'              => 'Admin',
-            'email'             => 'admin@mail.com',
-            'email_verified_at' => now(),
-            'password'          => bcrypt('password'),
-        ]);
+    private function getUsersFromJson(): array
+    {
+        $usersJson = File::get(database_path('seeders/json/users.json'));
+        return json_decode($usersJson, true);
+    }
 
-        $user->save();
-        $user->assignRole('admin');
+    private function processUser(array $userData): void
+    {
+        $password = $userData['password'];
+        unset($userData['password']);
 
-        // Create a new user with user role
-        $user = new User([
-            'name'              => 'User',
-            'email'             => 'user@mail.com',
-            'email_verified_at' => now(),
-            'password'          => bcrypt('password'),
-        ]);
+        $role = $userData['role'];
+        unset($userData['role']);
 
-        $user->save();
-        $user->assignRole('user');
+        $plans = $userData['plans'] ?? [];
+        unset($userData['plans']);
+
+        $user = User::factory()->create(array_merge(
+            $userData,
+            [
+                'email_verified_at' => now(),
+                'password' => bcrypt($password),
+            ]
+        ));
+
+        $user->assignRole($role);
+        $this->attachPlansToUser($user, $plans);
+    }
+
+    private function attachPlansToUser(User $user, array $plans): void
+    {
+        foreach ($plans as $plan) {
+            $planId = DB::table('plans')
+                ->where('name', $plan['name'])
+                ->value('id');
+
+            $user->plans()->attach($planId);
+        }
     }
 }

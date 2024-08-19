@@ -2,117 +2,22 @@
 
 namespace Database\Seeders\permissionsSeeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Traits\PermissionSeederTrait;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class PlansPermissionsSeeder extends Seeder
 {
+    use PermissionSeederTrait;
+
     /**
      * Run the database seeds.
+     * @return void
      */
     public function run(): void
     {
-        // Roles
-        $user           = Role::where('name', 'user')->first();
-        $adminRole      = Role::where('name', 'admin')->first();
-        $superAdminRole = Role::where('name', 'superAdmin')->first();
-
-        // Permission for reading plans
-        Permission::create(
-            [
-                'name'         => 'read plans',
-                'display_name' => 'Leer planes',
-                'action'       => 'read',
-                'subject'      => 'plan'
-            ]
-        )->syncRoles(
-            [
-                $superAdminRole,
-                $adminRole,
-                $user
-            ]
-        );
-
-        // Permission for creating plans
-        Permission::create(
-            [
-                'name'         => 'create plans',
-                'display_name' => 'Crear planes',
-                'action'       => 'create',
-                'subject'      => 'plan'
-            ]
-        )->syncRoles(
-            [
-                $superAdminRole,
-                $adminRole,
-                $user
-            ]
-        );
-
-        // Permission for updating plans
-        Permission::create(
-            [
-                'name'         => 'update plans',
-                'display_name' => 'Actualizar planes',
-                'action'       => 'update',
-                'subject'      => 'plan'
-            ]
-        )->syncRoles(
-            [
-                $superAdminRole,
-                $adminRole,
-                $user
-            ]
-        );
-
-        // Permission for deleting plans
-        Permission::create(
-            [
-                'name'         => 'delete plans',
-                'display_name' => 'Eliminar planes',
-                'action'       => 'delete',
-                'subject'      => 'plan'
-            ]
-        )->syncRoles(
-            [
-                $superAdminRole,
-                $adminRole,
-                $user
-            ]
-        );
-
-        // Permission for restoring plans
-        Permission::create(
-            [
-                'name'         => 'restore plans',
-                'display_name' => 'Restaurar planes',
-                'action'       => 'restore',
-                'subject'      => 'plan'
-            ]
-        )->syncRoles(
-            [
-                $superAdminRole,
-                $adminRole,
-                $user
-            ]
-        );
-
-        // Permission for force deleting plans
-        Permission::create(
-            [
-                'name'         => 'force delete plans',
-                'display_name' => 'Eliminar permanentemente planes',
-                'action'       => 'force delete',
-                'subject'      => 'plan'
-            ]
-        )->syncRoles(
-            [
-                $superAdminRole,
-                $adminRole,
-                $user
-            ]
-        );
+        DB::transaction(function () {
+            $this->processPermission('seeders/json/permissions/plansPermissions.json');
+        });
     }
 }

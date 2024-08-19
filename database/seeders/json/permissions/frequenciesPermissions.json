@@ -1,0 +1,63 @@
+[
+    {
+        "name": "read frequencies",
+        "display_name": "Leer frecuencias",
+        "action": "read",
+        "subject": "frequency",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create frequencies",
+        "display_name": "Crear frecuencias",
+        "action": "create",
+        "subject": "frequency",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update frequencies",
+        "display_name": "Actualizar frecuencias",
+        "action": "update",
+        "subject": "frequency",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete frequencies",
+        "display_name": "Eliminar frecuencias",
+        "action": "delete",
+        "subject": "frequency",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore frequencies",
+        "display_name": "Restaurar frecuencias",
+        "action": "restore",
+        "subject": "frequency",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete frequencies",
+        "display_name": "Eliminar permanentemente frecuencias",
+        "action": "forceDelete",
+        "subject": "frequency",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

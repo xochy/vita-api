@@ -1,0 +1,63 @@
+[
+    {
+        "name": "read variations",
+        "display_name": "Leer variaciones",
+        "action": "read",
+        "subject": "variation",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create variations",
+        "display_name": "Crear variaciones",
+        "action": "create",
+        "subject": "variation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update variations",
+        "display_name": "Actualizar variaciones",
+        "action": "update",
+        "subject": "variation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete variations",
+        "display_name": "Eliminar variaciones",
+        "action": "delete",
+        "subject": "variation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore variations",
+        "display_name": "Restaurar variaciones",
+        "action": "restore",
+        "subject": "variation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete variations",
+        "display_name": "Eliminar permanentemente variaciones",
+        "action": "forceDelete",
+        "subject": "variation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

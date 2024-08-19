@@ -1,0 +1,68 @@
+[
+    {
+        "name": "read routines",
+        "display_name": "Leer rutinas",
+        "action": "read",
+        "subject": "routine",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create routines",
+        "display_name": "Crear rutinas",
+        "action": "create",
+        "subject": "routine",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "update routines",
+        "display_name": "Actualizar rutinas",
+        "action": "update",
+        "subject": "routine",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "delete routines",
+        "display_name": "Eliminar rutinas",
+        "action": "delete",
+        "subject": "routine",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "restore routines",
+        "display_name": "Restaurar rutinas",
+        "action": "restore",
+        "subject": "routine",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "force delete routines",
+        "display_name": "Eliminar permanentemente rutinas",
+        "action": "forceDelete",
+        "subject": "routine",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    }
+]

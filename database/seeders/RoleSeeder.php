@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class RoleSeeder extends Seeder
 {
@@ -13,38 +14,36 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::query()->delete();
-        Permission::query()->delete();
+        DB::transaction(function () {
+            $this->deleteExistingRoles();
+            $this->deleteExistingPermissions();
 
-        /* -------------------------------------------------------------------------- */
-        /*                            Roles specifications                            */
-        /* -------------------------------------------------------------------------- */
+            $roles = $this->getRolesFromJson();
 
-        // Super admin role
-        Role::create(
-            [
-                'name'         => 'superAdmin',
-                'display_name' => 'Super Administrador',
-                'default'      => true,
-            ]
-        );
+            foreach ($roles as $roleData) {
+                $this->processRole($roleData);
+            }
+        });
+    }
 
-        // Admin role
-        Role::create(
-            [
-                'name'         => 'admin',
-                'display_name' => 'Administrador',
-                'default'      => true,
-            ]
-        );
+    private function deleteExistingRoles(): void
+    {
+        DB::table('roles')->delete();
+    }
 
-        // User role
-        Role::create(
-            [
-                'name'         => 'user',
-                'display_name' => 'Usuario',
-                'default'      => true,
-            ]
-        );
+    private function deleteExistingPermissions(): void
+    {
+        DB::table('permissions')->delete();
+    }
+
+    private function getRolesFromJson(): array
+    {
+        $rolesJson = File::get(database_path('seeders/json/roles.json'));
+        return json_decode($rolesJson, true);
+    }
+
+    private function processRole(array $roleData): void
+    {
+        Role::create($roleData);
     }
 }

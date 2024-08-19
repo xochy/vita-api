@@ -1,36 +1,28 @@
 [
     {
-        "name": "Basic",
-        "price": 0,
-        "description": "The basic plan is free and includes access to all features.",
+        "name": "Lost weight",
         "translations": [
             {
                 "locale": "es",
                 "column": "name",
-                "translation": "B\u00e1sico"
-            },
-            {
-                "locale": "es",
-                "column": "description",
-                "translation": "El plan b\u00e1sico es gratuito e incluye acceso a todas las funciones."
+                "translation": "Perder peso"
             }
-        ]
+        ],
+        "goal": "Lose weight",
+        "frequency": "3 times per week",
+        "physicalCondition": "Initial or Beginner"
     },
     {
-        "name": "Premium",
-        "price": 9.99,
-        "description": "The premium plan includes access to all features and exclusive content.",
+        "name": "Gain muscle",
         "translations": [
             {
                 "locale": "es",
                 "column": "name",
-                "translation": "Premium"
-            },
-            {
-                "locale": "es",
-                "column": "description",
-                "translation": "El plan premium incluye acceso a todas las funciones y contenido exclusivo."
+                "translation": "Ganar músculo"
             }
-        ]
+        ],
+        "goal": "Develop specific muscles",
+        "frequency": "4-5 times per week",
+        "physicalCondition": "Advanced"
     }
 ]

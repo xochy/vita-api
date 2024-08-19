@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Muscle;
+use App\Traits\HandlesTranslations;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\File;
 
 class MuscleSeeder extends Seeder
 {
+    use HandlesTranslations;
+
     /**
      * Run the database seeds.
      */
@@ -25,12 +28,15 @@ class MuscleSeeder extends Seeder
                 $translations = $muscleData['translations'];
                 unset($muscleData['translations']);
 
-                $muscle = Muscle::factory($muscleData)->create();
+                $muscle = $this->createMuscle($muscleData);
 
-                foreach ($translations as $translationData) {
-                    $muscle->translations()->create($translationData);
-                }
+                $this->handleTranslations($muscle, $translations);
             }
         });
+    }
+
+    private function createMuscle(array $muscleData): Muscle
+    {
+        return Muscle::factory($muscleData)->create();
     }
 }

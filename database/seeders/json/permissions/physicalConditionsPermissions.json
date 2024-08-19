@@ -1,0 +1,63 @@
+[
+    {
+        "name": "read physical conditions",
+        "display_name": "Leer condiciones físicas",
+        "action": "read",
+        "subject": "physicalCondition",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create physical conditions",
+        "display_name": "Crear condiciones físicas",
+        "action": "create",
+        "subject": "physicalCondition",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update physical conditions",
+        "display_name": "Actualizar condiciones físicas",
+        "action": "update",
+        "subject": "physicalCondition",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete physical conditions",
+        "display_name": "Eliminar condiciones físicas",
+        "action": "delete",
+        "subject": "physicalCondition",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore physical conditions",
+        "display_name": "Restaurar condiciones físicas",
+        "action": "restore",
+        "subject": "physicalCondition",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete physical conditions",
+        "display_name": "Eliminar permanentemente condiciones físicas",
+        "action": "forceDelete",
+        "subject": "physicalCondition",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

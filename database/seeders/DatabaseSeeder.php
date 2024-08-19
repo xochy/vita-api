@@ -17,36 +17,43 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
 
+        // seeders related to permissions
         $this->call(
             [
+                // management permissions seeders
                 UsersPermissionsSeeder::class,
                 RolesPermissionsSeeder::class,
                 PermissionsPermissionsSeeder::class,
-                UserSeeder::class,
+
+                // models permissions seeders
+                PhysicalConditionsPermissionsSeeder::class,
             ]
         );
 
+        // seederes related with catalogs
         $this->call(
             [
+                GoalSeeder::class,
+                MuscleSeeder::class,
                 CategorySeeder::class,
+                FrequencySeeder::class,
+                PhysicalConditionSeeder::class,
             ]
         );
-
-        $this->call(MuscleSeeder::class);
 
         $this->call(
             [
+                // 1. workouts are needed for routines
                 WorkoutSeeder::class,
-                VariationSeeder::class
+                // 2. make sure to seed variations before routines (they are related with workouts)
+                VariationSeeder::class,
+                // 3. routines are needed for plans
+                RoutineSeeder::class,
+                // 4. plans are needed for users
+                PlanSeeder::class,
             ]
         );
 
-        $this->call(RoutineSeeder::class);
-
-        $this->call(GoalSeeder::class);
-        $this->call(FrequencySeeder::class);
-
-        $this->call(PhysicalConditionsPermissionsSeeder::class);
-        $this->call(PhysicalConditionSeeder::class);
+        $this->call(UserSeeder::class,);
     }
 }

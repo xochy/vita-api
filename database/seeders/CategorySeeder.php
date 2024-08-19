@@ -3,33 +3,47 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Traits\HandlesTranslations;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class CategorySeeder extends Seeder
 {
+    use HandlesTranslations;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
         DB::transaction(function () {
-            DB::table('categories')->delete();
-
-            $categoriesJson = File::get(database_path('seeders/json/categories.json'));
-            $categories = json_decode($categoriesJson, true);
+            $this->deleteExistingCategories();
+            $categories = $this->getCategoriesFromJson();
 
             foreach ($categories as $categoryData) {
-                $translations = $categoryData['translations'];
-                unset($categoryData['translations']);
-
-                $category = Category::factory($categoryData)->create();
-
-                foreach ($translations as $translationData) {
-                    $category->translations()->create($translationData);
-                }
+                $this->processCategory($categoryData);
             }
         });
+    }
+
+    private function deleteExistingCategories(): void
+    {
+        DB::table('categories')->delete();
+    }
+
+    private function getCategoriesFromJson(): array
+    {
+        $categoriesJson = File::get(database_path('seeders/json/categories.json'));
+        return json_decode($categoriesJson, true);
+    }
+
+    private function processCategory(array $categoryData): void
+    {
+        $translations = $categoryData['translations'];
+        unset($categoryData['translations']);
+
+        $category = Category::factory($categoryData)->create();
+        $this->handleTranslations($category, $translations);
     }
 }
