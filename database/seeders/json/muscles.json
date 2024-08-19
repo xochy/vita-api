@@ -1,0 +1,434 @@
+[
+    {
+        "name": "Biceps",
+        "description": "The biceps brachii muscle, commonly known as the biceps, is a two-headed muscle located on the front of the upper arm. It is responsible for elbow flexion and forearm supination.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Bíceps"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo bíceps braquial, comúnmente conocido como bíceps, es un músculo de dos cabezas ubicado en la parte delantera del brazo. Es responsable de la flexión del codo y la supinación del antebrazo."
+            }
+        ]
+    },
+    {
+        "name": "Triceps",
+        "description": "The triceps brachii muscle, commonly known as the triceps, is a three-headed muscle located on the back of the upper arm. It is responsible for elbow extension.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Tríceps"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo tríceps braquial, comúnmente conocido como tríceps, es un músculo de tres cabezas ubicado en la parte trasera del brazo. Es responsable de la extensión del codo."
+            }
+        ]
+    },
+    {
+        "name": "Quadriceps",
+        "description": "The quadriceps femoris muscle, commonly known as the quadriceps, is a group of four muscles located on the front of the thigh. It is responsible for knee extension.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Cuádriceps"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo cuádriceps femoral, comúnmente conocido como cuádriceps, es un grupo de cuatro músculos ubicados en la parte delantera del muslo. Es responsable de la extensión de la rodilla."
+            }
+        ]
+    },
+    {
+        "name": "Hamstrings",
+        "description": "The hamstring muscles are a group of three muscles located on the back of the thigh. They are responsible for knee flexion and hip extension.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Isquiotibiales"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos isquiotibiales son un grupo de tres músculos ubicados en la parte trasera del muslo. Son responsables de la flexión de la rodilla y la extensión de la cadera."
+            }
+        ]
+    },
+    {
+        "name": "Glutes",
+        "description": "The gluteus maximus, gluteus medius, and gluteus minimus muscles, commonly known as the glutes, are located in the buttocks. They are responsible for hip extension, abduction, and rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Glúteos"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos glúteo mayor, glúteo medio y glúteo menor, comúnmente conocidos como glúteos, se encuentran en las nalgas. Son responsables de la extensión, abducción y rotación de la cadera."
+            }
+        ]
+    },
+    {
+        "name": "Calves",
+        "description": "The calf muscles, including the gastrocnemius and soleus muscles, are located on the back of the lower leg. They are responsible for ankle plantar flexion.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pantorrillas"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos de la pantorrilla, incluidos los músculos gastrocnemio y sóleo, se encuentran en la parte trasera de la pierna. Son responsables de la flexión plantar del tobillo."
+            }
+        ]
+    },
+    {
+        "name": "Pectorals",
+        "description": "The pectoralis major and pectoralis minor muscles, commonly known as the pecs, are located in the chest. They are responsible for shoulder flexion, adduction, and internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectorales"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos pectoral mayor y pectoral menor, comúnmente conocidos como pectorales, se encuentran en el pecho. Son responsables de la flexión, aducción y rotación interna del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Pectoralis major",
+        "description": "The large and upper chest muscle responsible for push and arm adduction movements. It is commonly worked with exercises like bench press and push-ups.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectoral Mayor"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo grande y superior del pecho responsable de los movimientos de empuje y aducción del brazo."
+            }
+        ]
+    },
+    {
+        "name": "Pectoralis major (clavicular area)",
+        "description": "The clavicular area of the pectoralis major is the upper part of the chest muscle. It is commonly worked with exercises like incline bench press and dumbbell flyes.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectoral Mayor (área clavicular)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El área clavicular del pectoral mayor es la parte superior del músculo del pecho. Comúnmente se trabaja con ejercicios como press de banca inclinado y vuelos con mancuernas."
+            }
+        ]
+    },
+    {
+        "name": "Pectoralis major (lower part)",
+        "description": "The lower part of the pectoralis major is the lower part of the chest muscle. It is commonly worked with exercises like decline bench press and cable crossovers.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectoral Mayor (parte inferior)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "La parte inferior del pectoral mayor es la parte inferior del músculo del pecho. Comúnmente se trabaja con ejercicios como press de banca declinado y cruces de cables."
+            }
+        ]
+    },
+    {
+        "name": "Pectoralis minor",
+        "description": "The small and lower chest muscle responsible for shoulder blade movements. It is commonly worked with exercises like push-ups and dips.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pectoral Menor"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El pequeño y bajo músculo del pecho responsable de los movimientos de la escápula."
+            }
+        ]
+    },
+    {
+        "name": "Deltoids",
+        "description": "The deltoid muscle, commonly known as the delts, is located on the shoulder. It is responsible for shoulder abduction, flexion, and extension.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo deltoides, comúnmente conocido como deltoides, se encuentra en el hombro. Es responsable de la abducción, flexión y extensión del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Deltoids (anterior)",
+        "description": "The anterior deltoid is the front part of the deltoid muscle. It is commonly worked with exercises like front raises and overhead presses.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides (anterior)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El deltoides anterior es la parte frontal del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones frontales y prensas de hombros."
+            }
+        ]
+    },
+    {
+        "name": "Deltoids (exterior)",
+        "description": "The exterior deltoid is the outer part of the deltoid muscle. It is commonly worked with exercises like lateral raises and upright rows.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides (exterior)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El deltoides exterior es la parte externa del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones laterales y filas verticales."
+            }
+        ]
+    },
+    {
+        "name": "Deltoids (lateral)",
+        "description": "The lateral deltoid is the middle part of the deltoid muscle. It is commonly worked with exercises like lateral raises and upright rows.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides (lateral)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El deltoides lateral es la parte media del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones laterales y filas verticales."
+            }
+        ]
+    },
+    {
+        "name": "Deltoids (posterior)",
+        "description": "The posterior deltoid is the rear part of the deltoid muscle. It is commonly worked with exercises like rear delt flyes and face pulls.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides (posterior)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El deltoides posterior es la parte trasera del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones laterales posteriores y tirones de cara."
+            }
+        ]
+    },
+    {
+        "name": "Deltoids (medial)",
+        "description": "The medial deltoid is the side part of the deltoid muscle. It is commonly worked with exercises like lateral raises and upright rows.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Deltoides (medial)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El deltoides medio es la parte lateral del músculo deltoides. Comúnmente se trabaja con ejercicios como elevaciones laterales y filas verticales."
+            }
+        ]
+    },
+    {
+        "name": "Trapezius",
+        "description": "The trapezius muscle, commonly known as the traps, is located on the upper back and neck. It is responsible for shoulder elevation, retraction, and depression.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Trapecio"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo trapecio, comúnmente conocido como trapecios, se encuentra en la parte superior de la espalda y el cuello. Es responsable de la elevación, retracción y depresión del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Rhomboids",
+        "description": "The rhomboid muscles are located between the shoulder blades and help with scapular retraction. They are commonly worked with exercises like rows and pull-ups.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Romboide"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos romboides se encuentran entre las escápulas y ayudan con la retracción escapular. Comúnmente se trabajan con ejercicios como filas y dominadas."
+            }
+        ]
+    },
+    {
+        "name": "Latissimus dorsi",
+        "description": "The latissimus dorsi muscle, commonly known as the lats, is located on the back. It is responsible for shoulder adduction, extension, and internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Dorsales anchos"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo dorsal ancho, comúnmente conocido como dorsales, se encuentra en la espalda. Es responsable de la aducción, extensión y rotación interna del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Abs",
+        "description": "The abdominal muscles, commonly known as the abs, are located in the abdomen. They are responsible for core stability and spinal flexion.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Abdominales"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos abdominales, comúnmente conocidos como abdominales, se encuentran en el abdomen. Son responsables de la estabilidad del núcleo y la flexión espinal."
+            }
+        ]
+    },
+    {
+        "name": "Teres",
+        "description": "The teres major and teres minor muscles are located on the back of the shoulder. They help with shoulder adduction and internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Teres"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los músculos teres mayor y teres menor se encuentran en la parte trasera del hombro. Ayudan con la aducción y rotación interna del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Teres major",
+        "description": "The teres major muscle is located on the back of the shoulder. It helps with shoulder adduction and internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Teres mayor"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo teres mayor se encuentra en la parte trasera del hombro. Ayuda con la aducción y rotación interna del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Coracobrachialis",
+        "description": "The coracobrachialis muscle is located in the upper arm. It helps with shoulder flexion and adduction.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Coracobraquial"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo coracobraquial se encuentra en el brazo. Ayuda con la flexión y aducción del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Serratus",
+        "description": "The serratus muscle is located on the side of the chest. It helps with scapular protraction and shoulder abduction.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Serrato"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo serrato se encuentra en el costado del pecho. Ayuda con la protracción escapular y la abducción del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Serratus anterior",
+        "description": "The serratus anterior muscle is located on the side of the chest. It helps with scapular protraction and shoulder abduction.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Serrato anterior"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo serrato anterior se encuentra en el costado del pecho. Ayuda con la protracción escapular y la abducción del hombro."
+            }
+        ]
+    },
+    {
+        "name": "Subscapularis",
+        "description": "The subscapularis muscle is located on the front of the shoulder blade. It helps with shoulder internal rotation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Subescapular"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "El músculo subescapular se encuentra en la parte delantera de la escápula. Ayuda con la rotación interna del hombro."
+            }
+        ]
+    }
+]

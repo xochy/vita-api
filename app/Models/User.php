@@ -101,7 +101,7 @@ class User extends Authenticatable
      * @param string $value
      * @return void
      */
-    public function scopeName($query, string $value): void
+    public function scopeName(Builder $query, string $value): void
     {
         $query->where('name', 'like', "%$value%");
     }

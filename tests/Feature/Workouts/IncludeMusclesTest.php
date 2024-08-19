@@ -4,9 +4,10 @@ namespace Tests\Feature\Workouts;
 
 use App\Enums\MusclePriorityEnum;
 use App\Models\Muscle;
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
+use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -28,7 +29,6 @@ class IncludeMusclesTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
-    protected Subcategory $subcategory;
 
     public function setUp(): void
     {
@@ -36,17 +36,16 @@ class IncludeMusclesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
+            $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
     }
 
     /** @test */
     public function workouts_can_include_muscles()
     {
-        $workout = Workout::factory()
-            ->for($this->subcategory)
+        $workout = Workout::factory()->forCategory()
             ->hasAttached(
                 Muscle::factory(),
                 [
@@ -86,8 +85,7 @@ class IncludeMusclesTest extends TestCase
     /** @test */
     public function workouts_can_fetch_related_muscles()
     {
-        $workout = Workout::factory()
-            ->for($this->subcategory)
+        $workout = Workout::factory()->forCategory()
             ->hasAttached(
                 Muscle::factory(),
                 [
@@ -133,8 +131,7 @@ class IncludeMusclesTest extends TestCase
     /** @test */
     public function workouts_can_include_muscles_with_different_priorities()
     {
-        $workout = Workout::factory()
-            ->for($this->subcategory)
+        $workout = Workout::factory()->forCategory()
             ->hasAttached(
                 Muscle::factory(),
                 [

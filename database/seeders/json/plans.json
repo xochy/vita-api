@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Lost weight",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Perder peso"
+            }
+        ],
+        "goal": "Lose weight",
+        "frequency": "3 times per week",
+        "physicalCondition": "Initial or Beginner"
+    },
+    {
+        "name": "Gain muscle",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Ganar músculo"
+            }
+        ],
+        "goal": "Develop specific muscles",
+        "frequency": "4-5 times per week",
+        "physicalCondition": "Advanced"
+    }
+]

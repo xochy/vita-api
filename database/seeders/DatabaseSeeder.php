@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Database\Seeders\permissionsSeeders\PermissionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PhysicalConditionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\RolesPermissionsSeeder;
@@ -18,15 +17,43 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
 
-        $this->call(UsersPermissionsSeeder::class);
-        $this->call(RolesPermissionsSeeder::class);
-        $this->call(PermissionsPermissionsSeeder::class);
-        $this->call(UserSeeder::class);
+        // seeders related to permissions
+        $this->call(
+            [
+                // management permissions seeders
+                UsersPermissionsSeeder::class,
+                RolesPermissionsSeeder::class,
+                PermissionsPermissionsSeeder::class,
 
-        $this->call(GoalSeeder::class);
-        $this->call(FrequencySeeder::class);
+                // models permissions seeders
+                PhysicalConditionsPermissionsSeeder::class,
+            ]
+        );
 
-        $this->call(PhysicalConditionsPermissionsSeeder::class);
-        $this->call(PhysicalConditionSeeder::class);
+        // seederes related with catalogs
+        $this->call(
+            [
+                GoalSeeder::class,
+                MuscleSeeder::class,
+                CategorySeeder::class,
+                FrequencySeeder::class,
+                PhysicalConditionSeeder::class,
+            ]
+        );
+
+        $this->call(
+            [
+                // 1. workouts are needed for routines
+                WorkoutSeeder::class,
+                // 2. make sure to seed variations before routines (they are related with workouts)
+                VariationSeeder::class,
+                // 3. routines are needed for plans
+                RoutineSeeder::class,
+                // 4. plans are needed for users
+                PlanSeeder::class,
+            ]
+        );
+
+        $this->call(UserSeeder::class,);
     }
 }

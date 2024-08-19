@@ -1,0 +1,56 @@
+[
+    {
+        "name": "read permissions",
+        "display_name": "Leer permisos",
+        "action": "read",
+        "subject": "permission",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "create permissions",
+        "display_name": "Crear permisos",
+        "action": "create",
+        "subject": "permission",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "update permissions",
+        "display_name": "Actualizar permisos",
+        "action": "update",
+        "subject": "permission",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "delete permissions",
+        "display_name": "Eliminar permisos",
+        "action": "delete",
+        "subject": "permission",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "restore permissions",
+        "display_name": "Restaurar permisos",
+        "action": "restore",
+        "subject": "permission",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "force delete permissions",
+        "display_name": "Eliminar permanentemente permisos",
+        "action": "forceDelete",
+        "subject": "permission",
+        "roles": [
+            "superAdmin"
+        ]
+    }
+]

@@ -1,0 +1,63 @@
+[
+    {
+        "name": "read goals",
+        "display_name": "Leer metas",
+        "action": "read",
+        "subject": "goal",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create goals",
+        "display_name": "Crear metas",
+        "action": "create",
+        "subject": "goal",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update goals",
+        "display_name": "Actualizar metas",
+        "action": "update",
+        "subject": "goal",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete goals",
+        "display_name": "Eliminar metas",
+        "action": "delete",
+        "subject": "goal",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore goals",
+        "display_name": "Restaurar metas",
+        "action": "restore",
+        "subject": "goal",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete goals",
+        "display_name": "Eliminar permanentemente metas",
+        "action": "forceDelete",
+        "subject": "goal",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

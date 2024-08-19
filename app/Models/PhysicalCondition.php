@@ -72,11 +72,11 @@ class PhysicalCondition extends Model
     /**
      * Apply the scope related with name.
      *
-     * @param Builder $builder
-     * @param string
+     * @param Builder $query
+     * @param string $value
      * @return void
      */
-    public function scopeName(Builder $query, $value): void
+    public function scopeName(Builder $query, string $value): void
     {
         $query->where('name', 'LIKE', "%{$value}%");
     }
@@ -84,11 +84,11 @@ class PhysicalCondition extends Model
     /**
      * Apply the scope related with description.
      *
-     * @param Builder $builder
-     * @param string
+     * @param Builder $query
+     * @param string $value
      * @return void
      */
-    public function scopeDescription(Builder $query, $value): void
+    public function scopeDescription(Builder $query, string $value): void
     {
         $query->where('description', 'LIKE', "%{$value}%");
     }
@@ -96,8 +96,8 @@ class PhysicalCondition extends Model
     /**
      * Apply the scope related with search function.
      *
-     * @param Builder $builder
-     * @param string
+     * @param Builder $query
+     * @param string $values
      * @return void
      */
     public function scopeSearch(Builder $query, $values): void

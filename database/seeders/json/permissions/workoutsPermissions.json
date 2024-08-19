@@ -1,0 +1,63 @@
+[
+    {
+        "name": "read workouts",
+        "display_name": "Leer entrenamientos",
+        "action": "read",
+        "subject": "workout",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create workouts",
+        "display_name": "Crear entrenamientos",
+        "action": "create",
+        "subject": "workout",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update workouts",
+        "display_name": "Actualizar entrenamientos",
+        "action": "update",
+        "subject": "workout",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete workouts",
+        "display_name": "Eliminar entrenamientos",
+        "action": "delete",
+        "subject": "workout",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore workouts",
+        "display_name": "Restaurar entrenamientos",
+        "action": "restore",
+        "subject": "workout",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete workouts",
+        "display_name": "Eliminar permanentemente entrenamientos",
+        "action": "forceDelete",
+        "subject": "workout",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

@@ -19,6 +19,11 @@ class WorkoutRequest extends ResourceRequest
     public function rules(): array
     {
         return [
+            'group' => [
+                'required',
+                'string',
+                Rule::in(['Free weights', 'Other exercises', 'Machines']),
+            ],
             'name' => [
                 'required',
                 'string',
@@ -46,7 +51,7 @@ class WorkoutRequest extends ResourceRequest
                 'image',
                 'max:2048',
             ],
-            'subcategory' => [
+            'category' => [
                 JsonApiRule::toOne()
             ],
             'muscles' => [

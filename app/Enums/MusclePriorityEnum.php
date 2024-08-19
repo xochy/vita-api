@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum MusclePriorityEnum: string
 {
-    case PRINCIPAL = 'principal';
-    case SECONDARY = 'secondary';
-    case ANTAGONIST = 'antagonist';
+    case PRINCIPAL = 'Principal';
+    case SECONDARY = 'Secondary';
+    case ANTAGONIST = 'Antagonist';
 
     public static function getAllValues(): array
     {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VariationController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,27 +21,29 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     $server->resource('categories', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('translations');
-            $relationships->hasMany('subcategories');
-        });
-
-    // Definitions for Subcategory model
-    $server->resource('subcategories', JsonApiController::class)
-        ->relationships(function (Relationships $relationships) {
-            $relationships->hasOne('category');
+            $relationships->hasMany('workouts');
         });
 
     // Definitions for Muscle model
     $server->resource('muscles', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('workouts');
+            $relationships->hasMany('variations');
         });
 
     // Definitions for Workout model
     $server->resource('workouts', WorkoutController::class)
         ->relationships(function (Relationships $relationships) {
-            $relationships->hasOne('subcategory');
+            $relationships->hasOne('category');
             $relationships->hasMany('muscles');
             $relationships->hasMany('routines');
+        });
+
+    // Definitions for Variation model
+    $server->resource('variations', VariationController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasOne('workout');
+            $relationships->hasMany('muscles');
         });
 
     // Definitions for Routine model

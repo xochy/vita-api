@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Workouts;
 
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
@@ -20,7 +20,6 @@ class ListWorkoutsTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
-    protected Subcategory $subcategory;
 
     public function setUp(): void
     {
@@ -32,13 +31,12 @@ class ListWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
     }
 
     /** @test */
     public function it_can_fetch_single_workout()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
@@ -66,60 +64,30 @@ class ListWorkoutsTest extends TestCase
     /** @test */
     public function can_fetch_all_workouts()
     {
-        $workouts = Workout::factory()->for($this->subcategory)->count(3)->create();
+        $workouts = Workout::factory()->forCategory()->count(3)->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
-            [
-                [
+            $workouts->map(
+                fn (Workout $workout) => [
                     'type' => self::MODEL_PLURAL_NAME,
-                    'id' => (string) $workouts[0]->getRouteKey(),
+                    'id' => (string) $workout->getRouteKey(),
                     'attributes' => [
-                        'name'        => $workouts[0]->name,
-                        'performance' => $workouts[0]->performance,
-                        'comments'    => $workouts[0]->comments,
-                        'corrections' => $workouts[0]->corrections,
-                        'warnings'    => $workouts[0]->warnings,
-                        'slug'        => $workouts[0]->slug,
+                        'name'        => $workout->name,
+                        'performance' => $workout->performance,
+                        'comments'    => $workout->comments,
+                        'corrections' => $workout->corrections,
+                        'warnings'    => $workout->warnings,
+                        'slug'        => $workout->slug,
                     ],
                     'links' => [
-                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[0])
+                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
                     ]
-                ],
-                [
-                    'type' => self::MODEL_PLURAL_NAME,
-                    'id' => (string) $workouts[1]->getRouteKey(),
-                    'attributes' => [
-                        'name'        => $workouts[1]->name,
-                        'performance' => $workouts[1]->performance,
-                        'comments'    => $workouts[1]->comments,
-                        'corrections' => $workouts[1]->corrections,
-                        'warnings'    => $workouts[1]->warnings,
-                        'slug'        => $workouts[1]->slug,
-                    ],
-                    'links' => [
-                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[1])
-                    ]
-                ],
-                [
-                    'type' => self::MODEL_PLURAL_NAME,
-                    'id' => (string) $workouts[2]->getRouteKey(),
-                    'attributes' => [
-                        'name'        => $workouts[2]->name,
-                        'performance' => $workouts[2]->performance,
-                        'comments'    => $workouts[2]->comments,
-                        'corrections' => $workouts[2]->corrections,
-                        'warnings'    => $workouts[2]->warnings,
-                        'slug'        => $workouts[2]->slug,
-                    ],
-                    'links' => [
-                        'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workouts[2])
-                    ]
-                ],
-            ]
+                ]
+            )->all()
         );
     }
 }

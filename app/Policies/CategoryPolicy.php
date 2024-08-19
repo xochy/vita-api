@@ -78,10 +78,10 @@ class CategoryPolicy
     }
 
     /**
-     * Determine whether the user can view the category's subcategories.
+     * Determine whether the user can view the category's workouts.
      */
-    public function viewSubcategories(User $user, Category $category): bool
+    public function viewWorkouts(User $user, Category $category): bool
     {
-        return $user->can('read subcategories');
+        return $user->can('read workouts');
     }
 }

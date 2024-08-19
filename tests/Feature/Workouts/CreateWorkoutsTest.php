@@ -3,8 +3,8 @@
 namespace Tests\Feature\Workouts;
 
 use App\Enums\MusclePriorityEnum;
+use App\Models\Category;
 use App\Models\Muscle;
-use App\Models\Subcategory;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\RoleSeeder;
@@ -23,8 +23,8 @@ class CreateWorkoutsTest extends TestCase
     const MODEL_PLURAL_NAME = 'workouts';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.store';
 
-    const BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME = 'subcategory';
-    const BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME = 'subcategories';
+    const BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME = 'category';
+    const BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME = 'categories';
 
     const BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_SINGLE_NAME = 'muscle';
     const BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME = 'muscles';
@@ -40,7 +40,7 @@ class CreateWorkoutsTest extends TestCase
     const MODEL_IMAGE_ROUTE_PATH = 'app/public/1/';
 
     protected User $user;
-    protected Subcategory $subcategory;
+    protected Category $category;
 
     // For making relationship test with 3 muscles
     protected Muscle $muscle1;
@@ -57,7 +57,7 @@ class CreateWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
+        $this->category = Category::factory()->create();
 
         // For making relationship test with 3 muscles
         $this->muscle1 = Muscle::factory()->create();
@@ -72,11 +72,13 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_IMAGE => $file
-            ]
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ]
+            )
+        );
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -97,15 +99,17 @@ class CreateWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_as_admin_can_create_workouts_including_subcategory()
+    public function authenticated_users_as_admin_can_create_workouts_including_category()
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_IMAGE => $file
-            ]
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ]
+            )
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -113,10 +117,10 @@ class CreateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $workout,
             'relationships' => [
-                self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
                     'data' => [
-                        'type' => self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME,
-                        'id' => (string) $this->subcategory->getRouteKey()
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
                     ]
                 ],
             ]
@@ -124,15 +128,15 @@ class CreateWorkoutsTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
-            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))->dump()
             ->assertCreated();
 
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                'id'             => Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey(),
-                'subcategory_id' => $this->subcategory->getRouteKey(),
+                'id' => Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey(),
+                'category_id' => $this->category->getRouteKey(),
                 self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
                 self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
@@ -149,11 +153,13 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_IMAGE => $file
-            ]
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ]
+            )
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -161,10 +167,10 @@ class CreateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $workout,
             'relationships' => [
-                self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
                     'data' => [
-                        'type' => self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME,
-                        'id' => (string) $this->subcategory->getRouteKey()
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
                     ]
                 ],
                 self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME => [
@@ -185,19 +191,19 @@ class CreateWorkoutsTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
             ->includePaths(self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
         $workoutId = Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
 
-        // Verify BelongsTo relationship with Subcategory model and Workout data
+        // Verify BelongsTo relationship with category model and Workout data
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                'id'             => $workoutId,
-                'subcategory_id' => $this->subcategory->getRouteKey(),
+                'id' => $workoutId,
+                'category_id' => $this->category->getRouteKey(),
                 self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
                 self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
@@ -210,9 +216,9 @@ class CreateWorkoutsTest extends TestCase
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_MUSCLE_WORKOUT,
             [
-                'muscle_id'  => $this->muscle1->getRouteKey(),
+                'muscle_id' => $this->muscle1->getRouteKey(),
                 'workout_id' => $workoutId,
-                'priority'   => MusclePriorityEnum::PRINCIPAL
+                'priority' => MusclePriorityEnum::PRINCIPAL
             ]
         );
 
@@ -224,11 +230,13 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_IMAGE => $file
-            ]
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ]
+            )
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -236,10 +244,10 @@ class CreateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $workout,
             'relationships' => [
-                self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
                     'data' => [
-                        'type' => self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME,
-                        'id' => (string) $this->subcategory->getRouteKey()
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
                     ]
                 ],
                 self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME => [
@@ -278,24 +286,24 @@ class CreateWorkoutsTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
             ->includePaths(self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
         $workoutId = Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
 
-        // Verify BelongsTo relationship with Subcategory model and Workout data
+        // Verify BelongsTo relationship with category model and Workout data
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                'id'             => $workoutId,
-                'subcategory_id' => $this->subcategory->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                'id' => $workoutId,
+                'category_id' => $this->category->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => $workout[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
             ]
         );
 
@@ -303,27 +311,27 @@ class CreateWorkoutsTest extends TestCase
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_MUSCLE_WORKOUT,
             [
-                'muscle_id'  => $this->muscle1->getRouteKey(),
+                'muscle_id' => $this->muscle1->getRouteKey(),
                 'workout_id' => $workoutId,
-                'priority'   => MusclePriorityEnum::PRINCIPAL
+                'priority' => MusclePriorityEnum::PRINCIPAL
             ]
         );
 
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_MUSCLE_WORKOUT,
             [
-                'muscle_id'  => $this->muscle2->getRouteKey(),
+                'muscle_id' => $this->muscle2->getRouteKey(),
                 'workout_id' => $workoutId,
-                'priority'   => MusclePriorityEnum::SECONDARY
+                'priority' => MusclePriorityEnum::SECONDARY
             ]
         );
 
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_MUSCLE_WORKOUT,
             [
-                'muscle_id'  => $this->muscle3->getRouteKey(),
+                'muscle_id' => $this->muscle3->getRouteKey(),
                 'workout_id' => $workoutId,
-                'priority'   => MusclePriorityEnum::ANTAGONIST
+                'priority' => MusclePriorityEnum::ANTAGONIST
             ]
         );
 
@@ -335,20 +343,22 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_IMAGE => $file
-            ]
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ]
+            )
+        );
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $workout,
             'relationships' => [
-                self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
                     'data' => [
-                        'type' => self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME,
-                        'id' => (string) $this->subcategory->getRouteKey()
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
                     ]
                 ]
             ]
@@ -358,7 +368,7 @@ class CreateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Forbidden (403)
@@ -384,21 +394,23 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_NAME => '',
-                self::MODEL_ATTRIBUTE_IMAGE => $file
-            ],
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_NAME => '',
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ],
+            )
+        );
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $workout,
             'relationships' => [
-                self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
                     'data' => [
-                        'type' => self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME,
-                        'id' => (string) $this->subcategory->getRouteKey()
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
                     ]
                 ]
             ]
@@ -406,7 +418,7 @@ class CreateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -429,21 +441,23 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_PERFORMANCE => '',
-                self::MODEL_ATTRIBUTE_IMAGE => $file
-            ]
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_PERFORMANCE => '',
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ]
+            )
+        );
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $workout,
             'relationships' => [
-                self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
                     'data' => [
-                        'type' => self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME,
-                        'id' => (string) $this->subcategory->getRouteKey()
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
                     ]
                 ]
             ]
@@ -451,7 +465,7 @@ class CreateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -474,14 +488,16 @@ class CreateWorkoutsTest extends TestCase
     {
         $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
 
-        $workout = array_filter(Workout::factory()->raw(
-            [
-                self::MODEL_ATTRIBUTE_COMMENTS    => '',
-                self::MODEL_ATTRIBUTE_CORRECTIONS => '',
-                self::MODEL_ATTRIBUTE_WARNINGS    => '',
-                self::MODEL_ATTRIBUTE_IMAGE       => $file
-            ]
-        ));
+        $workout = array_filter(
+            Workout::factory()->raw(
+                [
+                    self::MODEL_ATTRIBUTE_COMMENTS => '',
+                    self::MODEL_ATTRIBUTE_CORRECTIONS => '',
+                    self::MODEL_ATTRIBUTE_WARNINGS => '',
+                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                ]
+            )
+        );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
 
@@ -489,10 +505,10 @@ class CreateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $workout,
             'relationships' => [
-                self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
                     'data' => [
-                        'type' => self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_PLURAL_NAME,
-                        'id' => (string) $this->subcategory->getRouteKey()
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
                     ]
                 ]
             ]
@@ -500,14 +516,14 @@ class CreateWorkoutsTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->includePaths(self::BELONGS_TO_SUBCATEGORY_RELATIONSHIP_SINGLE_NAME)
-            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))->dump()
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_NAME => $workout[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
             ]
         );

@@ -3,8 +3,8 @@
 namespace Tests\Feature\Workouts;
 
 use App\Enums\MusclePriorityEnum;
+use App\Models\Category;
 use App\Models\Muscle;
-use App\Models\Subcategory;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\RoleSeeder;
@@ -12,7 +12,6 @@ use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -39,7 +38,6 @@ class UpdateWorkoutsTest extends TestCase
     const MODEL_WARNINGS_ATTRIBUTE_VALUE = 'warnings changed';
 
     protected User $user;
-    protected Subcategory $subcategory;
     protected UploadedFile $file;
 
     public function setUp(): void
@@ -52,7 +50,6 @@ class UpdateWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
 
         Storage::disk('public')->deleteDirectory('.');
 
@@ -62,7 +59,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function guests_users_cannot_update_workouts()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -87,7 +84,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_can_update_workouts()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -124,7 +121,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function can_update_the_workout_name_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -157,7 +154,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function can_update_the_workout_performance_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -190,7 +187,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function can_update_the_workout_comments_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -223,7 +220,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function can_update_the_workout_corrections_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -256,7 +253,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function can_update_the_workout_warnings_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -287,19 +284,19 @@ class UpdateWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function can_update_the_workout_subcategory_only()
+    public function can_update_the_workout_category_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
-        $newSubcategory = Subcategory::factory()->forCategory()->create();
+        $workout = Workout::factory()->forCategory()->create();
+        $newCategory = Category::factory()->create();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
             'id' => (string) $workout->getRouteKey(),
             'relationships' => [
-                'subcategory' => [
+                'category' => [
                     'data' => [
-                        'type' => 'subcategories',
-                        'id' => (string) $newSubcategory->getRouteKey()
+                        'type' => 'categories',
+                        'id' => (string) $newCategory->getRouteKey()
                     ]
                 ]
             ]
@@ -315,8 +312,8 @@ class UpdateWorkoutsTest extends TestCase
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                'id'             => $workout->getRouteKey(),
-                'subcategory_id' => $newSubcategory->getRouteKey(),
+                'id'          => $workout->getRouteKey(),
+                'category_id' => $newCategory->getRouteKey(),
                 self::MODEL_ATTRIBUTE_NAME        => $workout->name,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
                 self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
@@ -329,8 +326,8 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function can_update_the_workout_muscles_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
-        $newSubcategory = Subcategory::factory()->forCategory()->create();
+        $workout = Workout::factory()->forCategory()->create();
+        $newCategory = Category::factory()->create();
 
         $muscles = Muscle::factory()->count(3)->create();
 
@@ -338,10 +335,10 @@ class UpdateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'id' => (string) $workout->getRouteKey(),
             'relationships' => [
-                'subcategory' => [
+                'category' => [
                     'data' => [
-                        'type' => 'subcategories',
-                        'id' => (string) $newSubcategory->getRouteKey()
+                        'type' => 'categories',
+                        'id' => (string) $newCategory->getRouteKey()
                     ]
                 ],
                 'muscles' => [
@@ -417,10 +414,10 @@ class UpdateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'id' => (string) $workout->getRouteKey(),
             'relationships' => [
-                'subcategory' => [
+                'category' => [
                     'data' => [
-                        'type' => 'subcategories',
-                        'id' => (string) $newSubcategory->getRouteKey()
+                        'type' => 'categories',
+                        'id' => (string) $newCategory->getRouteKey()
                     ]
                 ],
                 'muscles' => [
@@ -487,7 +484,7 @@ class UpdateWorkoutsTest extends TestCase
     /** @test */
     public function can_update_the_workout_image_only()
     {
-        $workout = Workout::factory()->for($this->subcategory)->create();
+        $workout = Workout::factory()->forCategory()->create();
 
         $file = UploadedFile::fake()->image($fileName = 'Test.jpg');
 

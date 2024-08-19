@@ -1,0 +1,63 @@
+[
+    {
+        "name": "read categories",
+        "display_name": "Leer categor\u00edas",
+        "action": "read",
+        "subject": "category",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create categories",
+        "display_name": "Crear categor\u00edas",
+        "action": "create",
+        "subject": "category",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update categories",
+        "display_name": "Actualizar categor\u00edas",
+        "action": "update",
+        "subject": "category",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete categories",
+        "display_name": "Eliminar categor\u00edas",
+        "action": "delete",
+        "subject": "category",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore categories",
+        "display_name": "Restaurar categor\u00edas",
+        "action": "restore",
+        "subject": "category",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete categories",
+        "display_name": "Eliminar permanentemente categor\u00edas",
+        "action": "forceDelete",
+        "subject": "category",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

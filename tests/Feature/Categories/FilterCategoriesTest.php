@@ -56,11 +56,13 @@ class FilterCategoriesTest extends TestCase
     public function can_filter_categories_by_name()
     {
         Category::factory()->count(3)
-            ->state(new Sequence(
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
-            ))
+            ->state(
+                new Sequence(
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
+                )
+            )
             ->create();
 
         $url = route(
@@ -81,11 +83,13 @@ class FilterCategoriesTest extends TestCase
     public function can_filter_categories_by_description()
     {
         Category::factory()->count(3)
-            ->state(new Sequence(
-                ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
-                ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
-                ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_DESCRIPTION],
-            ))
+            ->state(
+                new Sequence(
+                    ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
+                    ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
+                    ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_DESCRIPTION],
+                )
+            )
             ->create();
 
         $url = route(
@@ -106,20 +110,22 @@ class FilterCategoriesTest extends TestCase
     public function can_filter_categories_by_name_and_description()
     {
         Category::factory()->count(3)
-            ->state(new Sequence(
-                [
-                    'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME,
-                    'description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION
-                ],
-                [
-                    'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME,
-                    'description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION
-                ],
-                [
-                    'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME,
-                    'description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_DESCRIPTION
-                ],
-            ))
+            ->state(
+                new Sequence(
+                    [
+                        'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME,
+                        'description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION
+                    ],
+                    [
+                        'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME,
+                        'description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION
+                    ],
+                    [
+                        'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME,
+                        'description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_DESCRIPTION
+                    ],
+                )
+            )
             ->create();
 
         $url = route(
@@ -143,8 +149,6 @@ class FilterCategoriesTest extends TestCase
     /** @test */
     public function cannot_filter_categories_by_unknown_filters()
     {
-        Category::factory()->create();
-
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
             [
@@ -159,7 +163,7 @@ class FilterCategoriesTest extends TestCase
         $response->assertError(
             400,
             [
-                'title'  => 'Invalid Query Parameter',
+                'title' => 'Invalid Query Parameter',
                 'detail' => 'Filter parameter unknown is not allowed.',
                 'source' => ['parameter' => 'filter'],
             ]
@@ -173,7 +177,7 @@ class FilterCategoriesTest extends TestCase
         $response->assertError(
             400,
             [
-                'title'  => 'Parámetro de Consulta No Válido',
+                'title' => 'Parámetro de Consulta No Válido',
                 'detail' => 'El parámetro de fitro unknown no está permido.',
                 'source' => ['parameter' => 'filter'],
             ]
@@ -184,11 +188,13 @@ class FilterCategoriesTest extends TestCase
     public function can_search_categories_by_name()
     {
         Category::factory()->count(3)
-            ->state(new Sequence(
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
-            ))
+            ->state(
+                new Sequence(
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
+                )
+            )
             ->create();
 
         $url = route(
@@ -209,11 +215,13 @@ class FilterCategoriesTest extends TestCase
     public function can_search_categories_by_description()
     {
         Category::factory()->count(3)
-            ->state(new Sequence(
-                ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
-                ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
-                ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_DESCRIPTION],
-            ))
+            ->state(
+                new Sequence(
+                    ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION],
+                    ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION],
+                    ['description' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_DESCRIPTION],
+                )
+            )
             ->create();
 
         $url = route(
@@ -234,11 +242,13 @@ class FilterCategoriesTest extends TestCase
     public function can_search_categories_by_name_with_multiple_terms()
     {
         Category::factory()->count(3)
-            ->state(new Sequence(
-                ['name' => self::MODEL_EXTRA_SEARCHING_TERM . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME],
-            ))
+            ->state(
+                new Sequence(
+                    ['name' => self::MODEL_EXTRA_SEARCHING_TERM . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME],
+                )
+            )
             ->create();
 
         $url = route(

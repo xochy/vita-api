@@ -33,6 +33,7 @@ class WorkoutSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('group'),
             Str::make('name')->sortable(),
             Str::make('performance'),
             Str::make('comments'),
@@ -46,7 +47,7 @@ class WorkoutSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            BelongsTo::make('subcategory'),
+            BelongsTo::make('category'),
             BelongsToMany::make('muscles')->fields(
                 [
                     'priority'
@@ -70,6 +71,7 @@ class WorkoutSchema extends Schema
             Scope::make('comments'),
             Scope::make('corrections'),
             Scope::make('warnings'),
+            Scope::make('search'),
         ];
     }
 

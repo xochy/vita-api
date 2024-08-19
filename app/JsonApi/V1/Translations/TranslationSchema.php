@@ -45,8 +45,8 @@ class TranslationSchema extends Schema
                 'workouts',
                 'routines',
                 'categories',
+                'variations',
                 'frequencies',
-                'subcategories',
                 'physical-conditions',
             )
         ];

@@ -1,0 +1,63 @@
+[
+    {
+        "name": "read muscles",
+        "display_name": "Leer músculos",
+        "action": "read",
+        "subject": "muscle",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create muscles",
+        "display_name": "Crear músculos",
+        "action": "create",
+        "subject": "muscle",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update muscles",
+        "display_name": "Actualizar músculos",
+        "action": "update",
+        "subject": "muscle",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete muscles",
+        "display_name": "Eliminar músculos",
+        "action": "delete",
+        "subject": "muscle",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore muscles",
+        "display_name": "Restaurar músculos",
+        "action": "restore",
+        "subject": "muscle",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete muscles",
+        "display_name": "Eliminar permanentemente músculos",
+        "action": "forceDelete",
+        "subject": "muscle",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

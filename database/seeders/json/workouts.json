@@ -1,0 +1,626 @@
+[
+    {
+        "name": "Bench press",
+        "performance": "Lie on your back on the bench, making sure your head and back are fully supported, and keep your feet firmly on the floor. Position yourself so the bar is directly above your eyes, and grip it with your hands slightly wider than shoulder-width apart, using an overhand grip with your thumbs under the bar. Take a deep breath before lifting the bar off its supports, and then align it with your chest. Lower your elbows out to the sides until the bar is just above the center of your chest, then push it upward in a straight line. Inhale as you lower the bar, and exhale as you push it back up.",
+        "comments": "This is a foundational exercise. It's challenging but straightforward; it demands focus and often the assistance of a spotter. If the bench is elevated, placing your feet on a step can help prevent excessive arching of the lower back. Stability is key. You might arch your back (which can generate more power) to finish a set, but only if you're struggling with the final rep and don't have a spotter. Be cautious when placing the bar back on its rack after completing the set. Deviating from the standard path (like lowering the bar toward the shoulders or abdomen) is not advisable and generally doesn't offer any added benefits. Although the biceps are considered an opposing muscle group in this exercise, they still bear some load during the bench press. This highlights how a muscle, even when primarily moving in one direction, can support its opposing muscle group depending on the body part in focus and other variables.",
+        "corrections": "Focus on maintaining proper form by keeping your feet flat on the floor and your lower back slightly arched. Ensure that your wrists remain straight and aligned with your elbows throughout the movement. Lower the barbell to just below your chest, not your neck, to avoid shoulder strain.",
+        "warnings": "Avoid bouncing the bar off your chest, as this can lead to injury and reduced muscle engagement. Always use a spotter for heavy lifts to prevent accidents. Overloading the bar can compromise your form, increasing the risk of shoulder, wrist, or lower back injury.",
+        "muscles": [
+            {
+                "name": "Pectoralis major",
+                "priority": "Principal"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Subscapularis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Biceps",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (posterior)",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Press de banca"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Acu\u00e9stese boca arriba en el banco, asegur\u00e1ndose de que su cabeza y espalda est\u00e9n completamente apoyadas y manteniendo los pies firmemente en el suelo. Posicione la barra directamente sobre sus ojos y suj\u00e9tela con las manos ligeramente m\u00e1s anchas que el ancho de los hombros, usando un agarre por encima con los pulgares debajo de la barra. Respire profundamente antes de levantar la barra de sus soportes y luego alinee con su pecho. Baje los codos hacia los lados hasta que la barra est\u00e9 justo encima del centro de su pecho y luego emp\u00fajela hacia arriba en l\u00ednea recta. Inhale al bajar la barra y exhale al empujarla hacia arriba."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Este es un ejercicio fundamental. Es desafiante pero sencillo; exige concentraci\u00f3n y a menudo la asistencia de un observador. Si el banco est\u00e1 elevado, colocar los pies en un escal\u00f3n puede ayudar a prevenir el arqueo excesivo de la parte baja de la espalda. La estabilidad es clave. Puede arquear la espalda (lo que puede generar m\u00e1s potencia) para terminar un set, pero solo si tiene dificultades con la \u00faltima repetici\u00f3n y no tiene un observador. Tenga cuidado al colocar la barra de nuevo en su soporte despu\u00e9s de completar el set. No es aconsejable desviarse del camino est\u00e1ndar (como bajar la barra hacia los hombros o el abdomen) y generalmente no ofrece beneficios adicionales. Aunque los b\u00edceps se consideran un grupo muscular opuesto en este ejercicio, todav\u00eda soportan algo de carga durante el press de banca. Esto destaca c\u00f3mo un m\u00fasculo, incluso cuando se mueve principalmente en una direcci\u00f3n, puede apoyar a su grupo muscular opuesto dependiendo de la parte del cuerpo en foco y otras variables."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Conc\u00e9ntrese en mantener una forma adecuada manteniendo los pies planos en el suelo y la parte baja de la espalda ligeramente arqueada. Aseg\u00farese de que sus mu\u00f1ecas permanezcan rectas y alineadas con sus codos durante todo el movimiento. Baje la barra hasta justo debajo de su pecho, no su cuello, para evitar la tensi\u00f3n en los hombros."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite rebotar la barra en el pecho, ya que esto puede provocar lesiones y reducir la participaci\u00f3n muscular. Siempre use un observador para levantamientos pesados para prevenir accidentes. Sobrecargar la barra puede comprometer su forma, aumentando el riesgo de lesiones en los hombros, mu\u00f1ecas o parte baja de la espalda."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    },
+    {
+        "name": "Incline bench press",
+        "performance": "Sit back on the bench, which should be set at an angle of no more than 30 to 45 degrees. Ensure your feet are flat on the floor and that your back and head are fully supported. Grasp the bar, positioned directly above your forehead, with an overhand grip. Your forearms should be vertical to the ground, and your hands should be slightly wider than shoulder-width apart. Inhale before lifting the bar from its rack. Lower the bar until it lightly touches the upper portion of your chest, then press it upward in a straight line. Keep your elbows flared out from your body. Exhale as you complete the lift.",
+        "comments": "The bench can be adjusted to an incline of up to 60 or 70°, which places more emphasis on the upper section of the pectoralis major. However, this also shifts a significant portion of the load to the shoulders. While this part of the chest is important and should not be neglected, it often gets less attention compared to the lower part. Contrary to common belief, targeting this area does not prevent or correct sagging breasts in women, although the exercise remains beneficial. It's important to note that certain muscles, like the pectoralis, latissimus dorsi, and gluteus, can be trained by focusing on specific regions due to the orientation of the muscle fibers. However, bodybuilders often exaggerate the effects of isolating different sections of a single muscle group. In reality, this is usually not possible to the extent that is often claimed. The middle and outer portions of the pectoralis are engaged during movements involving horizontal adduction of the arm against resistance, such as during bench press exercises.",
+        "corrections": "Ensure your feet are flat on the floor and your back is firmly pressed against the bench. Avoid arching your back excessively, as this can strain your lower back. Maintain a controlled movement, lowering the barbell to your upper chest and pressing it back up with a steady motion.",
+        "warnings": "Never lock out your elbows completely at the top of the lift to avoid joint strain. If you experience any sharp pain or discomfort in your shoulders, stop the exercise immediately and reassess your form or weight.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (clavicular area)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (medial)",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Subscapularis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Biceps",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (posterior)",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Press de banca inclinado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Si\u00e9ntese en el banco, que debe estar ajustado a un \u00e1ngulo de no m\u00e1s de 30 a 45 grados. Aseg\u00farese de que los pies est\u00e9n planos en el suelo y de que la espalda y la cabeza est\u00e9n completamente apoyadas. Agarre la barra, posicionada directamente sobre su frente, con un agarre por encima. Sus antebrazos deben ser verticales al suelo y sus manos deben estar ligeramente m\u00e1s anchas que el ancho de los hombros. Inhale antes de levantar la barra de su soporte. Baje la barra hasta que toque ligeramente la parte superior de su pecho y luego presi\u00f3nela hacia arriba en l\u00ednea recta. Mantenga los codos alejados de su cuerpo. Exhale al completar el levantamiento."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "El banco se puede ajustar a un \u00e1ngulo de hasta 60 o 70\u00b0, lo que pone m\u00e1s \u00e9nfasis en la secci\u00f3n superior del pectoral mayor. Sin embargo, esto tambi\u00e9n desplaza una parte significativa de la carga a los hombros. Si bien esta parte del pecho es importante y no debe ser descuidada, a menudo recibe menos atenci\u00f3n en comparaci\u00f3n con la parte inferior. Contrariamente a la creencia com\u00fan, apuntar a esta \u00e1rea no previene ni corrige la ca\u00edda de los senos en las mujeres, aunque el ejercicio sigue siendo beneficioso. Es importante tener en cuenta que ciertos m\u00fasculos, como el pectoral, el dorsal ancho y los gl\u00fateos, pueden ser entrenados enfoc\u00e1ndose en regiones espec\u00edficas debido a la orientaci\u00f3n de las fibras musculares. Sin embargo, los culturistas a menudo exageran los efectos de aislar diferentes secciones de un solo grupo muscular. En realidad, esto generalmente no es posible en la medida que se reclama a menudo. Las porciones media y externa del pectoral se activan durante los movimientos que implican aducci\u00f3n horizontal del brazo contra resistencia, como durante los ejercicios de press de banca."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Aseg\u00farese de que los pies est\u00e9n planos en el suelo y la espalda est\u00e9 firmemente presionada contra el banco. Evite arquear excesivamente la espalda, ya que esto puede tensar la parte baja de la espalda. Mantenga un movimiento controlado, bajando la barra hasta su pecho superior y presion\u00e1ndola hacia arriba con un movimiento constante."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Nunca bloquee completamente los codos en la parte superior del levantamiento para evitar la tensi\u00f3n en las articulaciones. Si experimenta alg\u00fan dolor agudo o molestia en los hombros, detenga el ejercicio de inmediato y vuelva a evaluar su forma o peso."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    },
+    {
+        "name": "Decline bench press",
+        "performance": "Lie face up on a decline bench set at an angle between 20° and 30°, with your legs secured. Grasp the barbell, positioned directly above your eyes, using an overhand grip. Breathe in before lowering the barbell from its rack and bring it down until it nearly touches your chest. Push the barbell straight up. Ensure your forearms move perpendicular to the floor, and keep your elbows extended away from your body, similar to previous exercises. Exhale as you complete the lift.",
+        "comments": "This particular exercise is now rarely used (or should be) as it targets the lower part of the chest, which can be effectively worked with more conventional exercises. Additionally, it's not advisable to perform intense workouts with your head positioned below your heart for extended periods, as the body is not optimized for strenuous activity in an inverted position. Ideally, the bench should not be angled more than approximately 35°, and it's important to have assistance when performing this exercise. Contrary to what some sources and trainers might suggest, this variation does not specifically 'sculpt' the lower pectoral muscle. Instead, achieving this effect involves regular chest workouts, proper nutrition, and cardiovascular exercises.",
+        "corrections": "Ensure your shoulders are retracted and your chest is up to prevent shoulder strain. Keep your feet flat on the ground and your lower back pressed against the bench to maintain stability and proper form.",
+        "warnings": "Avoid letting the barbell drop too quickly to prevent injury and maintain control. Do not flare your elbows out excessively, as this can put undue stress on your shoulder joints.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (lower part)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Pectoralis minor",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Subscapularis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Biceps",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (posterior)",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Press de banca declinado"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Acu\u00e9stese boca arriba en un banco declinado ajustado a un \u00e1ngulo entre 20\u00b0 y 30\u00b0, con las piernas aseguradas. Agarre la barra, posicionada directamente sobre sus ojos, usando un agarre por encima. Respire antes de bajar la barra de su soporte y b\u00e1jela hasta que casi toque su pecho. Empuje la barra recta hacia arriba. Aseg\u00farese de que sus antebrazos se muevan perpendicularmente al suelo y mantenga los codos extendidos lejos de su cuerpo, similar a ejercicios anteriores. Exhale al completar el levantamiento."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Este ejercicio en particular ahora rara vez se usa (o deber\u00eda) ya que apunta a la parte inferior del pecho, que se puede trabajar de manera efectiva con ejercicios m\u00e1s convencionales. Adem\u00e1s, no es aconsejable realizar entrenamientos intensos con la cabeza posicionada por debajo de su coraz\u00f3n durante per\u00edodos prolongados, ya que el cuerpo no est\u00e1 optimizado para la actividad extenuante en una posici\u00f3n invertida. Idealmente, el banco no debe estar inclinado m\u00e1s de aproximadamente 35\u00b0 y es importante tener asistencia al realizar este ejercicio. Contrariamente a lo que algunas fuentes y entrenadores podr\u00edan sugerir, esta variaci\u00f3n no 'esculpe' espec\u00edficamente el m\u00fasculo pectoral inferior. En cambio, lograr este efecto implica entrenamientos regulares de pecho, nutrici\u00f3n adecuada y ejercicios cardiovasculares."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Aseg\u00farese de que los hombros est\u00e9n retra\u00eddos y el pecho est\u00e9 hacia arriba para prevenir la tensi\u00f3n en los hombros. Mantenga los pies planos en el suelo y la parte baja de la espalda presionada contra el banco para mantener la estabilidad y la forma adecuada."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite que la barra caiga demasiado r\u00e1pido para prevenir lesiones y mantener el control. No extienda excesivamente los codos, ya que esto puede poner un estr\u00e9s indebido en las articulaciones de los hombros."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    },
+    {
+        "name": "Dumbbell press",
+        "performance": "Lie on your back with your head and shoulders supported by the bench and your feet either flat on the ground or elevated on a step if the bench is low. Hold the dumbbells directly above your chest with a slight separation between them. Similar to the barbell press, ensure your forearms move perpendicular to the floor. Inhale as you lower the weights to chest level (based on your flexibility), then exhale as you press them upward and towards each other. Keep your elbows perpendicular to your torso and avoid letting them drift too close to your body.",
+        "comments": "Dumbbells offer a greater range of motion compared to barbells. However, handling the weights at the start and end of each set can be challenging. It's advisable to have a spotter for heavy lifts. To begin, rest the dumbbells on your knees, lie back with your arms bent, and then press the weights up with assistance if needed. At the end of the set, move the dumbbells to a neutral position by bending your elbows, lift your knees, and lower the weights onto them as you sit up. Avoid letting the dumbbells drop to your sides while lying down to prevent shoulder injuries or equipment damage. Some research suggests that using dumbbells may engage the sternal part of the pectoral muscle more, but the difference might be minimal due to the lack of distinct separations in muscle insertions. Adjusting the bench incline or applying other techniques can target different areas of broad muscles like the pectorals and latissimus dorsi.",
+        "corrections": "When performing a dumbbell press, keep your back flat against the bench to avoid unnecessary strain on your spine. Maintain a controlled movement by lowering the dumbbells to chest level and pressing them up slowly, ensuring your elbows are aligned with your wrists.",
+        "warnings": "Avoid locking your elbows at the top of the press to prevent joint stress. Be cautious not to arch your back excessively, as this can lead to lower back injury. If you experience sharp pain, stop immediately and reassess your form.",
+        "muscles": [
+            {
+                "name": "Pectoralis major",
+                "priority": "Principal"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Subscapularis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Biceps",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (posterior)",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Press de banca con mancuernas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Acu\u00e9stese boca arriba con la cabeza y los hombros apoyados en el banco y los pies planos en el suelo o elevados en un escal\u00f3n si el banco es bajo. Sostenga las mancuernas directamente sobre su pecho con una ligera separaci\u00f3n entre ellas. Similar al press de banca con barra, aseg\u00farese de que sus antebrazos se muevan perpendicularmente al suelo. Inhale al bajar las pesas al nivel del pecho (seg\u00fan su flexibilidad), luego exhale al presionarlas hacia arriba y hacia cada una. Mantenga los codos perpendiculares a su torso y evite que se acerquen demasiado a su cuerpo."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Las mancuernas ofrecen un mayor rango de movimiento en comparaci\u00f3n con las barras. Sin embargo, manejar los pesos al comienzo y al final de cada set puede ser desafiante. Es aconsejable tener un observador para levantamientos pesados. Para comenzar, descanse las mancuernas en sus rodillas, acu\u00e9stese con los brazos doblados y luego presione las pesas hacia arriba con ayuda si es necesario. Al final del set, mueva las mancuernas a una posici\u00f3n neutral doblando los codos, levante las rodillas y baje las pesas sobre ellas mientras se sienta. Evite que las mancuernas caigan a los lados mientras est\u00e1 acostado para prevenir lesiones en los hombros o da\u00f1os en el equipo. Algunas investigaciones sugieren que el uso de mancuernas puede involucrar m\u00e1s la parte esternal del m\u00fasculo pectoral, pero la diferencia podr\u00eda ser m\u00ednima debido a la falta de separaciones distintas en las inserciones musculares. Ajustar la inclinaci\u00f3n del banco o aplicar otras t\u00e9cnicas puede apuntar a diferentes \u00e1reas de m\u00fasculos amplios como los pectorales y el dorsal ancho."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Al realizar un press de banca con mancuernas, mantenga la espalda plana contra el banco para evitar una tensi\u00f3n innecesaria en su columna vertebral. Mantenga un movimiento controlado bajando las mancuernas al nivel del pecho y presion\u00e1ndolas lentamente hacia arriba, asegurando que sus codos est\u00e9n alineados con sus mu\u00f1ecas."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite bloquear los codos en la parte superior del press para evitar el estr\u00e9s en las articulaciones. Tenga cuidado de no arquear excesivamente la espalda, ya que esto puede provocar una lesi\u00f3n en la parte baja de la espalda. Si experimenta un dolor agudo, det\u00e9ngase de inmediato y vuelva a evaluar su forma."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    },
+    {
+        "name": "Flyes / Dummbell flyes",
+        "performance": "Lie on a narrow bench with your head and back supported, and your feet placed either on the ground (if the bench is low) or on the end of the bench. Hold the dumbbells vertically above your chest, keeping them slightly apart, with your palms facing each other and your elbows slightly bent. Take a deep breath as you lower the weights to chest level (depending on your flexibility) while maintaining the position of your elbows. Lift the dumbbells vertically and inward, making sure they don’t touch. Exhale at the end of the movement. Keep your elbows away from your body as if you were embracing someone.",
+        "comments": "Theoretically, this exercise aids in the development of the chest, particularly in young athletes who are still growing. The benefits are less pronounced for older individuals, though there is some evidence suggesting that dumbbell flyes may help stretch the intercostal cartilage. In practical terms, this exercise is quite similar to the dumbbell press regarding the pectoral muscle. The pectoralis major attaches to the humerus, which moves similarly in both exercises. The difference in sensation during this exercise comes from the more distant application of force in body leverage (technically, the 'power moment' is more significant). Surprisingly, this common error persists among trainers and in literature. The primary distinction is that this exercise isolates the pectoral muscle more effectively since the triceps are not engaged.",
+        "corrections": "Ensure proper form by keeping a slight bend in your elbows throughout the movement to protect your shoulders. Avoid lowering the dumbbells too far; stop when your chest feels a stretch to prevent strain.",
+        "warnings": "Don’t use excessively heavy weights as this can compromise your form and increase the risk of shoulder injuries. Also, avoid bouncing the weights; control the movement to maximize effectiveness and safety.",
+        "muscles": [
+            {
+                "name": "Pectoralis major",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Principal"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Subscapularis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Biceps",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (posterior)",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Trapezius",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Rhomboids",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Teres",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Aperturas con mancuernas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Acu\u00e9stese en un banco estrecho con la cabeza y la espalda apoyadas y los pies colocados en el suelo (si el banco es bajo) o en el extremo del banco. Sostenga las mancuernas verticalmente sobre su pecho, manteni\u00e9ndolas ligeramente separadas, con las palmas hacia arriba y los codos ligeramente doblados. Respire profundamente mientras baja las pesas al nivel del pecho (dependiendo de su flexibilidad) manteniendo la posici\u00f3n de sus codos. Levante las mancuernas verticalmente y hacia adentro, asegur\u00e1ndose de que no se toquen. Exhale al final del movimiento. Mantenga los codos alejados de su cuerpo como si estuviera abrazando a alguien."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Te\u00f3ricamente, este ejercicio ayuda en el desarrollo del pecho, particularmente en j\u00f3venes atletas que a\u00fan est\u00e1n creciendo. Los beneficios son menos pronunciados para personas mayores, aunque hay evidencia que sugiere que las aperturas con mancuernas pueden ayudar a estirar el cart\u00edlago intercostal. En t\u00e9rminos pr\u00e1cticos, este ejercicio es bastante similar al press de banca con mancuernas con respecto al m\u00fasculo pectoral. El pectoral mayor se une al h\u00famero, que se mueve de manera similar en ambos ejercicios. La diferencia en la sensaci\u00f3n durante este ejercicio proviene de la aplicaci\u00f3n m\u00e1s distante de la fuerza en la palanca corporal (t\u00e9cnicamente, el 'momento de potencia' es m\u00e1s significativo). Sorprendentemente, este error com\u00fan persiste entre los entrenadores y en la literatura. La distinci\u00f3n principal es que este ejercicio a\u00edsla m\u00e1s efectivamente el m\u00fasculo pectoral ya que los tr\u00edceps no est\u00e1n involucrados."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Aseg\u00farese de mantener una ligera flexi\u00f3n en los codos durante todo el movimiento para proteger sus hombros. Evite bajar demasiado las mancuernas; det\u00e9ngase cuando sienta un estiramiento en el pecho para evitar la tensi\u00f3n."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "No use pesos excesivamente pesados ya que esto puede comprometer su forma y aumentar el riesgo de lesiones en los hombros. Adem\u00e1s, evite rebotar las pesas; controle el movimiento para maximizar la efectividad y la seguridad."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    },
+    {
+        "name": "Push-ups",
+        "performance": "Begin by lying face down on the floor with your feet together and hands positioned slightly wider than shoulder-width apart, with fingers pointing slightly inward. Start with your arms fully extended and legs straight. Lower your body until your chest is nearly touching the ground, keeping your hips stable and your body in a straight line throughout. Inhale as you lower yourself and exhale as you push back up.",
+        "comments": "This movement is akin to the bench press, but relies on your body weight. If wrist discomfort occurs, you can use your fists for support without altering the effectiveness of the exercise. A progressive approach from easier to more challenging is as follows: (1) performing against a wall with feet close to it; (2) performing against a wall with feet further away; (3) on the floor with knees supported and hands on an elevated surface; (4) on the floor with knees supported and hands on the ground; (5) with feet (but not knees) on the floor and hands on an elevated surface; (6) hands and feet on the floor as described in the basic exercise. The exercise becomes easier by widening your leg stance.",
+        "corrections": "Ensure your body is in a straight line from head to heels, avoiding sagging or arching your back. Keep your hands shoulder-width apart and lower yourself until your chest nearly touches the floor. Engage your core throughout the movement to maintain stability.",
+        "warnings": "Avoid locking your elbows at the top of the push-up to prevent joint strain. If you feel any shoulder pain or discomfort, stop immediately and assess your form. Overdoing push-ups without proper rest can lead to muscle strain or overuse injuries.",
+        "muscles": [
+            {
+                "name": "Pectoralis major",
+                "priority": "Principal"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Subscapularis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Biceps",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (posterior)",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Flexiones"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Comience acost\u00e1ndose boca abajo en el suelo con los pies juntos y las manos colocadas ligeramente m\u00e1s anchas que el ancho de los hombros, con los dedos ligeramente hacia adentro. Comience con los brazos completamente extendidos y las piernas rectas. Baje su cuerpo hasta que su pecho casi toque el suelo, manteniendo las caderas estables y su cuerpo en l\u00ednea recta en todo momento. Inhale al bajar y exhale al empujar hacia arriba."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Este movimiento es similar al press de banca, pero depende de su peso corporal. Si se produce molestias en las mu\u00f1ecas, puede usar los pu\u00f1os para apoyarse sin alterar la efectividad del ejercicio. Un enfoque progresivo de m\u00e1s f\u00e1cil a m\u00e1s desafiante es el siguiente: (1) realizar contra una pared con los pies cerca de ella; (2) realizar contra una pared con los pies m\u00e1s alejados; (3) en el suelo con las rodillas apoyadas y las manos en una superficie elevada; (4) en el suelo con las rodillas apoyadas y las manos en el suelo; (5) con los pies (pero no las rodillas) en el suelo y las manos en una superficie elevada; (6) manos y pies en el suelo como se describe en el ejercicio b\u00e1sico. El ejercicio se facilita al ensanchar la postura de las piernas."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Aseg\u00farese de que su cuerpo est\u00e9 en l\u00ednea recta desde la cabeza hasta los talones, evitando que la espalda se hunda o arquee. Mantenga las manos separadas al ancho de los hombros y b\u00e1jese hasta que su pecho casi toque el suelo. Mantenga su n\u00facleo comprometido durante todo el movimiento para mantener la estabilidad."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite bloquear los codos en la parte superior de la flexi\u00f3n para evitar la tensi\u00f3n en las articulaciones. Si siente alg\u00fan dolor o molestia en los hombros, det\u00e9ngase de inmediato y eval\u00fae su forma. Hacer demasiadas flexiones sin el debido descanso puede provocar una distensi\u00f3n muscular o lesiones por uso excesivo."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    },
+    {
+        "name": "Parallel dips",
+        "performance": "Start by gripping the parallel bars with a neutral grip, ideally using a V-shaped grip if available. Position your body with a slight forward lean and keep your legs close together. As you inhale, lower your body straight down, leaning your torso slightly forward while moving your legs back. Your elbows should angle back, away from your body during the descent. Once you reach the lowest point of the movement, push yourself back up while exhaling.",
+        "comments": "This movement serves as an excellent substitute for the decline press, though it requires a decent level of strength and might not be suitable for beginners. The exercise heavily engages the triceps and deltoids, but the primary focus should be on targeting the pectoral muscles. You should feel a stretch as you lower your body and a contraction as you push back up. If you have a history of elbow or shoulder injuries, approach this exercise with caution or avoid it altogether. The exercise should be performed in a controlled manner unless you are specifically training for explosive power in a sport. It's important to perform the movement fully; avoid making only partial motions near the full extension of the arms, as this reduces the effectiveness of the exercise.",
+        "corrections": "Ensure that your body remains upright with a slight forward lean to engage your chest and triceps. Keep your elbows close to your body to avoid unnecessary strain on your shoulders. Lower yourself until your upper arms are parallel to the ground, then push up without locking your elbows.",
+        "warnings": "Avoid dipping too low, as this can put excessive stress on your shoulder joints and lead to injury. Maintain control throughout the movement to prevent swinging or jerking motions. If you feel pain in your shoulders or wrists, stop immediately and reassess your form.",
+        "muscles": [
+            {
+                "name": "Pectoralis major (lower part)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Principal"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Principal"
+            },
+            {
+                "name": "Pectoralis minor",
+                "priority": "Principal"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Subscapularis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Biceps",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (posterior)",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Trapezius",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Fondos en paralelas"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Comience agarrando las barras paralelas con un agarre neutral, idealmente usando un agarre en forma de V si est\u00e1 disponible. Posicione su cuerpo con una ligera inclinaci\u00f3n hacia adelante y mantenga las piernas juntas. Mientras inhala, baje su cuerpo recto hacia abajo, inclinando ligeramente el torso hacia adelante mientras mueve las piernas hacia atr\u00e1s. Sus codos deben angulados hacia atr\u00e1s, alejados de su cuerpo durante el descenso. Una vez que alcance el punto m\u00e1s bajo del movimiento, emp\u00fajese hacia arriba mientras exhala."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Este movimiento sirve como un excelente sustituto del press declinado, aunque requiere un nivel decente de fuerza y puede no ser adecuado para principiantes. El ejercicio involucra fuertemente a los tr\u00edceps y deltoides, pero el enfoque principal debe estar en apuntar a los m\u00fasculos pectorales. Deber\u00eda sentir un estiramiento al bajar su cuerpo y una contracci\u00f3n al empujar hacia arriba. Si tiene antecedentes de lesiones en los codos o hombros, aborde este ejercicio con precauci\u00f3n o ev\u00edtelo por completo. El ejercicio debe realizarse de manera controlada a menos que est\u00e9 entrenando espec\u00edficamente para una potencia explosiva en un deporte. Es importante realizar el movimiento completamente; evite hacer solo movimientos parciales cerca de la extensi\u00f3n completa de los brazos, ya que esto reduce la efectividad del ejercicio."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Aseg\u00farese de que su cuerpo permanezca erguido con una ligera inclinaci\u00f3n hacia adelante para involucrar su pecho y tr\u00edceps. Mantenga los codos cerca de su cuerpo para evitar una tensi\u00f3n innecesaria en los hombros. B\u00e1jese hasta que sus brazos superiores est\u00e9n paralelos al suelo, luego emp\u00fajese hacia arriba sin bloquear los codos."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite bajar demasiado, ya que esto puede poner un estr\u00e9s excesivo en las articulaciones de los hombros y provocar lesiones. Mantenga el control durante todo el movimiento para evitar movimientos de balanceo o bruscos. Si siente dolor en los hombros o mu\u00f1ecas, det\u00e9ngase de inmediato y vuelva a evaluar su forma."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    },
+    {
+        "name": "Dumbbell pullover",
+        "performance": "Lie flat on a bench, positioning your head near the edge. Grip the dumbbell securely, allowing it to rest within the triangle formed by your thumbs and index fingers. With a slight bend in your elbows, slowly lower the dumbbell over and behind your head while taking a deep breath. Keep your elbows steady throughout the movement. You should experience a stretch in your chest muscles and a sense of your chest expanding. As your chest muscles contract, bring the dumbbell back up to the starting position above your eyes, exhaling as you complete the movement.",
+        "comments": "This exercise is best suited for advanced lifters, targeting not only the chest but also the lats and surrounding muscles. Traditionally, it has been believed to 'expand' the chest and improve flexibility, which is why deep inhalation is emphasized. The muscles engaged are strong and the movement allows for favorable leverage, making it possible to handle significant weights. However, it is generally unnecessary to use very heavy weights as this can lead to improper form and potential injury. The dumbbell pullover is not typically used for building chest muscle size; other exercises are more effective for that goal. It's also worth noting that whether using a barbell or dumbbells, the exercise can work both the chest and back, depending on technique and focus.",
+        "corrections": "When performing the dumbbell pullover, ensure that your lower back remains pressed against the bench to avoid arching, which can place undue stress on your spine. Your arms should move in a controlled arc without locking the elbows completely to keep tension on the chest and lats. Additionally, start with a lighter weight to maintain proper form and gradually increase as you get more comfortable with the movement.",
+        "warnings": "Avoid using excessive weight, as this can compromise your form and lead to shoulder or lower back injuries. Be cautious not to overstretch your shoulders, especially if you have a history of shoulder issues. Always engage your core to stabilize your body and prevent any strain on your lower back during the exercise.",
+        "muscles": [
+            {
+                "name": "Latissimus dorsi",
+                "priority": "Principal"
+            },
+            {
+                "name": "Teres",
+                "priority": "Principal"
+            },
+            {
+                "name": "Pectoralis major",
+                "priority": "Principal"
+            },
+            {
+                "name": "Serratus anterior",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Coracobrachialis",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Rhomboids",
+                "priority": "Secondary"
+            },
+            {
+                "name": "Pectoralis major",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Deltoids (anterior)",
+                "priority": "Antagonist"
+            },
+            {
+                "name": "Triceps",
+                "priority": "Antagonist"
+            }
+        ],
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pullover con mancuerna"
+            },
+            {
+                "locale": "es",
+                "column": "performance",
+                "translation": "Acu\u00e9stese boca arriba en un banco, colocando la cabeza cerca del borde. Agarre la mancuerna de forma segura, permitiendo que descanse dentro del tri\u00e1ngulo formado por sus pulgares e \u00edndices. Con una ligera flexi\u00f3n en los codos, baje lentamente la mancuerna sobre y detr\u00e1s de su cabeza mientras toma una respiraci\u00f3n profunda. Mantenga los codos estables durante todo el movimiento. Deber\u00eda experimentar un estiramiento en los m\u00fasculos del pecho y una sensaci\u00f3n de que su pecho se expande. A medida que los m\u00fasculos del pecho se contraen, lleve la mancuerna de vuelta a la posici\u00f3n inicial sobre sus ojos, exhalando al completar el movimiento."
+            },
+            {
+                "locale": "es",
+                "column": "comments",
+                "translation": "Este ejercicio es m\u00e1s adecuado para levantadores avanzados, apuntando no solo al pecho sino tambi\u00e9n a los dorsales y m\u00fasculos circundantes. Tradicionalmente, se ha cre\u00eddo que 'expande' el pecho y mejora la flexibilidad, por eso se enfatiza la inhalaci\u00f3n profunda. Los m\u00fasculos involucrados son fuertes y el movimiento permite una palanca favorable, lo que hace posible manejar pesos significativos. Sin embargo, generalmente no es necesario usar pesos muy pesados ya que esto puede llevar a una forma incorrecta y lesiones potenciales. El pullover con mancuerna no se usa t\u00edpicamente para aumentar el tama\u00f1o de los m\u00fasculos del pecho; otros ejercicios son m\u00e1s efectivos para ese objetivo. Tambi\u00e9n vale la pena mencionar que ya sea usando una barra o mancuernas, el ejercicio puede trabajar tanto el pecho como la espalda, dependiendo de la t\u00e9cnica y el enfoque."
+            },
+            {
+                "locale": "es",
+                "column": "corrections",
+                "translation": "Al realizar el pullover con mancuerna, aseg\u00farese de que su espalda baja permanezca presionada contra el banco para evitar arquearla, lo que puede ejercer una tensi\u00f3n indebida en su columna vertebral. Sus brazos deben moverse en un arco controlado sin bloquear completamente los codos para mantener la tensi\u00f3n en el pecho y los dorsales. Adem\u00e1s, comience con un peso m\u00e1s ligero para mantener una forma adecuada y aumente gradualmente a medida que se sienta m\u00e1s c\u00f3modo con el movimiento."
+            },
+            {
+                "locale": "es",
+                "column": "warnings",
+                "translation": "Evite usar un peso excesivo, ya que esto puede comprometer su forma y provocar lesiones en los hombros o la parte baja de la espalda. Tenga cuidado de no estirar demasiado los hombros, especialmente si tiene antecedentes de problemas en los hombros. Siempre comprometa su n\u00facleo para estabilizar su cuerpo y evitar cualquier tensi\u00f3n en la parte baja de la espalda durante el ejercicio."
+            }
+        ],
+        "category": "Chest",
+        "group": "Free weights"
+    }
+]

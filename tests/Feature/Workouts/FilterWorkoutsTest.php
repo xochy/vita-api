@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Workouts;
 
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
@@ -55,7 +55,6 @@ class FilterWorkoutsTest extends TestCase
     const MODEL_FILTER_WARNINGS_PARAM_NAME = 'filter[warnings]';
 
     protected User $user;
-    protected Subcategory $subcategory;
 
     public function setUp(): void
     {
@@ -67,28 +66,29 @@ class FilterWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
     }
 
     /** @test */
     public function can_filter_workouts_by_name()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
-            ->state(new Sequence(
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
-            ))
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
+                )
+            )
             ->create();
 
-            $url = route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_FILTER_NAME_PARAM_NAME => 'alfa'
-                ]
-            );
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_NAME_PARAM_NAME => 'alfa'
+            ]
+        );
 
-            $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -96,24 +96,26 @@ class FilterWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_performance()
+    public function can_filter_workouts_by_performance()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
-            ->state(new Sequence(
-                ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE],
-                ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE],
-                ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_PERFORMANCE],
-            ))
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE],
+                    ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE],
+                    ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_PERFORMANCE],
+                )
+            )
             ->create();
 
-            $url = route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_FILTER_PERFORMANCE_PARAM_NAME => 'alfa'
-                ]
-            );
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_PERFORMANCE_PARAM_NAME => 'alfa'
+            ]
+        );
 
-            $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE)
@@ -121,24 +123,26 @@ class FilterWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_comments()
+    public function can_filter_workouts_by_comments()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
-            ->state(new Sequence(
-                ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS],
-                ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS],
-                ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_COMMENTS],
-            ))
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS],
+                    ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS],
+                    ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_COMMENTS],
+                )
+            )
             ->create();
 
-            $url = route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_FILTER_COMMENTS_PARAM_NAME => 'alfa'
-                ]
-            );
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_COMMENTS_PARAM_NAME => 'alfa'
+            ]
+        );
 
-            $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS)
@@ -146,24 +150,26 @@ class FilterWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_corrections()
+    public function can_filter_workouts_by_corrections()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
-            ->state(new Sequence(
-                ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS],
-                ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS],
-                ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CORRECTIONS],
-            ))
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS],
+                    ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS],
+                    ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CORRECTIONS],
+                )
+            )
             ->create();
 
-            $url = route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_FILTER_CORRECTIONS_PARAM_NAME => 'alfa'
-                ]
-            );
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_CORRECTIONS_PARAM_NAME => 'alfa'
+            ]
+        );
 
-            $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS)
@@ -171,27 +177,290 @@ class FilterWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function can_filter_categories_by_warnings()
+    public function can_filter_workouts_by_warnings()
     {
-        Workout::factory()->for($this->subcategory)->count(3)
-            ->state(new Sequence(
-                ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS],
-                ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS],
-                ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_WARNINGS],
-            ))
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS],
+                    ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS],
+                    ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_WARNINGS],
+                )
+            )
             ->create();
 
-            $url = route(
-                self::MODEL_MAIN_ACTION_ROUTE,
-                [
-                    self::MODEL_FILTER_WARNINGS_PARAM_NAME => 'alfa'
-                ]
-            );
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_WARNINGS_PARAM_NAME => 'alfa'
+            ]
+        );
 
-            $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_WARNINGS);
+    }
+
+    /** @test */
+    public function can_filter_workouts_by_all_terms()
+    {
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    [
+                        'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME,
+                        'performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE,
+                        'comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS,
+                        'corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS,
+                        'warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS,
+                    ],
+                    [
+                        'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME,
+                        'performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE,
+                        'comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS,
+                        'corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS,
+                        'warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS,
+                    ],
+                    [
+                        'name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME,
+                        'performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_PERFORMANCE,
+                        'comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_COMMENTS,
+                        'corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CORRECTIONS,
+                        'warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_WARNINGS,
+                    ],
+                )
+            )
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_NAME_PARAM_NAME => 'alfa',
+                self::MODEL_FILTER_PERFORMANCE_PARAM_NAME => 'alfa',
+                self::MODEL_FILTER_COMMENTS_PARAM_NAME => 'alfa',
+                self::MODEL_FILTER_CORRECTIONS_PARAM_NAME => 'alfa',
+                self::MODEL_FILTER_WARNINGS_PARAM_NAME => 'alfa',
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()->get($url)
+            ->assertJsonCount(1, 'data')
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE)
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS)
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS)
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_PERFORMANCE)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_COMMENTS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CORRECTIONS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_WARNINGS);
+    }
+
+    /** @test */
+    public function cannot_filter_workouts_by_unknown_filters()
+    {
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_UNKNOWN_PARAM_NAME => 2
+            ]
+        );
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->get($url);
+
+        // Bad Request
+        $response->assertError(
+            400,
+            [
+                'title' => 'Invalid Query Parameter',
+                'detail' => 'Filter parameter unknown is not allowed.',
+                'source' => ['parameter' => 'filter'],
+            ]
+        );
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Locale', 'es')
+            ->get($url);
+
+        // Bad Request
+        $response->assertError(
+            400,
+            [
+                'title' => 'Parámetro de Consulta No Válido',
+                'detail' => 'El parámetro de fitro unknown no está permido.',
+                'source' => ['parameter' => 'filter'],
+            ]
+        );
+    }
+
+    /** @test */
+    public function can_search_workouts_by_name()
+    {
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
+                )
+            )
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_SEARCH_PARAM_NAME => 'alfa'
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()->get($url)
+            ->assertJsonCount(1, 'data')
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME);
+    }
+
+    /** @test */
+    public function can_search_workouts_by_performance()
+    {
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE],
+                    ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE],
+                    ['performance' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_PERFORMANCE],
+                )
+            )
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_SEARCH_PARAM_NAME => 'alfa'
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()->get($url)
+            ->assertJsonCount(1, 'data')
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_PERFORMANCE);
+    }
+
+    /** @test */
+    public function can_search_workouts_by_comments()
+    {
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS],
+                    ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS],
+                    ['comments' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_COMMENTS],
+                )
+            )
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_SEARCH_PARAM_NAME => 'alfa'
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()->get($url)
+            ->assertJsonCount(1, 'data')
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_COMMENTS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_COMMENTS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_COMMENTS);
+    }
+
+    /** @test */
+    public function can_search_workouts_by_corrections()
+    {
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS],
+                    ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS],
+                    ['corrections' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CORRECTIONS],
+                )
+            )
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_SEARCH_PARAM_NAME => 'alfa'
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()->get($url)
+            ->assertJsonCount(1, 'data')
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CORRECTIONS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CORRECTIONS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CORRECTIONS);
+    }
+
+    /** @test */
+    public function can_search_workouts_by_warnings()
+    {
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS],
+                    ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS],
+                    ['warnings' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_WARNINGS],
+                )
+            )
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_SEARCH_PARAM_NAME => 'alfa'
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()->get($url)
+            ->assertJsonCount(1, 'data')
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_WARNINGS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_WARNINGS)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_WARNINGS);
+    }
+
+    /** @test */
+    public function can_search_workouts_by_name_with_multiple_terms()
+    {
+        Workout::factory()->forCategory()->count(3)
+            ->state(
+                new Sequence(
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME],
+                )
+            )
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                self::MODEL_FILTER_SEARCH_PARAM_NAME => 'lambda'
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()->get($url)
+            ->assertJsonCount(2, 'data')
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME)
+            ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME)
+            ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME);
     }
 }

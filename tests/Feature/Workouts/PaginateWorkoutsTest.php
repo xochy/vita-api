@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Workouts;
 
-use App\Models\Subcategory;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
@@ -22,7 +22,6 @@ class PaginateWorkoutsTest extends TestCase
     const MODEL_NUMBER_PARAM_NAME = 'page[number]';
 
     protected User $user;
-    protected Subcategory $subcategory;
 
     public function setUp(): void
     {
@@ -34,18 +33,18 @@ class PaginateWorkoutsTest extends TestCase
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
-        $this->subcategory = Subcategory::factory()->forCategory()->create();
     }
 
     /** @test */
     public function can_fetch_paginated_workouts()
     {
-        Workout::factory()->for($this->subcategory)->count(10)->create();
+        Workout::factory()->forCategory()->count(10)->create();
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
             [
-                self::MODEL_SIZE_PARAM_NAME => 2, self::MODEL_NUMBER_PARAM_NAME => 3
+                self::MODEL_SIZE_PARAM_NAME => 2,
+                self::MODEL_NUMBER_PARAM_NAME => 3
             ]
         );
 
@@ -63,25 +62,29 @@ class PaginateWorkoutsTest extends TestCase
                 'first' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 1, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 1,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
-                'prev'  => route(
+                'prev' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 2, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 2,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
-                'next'  => route(
+                'next' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 4, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 4,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
-                'last'  => route(
+                'last' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 5, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 5,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
             ]

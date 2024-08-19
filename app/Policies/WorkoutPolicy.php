@@ -26,7 +26,7 @@ class WorkoutPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('read workouts');
     }
 
     /**
@@ -34,7 +34,7 @@ class WorkoutPolicy
      */
     public function view(User $user, Workout $workout): bool
     {
-        return true;
+        return $user->can('read workouts');
     }
 
     /**
@@ -80,9 +80,9 @@ class WorkoutPolicy
     /**
      * Determine whether the user can view the workout's category.
      */
-    public function viewSubcategory(User $user, Workout $workout): bool
+    public function viewCategory(User $user, Workout $workout): bool
     {
-        return $user->can('read subcategories');
+        return $user->can('read categories');
     }
 
     /**
