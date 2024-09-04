@@ -20,8 +20,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     // Definitions for Category model
     $server->resource('categories', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
-            $relationships->hasMany('translations');
             $relationships->hasMany('workouts');
+            $relationships->hasMany('translations');
         });
 
     // Definitions for Muscle model
@@ -29,6 +29,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('workouts');
             $relationships->hasMany('variations');
+            $relationships->hasMany('translations');
         });
 
     // Definitions for Workout model
@@ -37,6 +38,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('category');
             $relationships->hasMany('muscles');
             $relationships->hasMany('routines');
+            $relationships->hasMany('variations');
+            $relationships->hasMany('translations');
         });
 
     // Definitions for Variation model
@@ -44,6 +47,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('workout');
             $relationships->hasMany('muscles');
+            $relationships->hasMany('translations');
         });
 
     // Definitions for Routine model
@@ -51,16 +55,26 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('plans');
             $relationships->hasMany('workouts');
+            $relationships->hasMany('translations');
         });
 
     // Definitions for Frequency model
-    $server->resource('frequencies', JsonApiController::class);
+    $server->resource('frequencies', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('translations');
+        });
 
     // Definitions for Goal model
-    $server->resource('goals', JsonApiController::class);
+    $server->resource('goals', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('translations');
+        });
 
     // Definitions for PhysicalCondition model
-    $server->resource('physical-conditions', JsonApiController::class);
+    $server->resource('physical-conditions', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('translations');
+        });
 
     // Definitions for Plan model
     $server->resource('plans', JsonApiController::class)
@@ -68,8 +82,9 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('goal');
             $relationships->hasOne('frequency');
             $relationships->hasOne('physicalCondition');
-            $relationships->hasMany('routines');
             $relationships->hasMany('users');
+            $relationships->hasMany('routines');
+            $relationships->hasMany('translations');
         });
 
     // Definitions for User model

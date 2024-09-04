@@ -16,6 +16,16 @@ class TranslationSchema extends Schema
 {
 
     /**
+     * Determine if the resource is authorizable.
+     *
+     * @return bool
+     */
+    public function authorizable(): bool
+    {
+        return false;
+    }
+    
+    /**
      * The model the schema corresponds to.
      *
      * @var string

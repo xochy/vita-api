@@ -76,4 +76,12 @@ class GoalPolicy
     {
         return $user->can('force delete goals');
     }
+
+    /**
+     * Determine whether the user can view goal's translations.
+     */
+    public function viewTranslations(User $user, Goal $goal): bool
+    {
+        return $user->can('read goals');
+    }
 }

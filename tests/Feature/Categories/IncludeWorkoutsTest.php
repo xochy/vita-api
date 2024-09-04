@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class IncludeworkoutsTest extends TestCase
+class IncludeWorkoutsTest extends TestCase
 {
     use RefreshDatabase;
 

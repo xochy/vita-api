@@ -84,4 +84,12 @@ class CategoryPolicy
     {
         return $user->can('read workouts');
     }
+
+    /**
+     * Determine whether the user can view the category's translations.
+     */
+    public function viewTranslations(User $user, Category $category): bool
+    {
+        return $user->can('read categories');
+    }
 }
