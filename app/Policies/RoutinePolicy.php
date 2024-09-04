@@ -84,4 +84,12 @@ class RoutinePolicy
     {
         return $user->can('read workouts');
     }
+
+    /**
+     * Determine whether the user can view the routine's translations.
+     */
+    public function viewTranslations(User $user, Routine $routine): bool
+    {
+        return $user->can('read routines');
+    }
 }

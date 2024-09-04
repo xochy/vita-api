@@ -116,4 +116,20 @@ class WorkoutPolicy
     {
         return $user->can('update workouts');
     }
+
+    /**
+     * Determine whether the user can view the workout's translations.
+     */
+    public function viewTranslations(User $user, Workout $workout): bool
+    {
+        return $user->can('read workouts');
+    }
+
+    /**
+     * Determine whether the user can view the workout's variations.
+     */
+    public function viewVariations(User $user, Workout $workout): bool
+    {
+        return $user->can('read workouts');
+    }
 }

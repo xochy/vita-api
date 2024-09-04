@@ -76,4 +76,12 @@ class FrequencyPolicy
     {
         return $user->can('force delete frequencies');
     }
+
+    /**
+     * Determine whether the user can view the frequency's translations.
+     */
+    public function viewTranslations(User $user, Frequency $frequency): bool
+    {
+        return $user->can('read frequencies');
+    }
 }

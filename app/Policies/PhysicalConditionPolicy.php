@@ -76,4 +76,12 @@ class PhysicalConditionPolicy
     {
         return $user->can('force delete physical conditions');
     }
+
+    /**
+     * Determine whether the user can view physical condition's translations.
+     */
+    public function viewTranslations(User $user, PhysicalCondition $physicalCondition): bool
+    {
+        return $user->can('read physical conditions');
+    }
 }

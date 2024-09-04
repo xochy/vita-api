@@ -90,7 +90,14 @@ class VariationPolicy
      */
     public function viewMuscles(User $user, Variation $variation): bool
     {
-        dd($user->can('read muscles'));
         return $user->can('read muscles');
+    }
+
+    /**
+     * Determine whether the user can view the variation's translations.
+     */
+    public function viewTranslations(User $user, Variation $variation): bool
+    {
+        return $user->can('read variations');
     }
 }
