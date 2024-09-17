@@ -4,7 +4,6 @@ namespace App\JsonApi\V1\Categories;
 
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
-use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
 class CategoryRequest extends ResourceRequest
 {

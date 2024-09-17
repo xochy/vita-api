@@ -137,11 +137,11 @@ class CreateWorkoutsTest extends TestCase
             [
                 'id' => Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey(),
                 'category_id' => $this->category->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_NAME => $workout[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
             ]
         );
 
@@ -204,11 +204,11 @@ class CreateWorkoutsTest extends TestCase
             [
                 'id' => $workoutId,
                 'category_id' => $this->category->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_NAME => $workout[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
             ]
         );
 
@@ -377,11 +377,11 @@ class CreateWorkoutsTest extends TestCase
         $this->assertDatabaseMissing(
             self::MODEL_PLURAL_NAME,
             [
-                self::MODEL_ATTRIBUTE_NAME        => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_NAME => $workout[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
             ]
         );
 
