@@ -2,7 +2,6 @@
 
 namespace App\JsonApi\V1\Translations;
 
-use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
@@ -30,7 +29,7 @@ class TranslationRequest extends ResourceRequest
             'translation' => [
                 'required',
                 'string',
-                'max:255',
+                'max:1000',
             ],
             'translationable' => JsonApiRule::toOne(),
         ];
