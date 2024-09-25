@@ -1,0 +1,25 @@
+[
+    {
+        "name": "root"
+    },
+    {
+        "name": "Documents",
+        "parent": "root"
+    },
+    {
+        "name": "Images",
+        "parent": "root"
+    },
+    {
+        "name": "Videos",
+        "parent": "root"
+    },
+    {
+        "name": "Audios",
+        "parent": "root"
+    },
+    {
+        "name": "Others",
+        "parent": "root"
+    }
+]

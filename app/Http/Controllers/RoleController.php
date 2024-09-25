@@ -47,8 +47,8 @@ class RoleController extends Controller
 
         $data = $roles->map(function ($role) {
             return [
-                'id'           => $role->id,
-                'name'         => $role->name,
+                'id' => $role->id,
+                'name' => $role->name,
                 'display_name' => $role->display_name
             ];
         });
@@ -75,7 +75,7 @@ class RoleController extends Controller
         }
 
         $fields = $this->validateRoleFields($request, false);
-        $validator = $this->makeRoleFiledsValidator($fields, false);
+        $validator = $this->makeRoleFieldsValidator($fields, false);
 
         if ($validator->stopOnFirstFailure()->fails()) {
             throw JsonApiException::error(
@@ -88,10 +88,10 @@ class RoleController extends Controller
 
         $role = Role::create(
             [
-                'name'         => $fields['name'],
+                'name' => $fields['name'],
                 'display_name' => $fields['display_name'],
-                'default'      => false,
-                'guard_name'   => 'web',
+                'default' => false,
+                'guard_name' => 'web',
             ]
         );
 
@@ -102,9 +102,9 @@ class RoleController extends Controller
                 'type' => 'roles',
                 'id' => $role->id,
                 'attributes' => [
-                    'name'         => $role->name,
+                    'name' => $role->name,
                     'display_name' => $role->display_name,
-                    'default'      => $role->default
+                    'default' => $role->default
                 ]
             ]
         ], 201); // Created
@@ -129,7 +129,7 @@ class RoleController extends Controller
         }
 
         $fields = $this->validateRoleFields($request);
-        $validator = $this->makeRoleFiledsValidator($fields);
+        $validator = $this->makeRoleFieldsValidator($fields);
 
         if ($validator->stopOnFirstFailure()->fails()) {
             throw JsonApiException::error(
@@ -277,7 +277,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Validation\Validator
      */
-    private function makeRoleFiledsValidator(array $fields, bool $withId = true): \Illuminate\Validation\Validator
+    private function makeRoleFieldsValidator(array $fields, bool $withId = true): \Illuminate\Validation\Validator
     {
         $validations = [
             'name' => [
@@ -300,9 +300,6 @@ class RoleController extends Controller
             ];
         }
 
-        return Validator::make(
-            $fields,
-            $validations
-        );
+        return Validator::make($fields, $validations);
     }
 }

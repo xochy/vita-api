@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "435f4e232e5db41ce7f30270379b58be",
+    "content-hash": "03357b7d6a033a4935afed870a35f0c4",
     "packages": [
         {
             "name": "brick/math",
@@ -3027,6 +3027,57 @@
                 }
             ],
             "time": "2024-03-06T16:17:14+00:00"
+        },
+        {
+            "name": "paxha/laravel-recursive-relationships",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paxha/laravel-recursive-relationships.git",
+                "reference": "1f6fb81c6c576a378e564d00ceba8d00cb34e7d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paxha/laravel-recursive-relationships/zipball/1f6fb81c6c576a378e564d00ceba8d00cb34e7d9",
+                "reference": "1f6fb81c6c576a378e564d00ceba8d00cb34e7d9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.4",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "laravel",
+            "autoload": {
+                "psr-4": {
+                    "RecursiveRelationships\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hassan Raza Pasha",
+                    "email": "e.hassanrazapasha@gmail.com"
+                }
+            ],
+            "description": "This Laravel Eloquent extension provides recursive relationships using common table.",
+            "keywords": [
+                "laravel",
+                "laravel library",
+                "laravel recursive relationships",
+                "parent child relations",
+                "recursive relationships"
+            ],
+            "support": {
+                "issues": "https://github.com/paxha/laravel-recursive-relationships/issues",
+                "source": "https://github.com/paxha/laravel-recursive-relationships/tree/v1.1.0"
+            },
+            "time": "2020-12-17T16:18:24+00:00"
         },
         {
             "name": "phpoption/phpoption",

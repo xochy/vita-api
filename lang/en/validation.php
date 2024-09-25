@@ -201,6 +201,7 @@ return [
         'system'       => 'measurement system',
         'weight'       => 'weight',
         'display_name' => 'display name',
+        'filename'     => 'file name',
     ],
 
 ];

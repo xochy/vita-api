@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DirectoryController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -136,5 +138,22 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $actions->delete('deletePermission');
             // Flat list
             $actions->get('flatList');
+        });
+
+    // Definitions for Directory model
+    $server->resource('directories', DirectoryController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasOne('parent');
+            $relationships->hasMany('subdirectories');
+            $relationships->hasMany('medias');
+        });
+
+    // Definitions for Media model
+    $server->resource('medias', MediaController::class)
+        ->actions('manage', function ($actions) {
+            // Download action
+            $actions->get('downloadFile');
+            $actions->get('downloadFiles');
+            $actions->get('outputFile');
         });
 });
