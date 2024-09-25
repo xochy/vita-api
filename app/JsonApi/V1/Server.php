@@ -2,7 +2,6 @@
 
 namespace App\JsonApi\V1;
 
-use App\Models\Routine;
 use Illuminate\Support\Facades\Auth;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
@@ -47,6 +46,8 @@ class Server extends BaseServer
             Roles\RoleSchema::class,
             Permissions\PermissionSchema::class,
             Variations\VariationSchema::class,
+            Directories\DirectorySchema::class,
+            Medias\MediaSchema::class,
         ];
     }
 }

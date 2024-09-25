@@ -129,7 +129,7 @@ class CreateWorkoutsTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
-            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))->dump()
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
         $this->assertDatabaseHas(

@@ -230,6 +230,9 @@ return [
         'weight'                => 'peso',
         'year'                  => 'año',
         'display_name'          => 'nombre de visualización',
+        'action'                => 'acción',
+        'path'                  => 'ruta',
+        'filename'              => 'nombre de archivo',
     ],
 
 ];
