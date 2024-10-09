@@ -26,10 +26,4 @@ class DownloadMediasTest extends TestCase
         $this->user = User::factory()->create()->assignRole('superAdmin');
         $this->seed(DirectoriesPermissionsSeeder::class);
     }
-
-    /** @test */
-    public function authenticated_users_can_download_single_media()
-    {
-        
-    }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Directory;
 use App\Models\Media;
 use App\Validators\MediaFieldsValidator;
 use Illuminate\Http\Request;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
+use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use Spatie\MediaLibrary\Support\MediaStream;
 
@@ -34,6 +36,34 @@ class MediaController extends Controller
     public function __construct(MediaFieldsValidator $mediaValidator)
     {
         $this->mediaValidator = $mediaValidator;
+    }
+
+    /**
+     * Upload a file to the media library.
+     *
+     * @param Request $request
+     *
+     * @return DataResponse|JsonApiException
+     */
+    public function uploadFile(Request $request): DataResponse|JsonApiException
+    {
+        try {
+            $directory = Directory::find($request->directoryId);
+            $path = $request->path;
+
+            $media = $directory->addMediaFromRequest('file')
+                ->withCustomProperties(['zip_filename_prefix' => $path])
+                ->toMediaCollection('files');
+
+            return DataResponse::make($media);
+        } catch (\Throwable $th) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $th->getMessage()
+                ]
+            );
+        }
     }
 
     /**
