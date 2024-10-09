@@ -50,8 +50,8 @@ class AddMediasToDirectoryTest extends TestCase
             'meta' => [
                 'media' => [
                     'action' => 'store',
-                    'path'   => self::IMAGE_PATH,
-                    'data'   => [$file1, $file2, $file3]
+                    'path' => self::IMAGE_PATH,
+                    'data' => [$file1, $file2, $file3]
                 ]
             ]
         ];
@@ -279,7 +279,7 @@ class AddMediasToDirectoryTest extends TestCase
         $response->assertError(
             400,
             [
-                'detail' => 'The content field is required.'
+                'detail' => "The content field is required."
             ]
         );
     }

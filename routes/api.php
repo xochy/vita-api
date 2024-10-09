@@ -152,6 +152,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     $server->resource('medias', MediaController::class)
         ->actions('manage', function ($actions) {
             // Download action
+            $actions->post('uploadFile');
             $actions->get('downloadFile');
             $actions->get('downloadFiles');
             $actions->get('outputFile');

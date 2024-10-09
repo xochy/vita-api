@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\PermissionsSeeders\DirectoriesPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PermissionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PhysicalConditionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\RolesPermissionsSeeder;
@@ -55,6 +56,10 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->call(UserSeeder::class,);
-        $this->call(DirectorySeeder::class);
+
+        $this->call([
+            DirectorySeeder::class,
+            DirectoriesPermissionsSeeder::class,
+        ]);
     }
 }

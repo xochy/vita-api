@@ -3,6 +3,7 @@
 namespace App\JsonApi\V1\Medias;
 
 use App\Models\Media;
+use LaravelJsonApi\Core\Json\Hash;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\Str;
@@ -49,6 +50,9 @@ class MediaSchema extends Schema
             Str::make('extension')->readOnly(),
             Str::make('humanReadableSize')->readOnly(),
             Str::make('size')->readOnly(),
+            Str::make('publicUrl')->extractUsing(
+                static fn($model) => $model->getFullUrl()
+            )->readOnly(),
             DateTime::make('createdAt', 'created_at')->sortable()->readOnly(),
             DateTime::make('updatedAt', 'created_at')->sortable()->readOnly(),
         ];
