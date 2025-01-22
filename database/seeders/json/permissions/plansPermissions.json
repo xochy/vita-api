@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show plans",
+        "display_name": "Mostrar planes",
+        "action": "show",
+        "subject": "plan",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create plans",
         "display_name": "Crear planes",
         "action": "create",

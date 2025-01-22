@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show muscles",
+        "display_name": "Mostrar músculos",
+        "action": "show",
+        "subject": "muscle",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create muscles",
         "display_name": "Crear músculos",
         "action": "create",

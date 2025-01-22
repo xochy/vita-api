@@ -2,11 +2,20 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
 use Database\Seeders\PermissionsSeeders\DirectoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\FrequenciesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\GoalsPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\MusclesPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PermissionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PhysicalConditionsPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\PlansPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\RolesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\RoutinesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\TranslationsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\UsersPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\VariationsPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,7 +35,18 @@ class DatabaseSeeder extends Seeder
                 RolesPermissionsSeeder::class,
                 PermissionsPermissionsSeeder::class,
 
+                // transalations permissions seeders
+                TranslationsPermissionsSeeder::class,
+
                 // models permissions seeders
+                PlansPermissionsSeeder::class,
+                GoalsPermissionsSeeder::class,
+                MusclesPermissionsSeeder::class,
+                WorkoutsPermissionsSeeder::class,
+                RoutinesPermissionsSeeder::class,
+                VariationsPermissionsSeeder::class,
+                CategoriesPermissionsSeeder::class,
+                FrequenciesPermissionsSeeder::class,
                 PhysicalConditionsPermissionsSeeder::class,
             ]
         );

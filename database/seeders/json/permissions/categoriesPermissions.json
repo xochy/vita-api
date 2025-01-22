@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show categories",
+        "display_name": "Mostrar categor\u00edas",
+        "action": "show",
+        "subject": "category",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create categories",
         "display_name": "Crear categor\u00edas",
         "action": "create",

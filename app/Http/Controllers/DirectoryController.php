@@ -6,14 +6,15 @@ use App\Http\Controllers\Controller;
 use App\JsonApi\V1\Directories\DirectoryRequest;
 use App\Models\Directory;
 use App\Validators\DirectoryFieldsValidator;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
+use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
 class DirectoryController extends Controller
 {
-
     use Actions\FetchMany;
     use Actions\FetchOne;
     use Actions\Store;
@@ -29,15 +30,18 @@ class DirectoryController extends Controller
     const UPDATE_ACTION = 'update';
     const DELETE_ACTION = 'delete';
 
+    protected $mediaController;
     protected $directoryValidator;
 
     /**
      * Initialize the directory validator for the controller.
      *
+     * @param MediaController $mediaController
      * @param DirectoryFieldsValidator $directoryValidator
      */
-    public function __construct(DirectoryFieldsValidator $directoryValidator)
+    public function __construct(MediaController $mediaController, DirectoryFieldsValidator $directoryValidator)
     {
+        $this->mediaController = $mediaController;
         $this->directoryValidator = $directoryValidator;
     }
 
@@ -65,6 +69,19 @@ class DirectoryController extends Controller
     public function updated(Directory $directory, DirectoryRequest $request): void
     {
         $this->manageMedia($directory, $request);
+    }
+
+    /**
+     * Upload a file related to the directory.
+     *
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function uploadDirectoryFile(Request $request): DataResponse|JsonApiException
+    {
+        $directory = Directory::find($request->directoryId);
+        return $this->mediaController->uploadFile($request, $directory);
     }
 
     /**

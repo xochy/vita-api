@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show routines",
+        "display_name": "Mostrar rutinas",
+        "action": "show",
+        "subject": "routine",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create routines",
         "display_name": "Crear rutinas",
         "action": "create",

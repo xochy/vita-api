@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show goals",
+        "display_name": "Mostrar metas",
+        "action": "show",
+        "subject": "goal",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create goals",
         "display_name": "Crear metas",
         "action": "create",

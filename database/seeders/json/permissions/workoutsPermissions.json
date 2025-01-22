@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show workouts",
+        "display_name": "Mostrar entrenamientos",
+        "action": "show",
+        "subject": "workout",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create workouts",
         "display_name": "Crear entrenamientos",
         "action": "create",

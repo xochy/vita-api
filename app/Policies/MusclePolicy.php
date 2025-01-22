@@ -100,4 +100,9 @@ class MusclePolicy
     {
         return $user->can('read muscles');
     }
+
+    public function viewMedias(User $user, Muscle $muscle): bool
+    {
+        return $user->can('read muscles');
+    }
 }
