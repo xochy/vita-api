@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Directory;
 use App\Models\Media;
 use App\Validators\MediaFieldsValidator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
 use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\Support\MediaStream;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MediaController extends Controller
 {
@@ -25,6 +30,8 @@ class MediaController extends Controller
     use Actions\UpdateRelationship;
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
+
+    use InteractsWithMedia;
 
     protected $mediaValidator;
 
@@ -42,20 +49,99 @@ class MediaController extends Controller
      * Upload a file to the media library.
      *
      * @param Request $request
+     * @param Model $model
      *
      * @return DataResponse|JsonApiException
      */
-    public function uploadFile(Request $request): DataResponse|JsonApiException
+    public function uploadFile(Request $request, Model $model): DataResponse|JsonApiException
     {
-        try {
-            $directory = Directory::find($request->directoryId);
-            $path = $request->path;
+        if (!$model instanceof HasMedia) {
+            throw new JsonApiException(
+                [
+                    'status' => 400,
+                    'detail' => 'The provided model does not implement the HasMedia interface.'
+                ]
+            );
+        }
 
-            $media = $directory->addMediaFromRequest('file')
+        try {
+            $path = $request->path;
+            $media = $model->addMediaFromRequest('file')
                 ->withCustomProperties(['zip_filename_prefix' => $path])
                 ->toMediaCollection('files');
 
             return DataResponse::make($media);
+        } catch (\Throwable $th) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $th->getMessage()
+                ]
+            );
+        }
+    }
+
+    /**
+     * Upload files to the media library.
+     *
+     * @param Request $request
+     * @param Model $model
+     *
+     * @return DataResponse|JsonApiException
+     */
+    public function uploadFiles(Request $request, Model $model): DataResponse|JsonApiException
+    {
+        if (!$model instanceof HasMedia) {
+            throw new JsonApiException(
+                [
+                    'status' => 400,
+                    'detail' => 'The provided model does not implement the HasMedia interface.'
+                ]
+            );
+        }
+
+        try {
+            $model->clearMediaCollection($request->collection);
+
+            $path = $request->path;
+
+            $mediaAdders = $model->addMultipleMediaFromRequest(['files']);
+            foreach ($mediaAdders as $fileAdder) {
+                $fileAdder->withCustomProperties(['zip_filename_prefix' => $path])
+                    ->toMediaCollection($request->collection);
+            }
+
+            Log::info('Actual files in model collection: ' . $model->getMedia($request->collection));
+
+            return DataResponse::make($model->getMedia($request->collection));
+        } catch (\Throwable $th) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $th->getMessage()
+                ]
+            );
+        }
+    }
+
+    public function downloadMedia(Model $model, $mediaUuid): BinaryFileResponse|JsonApiException
+    {
+        $media = $model->getMedia('images')->firstWhere('uuid', $mediaUuid);
+
+        if (!$media) {
+            throw new JsonApiException(
+                [
+                    'status' => 404,
+                    'detail' => 'Media not found.'
+                ]
+            );
+        }
+
+        try {
+            return response()->file($media->getPath(), [
+                'Content-Type' => $media->mime_type,
+                'Content-Disposition' => 'inline',
+            ]);
         } catch (\Throwable $th) {
             throw JsonApiException::error(
                 [
@@ -141,6 +227,15 @@ class MediaController extends Controller
             );
         }
 
-        return Media::find($request->data['id']);
+        try {
+            return Media::find($request->data['id'])->first();
+        } catch (\Throwable $th) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => $th->getMessage()
+                ]
+            );
+        }
     }
 }

@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show variations",
+        "display_name": "Mostrar variaciones",
+        "action": "show",
+        "subject": "variation",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create variations",
         "display_name": "Crear variaciones",
         "action": "create",

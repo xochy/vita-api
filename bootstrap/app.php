@@ -15,6 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('api', App\Http\Middleware\Localization::class);
         $middleware->appendToGroup('api', App\Http\Middleware\RefreshToken::class);
     })
-    ->withExceptions(function (Exceptions $exceptions) {
+    ->withExceptions(function (Exceptions $_) {
         //
     })->create();

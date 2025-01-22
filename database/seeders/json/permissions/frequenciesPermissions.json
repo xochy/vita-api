@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show frequencies",
+        "display_name": "Mostrar frecuencias",
+        "action": "show",
+        "subject": "frequency",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create frequencies",
         "display_name": "Crear frecuencias",
         "action": "create",

@@ -11,6 +11,17 @@
         ]
     },
     {
+        "name": "show physical conditions",
+        "display_name": "Mostrar condiciones físicas",
+        "action": "show",
+        "subject": "physicalCondition",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
         "name": "create physical conditions",
         "display_name": "Crear condiciones físicas",
         "action": "create",

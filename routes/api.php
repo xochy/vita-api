@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
 use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
+use LaravelJsonApi\Laravel\Routing\ActionRegistrar;
 use LaravelJsonApi\Laravel\Routing\Relationships;
 use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
 
@@ -27,11 +29,16 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         });
 
     // Definitions for Muscle model
-    $server->resource('muscles', JsonApiController::class)
+    $server->resource('muscles', MuscleController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('workouts');
             $relationships->hasMany('variations');
             $relationships->hasMany('translations');
+            $relationships->hasMany('medias');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('upload-files', 'uploadFiles');
+            $actions->get('download-file/{id}/{mediaId}', 'downloadFile');
         });
 
     // Definitions for Workout model
@@ -146,6 +153,9 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('parent');
             $relationships->hasMany('subdirectories');
             $relationships->hasMany('medias');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('upload-directory-file', 'uploadDirectoryFile');
         });
 
     // Definitions for Media model

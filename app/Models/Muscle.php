@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Muscle extends Model
+class Muscle extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, MuscleMutators;
+    use HasFactory, HasSlug, MuscleMutators, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +30,7 @@ class Muscle extends Model
      *
      * @return SlugOptions
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')

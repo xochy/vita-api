@@ -1,0 +1,74 @@
+[
+    {
+        "name": "read translations",
+        "display_name": "Leer traducciones",
+        "action": "read",
+        "subject": "translation",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "show translations",
+        "display_name": "Mostrar traducciones",
+        "action": "show",
+        "subject": "translation",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create translations",
+        "display_name": "Crear traducciones",
+        "action": "create",
+        "subject": "translation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update translations",
+        "display_name": "Actualizar traducciones",
+        "action": "update",
+        "subject": "translation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete translations",
+        "display_name": "Eliminar traducciones",
+        "action": "delete",
+        "subject": "translation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore translations",
+        "display_name": "Restaurar traducciones",
+        "action": "restore",
+        "subject": "translation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete translations",
+        "display_name": "Eliminar permanentemente traducciones",
+        "action": "forceDelete",
+        "subject": "translation",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]
