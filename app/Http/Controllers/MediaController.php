@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Directory;
 use App\Models\Media;
 use App\Validators\MediaFieldsValidator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -89,7 +89,7 @@ class MediaController extends Controller
      *
      * @return DataResponse|JsonApiException
      */
-    public function uploadFiles(Request $request, Model $model): DataResponse|JsonApiException
+    public function uploadFiles(Request $request, Model|Collection $model): DataResponse|JsonApiException
     {
         if (!$model instanceof HasMedia) {
             throw new JsonApiException(
@@ -124,7 +124,7 @@ class MediaController extends Controller
         }
     }
 
-    public function downloadMedia(Model $model, $mediaUuid): BinaryFileResponse|JsonApiException
+    public function downloadMedia(Model|Collection $model, $mediaUuid): BinaryFileResponse|JsonApiException
     {
         $media = $model->getMedia('images')->firstWhere('uuid', $mediaUuid);
 

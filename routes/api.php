@@ -4,6 +4,7 @@ use App\Http\Controllers\DirectoryController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VariationController;
@@ -86,7 +87,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         });
 
     // Definitions for Plan model
-    $server->resource('plans', JsonApiController::class)
+    $server->resource('plans', PlanController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('goal');
             $relationships->hasOne('frequency');
@@ -94,6 +95,10 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasMany('users');
             $relationships->hasMany('routines');
             $relationships->hasMany('translations');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('upload-files', 'uploadFiles');
+            $actions->get('download-file/{id}/{mediaId}', 'downloadFile');
         });
 
     // Definitions for User model

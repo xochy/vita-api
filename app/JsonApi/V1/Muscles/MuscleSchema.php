@@ -40,10 +40,10 @@ class MuscleSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            HasMany::make('translations'),
             BelongsToMany::make('workouts'),
             BelongsToMany::make('variations'),
 
+            HasMany::make('translations'),
             HasMany::make('medias', 'media')->type('medias'),
         ];
     }

@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Plan extends Model
+class Plan extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, PlanMutators;
+    use HasFactory, HasSlug, PlanMutators, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
