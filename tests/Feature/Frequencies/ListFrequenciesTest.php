@@ -46,9 +46,9 @@ class ListFrequenciesTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $frequency->getRouteKey(),
                 'attributes' => [
-                    'name'        => $frequency->name,
+                    'name' => $frequency->name,
                     'description' => $frequency->description,
-                    'slug'        => $frequency->slug,
+                    'slug' => $frequency->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequency)
@@ -72,9 +72,9 @@ class ListFrequenciesTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $frequencies[0]->getRouteKey(),
                     'attributes' => [
-                        'name'        => $frequencies[0]->name,
+                        'name' => $frequencies[0]->name,
                         'description' => $frequencies[0]->description,
-                        'slug'        => $frequencies[0]->slug,
+                        'slug' => $frequencies[0]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[0])
@@ -84,9 +84,9 @@ class ListFrequenciesTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $frequencies[1]->getRouteKey(),
                     'attributes' => [
-                        'name'        => $frequencies[1]->name,
+                        'name' => $frequencies[1]->name,
                         'description' => $frequencies[1]->description,
-                        'slug'        => $frequencies[1]->slug,
+                        'slug' => $frequencies[1]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[1])
@@ -96,12 +96,52 @@ class ListFrequenciesTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $frequencies[2]->getRouteKey(),
                     'attributes' => [
-                        'name'        => $frequencies[2]->name,
+                        'name' => $frequencies[2]->name,
                         'description' => $frequencies[2]->description,
-                        'slug'        => $frequencies[2]->slug,
+                        'slug' => $frequencies[2]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $frequencies[2])
+                    ]
+                ]
+            ]
+        );
+    }
+
+    /** @test */
+    public function can_fetch_flat_frequencies_list()
+    {
+        $frequencies = Frequency::factory()->count(3)->create();
+
+        $params = [
+            'fields[frequencies]' => 'name'
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->get(route(self::MODEL_INDEX_ACTION_ROUTE, $params));
+
+        $response->assertFetchedMany(
+            [
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $frequencies[0]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $frequencies[0]->name,
+                    ]
+                ],
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $frequencies[1]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $frequencies[1]->name,
+                    ],
+                ],
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $frequencies[2]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $frequencies[2]->name,
                     ]
                 ]
             ]
