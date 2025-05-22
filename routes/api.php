@@ -29,6 +29,12 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasMany('translations');
         });
 
+    // Definitions for Equipment model
+    $server->resource('equipments', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('translations');
+        });
+
     // Definitions for Muscle model
     $server->resource('muscles', MuscleController::class)
         ->relationships(function (Relationships $relationships) {
