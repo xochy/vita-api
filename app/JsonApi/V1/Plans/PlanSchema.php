@@ -26,6 +26,13 @@ class PlanSchema extends Schema
     public static string $model = Plan::class;
 
     /**
+ * The relationships that should be eager loaded.
+ *
+ * @var array
+ */
+protected array $with = ['goal'];
+
+    /**
      * Get the resource fields.
      *
      * @return array
@@ -35,6 +42,9 @@ class PlanSchema extends Schema
         return [
             ID::make(),
             Str::make('name')->sortable(),
+            Str::make('goalName', 'name')->on('goal'),
+            Str::make('frequencyName', 'name')->on('frequency'),
+            Str::make('physicalConditionName', 'name')->on('physicalCondition'),
             Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -48,6 +58,7 @@ class PlanSchema extends Schema
             BelongsToMany::make('routines'),
 
             HasMany::make('translations'),
+            HasMany::make('medias', 'media')->type('medias'),
         ];
     }
 

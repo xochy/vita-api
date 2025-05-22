@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Muscle;
+use App\Models\Plan;
 use App\Traits\HandlesMedia;
 use Illuminate\Http\Request;
 use LaravelJsonApi\Core\Exceptions\JsonApiException;
@@ -11,7 +11,7 @@ use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class MuscleController extends Controller
+class PlanController extends Controller
 {
     use Actions\FetchMany;
     use Actions\FetchOne;
@@ -45,7 +45,7 @@ class MuscleController extends Controller
      */
     public function uploadFiles(Request $request): DataResponse|JsonApiException
     {
-        $model = Muscle::find($request->id);
+        $model = Plan::find($request->id);
         if (!$model) {
             throw JsonApiException::error(
                 [
@@ -67,7 +67,7 @@ class MuscleController extends Controller
      */
     public function downloadFile(Request $request): BinaryFileResponse|JsonApiException
     {
-        $model = Muscle::find($request->id);
+        $model = Plan::find($request->id);
         if (!$model) {
             throw JsonApiException::error(
                 [

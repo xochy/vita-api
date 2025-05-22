@@ -46,9 +46,9 @@ class ListGoalsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $goal->getRouteKey(),
                 'attributes' => [
-                    'name'        => $goal->name,
+                    'name' => $goal->name,
                     'description' => $goal->description,
-                    'slug'        => $goal->slug,
+                    'slug' => $goal->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goal)
@@ -72,9 +72,9 @@ class ListGoalsTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $goals[0]->getRouteKey(),
                     'attributes' => [
-                        'name'        => $goals[0]->name,
+                        'name' => $goals[0]->name,
                         'description' => $goals[0]->description,
-                        'slug'        => $goals[0]->slug,
+                        'slug' => $goals[0]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goals[0])
@@ -84,9 +84,9 @@ class ListGoalsTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $goals[1]->getRouteKey(),
                     'attributes' => [
-                        'name'        => $goals[1]->name,
+                        'name' => $goals[1]->name,
                         'description' => $goals[1]->description,
-                        'slug'        => $goals[1]->slug,
+                        'slug' => $goals[1]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goals[1])
@@ -96,12 +96,52 @@ class ListGoalsTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $goals[2]->getRouteKey(),
                     'attributes' => [
-                        'name'        => $goals[2]->name,
+                        'name' => $goals[2]->name,
                         'description' => $goals[2]->description,
-                        'slug'        => $goals[2]->slug,
+                        'slug' => $goals[2]->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $goals[2])
+                    ]
+                ]
+            ]
+        );
+    }
+
+    /** @test */
+    public function can_fetch_flat_goals_list()
+    {
+        $goals = Goal::factory()->count(3)->create();
+
+        $params = [
+            'fields[goals]' => 'name'
+        ];
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->get(route(self::MODEL_INDEX_ACTION_ROUTE, $params));
+
+        $response->assertFetchedMany(
+            [
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $goals[0]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $goals[0]->name,
+                    ]
+                ],
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $goals[1]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $goals[1]->name,
+                    ],
+                ],
+                [
+                    'type' => self::MODEL_PLURAL_NAME,
+                    'id' => (string) $goals[2]->getRouteKey(),
+                    'attributes' => [
+                        'name' => $goals[2]->name,
                     ]
                 ]
             ]
