@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Equipments;
 
+use App\Models\Equipment;
 use App\Models\User;
 use Database\Seeders\PermissionsSeeders\EquipmentsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -37,8 +39,83 @@ class SortEquipmentsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_test()
+    public function can_sort_equipments_by_name_asc()
     {
-        //
+        Equipment::factory()->count(3)
+            ->state(new Sequence(
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+            ))
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                'sort' => self::MODEL_SORT_PARAM_VALUE
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()
+            ->get($url)->assertSeeInOrder(
+                [
+                    self::MODEL_ALFA_NAME,
+                    self::MODEL_BETA_NAME,
+                    self::MODEL_GAMA_NAME,
+                ]
+            );
     }
+
+    /** @test */
+    public function can_sort_equipments_by_name_desc()
+    {
+        Equipment::factory()->count(3)
+            ->state(new Sequence(
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+            ))
+            ->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                'sort' => '-' . self::MODEL_SORT_PARAM_VALUE
+            ]
+        );
+
+        $this->actingAs($this->user)->jsonApi()
+            ->get($url)->assertSeeInOrder(
+                [
+                    self::MODEL_GAMA_NAME,
+                    self::MODEL_BETA_NAME,
+                    self::MODEL_ALFA_NAME,
+                ]
+            );
+    }
+
+    /** @test */
+    public function cannot_sort_equipments_by_unknown_fields()
+    {
+        Equipment::factory()->times(3)->create();
+
+        $url = route(
+            self::MODEL_MAIN_ACTION_ROUTE,
+            [
+                'sort' => 'unknown_field'
+            ]
+        );
+
+        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+
+        $response->assertError(
+            400,
+            [
+                'source' => ['parameter' => 'sort'],
+                'status' => '400',
+                'title' => 'Invalid Query Parameter',
+            ]
+        );
+    }
+
 }

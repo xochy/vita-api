@@ -17,7 +17,17 @@ class EquipmentRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'name' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('categories', 'name')->ignore($this->route('category')),
+            ],
+            'description' => [
+                'required',
+                'string',
+                'max:1000',
+            ],
         ];
     }
 

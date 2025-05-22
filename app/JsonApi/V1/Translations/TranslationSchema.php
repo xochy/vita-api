@@ -24,7 +24,7 @@ class TranslationSchema extends Schema
     {
         return false;
     }
-    
+
     /**
      * The model the schema corresponds to.
      *
@@ -55,6 +55,7 @@ class TranslationSchema extends Schema
                 'workouts',
                 'routines',
                 'categories',
+                'equipments',
                 'variations',
                 'frequencies',
                 'physical-conditions',
