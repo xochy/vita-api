@@ -1,28 +1,28 @@
 <?php
 
-namespace App\JsonApi\V1\Translations;
+namespace App\JsonApi\V1\Equipments;
 
-use App\Models\Translation;
+use App\Models\Equipment;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class TranslationSchema extends Schema
+class EquipmentSchema extends Schema
 {
-
     /**
-     * Determine if the resource is authorizable.
+     * Get the JSON:API resource type.
      *
-     * @return bool
+     * @return string
      */
-    public function authorizable(): bool
+    public static function type(): string
     {
-        return false;
+        return 'equipments';
     }
 
     /**
@@ -30,7 +30,7 @@ class TranslationSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Translation::class;
+    public static string $model = Equipment::class;
 
     /**
      * Get the resource fields.
@@ -41,25 +41,14 @@ class TranslationSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('column'),
-            Str::make('locale'),
-            Str::make('translation'),
+            Str::make('name')->sortable(),
+            Str::make('description'),
+            Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            MorphTo::make('translationable')->types(
-                'plans',
-                'goals',
-                'muscles',
-                'workouts',
-                'routines',
-                'categories',
-                'equipments',
-                'variations',
-                'frequencies',
-                'physical-conditions',
-            )
+            HasMany::make('translations'),
         ];
     }
 
@@ -72,6 +61,9 @@ class TranslationSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            Scope::make('name'),
+            Scope::make('description'),
+            Scope::make('search'),
         ];
     }
 
@@ -84,4 +76,5 @@ class TranslationSchema extends Schema
     {
         return PagePagination::make();
     }
+
 }

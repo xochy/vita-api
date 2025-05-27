@@ -48,6 +48,7 @@ class Server extends BaseServer
             Variations\VariationSchema::class,
             Directories\DirectorySchema::class,
             Medias\MediaSchema::class,
+            Equipments\EquipmentSchema::class,
         ];
     }
 }

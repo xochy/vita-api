@@ -5,12 +5,12 @@ namespace App\Models\Traits\Mutators;
 use App\Traits\Translation;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-trait CategoryMutators
+trait EquipmentMutators
 {
     use Translation;
 
     /**
-     * Get the name of the category.
+     * Get the name of the equipment.
      *
      * @return string
      */
@@ -22,7 +22,7 @@ trait CategoryMutators
     }
 
     /**
-     * Get the description of the category.
+     * Get the description of the equipment.
      *
      * @return string
      */

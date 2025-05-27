@@ -1,0 +1,64 @@
+[
+    {
+        "name": "read equipments",
+        "display_name": "Leer equipos",
+        "action": "read",
+        "subject": "equipment",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "show equipments",
+        "display_name": "Mostrar equipos",
+        "action": "show",
+        "subject": "equipment",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create equipments",
+        "display_name": "Crear equipos",
+        "action": "create",
+        "subject": "equipment",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update equipments",
+        "display_name": "Actualizar equipos",
+        "action": "update",
+        "subject": "equipment",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete equipments",
+        "display_name": "Eliminar equipos",
+        "action": "delete",
+        "subject": "equipment",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore equipments",
+        "display_name": "Restaurar equipos",
+        "action": "restore",
+        "subject": "equipment",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

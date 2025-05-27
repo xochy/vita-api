@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Equipment;
 use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
 use Database\Seeders\PermissionsSeeders\DirectoriesPermissionsSeeder;
+use Database\Seeders\PermissionsSeeders\EquipmentsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\FrequenciesPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\GoalsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\MusclesPermissionsSeeder;
@@ -48,6 +50,7 @@ class DatabaseSeeder extends Seeder
                 CategoriesPermissionsSeeder::class,
                 FrequenciesPermissionsSeeder::class,
                 PhysicalConditionsPermissionsSeeder::class,
+                EquipmentsPermissionsSeeder::class,
             ]
         );
 
@@ -59,6 +62,7 @@ class DatabaseSeeder extends Seeder
                 CategorySeeder::class,
                 FrequencySeeder::class,
                 PhysicalConditionSeeder::class,
+                EquipmentSeeder::class,
             ]
         );
 
