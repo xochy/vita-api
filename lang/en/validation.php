@@ -193,15 +193,16 @@ return [
     */
 
     'attributes' => [
-        'name'         => 'name',
-        'age'          => 'age',
-        'email'        => 'email address',
-        'gender'       => 'gender',
-        'height'       => 'height',
-        'system'       => 'measurement system',
-        'weight'       => 'weight',
-        'display_name' => 'display name',
-        'filename'     => 'file name',
+        'name'           => 'name',
+        'age'            => 'age',
+        'email'          => 'email address',
+        'gender'         => 'gender',
+        'height'         => 'height',
+        'system'         => 'measurement system',
+        'weight'         => 'weight',
+        'display_name'   => 'display name',
+        'filename'       => 'file name',
+        'firebase_token' => 'Firebase token',
     ],
 
 ];

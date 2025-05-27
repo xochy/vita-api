@@ -22,6 +22,7 @@ class RefreshToken
             'v1.users.signin',
             'v1.users.signup',
             'v1.users.signout',
+            'v1.users.socialSignin',
         ];
 
         if ($request->routeIs($exclude)) {

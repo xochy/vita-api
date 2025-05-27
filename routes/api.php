@@ -121,6 +121,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $actions->post('signout');
             // Refresh token action
             $actions->post('refresh');
+            // Social sign-in action
+            $actions->post('social-signin');
         });
 
     // Definitions for Translation model
