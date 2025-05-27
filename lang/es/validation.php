@@ -233,6 +233,7 @@ return [
         'action'                => 'acción',
         'path'                  => 'ruta',
         'filename'              => 'nombre de archivo',
+        'firebase_token'        => 'token de Firebase',
     ],
 
 ];

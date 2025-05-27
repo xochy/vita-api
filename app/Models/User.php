@@ -30,8 +30,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'age',
-        'gender', 'system', 'weight', 'height', 'deleted_at'
+        'name',
+        'email',
+        'password',
+        'age',
+        'gender',
+        'system',
+        'weight',
+        'height',
+        'firebase_uid',
+        'provider',
+        'avatar',
+        'deleted_at'
     ];
 
     /**
