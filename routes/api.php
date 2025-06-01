@@ -187,6 +187,10 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('comments');
             $relationships->hasOne('user');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('upload-files', 'uploadFiles');
+            $actions->get('download-file/{id}/{mediaId}', 'downloadFile');
         });
 
     // Definitions for Comment model
