@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, PostMutators;
+    use HasFactory, HasSlug, PostMutators, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.

@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MediaController extends Controller
 {
-
     use Actions\FetchMany;
     use Actions\FetchOne;
     use Actions\Store;
@@ -56,10 +55,10 @@ class MediaController extends Controller
     public function uploadFile(Request $request, Model $model): DataResponse|JsonApiException
     {
         if (!$model instanceof HasMedia) {
-            throw new JsonApiException(
+            throw JsonApiException::error(
                 [
-                    'status' => 400,
-                    'detail' => 'The provided model does not implement the HasMedia interface.'
+                    'status' => 400, // Wrong request
+                    'detail' => __('exceptions.model_does_not_implement_has_media')
                 ]
             );
         }
@@ -92,10 +91,10 @@ class MediaController extends Controller
     public function uploadFiles(Request $request, Model|Collection $model): DataResponse|JsonApiException
     {
         if (!$model instanceof HasMedia) {
-            throw new JsonApiException(
+            throw JsonApiException::error(
                 [
-                    'status' => 400,
-                    'detail' => 'The provided model does not implement the HasMedia interface.'
+                    'status' => 400, // Wrong request
+                    'detail' => __('exceptions.model_does_not_implement_has_media')
                 ]
             );
         }
@@ -129,10 +128,10 @@ class MediaController extends Controller
         $media = $model->getMedia('images')->firstWhere('uuid', $mediaUuid);
 
         if (!$media) {
-            throw new JsonApiException(
+            throw JsonApiException::error(
                 [
-                    'status' => 404,
-                    'detail' => 'Media not found.'
+                    'status' => 404, // Not found
+                    'detail' => __('exceptions.media_file_not_found')
                 ]
             );
         }
@@ -140,7 +139,7 @@ class MediaController extends Controller
         try {
             return response()->file($media->getPath(), [
                 'Content-Type' => $media->mime_type,
-                'Content-Disposition' => 'inline',
+                'Content-Disposition' => "inline; filename=\"{$media->file_name}\"",
             ]);
         } catch (\Throwable $th) {
             throw JsonApiException::error(
