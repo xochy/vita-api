@@ -33,7 +33,7 @@ class EquipmentSeeder extends Seeder
     }
     private function getEquipmentFromJson(): array
     {
-        $equipmentJson = File::get(database_path('seeders/json/equipment.json'));
+        $equipmentJson = File::get(database_path('seeders/json/equipments.json'));
         return json_decode($equipmentJson, true);
     }
     private function processEquipment(array $equipmentData): void

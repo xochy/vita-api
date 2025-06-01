@@ -1,0 +1,77 @@
+[
+    {
+        "name": "read comments",
+        "display_name": "Leer comentarios",
+        "action": "read",
+        "subject": "comment",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "show comments",
+        "display_name": "Mostrar comentarios",
+        "action": "show",
+        "subject": "comment",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create comments",
+        "display_name": "Crear comentarios",
+        "action": "create",
+        "subject": "comment",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "update comments",
+        "display_name": "Actualizar comentarios",
+        "action": "update",
+        "subject": "comment",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "delete comments",
+        "display_name": "Eliminar comentarios",
+        "action": "delete",
+        "subject": "comment",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "restore comments",
+        "display_name": "Restaurar comentarios",
+        "action": "restore",
+        "subject": "comment",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete comments",
+        "display_name": "Eliminar permanentemente comentarios",
+        "action": "forceDelete",
+        "subject": "comment",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

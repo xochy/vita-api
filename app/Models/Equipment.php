@@ -17,6 +17,8 @@ class Equipment extends Model implements HasMedia
 {
     use HasFactory, HasSlug, InteractsWithMedia, EquipmentMutators;
 
+    protected $table = 'equipments';
+
     protected $fillable = ['name', 'description'];
 
     /**

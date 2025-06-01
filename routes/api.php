@@ -5,6 +5,7 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VariationController;
@@ -179,5 +180,19 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $actions->get('downloadFile');
             $actions->get('downloadFiles');
             $actions->get('outputFile');
+        });
+
+    // Definitions for Post model
+    $server->resource('posts', PostController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('comments');
+            $relationships->hasOne('user');
+        });
+
+    // Definitions for Comment model
+    $server->resource('comments', JsonApiController::class)
+        ->relationships(function (Relationships $relationships) {
+            $relationships->hasOne('post');
+            $relationships->hasOne('user');
         });
 });
