@@ -6,6 +6,7 @@ use App\Models\Traits\Mutators\UserMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -98,6 +99,32 @@ class User extends Authenticatable
     public function plans(): BelongsToMany
     {
         return $this->belongsToMany(Plan::class);
+    }
+
+    /**
+     * Get the posts associated with the user.
+     *
+     * This function establishes a hasMany relationship between User and Post.
+     * It means that each User can have many Posts.
+     *
+     * @return HasMany
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get the comments associated with the user.
+     *
+     * This function establishes a hasMany relationship between User and Comment.
+     * It means that each User can have many Comments.
+     *
+     * @return HasMany
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     /* -------------------------------------------------------------------------- */

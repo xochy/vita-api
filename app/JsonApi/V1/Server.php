@@ -49,6 +49,8 @@ class Server extends BaseServer
             Directories\DirectorySchema::class,
             Medias\MediaSchema::class,
             Equipments\EquipmentSchema::class,
+            Posts\PostSchema::class,
+            Comments\CommentSchema::class,
         ];
     }
 }

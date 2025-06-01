@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature\Posts;
 
-use App\Models\Category;
+use App\Models\Post;
 use App\Models\User;
-use Database\Seeders\PermissionsSeeders\CategoriesPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\PostsPermissionsSeeders;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class PaginateCategoriesTest extends TestCase
+class PaginatePostsTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'categories';
+    const MODEL_PLURAL_NAME = 'posts';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     const MODEL_SIZE_PARAM_NAME = 'page[size]';
@@ -28,16 +28,18 @@ class PaginateCategoriesTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(CategoriesPermissionsSeeder::class);
+            $this->seed(PostsPermissionsSeeders::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
     }
 
     /** @test */
-    public function can_fetch_paginated_categories()
+    public function can_fetch_paginated_posts()
     {
-        Category::factory()->times(10)->create();
+        Post::factory()->times(10)->create([
+            'user_id' => $this->user->id,
+        ]);
 
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
