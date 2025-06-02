@@ -18,4 +18,5 @@ return [
     'model_not_found' => 'El modelo solicitado no fue encontrado.',
     'model_does_not_implement_has_media' => 'El modelo proporcionado no implementa la interfaz HasMedia.',
     'media_file_not_found' => 'Archivo de medios no encontrado.',
+    'collection_not_provided' => 'No se proporcionó ninguna colección de medios en la solicitud.',
 ];

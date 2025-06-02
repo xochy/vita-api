@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Post;
-use App\Traits\HandlesMedia;
-use Illuminate\Http\Request;
-use LaravelJsonApi\Core\Exceptions\JsonApiException;
-use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class PostController extends Controller
+class PostController extends BaseMediaController
 {
     use Actions\FetchMany;
     use Actions\FetchOne;
@@ -24,60 +18,8 @@ class PostController extends Controller
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
 
-    use HandlesMedia;
-
-    /**
-     * Initialize the media controller.
-     *
-     * @param MediaController $mediaController
-     */
-    public function __construct(MediaController $mediaController)
+    protected function getModelClass(): string
     {
-        $this->setMediaController($mediaController);
-    }
-
-    /**
-     * Upload media files.
-     *
-     * @param Request $request
-     *
-     * @return DataResponse|JsonApiException
-     */
-    public function uploadFiles(Request $request): DataResponse|JsonApiException
-    {
-
-        $model = Post::find($request->id);
-        if (!$model) {
-            throw JsonApiException::error(
-                [
-                    'status' => 404, // Not Found
-                    'detail' => __('exceptions.model_not_found'),
-                ]
-            );
-        }
-
-        return $this->uploadMediaFiles($request, $model);
-    }
-
-    /**
-     * Download a media file.
-     *
-     * @param Request $request
-     *
-     * @return BinaryFileResponse|JsonApiException
-     */
-    public function downloadFile(Request $request): BinaryFileResponse|JsonApiException
-    {
-        $model = Post::find($request->id);
-        if (!$model) {
-            throw JsonApiException::error(
-                [
-                    'status' => 404, // Not Found
-                    'detail' => __('exceptions.model_not_found'),
-                ]
-            );
-        }
-
-        return $this->downloadMediaFile($request, $model);
+        return Post::class;
     }
 }

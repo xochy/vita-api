@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Muscle;
-use App\Traits\HandlesMedia;
-use Illuminate\Http\Request;
-use LaravelJsonApi\Core\Exceptions\JsonApiException;
-use LaravelJsonApi\Core\Responses\DataResponse;
+use App\Models\Post;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class MuscleController extends Controller
+class MuscleController extends BaseMediaController
 {
     use Actions\FetchMany;
     use Actions\FetchOne;
@@ -24,59 +19,8 @@ class MuscleController extends Controller
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
 
-    use HandlesMedia;
-
-    /**
-     * Initialize the media controller.
-     *
-     * @param MediaController $mediaController
-     */
-    public function __construct(MediaController $mediaController)
+    protected function getModelClass(): string
     {
-        $this->setMediaController($mediaController);
-    }
-
-    /**
-     * Upload media files.
-     *
-     * @param Request $request
-     *
-     * @return DataResponse|JsonApiException
-     */
-    public function uploadFiles(Request $request): DataResponse|JsonApiException
-    {
-        $model = Muscle::find($request->id);
-        if (!$model) {
-            throw JsonApiException::error(
-                [
-                    'status' => 400, // Wrong request
-                    'detail' => 'Model not found.',
-                ]
-            );
-        }
-
-        return $this->uploadMediaFiles($request, $model);
-    }
-
-    /**
-     * Download a media file.
-     *
-     * @param Request $request
-     *
-     * @return BinaryFileResponse|JsonApiException
-     */
-    public function downloadFile(Request $request): BinaryFileResponse|JsonApiException
-    {
-        $model = Muscle::find($request->id);
-        if (!$model) {
-            throw JsonApiException::error(
-                [
-                    'status' => 400, // Wrong request
-                    'detail' => 'Model not found.',
-                ]
-            );
-        }
-
-        return $this->downloadMediaFile($request, $model);
+        return Muscle::class;
     }
 }

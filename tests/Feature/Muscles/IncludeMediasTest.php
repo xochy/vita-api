@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Posts;
+namespace Tests\Feature\Muscles;
 
-use App\Models\Post;
+use App\Models\Muscle;
 use App\Models\User;
-use Database\Seeders\permissionsSeeders\PostsPermissionsSeeders;
+use Database\Seeders\permissionsSeeders\MusclesPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -16,14 +16,14 @@ class IncludeMediasTest extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'posts';
+    const MODEL_PLURAL_NAME = 'muscles';
     const MODEL_UPLOAD_FILE_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.uploadFiles';
     const MODEL_DOWNLOAD_FILE_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.downloadFile';
 
     const MODEL_FILES_MIME_TYPE = 'image/jpeg';
-    const MODEL_FILES_COLLECTION_NAME = 'posts-images';
-    const MODEL_FIEL_IMAGE_NAME_1 = 'post-image1.jpg';
-    const MODEL_FIEL_IMAGE_NAME_2 = 'post-image2.jpg';
+    const MODEL_FILES_COLLECTION_NAME = 'muscles-images';
+    const MODEL_FIEL_IMAGE_NAME_1 = 'muscle-image1.jpg';
+    const MODEL_FIEL_IMAGE_NAME_2 = 'muscle-image2.jpg';
 
     protected User $user;
 
@@ -33,7 +33,7 @@ class IncludeMediasTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(PostsPermissionsSeeders::class);
+            $this->seed(MusclesPermissionsSeeder::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
@@ -42,18 +42,14 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function can_upload_single_image_to_post(): void
+    public function can_upload_single_image_to_muscle()
     {
-        $post = Post::factory()->create(
-            [
-                'user_id' => $this->user->id,
-            ]
-        );
+        $muscle = Muscle::factory()->create();
 
         $file = UploadedFile::fake()->image(self::MODEL_FIEL_IMAGE_NAME_1);
 
         $formData = $this->mediaUploadFormData(
-            $post,
+            $muscle,
             $file,
             self::MODEL_PLURAL_NAME,
             self::MODEL_FILES_COLLECTION_NAME
@@ -63,7 +59,7 @@ class IncludeMediasTest extends TestCase
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
-                    $post
+                    $muscle
                 ),
                 $formData
             );
@@ -71,15 +67,15 @@ class IncludeMediasTest extends TestCase
         $response->assertStatus(200);
 
         // Check if the media was uploaded
-        $post->refresh();
+        $muscle->refresh();
 
         $this->assertCount(
             1,
-            $post->getMedia(self::MODEL_FILES_COLLECTION_NAME)
+            $muscle->getMedia(self::MODEL_FILES_COLLECTION_NAME)
         );
 
         // Check the media details
-        $media = $post->getFirstMedia(self::MODEL_FILES_COLLECTION_NAME);
+        $media = $muscle->getFirstMedia(self::MODEL_FILES_COLLECTION_NAME);
 
         $this->assertEquals(
             self::MODEL_FIEL_IMAGE_NAME_1,
@@ -93,20 +89,16 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function can_upload_multiple_images_to_post(): void
+    public function can_upload_multiple_images_to_muscle(): void
     {
-        $post = Post::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $muscle = Muscle::factory()->create();
 
-        $files = [
-            UploadedFile::fake()->image(self::MODEL_FIEL_IMAGE_NAME_1),
-            UploadedFile::fake()->image(self::MODEL_FIEL_IMAGE_NAME_2),
-        ];
+        $file1 = UploadedFile::fake()->image(self::MODEL_FIEL_IMAGE_NAME_1);
+        $file2 = UploadedFile::fake()->image(self::MODEL_FIEL_IMAGE_NAME_2);
 
         $formData = $this->mediaUploadFormData(
-            $post,
-            $files,
+            $muscle,
+            [$file1, $file2],
             self::MODEL_PLURAL_NAME,
             self::MODEL_FILES_COLLECTION_NAME
         );
@@ -115,7 +107,7 @@ class IncludeMediasTest extends TestCase
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
-                    $post
+                    $muscle
                 ),
                 $formData
             );
@@ -123,15 +115,15 @@ class IncludeMediasTest extends TestCase
         $response->assertStatus(200);
 
         // Check if the media was uploaded
-        $post->refresh();
+        $muscle->refresh();
 
         $this->assertCount(
             2,
-            $post->getMedia(self::MODEL_FILES_COLLECTION_NAME)
+            $muscle->getMedia(self::MODEL_FILES_COLLECTION_NAME)
         );
 
         // Check the media details
-        foreach ($post->getMedia(self::MODEL_FILES_COLLECTION_NAME) as $media) {
+        foreach ($muscle->getMedia(self::MODEL_FILES_COLLECTION_NAME) as $media) {
             $this->assertContains(
                 $media->file_name,
                 [self::MODEL_FIEL_IMAGE_NAME_1, self::MODEL_FIEL_IMAGE_NAME_2]
@@ -144,20 +136,18 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function upload_to_posts_clears_existing_media_collection(): void
+    public function upload_to_muscles_clears_existing_media_collection(): void
     {
-        $post = Post::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $muscle = Muscle::factory()->create();
 
         // Add an initial media file
         $initialFile = UploadedFile::fake()->image('initial-image.jpg');
-        $post->addMedia($initialFile)->toMediaCollection(self::MODEL_FILES_COLLECTION_NAME);
+        $muscle->addMedia($initialFile)->toMediaCollection(self::MODEL_FILES_COLLECTION_NAME);
 
         // Check that the initial media exists
         $this->assertCount(
             1,
-            $post->getMedia(self::MODEL_FILES_COLLECTION_NAME)
+            $muscle->getMedia(self::MODEL_FILES_COLLECTION_NAME)
         );
 
         // Upload new files
@@ -167,7 +157,7 @@ class IncludeMediasTest extends TestCase
         ];
 
         $formData = $this->mediaUploadFormData(
-            $post,
+            $muscle,
             $newFiles,
             self::MODEL_PLURAL_NAME,
             self::MODEL_FILES_COLLECTION_NAME
@@ -177,7 +167,7 @@ class IncludeMediasTest extends TestCase
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
-                    $post
+                    $muscle
                 ),
                 $formData
             );
@@ -185,25 +175,23 @@ class IncludeMediasTest extends TestCase
         $response->assertStatus(200);
 
         // Check that the previous media collection was cleared and new media was added
-        $post->refresh();
+        $muscle->refresh();
 
         $this->assertCount(
             2,
-            $post->getMedia(self::MODEL_FILES_COLLECTION_NAME)
+            $muscle->getMedia(self::MODEL_FILES_COLLECTION_NAME)
         );
     }
 
     /** @test */
-    public function cannot_upload_files_to_post_without_authentication(): void
+    public function cannot_upload_files_to_muscles_without_authentication(): void
     {
-        $post = Post::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $muscle = Muscle::factory()->create();
 
         $file = UploadedFile::fake()->image(self::MODEL_FIEL_IMAGE_NAME_1);
 
         $formData = $this->mediaUploadFormData(
-            $post,
+            $muscle,
             $file,
             self::MODEL_PLURAL_NAME,
             self::MODEL_FILES_COLLECTION_NAME
@@ -212,7 +200,7 @@ class IncludeMediasTest extends TestCase
         $response = $this->postJson(
             route(
                 self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
-                $post
+                $muscle
             ),
             $formData
         );
@@ -223,22 +211,23 @@ class IncludeMediasTest extends TestCase
     /** @test */
     public function can_download_single_image_from_post(): void
     {
-        $post = Post::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $muscle = Muscle::factory()->create();
 
+        // Upload a file to the muscle
         $file = UploadedFile::fake()->image(self::MODEL_FIEL_IMAGE_NAME_1);
-        $post->addMedia($file)->toMediaCollection(self::MODEL_FILES_COLLECTION_NAME);
+        $muscle->addMedia($file)->toMediaCollection(self::MODEL_FILES_COLLECTION_NAME);
 
-        $media = $post->getFirstMedia(self::MODEL_FILES_COLLECTION_NAME);
+        // Get the first media item
+        $media = $muscle->getFirstMedia(self::MODEL_FILES_COLLECTION_NAME);
 
+        // Download the file
         $response = $this->actingAs($this->user)
             ->jsonApi()
             ->get(
                 route(
                     self::MODEL_DOWNLOAD_FILE_ACTION_ROUTE,
                     [
-                        'id' => $post->id,
+                        'id' => $muscle->id,
                         'mediaId' => $media->uuid,
                         'collection' => self::MODEL_FILES_COLLECTION_NAME,
                     ]
@@ -259,11 +248,9 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function download_returns_404_for_non_existent_post_media(): void
+    public function download_returns_404_for_non_existent_muscle_media(): void
     {
-        $post = Post::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $muscle = Muscle::factory()->create();
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
@@ -271,7 +258,7 @@ class IncludeMediasTest extends TestCase
                 route(
                     self::MODEL_DOWNLOAD_FILE_ACTION_ROUTE,
                     [
-                        'id' => $post->id,
+                        'id' => $muscle->id,
                         'mediaId' => 'non-existent-media-id',
                         'collection' => self::MODEL_FILES_COLLECTION_NAME,
                     ]
@@ -288,11 +275,9 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function download_returns_400_for_non_provided_post_collection(): void
+    public function download_returns_400_for_non_provided_muscle_collection(): void
     {
-        $post = Post::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $muscle = Muscle::factory()->create();
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
@@ -300,7 +285,7 @@ class IncludeMediasTest extends TestCase
                 route(
                     self::MODEL_DOWNLOAD_FILE_ACTION_ROUTE,
                     [
-                        'id' => $post->id,
+                        'id' => $muscle->id,
                         'mediaId' => 'some-media-id'
                     ]
                 )
@@ -316,7 +301,7 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function download_fails_for_non_existent_post(): void
+    public function download_fails_for_non_existent_muscle(): void
     {
         $response = $this->actingAs($this->user)
             ->jsonApi()
@@ -341,14 +326,12 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function post_upload_handles_empty_files_array(): void
+    public function muscle_upload_handles_empty_files_array(): void
     {
-        $post = Post::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $muscle = Muscle::factory()->create();
 
         $formData = $this->mediaUploadFormData(
-            $post,
+            $muscle,
             [],
             self::MODEL_PLURAL_NAME,
             self::MODEL_FILES_COLLECTION_NAME
@@ -358,7 +341,7 @@ class IncludeMediasTest extends TestCase
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
-                    $post
+                    $muscle
                 ),
                 $formData
             );

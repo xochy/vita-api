@@ -123,9 +123,18 @@ class MediaController extends Controller
         }
     }
 
-    public function downloadMedia(Model|Collection $model, $mediaUuid): BinaryFileResponse|JsonApiException
+    public function downloadMedia(Request $request, Model|Collection $model, $mediaUuid): BinaryFileResponse|JsonApiException
     {
-        $media = $model->getMedia('images')->firstWhere('uuid', $mediaUuid);
+        if (!$request->collection) {
+            throw JsonApiException::error(
+                [
+                    'status' => 400, // Wrong request
+                    'detail' => __('exceptions.collection_not_provided')
+                ]
+            );
+        }
+
+        $media = $model->getMedia($request->collection)->firstWhere('uuid', $mediaUuid);
 
         if (!$media) {
             throw JsonApiException::error(

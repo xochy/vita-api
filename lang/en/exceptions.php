@@ -18,4 +18,5 @@ return [
     'model_not_found' => 'The requested model was not found.',
     'model_does_not_implement_has_media' => 'The provided model does not implement the HasMedia interface.',
     'media_file_not_found' => 'Media file not found.',
+    'collection_not_provided' => 'No media collection provided in the request.',
 ];
