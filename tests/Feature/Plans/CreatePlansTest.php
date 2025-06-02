@@ -51,7 +51,7 @@ class CreatePlansTest extends TestCase
     }
 
     /** @test */
-    public function guests_users_cannot_create_plans()
+    public function guests_users_cannot_create_plans(): void
     {
         $plan = array_filter(Plan::factory()->raw());
 
@@ -71,7 +71,7 @@ class CreatePlansTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_can_create_plans()
+    public function authenticated_users_can_create_plans(): void
     {
         $plan = array_filter(Plan::factory()->raw());
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class Comment extends Model
 {
@@ -20,6 +21,25 @@ class Comment extends Model
         'user_id',
         'content',
     ];
+
+    /**
+     * Boot the model and assign user_id automatically when creating a post.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        // Automatically set the user_id to the currently authenticated user
+        static::creating(function ($comment) {
+            if (Auth::check() && !$comment->user_id) {
+                $comment->user_id = Auth::id();
+            }
+        });
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
 
     /**
      * Get the post associated with this comment.

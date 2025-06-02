@@ -53,11 +53,14 @@ class Post extends Model implements HasMedia
             ->saveSlugsTo('slug');
     }
 
-    protected static function boot()
+    /**
+     * Boot the model and assign user_id automatically when creating a post.
+     */
+    protected static function boot(): void
     {
         parent::boot();
 
-        // Asignar user_id automáticamente al crear
+        // Automatically assign the authenticated user's ID to the post when creating it
         static::creating(function ($post) {
             if (Auth::check() && !$post->user_id) {
                 $post->user_id = Auth::id();

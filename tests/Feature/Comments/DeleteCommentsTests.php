@@ -1,24 +1,25 @@
 <?php
 
-namespace Tests\Feature\Workouts;
+namespace Tests\Feature\Comments;
 
-use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Post;
 use App\Models\User;
-use App\Models\Workout;
-use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;
+use Database\Seeders\permissionsSeeders\CommentsPermissionsSeeders;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class DeleteWorkoutsTest extends TestCase
+class DeleteCommentsTests extends TestCase
 {
     use RefreshDatabase;
 
-    const MODEL_PLURAL_NAME = 'workouts';
+    const MODEL_PLURAL_NAME = 'comments';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
+    protected Post $post;
 
     public function setUp(): void
     {
@@ -26,19 +27,32 @@ class DeleteWorkoutsTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(WorkoutsPermissionsSeeder::class);
+            $this->seed(CommentsPermissionsSeeders::class);
         }
 
         $this->user = User::factory()->create()->assignRole('admin');
+        $this->post = Post::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
     }
 
     /** @test */
-    public function guests_users_cannot_delete_workouts(): void
+    public function guests_users_cannot_delete_comments(): void
     {
-        $workout = Workout::factory()->forCategory()->create();
+        $comment = Comment::factory()->create(
+            [
+                'post_id' => $this->post->id,
+                'user_id' => $this->user->id,
+            ]
+        );
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $comment->getRouteKey()
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -47,14 +61,19 @@ class DeleteWorkoutsTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_can_delete_workouts(): void
     {
-        $workout = Workout::factory()->forCategory()->create();
+        $comment = Comment::factory()->create(
+            [
+                'post_id' => $this->post->id,
+                'user_id' => $this->user->id,
+            ]
+        );
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
             ->delete(
                 route(
                     self::MODEL_MAIN_ACTION_ROUTE,
-                    $workout->getRouteKey()
+                    $comment->getRouteKey()
                 )
             );
 
@@ -65,7 +84,7 @@ class DeleteWorkoutsTest extends TestCase
         $this->assertDatabaseMissing(
             self::MODEL_PLURAL_NAME,
             [
-                'id' => $workout->getKey()
+                'id' => $comment->id,
             ]
         );
     }

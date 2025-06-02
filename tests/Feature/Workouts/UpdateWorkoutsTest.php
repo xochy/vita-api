@@ -57,7 +57,7 @@ class UpdateWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function guests_users_cannot_update_workouts()
+    public function guests_users_cannot_update_workouts(): void
     {
         $workout = Workout::factory()->forCategory()->create();
 
@@ -82,7 +82,7 @@ class UpdateWorkoutsTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_as_admin_can_update_workouts()
+    public function authenticated_users_as_admin_can_update_workouts(): void
     {
         $workout = Workout::factory()->forCategory()->create();
 

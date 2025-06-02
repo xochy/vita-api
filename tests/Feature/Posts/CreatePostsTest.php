@@ -40,7 +40,7 @@ class CreatePostsTest extends TestCase
     }
 
     /** @test */
-    public function guests_users_cannot_create_posts()
+    public function guests_users_cannot_create_posts(): void
     {
         $post = array_filter(Post::factory()->raw());
 
@@ -59,7 +59,7 @@ class CreatePostsTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_without_permissions_cannot_create_posts()
+    public function authenticated_users_without_permissions_cannot_create_posts(): void
     {
         $user = User::factory()->create()->assignRole('user');
 
