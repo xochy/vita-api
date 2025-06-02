@@ -2,7 +2,6 @@
 
 namespace App\JsonApi\V1\Comments;
 
-use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
@@ -17,7 +16,15 @@ class CommentRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'content' => [
+                'required',
+                'string',
+                'max:10000',
+            ],
+            'post' => [
+                'required',
+                JsonApiRule::toOne()
+            ],
         ];
     }
 

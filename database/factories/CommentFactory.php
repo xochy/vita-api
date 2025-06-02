@@ -17,7 +17,7 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'content' => fake()->paragraphs(3, true),
         ];
     }
 }

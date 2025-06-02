@@ -6,6 +6,7 @@ use App\Models\Post;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
 use LaravelJsonApi\Eloquent\Fields\Str;
@@ -41,7 +42,7 @@ class PostSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            HasOne::make('user'),
+            BelongsTo::make('user'),
             HasMany::make('comments'),
             HasMany::make('translations'),
         ];

@@ -22,6 +22,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+if (!defined('DOWNLOAD_FILE_ROUTE')) {
+    define('DOWNLOAD_FILE_ROUTE', 'download-file/{id}/{mediaId}');
+}
+
 JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar $server) {
     // Definitions for Category model
     $server->resource('categories', JsonApiController::class)
@@ -46,7 +50,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         })
         ->actions(function (ActionRegistrar $actions) {
             $actions->post('upload-files', 'uploadFiles');
-            $actions->get('download-file/{id}/{mediaId}', 'downloadFile');
+            $actions->get(DOWNLOAD_FILE_ROUTE, 'downloadFile');
         });
 
     // Definitions for Workout model
@@ -190,7 +194,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         })
         ->actions(function (ActionRegistrar $actions) {
             $actions->post('upload-files', 'uploadFiles');
-            $actions->get('download-file/{id}/{mediaId}', 'downloadFile');
+            $actions->get(DOWNLOAD_FILE_ROUTE, 'downloadFile');
         });
 
     // Definitions for Comment model
