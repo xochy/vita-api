@@ -47,6 +47,6 @@ trait HandlesMedia
      */
     public function downloadMediaFile(Request $request, Model|Collection $model): BinaryFileResponse|JsonApiException
     {
-        return $this->mediaController->downloadMedia($model, $request->mediaId);
+        return $this->mediaController->downloadMedia($request, $model, $request->mediaId);
     }
 }
