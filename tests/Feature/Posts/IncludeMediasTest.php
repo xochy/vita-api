@@ -20,10 +20,10 @@ class IncludeMediasTest extends TestCase
     const MODEL_UPLOAD_FILE_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.uploadFiles';
     const MODEL_DOWNLOAD_FILE_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.downloadFile';
 
-    const MODEL_FILES_MIME_TYPE = 'image/jpeg';
+    const MODEL_FILES_MIME_TYPE = 'image/webp';
     const MODEL_FILES_COLLECTION_NAME = 'posts-images';
-    const MODEL_FIEL_IMAGE_NAME_1 = 'post-image1.jpg';
-    const MODEL_FIEL_IMAGE_NAME_2 = 'post-image2.jpg';
+    const MODEL_FIEL_IMAGE_NAME_1 = 'post-image1.webp';
+    const MODEL_FIEL_IMAGE_NAME_2 = 'post-image2.webp';
 
     protected User $user;
 
@@ -151,7 +151,7 @@ class IncludeMediasTest extends TestCase
         ]);
 
         // Add an initial media file
-        $initialFile = UploadedFile::fake()->image('initial-image.jpg');
+        $initialFile = UploadedFile::fake()->image('initial-image.webp');
         $post->addMedia($initialFile)->toMediaCollection(self::MODEL_FILES_COLLECTION_NAME);
 
         // Check that the initial media exists

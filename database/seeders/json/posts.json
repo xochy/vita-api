@@ -1,162 +1,1142 @@
 [
     {
-        "title": "How to lose weight effectively",
-        "content": "Losing weight can be a challenging journey, but with the right strategies, it can be achieved effectively. Here are some tips to help you on your weight loss journey.",
+        "title": "The Future of Renewable Energy",
+        "content": "Exploring the advancements in solar, wind, and geothermal power. These technologies are key to a sustainable future and combating climate change.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "C\u00f3mo perder peso de manera efectiva"
+                "translation": "El Futuro de la Energía Renovable"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "Perder peso puede ser un viaje desafiante, pero con las estrategias adecuadas, se puede lograr de manera efectiva. Aqu\u00ed hay algunos consejos para ayudarte en tu viaje de p\u00e9rdida de peso."
+                "translation": "Explorando los avances en energía solar, eólica y geotérmica. Estas tecnologías son clave para un futuro sostenible y para combatir el cambio climático."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "The benefits of regular exercise",
-        "content": "Regular exercise is essential for maintaining a healthy lifestyle. It helps improve cardiovascular health, strengthens muscles, and boosts mental well-being.",
+        "title": "Beginner's Guide to Digital Photography",
+        "content": "Learn the basics of aperture, ISO, and shutter speed. This guide will help you move from automatic mode to full manual control of your camera.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "Los beneficios del ejercicio regular"
+                "translation": "Guía de Fotografía Digital para Principiantes"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "El ejercicio regular es esencial para mantener un estilo de vida saludable. Ayuda a mejorar la salud cardiovascular, fortalece los m\u00fasculos y aumenta el bienestar mental."
+                "translation": "Aprende los conceptos básicos de apertura, ISO y velocidad de obturación. Esta guía te ayudará a pasar del modo automático al control manual total de tu cámara."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "Nutrition tips for a balanced diet",
-        "content": "A balanced diet is crucial for overall health. Incorporating a variety of foods, including fruits, vegetables, whole grains, and lean proteins, can help you achieve nutritional balance.",
+        "title": "The Art of Making Sourdough Bread",
+        "content": "A step-by-step tutorial on creating and maintaining a sourdough starter, and baking the perfect loaf with a crispy crust.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "Consejos de nutrici\u00f3n para una dieta equilibrada"
+                "translation": "El Arte de Hacer Pan de Masa Madre"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "Una dieta equilibrada es crucial para la salud en general. Incorporar una variedad de alimentos, incluidos frutas, verduras, granos enteros y prote\u00ednas magras, puede ayudarte a lograr un equilibrio nutricional."
+                "translation": "Un tutorial paso a paso sobre cómo crear y mantener un iniciador de masa madre, y hornear la hogaza perfecta con una corteza crujiente."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "Understanding mental health",
-        "content": "Mental health is just as important as physical health. It encompasses emotional, psychological, and social well-being. Taking care of your mental health is essential for a fulfilling life.",
+        "title": "Introduction to Stock Market Investing",
+        "content": "Understand the fundamentals of stocks, bonds, and ETFs. Learn how to build a diversified portfolio for long-term growth.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "Entendiendo la salud mental"
+                "translation": "Introducción a la Inversión en Bolsa"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "La salud mental es tan importante como la salud f\u00edsica. Abarca el bienestar emocional, psicol\u00f3gico y social. Cuidar de tu salud mental es esencial para una vida plena."
+                "translation": "Comprende los fundamentos de las acciones, bonos y ETFs. Aprende a construir una cartera diversificada para el crecimiento a largo plazo."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "The importance of hydration",
-        "content": "Staying hydrated is vital for overall health. Water plays a crucial role in bodily functions, including temperature regulation, joint lubrication, and nutrient transport.",
+        "title": "Mindfulness and Meditation for Stress Relief",
+        "content": "Discover techniques to calm your mind, reduce anxiety, and improve focus through daily meditation practices.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "La importancia de la hidrataci\u00f3n"
+                "translation": "Mindfulness y Meditación para Aliviar el Estrés"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "Mantenerse hidratado es vital para la salud en general. El agua desempe\u00f1a un papel crucial en las funciones corporales, incluida la regulaci\u00f3n de la temperatura, la lubricaci\u00f3n de las articulaciones y el transporte de nutrientes."
+                "translation": "Descubre técnicas para calmar tu mente, reducir la ansiedad y mejorar la concentración a través de prácticas diarias de meditación."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "Tips for better sleep",
-        "content": "Quality sleep is essential for physical and mental health. Establishing a regular sleep schedule, creating a comfortable sleep environment, and avoiding screens before bedtime can improve sleep quality.",
+        "title": "Top 10 Travel Destinations in South America",
+        "content": "From the mountains of Patagonia to the Amazon rainforest, explore the most breathtaking landscapes the continent has to offer.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "Consejos para un mejor sue\u00f1o"
+                "translation": "Los 10 Mejores Destinos de Viaje en Sudamérica"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "El sue\u00f1o de calidad es esencial para la salud f\u00edsica y mental. Establecer un horario de sue\u00f1o regular, crear un ambiente de sue\u00f1o c\u00f3modo y evitar las pantallas antes de acostarse puede mejorar la calidad del sue\u00f1o."
+                "translation": "Desde las montañas de la Patagonia hasta la selva amazónica, explora los paisajes más impresionantes que el continente tiene para ofrecer."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "The role of vitamins and minerals in health",
-        "content": "Vitamins and minerals are essential nutrients that play a vital role in various bodily functions. Ensuring adequate intake through a balanced diet can help prevent deficiencies and support overall health.",
+        "title": "The Importance of a Balanced Diet",
+        "content": "Learn about macronutrients and micronutrients, and how to create a meal plan that supports your health and fitness goals.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "El papel de las vitaminas y minerales en la salud"
+                "translation": "La Importancia de una Dieta Equilibrada"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "Las vitaminas y minerales son nutrientes esenciales que desempe\u00f1an un papel vital en diversas funciones corporales. Asegurar una ingesta adecuada a trav\u00e9s de una dieta equilibrada puede ayudar a prevenir deficiencias y apoyar la salud en general."
+                "translation": "Aprende sobre macronutrientes y micronutrientes, y cómo crear un plan de comidas que apoye tus objetivos de salud y fitness."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "How to manage stress effectively",
-        "content": "Stress management is crucial for maintaining mental health. Techniques such as mindfulness, exercise, and time management can help reduce stress levels and improve overall well-being.",
+        "title": "DIY Home Improvement Projects",
+        "content": "Easy and affordable projects to refresh your living space, from painting a feature wall to building your own shelves.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "C\u00f3mo manejar el estr\u00e9s de manera efectiva"
+                "translation": "Proyectos de Mejoras para el Hogar DIY"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "La gesti\u00f3n del estr\u00e9s es crucial para mantener la salud mental. T\u00e9cnicas como la atenci\u00f3n plena, el ejercicio y la gesti\u00f3n del tiempo pueden ayudar a reducir los niveles de estr\u00e9s y mejorar el bienestar general."
+                "translation": "Proyectos fáciles y asequibles para renovar tu espacio vital, desde pintar una pared destacada hasta construir tus propios estantes."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "The benefits of meditation",
-        "content": "Meditation is a practice that can enhance mental clarity, reduce stress, and promote emotional well-being. Regular meditation can lead to improved focus and a greater sense of peace.",
+        "title": "How to Learn a New Language Effectively",
+        "content": "Strategies and tools for mastering a new language, including immersion techniques and the best apps to use.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "Los beneficios de la meditaci\u00f3n"
+                "translation": "Cómo Aprender un Nuevo Idioma de Forma Efectiva"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "La meditaci\u00f3n es una pr\u00e1ctica que puede mejorar la claridad mental, reducir el estr\u00e9s y promover el bienestar emocional. La meditaci\u00f3n regular puede llevar a una mejor concentraci\u00f3n y un mayor sentido de paz."
+                "translation": "Estrategias y herramientas para dominar un nuevo idioma, incluyendo técnicas de inmersión y las mejores aplicaciones para usar."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
     },
     {
-        "title": "Healthy eating habits for weight management",
-        "content": "Developing healthy eating habits is key to effective weight management. Focus on portion control, balanced meals, and mindful eating to maintain a healthy weight.",
+        "title": "Understanding Artificial Intelligence",
+        "content": "A brief overview of machine learning, neural networks, and the ethical implications of advanced AI.",
         "translations": [
             {
                 "locale": "es",
                 "column": "title",
-                "translation": "\u00c1bitos alimenticios saludables para el control del peso"
+                "translation": "Comprendiendo la Inteligencia Artificial"
             },
             {
                 "locale": "es",
                 "column": "content",
-                "translation": "\u00c9l desarrollo de \u00e1bitos alimenticios saludables es clave para un control efectivo del peso. Conc\u00e9ntrate en el control de porciones, comidas equilibradas y comer con atenci\u00f3n plena para mantener un peso saludable."
+                "translation": "Una breve descripción del aprendizaje automático, las redes neuronales y las implicaciones éticas de la IA avanzada."
             }
-        ]
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Benefits of High-Intensity Interval Training (HIIT)",
+        "content": "Discover how short bursts of intense exercise can improve cardiovascular health and boost metabolism efficiently.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Los Beneficios del Entrenamiento de Intervalos de Alta Intensidad (HIIT)"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Descubre cómo ráfagas cortas de ejercicio intenso pueden mejorar la salud cardiovascular y acelerar el metabolismo de manera eficiente."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Classic Italian Pasta Recipes",
+        "content": "Master the art of making fresh pasta from scratch and learn to cook timeless sauces like Carbonara and Amatriciana.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Recetas Clásicas de Pasta Italiana"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Domina el arte de hacer pasta fresca desde cero y aprende a cocinar salsas atemporales como la Carbonara y la Amatriciana."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "How to Build a Personal Website",
+        "content": "A guide to choosing a domain name, selecting a hosting provider, and using website builders to create your online presence.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Cómo Construir un Sitio Web Personal"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una guía para elegir un nombre de dominio, seleccionar un proveedor de hosting y usar constructores de sitios web para crear tu presencia en línea."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Science of Happiness",
+        "content": "Exploring the psychological factors that contribute to a fulfilling life, including gratitude, social connections, and purpose.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "La Ciencia de la Felicidad"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Explorando los factores psicológicos que contribuyen a una vida plena, incluyendo la gratitud, las conexiones sociales y el propósito."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Container Gardening for Small Spaces",
+        "content": "Learn how to grow your own vegetables, herbs, and flowers on a balcony, patio, or windowsill.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Jardinería en Macetas para Espacios Pequeños"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende a cultivar tus propias verduras, hierbas y flores en un balcón, patio o alféizar."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Cybersecurity Tips for Everyday Users",
+        "content": "Protect your personal information with strong passwords, two-factor authentication, and recognizing phishing scams.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Consejos de Ciberseguridad para Usuarios Cotidianos"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Protege tu información personal con contraseñas seguras, autenticación de dos factores y reconociendo estafas de phishing."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Exploring the World of Craft Beer",
+        "content": "An introduction to different beer styles, from IPAs to Stouts, and how to properly taste and evaluate them.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Explorando el Mundo de la Cerveza Artesanal"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una introducción a diferentes estilos de cerveza, desde IPAs hasta Stouts, y cómo degustarlas y evaluarlas correctamente."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Budget Travel: See the World on a Shoestring",
+        "content": "Tips for finding cheap flights, affordable accommodation, and saving money on food while traveling.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Viajes Económicos: Recorre el Mundo con Poco Presupuesto"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Consejos para encontrar vuelos baratos, alojamiento asequible y ahorrar dinero en comida mientras viajas."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Importance of Sleep for Health",
+        "content": "Delving into how quality sleep affects everything from cognitive function to immune system strength.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "La Importancia del Sueño para la Salud"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Profundizando en cómo la calidad del sueño afecta todo, desde la función cognitiva hasta la fortaleza del sistema inmunológico."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Getting Started with Python Programming",
+        "content": "A beginner-friendly introduction to Python syntax, data types, and control structures. Includes simple coding exercises.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Iniciación a la Programación con Python"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una introducción amigable para principiantes a la sintaxis, tipos de datos y estructuras de control de Python. Incluye ejercicios de codificación simples."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Sustainable Living: Simple Changes for a Big Impact",
+        "content": "Learn how reducing waste, conserving water, and choosing eco-friendly products can make a difference for the planet.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Vida Sostenible: Pequeños Cambios con un Gran Impacto"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende cómo reducir los residuos, conservar el agua y elegir productos ecológicos puede marcar la diferencia para el planeta."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Rise of Electric Vehicles",
+        "content": "An analysis of the benefits of electric cars, the challenges of battery technology, and the future of transportation.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "El Auge de los Vehículos Eléctricos"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Un análisis de los beneficios de los coches eléctricos, los desafíos de la tecnología de baterías y el futuro del transporte."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Mastering the Art of Public Speaking",
+        "content": "Techniques to overcome stage fright, structure a compelling speech, and engage your audience with confidence.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Dominando el Arte de Hablar en Público"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Técnicas para superar el miedo escénico, estructurar un discurso convincente y captar a tu audiencia con confianza."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "A Guide to Classic Film Noir",
+        "content": "Explore the key themes, visual style, and iconic films of the film noir genre from the 1940s and 1950s.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Una Guía del Cine Negro Clásico"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Explora los temas clave, el estilo visual y las películas icónicas del género de cine negro de los años 40 y 50."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Basics of Graphic Design",
+        "content": "An introduction to the principles of design, including color theory, typography, and layout for creating visually appealing graphics.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Los Fundamentos del Diseño Gráfico"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una introducción a los principios del diseño, incluyendo la teoría del color, la tipografía y la composición para crear gráficos visualmente atractivos."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Healthy Smoothie Recipes",
+        "content": "A collection of delicious and nutritious smoothie recipes packed with fruits, vegetables, and protein to kickstart your day.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Recetas de Batidos Saludables"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una colección de recetas de batidos deliciosos y nutritivos llenos de frutas, verduras y proteínas para empezar tu día."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The History of Ancient Rome",
+        "content": "From the founding of the city to the fall of the empire, a look at the key events and figures that shaped Roman civilization.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "La Historia de la Antigua Roma"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Desde la fundación de la ciudad hasta la caída del imperio, un vistazo a los eventos y figuras clave que dieron forma a la civilización romana."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Effective Time Management Techniques",
+        "content": "Learn to prioritize tasks, avoid procrastination, and use tools like the Pomodoro Technique to boost your productivity.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Técnicas Efectivas de Gestión del Tiempo"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende a priorizar tareas, evitar la procrastinación y usar herramientas como la Técnica Pomodoro para aumentar tu productividad."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Introduction to Blockchain Technology",
+        "content": "Beyond Bitcoin, understand how decentralized ledger technology is set to revolutionize industries from finance to supply chain management.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Introducción a la Tecnología Blockchain"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Más allá de Bitcoin, comprende cómo la tecnología de registro distribuido está preparada para revolucionar industrias desde las finanzas hasta la gestión de la cadena de suministro."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Joy of Reading: How to Build a Reading Habit",
+        "content": "Tips for finding books you love, setting aside time to read, and joining a community of fellow book lovers.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "El Placer de Leer: Cómo Crear un Hábito de Lectura"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Consejos para encontrar libros que te encanten, reservar tiempo para leer y unirte a una comunidad de otros amantes de los libros."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Wonders of the Deep Sea",
+        "content": "Exploring the mysterious world of the ocean's depths, from bioluminescent creatures to hydrothermal vents.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Las Maravillas del Mar Profundo"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Explorando el misterioso mundo de las profundidades del océano, desde criaturas bioluminiscentes hasta respiraderos hidrotermales."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "How to Start a Successful Podcast",
+        "content": "A complete guide covering everything from choosing a topic and buying equipment to recording, editing, and marketing your show.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Cómo Iniciar un Podcast Exitoso"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una guía completa que abarca todo, desde elegir un tema y comprar equipo hasta grabar, editar y promocionar tu programa."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Urban Gardening Tips",
+        "content": "Maximizing small urban spaces to grow fresh produce. Learn about vertical gardens, container choices, and suitable crops.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Consejos de Jardinería Urbana"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Maximizando pequeños espacios urbanos para cultivar productos frescos. Aprende sobre jardines verticales, elección de contenedores y cultivos adecuados."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "A Brief History of Jazz Music",
+        "content": "From its origins in New Orleans to its evolution through Swing, Bebop, and Fusion, discover the key figures and sounds of jazz.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Una Breve Historia de la Música Jazz"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Desde sus orígenes en Nueva Orleans hasta su evolución a través del Swing, Bebop y Fusión, descubre las figuras y sonidos clave del jazz."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Philosophy of Stoicism",
+        "content": "An introduction to the teachings of Seneca, Epictetus, and Marcus Aurelius, and how to apply Stoic principles to modern life.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "La Filosofía del Estoicismo"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una introducción a las enseñanzas de Séneca, Epicteto y Marco Aurelio, y cómo aplicar los principios estoicos a la vida moderna."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "How to Brew the Perfect Cup of Coffee",
+        "content": "A guide to different brewing methods, from French press to pour-over, and the importance of bean selection and grind size.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Cómo Preparar la Taza de Café Perfecta"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una guía sobre diferentes métodos de preparación, desde la prensa francesa hasta el vertido, y la importancia de la selección del grano y el tamaño de la molienda."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Introduction to Quantum Computing",
+        "content": "Unraveling the concepts of qubits, superposition, and entanglement. A look at the potential and challenges of quantum computers.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Introducción a la Computación Cuántica"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Desentrañando los conceptos de cúbits, superposición y entrelazamiento. Una mirada al potencial y los desafíos de las computadoras cuánticas."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Benefits of Yoga for Mind and Body",
+        "content": "Exploring how regular yoga practice can improve flexibility, strength, and balance while reducing stress and promoting mental clarity.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Los Beneficios del Yoga para la Mente y el Cuerpo"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Explorando cómo la práctica regular de yoga puede mejorar la flexibilidad, la fuerza y el equilibrio, al tiempo que reduce el estrés y promueve la claridad mental."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Exploring the National Parks of the USA",
+        "content": "A journey through some of the most stunning national parks, from the Grand Canyon to Yellowstone, highlighting the best trails and viewpoints.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Explorando los Parques Nacionales de EE. UU."
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Un viaje a través de algunos de los parques nacionales más impresionantes, desde el Gran Cañón hasta Yellowstone, destacando los mejores senderos y miradores."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Art of Storytelling",
+        "content": "Learn the fundamental elements of a compelling story, including character development, plot structure, and creating emotional impact.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "El Arte de Contar Historias"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende los elementos fundamentales de una historia convincente, incluido el desarrollo de personajes, la estructura de la trama y la creación de un impacto emocional."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Understanding Climate Change",
+        "content": "An overview of the causes and effects of global warming, and the international efforts to address this critical issue.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Comprendiendo el Cambio Climático"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una descripción general de las causas y los efectos del calentamiento global, y los esfuerzos internacionales para abordar este problema crítico."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Beginner's Guide to Watercolor Painting",
+        "content": "Discover the essential techniques for watercolor painting, including washes, wet-on-wet, and dry brushing.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Guía de Pintura en Acuarela para Principiantes"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Descubre las técnicas esenciales para la pintura en acuarela, incluyendo aguadas, húmedo sobre húmedo y pincel seco."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Psychology of Color",
+        "content": "How different colors can influence emotions, behavior, and perceptions in marketing, branding, and everyday life.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "La Psicología del Color"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Cómo los diferentes colores pueden influir en las emociones, el comportamiento y las percepciones en el marketing, la marca y la vida cotidiana."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Creating a Personal Budget",
+        "content": "A practical guide to tracking your income and expenses, setting financial goals, and taking control of your money.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Creando un Presupuesto Personal"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una guía práctica para hacer un seguimiento de tus ingresos y gastos, establecer metas financieras y tomar el control de tu dinero."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The World of Classical Music",
+        "content": "An introduction to the major composers and periods of classical music, from Bach and Mozart to Beethoven and beyond.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "El Mundo de la Música Clásica"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una introducción a los principales compositores y períodos de la música clásica, desde Bach y Mozart hasta Beethoven y más allá."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "How to Improve Your Writing Skills",
+        "content": "Practical tips for improving clarity, style, and grammar in your writing, whether for professional or personal use.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Cómo Mejorar tus Habilidades de Escritura"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Consejos prácticos para mejorar la claridad, el estilo y la gramática en tu escritura, ya sea para uso profesional o personal."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Secrets of a Great Barbecue",
+        "content": "Learn about different types of smokers, the importance of rubs and sauces, and the low-and-slow cooking method.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Los Secretos de una Gran Barbacoa"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende sobre los diferentes tipos de ahumadores, la importancia de los adobos y las salsas, y el método de cocción lento y a baja temperatura."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Digital Minimalism in a Distracted World",
+        "content": "Strategies for reducing digital clutter, managing notifications, and using technology more intentionally.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Minimalismo Digital en un Mundo Distraído"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Estrategias para reducir el desorden digital, gestionar las notificaciones y usar la tecnología de manera más intencional."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Fascinating World of Mycology",
+        "content": "An introduction to the kingdom of fungi, exploring the role of mushrooms in ecosystems and their culinary and medicinal uses.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "El Fascinante Mundo de la Micología"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una introducción al reino de los hongos, explorando el papel de las setas en los ecosistemas y sus usos culinarios y medicinales."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "How Search Engines Work",
+        "content": "An overview of crawling, indexing, and ranking, the core processes that power search engines like Google.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Cómo Funcionan los Motores de Búsqueda"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una descripción general del rastreo, la indexación y la clasificación, los procesos centrales que impulsan los motores de búsqueda como Google."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Art of Giving and Receiving Feedback",
+        "content": "Learn how to provide constructive criticism and be receptive to feedback for personal and professional growth.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "El Arte de Dar y Recibir Feedback"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende a proporcionar críticas constructivas y a ser receptivo a los comentarios para el crecimiento personal y profesional."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Exploring the Ancient Wonders of the World",
+        "content": "A look at the Seven Wonders of the Ancient World, their history, and the mysteries that surround them.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Explorando las Antiguas Maravillas del Mundo"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Un vistazo a las Siete Maravillas del Mundo Antiguo, su historia y los misterios que las rodean."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Strength Training for Beginners",
+        "content": "A guide to basic lifts, proper form, and creating a simple workout plan to build muscle and strength safely.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Entrenamiento de Fuerza para Principiantes"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una guía sobre levantamientos básicos, la forma adecuada y la creación de un plan de entrenamiento simple para desarrollar músculo y fuerza de manera segura."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Impact of Social Media on Society",
+        "content": "An analysis of how social media platforms have changed communication, politics, and mental health.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "El Impacto de las Redes Sociales en la Sociedad"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Un análisis de cómo las plataformas de redes sociales han cambiado la comunicación, la política y la salud mental."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Baking Delicious Vegan Desserts",
+        "content": "Learn to make plant-based treats, from cookies and cakes to puddings, without sacrificing flavor or texture.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Horneando Deliciosos Postres Veganos"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende a hacer delicias a base de plantas, desde galletas y pasteles hasta pudines, sin sacrificar el sabor o la textura."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "A Guide to Ethical Fashion",
+        "content": "Understanding the impact of fast fashion and how to make more sustainable and ethical choices when buying clothes.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Una Guía de Moda Ética"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Comprendiendo el impacto de la moda rápida y cómo tomar decisiones más sostenibles y éticas al comprar ropa."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Basics of Astrophysics",
+        "content": "An introduction to stars, galaxies, black holes, and the fundamental laws that govern the universe.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Los Fundamentos de la Astrofísica"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Una introducción a las estrellas, galaxias, agujeros negros y las leyes fundamentales que gobiernan el universo."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "How to Choose the Right Pet for Your Lifestyle",
+        "content": "Considering factors like living space, activity level, and time commitment when deciding to get a new pet.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Cómo Elegir la Mascota Adecuada para tu Estilo de Vida"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Considerando factores como el espacio vital, el nivel de actividad y el compromiso de tiempo al decidir tener una nueva mascota."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "The Evolution of Video Games",
+        "content": "From pixelated classics to immersive virtual reality, a look at how video games have evolved over the decades.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "La Evolución de los Videojuegos"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Desde los clásicos pixelados hasta la realidad virtual inmersiva, un vistazo a cómo han evolucionado los videojuegos a lo largo de las décadas."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
+    },
+    {
+        "title": "Introduction to Interior Design",
+        "content": "Learn the principles of creating a beautiful and functional living space, including furniture arrangement, lighting, and color schemes.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "title",
+                "translation": "Introducción al Diseño de Interiores"
+            },
+            {
+                "locale": "es",
+                "column": "content",
+                "translation": "Aprende los principios para crear un espacio vital hermoso y funcional, incluida la disposición de los muebles, la iluminación y las paletas de colores."
+            }
+        ],
+        "user": {
+            "id": 2
+        }
     }
 ]

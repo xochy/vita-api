@@ -46,13 +46,15 @@ class TranslatePostsTest extends TestCase
         )->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'title',
+                    'locale' => 'es',
+                    'column' => 'title',
                     'translation' => self::MODEL_ES_TITLE,
                 ]
-            )->create([
-                    'user_id' => $this->user->id,
-                ]);
+            )
+            ->withoutImage()
+            ->create([
+                'user_id' => $this->user->id,
+            ]);
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
@@ -77,11 +79,13 @@ class TranslatePostsTest extends TestCase
         )->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'content',
+                    'locale' => 'es',
+                    'column' => 'content',
                     'translation' => self::MODEL_ES_CONTENT,
                 ]
-            )->create([
+            )
+            ->withoutImage()
+            ->create([
                     'user_id' => $this->user->id,
                 ]);
 
@@ -108,18 +112,20 @@ class TranslatePostsTest extends TestCase
         )->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'title',
+                    'locale' => 'es',
+                    'column' => 'title',
                     'translation' => self::MODEL_ES_TITLE,
                 ]
             )->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'content',
+                    'locale' => 'es',
+                    'column' => 'content',
                     'translation' => self::MODEL_ES_CONTENT,
                 ]
-            )->create([
+            )
+            ->withoutImage()
+            ->create([
                     'user_id' => $this->user->id,
                 ]);
 
@@ -145,8 +151,8 @@ class TranslatePostsTest extends TestCase
         $data = [
             'type' => 'translations',
             'attributes' => [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_TITLE,
             ],
             'relationships' => [
@@ -168,11 +174,11 @@ class TranslatePostsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_TITLE,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_TITLE,
                 'translationable_type' => Post::class,
-                'translationable_id'   => $post->id,
+                'translationable_id' => $post->id,
             ]
         );
     }
@@ -186,8 +192,8 @@ class TranslatePostsTest extends TestCase
 
         $translation = $post->translations()->create(
             [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_TITLE,
             ]
         );
@@ -209,12 +215,12 @@ class TranslatePostsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'id'                   => $translation->id,
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => 'Cómo bajar de peso actualizado',
+                'id' => $translation->id,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => 'Cómo bajar de peso actualizado',
                 'translationable_type' => Post::class,
-                'translationable_id'   => $post->id,
+                'translationable_id' => $post->id,
             ]
         );
     }

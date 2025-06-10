@@ -209,7 +209,7 @@ class IncludeMediasTest extends TestCase
     }
 
     /** @test */
-    public function can_download_single_image_from_post(): void
+    public function can_download_single_image_from_muscle(): void
     {
         $muscle = Muscle::factory()->create();
 

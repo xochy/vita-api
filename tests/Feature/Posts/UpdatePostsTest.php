@@ -40,7 +40,7 @@ class UpdatePostsTest extends TestCase
     /** @test */
     public function guests_users_cannot_update_posts()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -64,7 +64,7 @@ class UpdatePostsTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_can_update_posts()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -97,7 +97,7 @@ class UpdatePostsTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_cannot_update_other_users_posts()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -123,7 +123,7 @@ class UpdatePostsTest extends TestCase
     /** @test */
     public function can_update_the_posts_title_only()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -155,7 +155,7 @@ class UpdatePostsTest extends TestCase
     /** @test */
     public function can_update_the_posts_content_only()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -187,7 +187,7 @@ class UpdatePostsTest extends TestCase
     /** @test */
     public function cannot_update_posts_with_invalid_data()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -211,10 +211,10 @@ class UpdatePostsTest extends TestCase
     /** @test */
     public function cannot_update_the_post_title_if_exists()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
-        
+
         $post2 = Post::factory()->create([
             'user_id' => $this->user->id,
         ]);
