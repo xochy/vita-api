@@ -35,7 +35,7 @@ class DeletePostsTest extends TestCase
     /** @test */
     public function guests_users_cannot_delete_posts()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 
@@ -49,7 +49,7 @@ class DeletePostsTest extends TestCase
     /** @test */
     public function authenticated_users_as_admin_can_delete_posts()
     {
-        $post = Post::factory()->create([
+        $post = Post::factory()->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 

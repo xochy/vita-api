@@ -6,7 +6,6 @@ use App\Models\User;
 use Database\Seeders\permissionsSeeders\UsersPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Crypt;
 use Spatie\Permission\Models\Role;
 use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;

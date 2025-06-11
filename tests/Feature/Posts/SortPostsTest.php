@@ -63,6 +63,7 @@ class SortPostsTest extends TestCase
                     self::MODEL_SORT_PARAM_VALUE => now()->addDays(2)
                 ],
             ))
+            ->withoutImage()
             ->create();
 
         $url = route(
@@ -103,6 +104,7 @@ class SortPostsTest extends TestCase
                     self::MODEL_SORT_PARAM_VALUE => now()->addDays(2)
                 ],
             ))
+            ->withoutImage()
             ->create();
 
         $url = route(

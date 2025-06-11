@@ -76,4 +76,21 @@ class PostPolicy
     {
         return $user->can('force delete posts') && $user->id === $post->user_id;
     }
+
+    /* -------------------------------------------------------------------------- */
+    /*                       Policies for Post relationships                      */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Determine whether the user can view the user of the post.
+     */
+    public function viewUser(User $user, Post $post): bool
+    {
+        return $user->can('read posts');
+    }
+
+    public function viewMedias(User $user, Post $post): bool
+    {
+        return $user->can('read posts');
+    }
 }

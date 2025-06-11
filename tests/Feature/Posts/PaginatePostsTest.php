@@ -37,7 +37,7 @@ class PaginatePostsTest extends TestCase
     /** @test */
     public function can_fetch_paginated_posts()
     {
-        Post::factory()->times(10)->create([
+        Post::factory()->times(10)->withoutImage()->create([
             'user_id' => $this->user->id,
         ]);
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use Database\Seeders\permissionsSeeders\PostsPermissionsSeeders;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -50,6 +51,8 @@ class ListPostsTest extends TestCase
                 'attributes' => [
                     'title'       => $post->title,
                     'content'     => $post->content,
+                    'publisher'   => $post->user->name,
+                    'imageUrl'    => $post->getFirstMediaUrl('images'),
                     'publishedAt' => $post->published_at,
                     'slug'        => $post->slug,
                 ],
@@ -79,6 +82,8 @@ class ListPostsTest extends TestCase
                     'attributes' => [
                         'title'       => $post->title,
                         'content'     => $post->content,
+                        'publisher'   => $post->user->name,
+                        'imageUrl'    => $post->getFirstMediaUrl('images'),
                         'publishedAt' => $post->published_at,
                         'slug'        => $post->slug,
                     ],

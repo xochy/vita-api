@@ -23,8 +23,12 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 if (!defined('DOWNLOAD_FILE_ROUTE')) {
-    define('DOWNLOAD_FILE_ROUTE', 'download-file/{id}/{mediaId}');
+    define('DOWNLOAD_FILE_ROUTE', 'download-file/{id}/{mediaId}/{collection?}');
 }
+
+Route::get('v1/health', function () {
+    return response()->json(['status' => 'ok'], 200);
+})->name('api.health');
 
 JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar $server) {
     // Definitions for Category model
@@ -191,6 +195,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('comments');
             $relationships->hasOne('user');
+            $relationships->hasMany('medias');
         })
         ->actions(function (ActionRegistrar $actions) {
             $actions->post('upload-files', 'uploadFiles');

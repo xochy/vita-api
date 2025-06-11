@@ -67,6 +67,7 @@ class FilterPostsTest extends TestCase
                     'title' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_TITLE
                 ],
             ))
+            ->withoutImage()
             ->create([
                 'user_id' => $this->user->id,
             ]);
@@ -100,6 +101,7 @@ class FilterPostsTest extends TestCase
                     'content' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CONTENT
                 ],
             ))
+            ->withoutImage()
             ->create([
                 'user_id' => $this->user->id,
             ]);
@@ -136,6 +138,7 @@ class FilterPostsTest extends TestCase
                     'content' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CONTENT,
                 ],
             ))
+            ->withoutImage()
             ->create([
                 'user_id' => $this->user->id,
             ]);
@@ -211,6 +214,7 @@ class FilterPostsTest extends TestCase
                     'title' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_TITLE
                 ],
             ))
+            ->withoutImage()
             ->create([
                 'user_id' => $this->user->id,
             ]);
@@ -244,6 +248,7 @@ class FilterPostsTest extends TestCase
                     'content' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CONTENT
                 ],
             ))
+            ->withoutImage()
             ->create([
                 'user_id' => $this->user->id,
             ]);
@@ -280,6 +285,7 @@ class FilterPostsTest extends TestCase
                     'content' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_CONTENT,
                 ],
             ))
+            ->withoutImage()
             ->create([
                 'user_id' => $this->user->id,
             ]);
@@ -312,6 +318,7 @@ class FilterPostsTest extends TestCase
                     ['title' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_TITLE],
                 )
             )
+            ->withoutImage()
             ->create([
                 'user_id' => $this->user->id,
             ]);

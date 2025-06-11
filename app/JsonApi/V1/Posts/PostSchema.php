@@ -8,7 +8,6 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\Scope;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
@@ -36,6 +35,12 @@ class PostSchema extends Schema
             ID::make(),
             Str::make('title')->sortable(),
             Str::make('content'),
+            Str::make('publisher', 'name')
+                ->on('user')
+                ->readOnly(),
+            Str::make('imageUrl')->extractUsing(
+                static fn($model) => $model->getFirstMediaUrl('images')
+            )->readOnly(),
             Str::make('slug')->readOnly(),
             DateTime::make('publishedAt', 'published_at')->sortable(),
             DateTime::make('createdAt')->sortable()->readOnly(),
@@ -45,6 +50,7 @@ class PostSchema extends Schema
             BelongsTo::make('user'),
             HasMany::make('comments'),
             HasMany::make('translations'),
+            HasMany::make('medias', 'media')->type('medias'),
         ];
     }
 
