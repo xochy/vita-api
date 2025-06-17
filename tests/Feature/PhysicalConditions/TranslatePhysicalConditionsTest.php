@@ -23,6 +23,7 @@ class TranslatePhysicalConditionsTest extends TestCase
     const MODEL_EN_DESCRIPTION = 'The user has morbid obesity when their BMI is greater than 40';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -33,7 +34,7 @@ class TranslatePhysicalConditionsTest extends TestCase
             $this->seed(PhysicalConditionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -45,18 +46,19 @@ class TranslatePhysicalConditionsTest extends TestCase
                 'description' => self::MODEL_EN_DESCRIPTION,
             ]
         )->hasTranslations(
-            1,
-            [
-                'locale'      => 'es',
-                'column'      => 'name',
-                'translation' => self::MODEL_ES_NAME,
-            ]
-        )->create();
+                1,
+                [
+                    'locale' => 'es',
+                    'column' => 'name',
+                    'translation' => self::MODEL_ES_NAME,
+                ]
+            )->create();
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition));
 
         $response->assertFetchedOne(
@@ -64,9 +66,9 @@ class TranslatePhysicalConditionsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $physicalCondition->getRouteKey(),
                 'attributes' => [
-                    'name'        => self::MODEL_ES_NAME,
+                    'name' => self::MODEL_ES_NAME,
                     'description' => $physicalCondition->description,
-                    'slug'        => $physicalCondition->slug,
+                    'slug' => $physicalCondition->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
@@ -87,18 +89,19 @@ class TranslatePhysicalConditionsTest extends TestCase
                 'description' => self::MODEL_EN_DESCRIPTION,
             ]
         )->hasTranslations(
-            1,
-            [
-                'locale'      => 'es',
-                'column'      => 'description',
-                'translation' => self::MODEL_ES_DESCRIPTION,
-            ]
-        )->create();
+                1,
+                [
+                    'locale' => 'es',
+                    'column' => 'description',
+                    'translation' => self::MODEL_ES_DESCRIPTION,
+                ]
+            )->create();
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition));
 
         $response->assertFetchedOne(
@@ -106,9 +109,9 @@ class TranslatePhysicalConditionsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $physicalCondition->getRouteKey(),
                 'attributes' => [
-                    'name'        => $physicalCondition->name,
+                    'name' => $physicalCondition->name,
                     'description' => self::MODEL_ES_DESCRIPTION,
-                    'slug'        => $physicalCondition->slug,
+                    'slug' => $physicalCondition->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
@@ -129,25 +132,26 @@ class TranslatePhysicalConditionsTest extends TestCase
                 'description' => self::MODEL_EN_DESCRIPTION,
             ]
         )->hasTranslations(
-            2,
-            new Sequence(
-                [
-                    'locale'      => 'es',
-                    'column'      => 'name',
-                    'translation' => self::MODEL_ES_NAME,
-                ],
-                [
-                    'locale'      => 'es',
-                    'column'      => 'description',
-                    'translation' => self::MODEL_ES_DESCRIPTION,
-                ]
-            )
-        )->create();
+                2,
+                new Sequence(
+                    [
+                        'locale' => 'es',
+                        'column' => 'name',
+                        'translation' => self::MODEL_ES_NAME,
+                    ],
+                    [
+                        'locale' => 'es',
+                        'column' => 'description',
+                        'translation' => self::MODEL_ES_DESCRIPTION,
+                    ]
+                )
+            )->create();
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition));
 
         $response->assertFetchedOne(
@@ -155,9 +159,9 @@ class TranslatePhysicalConditionsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $physicalCondition->getRouteKey(),
                 'attributes' => [
-                    'name'        => self::MODEL_ES_NAME,
+                    'name' => self::MODEL_ES_NAME,
                     'description' => self::MODEL_ES_DESCRIPTION,
-                    'slug'        => $physicalCondition->slug,
+                    'slug' => $physicalCondition->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $physicalCondition)
@@ -193,6 +197,7 @@ class TranslatePhysicalConditionsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
@@ -200,11 +205,11 @@ class TranslatePhysicalConditionsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME,
                 'translationable_type' => PhysicalCondition::class,
-                'translationable_id'   => $physicalCondition->id,
+                'translationable_id' => $physicalCondition->id,
             ]
         );
     }
@@ -216,8 +221,8 @@ class TranslatePhysicalConditionsTest extends TestCase
 
         $translation = $physicalCondition->translations()->create(
             [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_NAME,
             ]
         );
@@ -232,6 +237,7 @@ class TranslatePhysicalConditionsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);
@@ -239,12 +245,12 @@ class TranslatePhysicalConditionsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'id'                    => $translation->id,
-                'locale'                => 'es',
-                'column'                => 'name',
-                'translation'           => 'Obesidad mórbida actualizada',
-                'translationable_type'  => PhysicalCondition::class,
-                'translationable_id'    => $physicalCondition->id,
+                'id' => $translation->id,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => 'Obesidad mórbida actualizada',
+                'translationable_type' => PhysicalCondition::class,
+                'translationable_id' => $physicalCondition->id,
             ]
         );
     }

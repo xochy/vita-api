@@ -28,6 +28,7 @@ class IncludeMediasTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -38,7 +39,7 @@ class IncludeMediasTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -56,6 +57,8 @@ class IncludeMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->expects('medias')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $directory));
 
         $mediaItems = $directory->getMedia();
@@ -92,6 +95,7 @@ class IncludeMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('medias')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_RELATIONSHIP_ROUTE, $directory));
 
         $response->assertJsonCount(3, 'data');

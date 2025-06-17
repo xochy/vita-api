@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->appendToGroup('api', App\Http\Middleware\Localization::class);
-        $middleware->appendToGroup('api', App\Http\Middleware\RefreshToken::class);
+        $middleware->appendToGroup('api', App\Http\Middleware\TokenRefreshMiddleware::class);
     })
     ->withExceptions(function (Exceptions $_) {
         //

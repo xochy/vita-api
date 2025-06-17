@@ -32,6 +32,7 @@ class FilterMediasTest extends TestCase
     const IMAGE_EXTENSION = '.jpg';
 
     protected User $user;
+    protected string $token;
     protected Directory $root;
     protected Directory $images;
     protected Directory $screenshots;
@@ -45,7 +46,7 @@ class FilterMediasTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
 
         $this->root = Directory::factory()->create();
 
@@ -92,7 +93,9 @@ class FilterMediasTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::IMAGE_1_NAME)
             ->assertDontSee(self::IMAGE_2_NAME)
@@ -112,7 +115,9 @@ class FilterMediasTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(2, 'data')
             ->assertSee(self::IMAGE_1_NAME)
             ->assertSee(self::IMAGE_3_NAME)

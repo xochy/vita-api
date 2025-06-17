@@ -20,6 +20,7 @@ class DeleteCommentsTests extends TestCase
 
     protected User $user;
     protected Post $post;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -30,7 +31,8 @@ class DeleteCommentsTests extends TestCase
             $this->seed(CommentsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
+
         $this->post = Post::factory()->create([
             'user_id' => $this->user->id,
         ]);
@@ -70,6 +72,7 @@ class DeleteCommentsTests extends TestCase
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->delete(
                 route(
                     self::MODEL_MAIN_ACTION_ROUTE,

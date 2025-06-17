@@ -17,6 +17,7 @@ class DeleteRolesTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.deleteRole';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -27,24 +28,30 @@ class DeleteRolesTest extends TestCase
             $this->seed(RolesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
     public function unauthorized_users_cannot_delete_roles()
     {
-        $user = User::factory()->create()->assignRole('admin');
+        [$user, $token] = $this->createUserWithToken();
 
         $role = Role::create(
             [
-                'name'         => 'Developer',
+                'name' => 'Developer',
                 'display_name' => 'Desarrollador',
-                'default'      => false
+                'default' => false
             ]
         );
 
-        $response =  $this->actingAs($user)->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $role->getRouteKey()));
+        $response = $this->actingAs($user)->jsonApi()
+            ->withHeader('Authorization', $token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $role->getRouteKey()
+                )
+            );
 
         // Forbidden (403)
         $response->assertError(
@@ -60,14 +67,20 @@ class DeleteRolesTest extends TestCase
     {
         $role = Role::create(
             [
-                'name'         => 'Developer',
+                'name' => 'Developer',
                 'display_name' => 'Desarrollador',
-                'default'      => false
+                'default' => false
             ]
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $role->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $role->getRouteKey()
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);

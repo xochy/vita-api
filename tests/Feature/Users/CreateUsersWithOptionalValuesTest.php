@@ -30,6 +30,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
     const MODEL_POINTER_FOR_HEIGHT = '/data/attributes/height';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -40,7 +41,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
             $this->seed(UsersPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -63,6 +64,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
@@ -98,6 +100,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -132,6 +135,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -172,6 +176,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -206,6 +211,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -246,6 +252,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -281,6 +288,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -317,6 +325,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -353,6 +362,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'en')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -388,6 +398,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -422,6 +433,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         $response->assertCreated();
@@ -457,6 +469,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -493,6 +506,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -529,6 +543,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'en')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -565,6 +580,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -599,6 +615,7 @@ class CreateUsersWithOptionalValuesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         $response->assertCreated();

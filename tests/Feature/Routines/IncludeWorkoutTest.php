@@ -28,6 +28,7 @@ class IncludeWorkoutTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
+    protected string $token;
     protected Category $category;
 
 
@@ -40,7 +41,7 @@ class IncludeWorkoutTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->category = Category::factory()->create();
     }
 
@@ -57,6 +58,7 @@ class IncludeWorkoutTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
         $response->assertJsonFragment(
@@ -93,6 +95,7 @@ class IncludeWorkoutTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
         $response->assertSee($routine->workouts[0]->name);
@@ -133,6 +136,7 @@ class IncludeWorkoutTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
         $response->assertJsonFragment(
@@ -150,30 +154,30 @@ class IncludeWorkoutTest extends TestCase
         $this->assertDatabaseHas(
             'routine_workout',
             [
-                'routine_id'  => $routine->id,
-                'series'      => 3,
+                'routine_id' => $routine->id,
+                'series' => 3,
                 'repetitions' => 10,
-                'time'        => 10
+                'time' => 10
             ]
         );
 
         $this->assertDatabaseHas(
             'routine_workout',
             [
-                'routine_id'  => $routine->id,
-                'series'      => 5,
+                'routine_id' => $routine->id,
+                'series' => 5,
                 'repetitions' => 12,
-                'time'        => 15
+                'time' => 15
             ]
         );
 
         $this->assertDatabaseHas(
             'routine_workout',
             [
-                'routine_id'  => $routine->id,
-                'series'      => 4,
+                'routine_id' => $routine->id,
+                'series' => 4,
                 'repetitions' => 8,
-                'time'        => 12
+                'time' => 12
             ]
         );
     }

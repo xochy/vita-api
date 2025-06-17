@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\TokenResponse;
 use App\Models\User;
 use App\Services\FirebaseService;
+use App\Services\TokenService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -44,7 +45,7 @@ class UserController extends Controller
      *
      * @return TokenResponse
      */
-    public function signin(Request $request): TokenResponse
+    public function signin(Request $request, TokenService $tokenService): TokenResponse
     {
         $fields = $this->validateSignInFields($request);
         $validator = $this->makeSignInValidator($fields);
@@ -78,7 +79,13 @@ class UserController extends Controller
             );
         }
 
-        return new TokenResponse($user);
+        $tokenData = $tokenService->createToken(
+            $user,
+            $request->input($fields['device_name'], 'Unknown Device'),
+            $user->getAllPermissions()->pluck('name')->toArray()
+        );
+
+        return new TokenResponse($user, $tokenData->plainTextToken);
     }
 
     /**

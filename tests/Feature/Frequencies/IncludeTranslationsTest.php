@@ -15,8 +15,6 @@ class IncludeTranslationsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $user;
-
     const MODEL_PLURAL_NAME = 'frequencies';
     const MODEL_INCLUDE_RELATIONSHIP_NAME = 'translations';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
@@ -32,6 +30,9 @@ class IncludeTranslationsTest extends TestCase
     const MODEL_SELF_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
+    protected User $user;
+    protected string $token;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -41,7 +42,7 @@ class IncludeTranslationsTest extends TestCase
             $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken('admin');
     }
 
     /** @test */
@@ -70,6 +71,8 @@ class IncludeTranslationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $frequency));
 
         $response->assertSee($frequency->translations[0]->slug);
@@ -113,6 +116,7 @@ class IncludeTranslationsTest extends TestCase
 
             $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_RELATIONSHIP_ROUTE, $frequency));
 
         $response->assertJsonCount(2, 'data');

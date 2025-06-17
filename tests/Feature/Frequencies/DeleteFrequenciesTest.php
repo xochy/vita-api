@@ -18,6 +18,7 @@ class DeleteFrequenciesTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -28,7 +29,7 @@ class DeleteFrequenciesTest extends TestCase
             $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken('admin');
     }
 
     /** @test */
@@ -37,7 +38,12 @@ class DeleteFrequenciesTest extends TestCase
         $frequency = Frequency::factory()->create();
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $frequency->getRouteKey()));
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $frequency->getRouteKey()
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -48,9 +54,15 @@ class DeleteFrequenciesTest extends TestCase
     {
         $frequency = Frequency::factory()->create();
 
-        $response = $this->actingAs($this->user)
-            ->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $frequency->getRouteKey()));
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $frequency->getRouteKey()
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);

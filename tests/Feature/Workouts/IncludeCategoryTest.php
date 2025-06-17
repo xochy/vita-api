@@ -28,6 +28,7 @@ class IncludeCategoryTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
     protected User $user;
+    protected string $token;
     protected Category $category;
 
     public function setUp(): void
@@ -40,7 +41,7 @@ class IncludeCategoryTest extends TestCase
             $this->seed(CategoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->category = Category::factory()->create();
     }
 
@@ -51,6 +52,7 @@ class IncludeCategoryTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $workout));
 
         $response->assertSee($workout->category->getRouteKey());
@@ -74,6 +76,7 @@ class IncludeCategoryTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SELF_ROUTE, $workout));
 
         $response->assertFetchedOne($workout->category);

@@ -24,6 +24,7 @@ class UpdateMediasTest extends TestCase
     const IMAGE_PATH = 'root/';
 
     protected User $user;
+    protected string $token;
     protected string $fileName;
     protected Directory $directory;
 
@@ -36,7 +37,7 @@ class UpdateMediasTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
 
         $file1 = UploadedFile::fake()->create($this->fileName = 'file1.jpg', 500, self::FILE_MIME_TYPE);
 
@@ -73,12 +74,14 @@ class UpdateMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $this->directory));
 
         $response->assertStatus(200);
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('medias')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_RELATIONSHIP_ROUTE, $this->directory));
 
         $response->assertStatus(200);
@@ -115,6 +118,7 @@ class UpdateMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $this->directory));
 
         $response->assertError(
@@ -149,6 +153,7 @@ class UpdateMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $this->directory));
 
         $response->assertError(
@@ -183,6 +188,7 @@ class UpdateMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $this->directory));
 
         $response->assertError(
@@ -217,6 +223,7 @@ class UpdateMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $this->directory));
 
         $response->assertError(
@@ -253,6 +260,7 @@ class UpdateMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $this->directory));
 
         $response->assertError(
@@ -289,6 +297,7 @@ class UpdateMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $this->directory));
 
         $response->assertError(

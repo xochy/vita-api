@@ -28,6 +28,7 @@ class IncludeTranslationsTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -38,7 +39,7 @@ class IncludeTranslationsTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -49,16 +50,17 @@ class IncludeTranslationsTest extends TestCase
                 'name' => self::MODEL_EN_NAME,
             ]
         )->hasTranslations(
-            1,
-            [
-                'locale'      => 'es',
-                'column'      => 'name',
-                'translation' => self::MODEL_ES_NAME,
-            ]
-        )->create();
+                1,
+                [
+                    'locale' => 'es',
+                    'column' => 'name',
+                    'translation' => self::MODEL_ES_NAME,
+                ]
+            )->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $routine));
 
         $response->assertSee($routine->translations[0]->slug);
@@ -84,16 +86,17 @@ class IncludeTranslationsTest extends TestCase
                 'name' => self::MODEL_EN_NAME,
             ]
         )->hasTranslations(
-            1,
-            [
-                'locale'      => 'es',
-                'column'      => 'name',
-                'translation' => self::MODEL_ES_NAME,
-            ]
-        )->create();
+                1,
+                [
+                    'locale' => 'es',
+                    'column' => 'name',
+                    'translation' => self::MODEL_ES_NAME,
+                ]
+            )->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_RELATIONSHIP_ROUTE, $routine));
 
         $response->assertJsonCount(1, 'data');

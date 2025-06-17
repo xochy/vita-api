@@ -29,6 +29,7 @@ class SortPostsTest extends TestCase
     const SORT_PARAM_VALUE = 'publishedAt';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -39,7 +40,7 @@ class SortPostsTest extends TestCase
             $this->seed(PostsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -74,6 +75,7 @@ class SortPostsTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url)->assertSeeInOrder(
                 [
                     self::MODEL_ALFA_TITLE,
@@ -115,6 +117,7 @@ class SortPostsTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url)->assertSeeInOrder(
                 [
                     self::MODEL_GAMA_TITLE,

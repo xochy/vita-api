@@ -20,6 +20,7 @@ class ListPostsTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -30,7 +31,7 @@ class ListPostsTest extends TestCase
             $this->seed(PostsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -42,6 +43,7 @@ class ListPostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $post));
 
         $response->assertFetchedOne(
@@ -49,12 +51,12 @@ class ListPostsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $post->getRouteKey(),
                 'attributes' => [
-                    'title'       => $post->title,
-                    'content'     => $post->content,
-                    'publisher'   => $post->user->name,
-                    'imageUrl'    => $post->getFirstMediaUrl('images'),
+                    'title' => $post->title,
+                    'content' => $post->content,
+                    'publisher' => $post->user->name,
+                    'imageUrl' => $post->getFirstMediaUrl('images'),
                     'publishedAt' => $post->published_at,
-                    'slug'        => $post->slug,
+                    'slug' => $post->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $post)
@@ -72,6 +74,7 @@ class ListPostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
@@ -80,12 +83,12 @@ class ListPostsTest extends TestCase
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $post->getRouteKey(),
                     'attributes' => [
-                        'title'       => $post->title,
-                        'content'     => $post->content,
-                        'publisher'   => $post->user->name,
-                        'imageUrl'    => $post->getFirstMediaUrl('images'),
+                        'title' => $post->title,
+                        'content' => $post->content,
+                        'publisher' => $post->user->name,
+                        'imageUrl' => $post->getFirstMediaUrl('images'),
                         'publishedAt' => $post->published_at,
-                        'slug'        => $post->slug,
+                        'slug' => $post->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $post)

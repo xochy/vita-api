@@ -20,6 +20,7 @@ class ListWorkoutsTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -30,7 +31,7 @@ class ListWorkoutsTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -40,6 +41,7 @@ class ListWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
         $response->assertFetchedOne(
@@ -47,12 +49,12 @@ class ListWorkoutsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $workout->getRouteKey(),
                 'attributes' => [
-                    'name'        => $workout->name,
+                    'name' => $workout->name,
                     'performance' => $workout->performance,
-                    'comments'    => $workout->comments,
+                    'comments' => $workout->comments,
                     'corrections' => $workout->corrections,
-                    'warnings'    => $workout->warnings,
-                    'slug'        => $workout->slug,
+                    'warnings' => $workout->warnings,
+                    'slug' => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -68,20 +70,21 @@ class ListWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
             $workouts->map(
-                fn (Workout $workout) => [
+                fn(Workout $workout) => [
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $workout->getRouteKey(),
                     'attributes' => [
-                        'name'        => $workout->name,
+                        'name' => $workout->name,
                         'performance' => $workout->performance,
-                        'comments'    => $workout->comments,
+                        'comments' => $workout->comments,
                         'corrections' => $workout->corrections,
-                        'warnings'    => $workout->warnings,
-                        'slug'        => $workout->slug,
+                        'warnings' => $workout->warnings,
+                        'slug' => $workout->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)

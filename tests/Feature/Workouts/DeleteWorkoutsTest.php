@@ -19,6 +19,7 @@ class DeleteWorkoutsTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -29,7 +30,7 @@ class DeleteWorkoutsTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -38,7 +39,12 @@ class DeleteWorkoutsTest extends TestCase
         $workout = Workout::factory()->forCategory()->create();
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $workout->getRouteKey()
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -51,6 +57,7 @@ class DeleteWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->delete(
                 route(
                     self::MODEL_MAIN_ACTION_ROUTE,

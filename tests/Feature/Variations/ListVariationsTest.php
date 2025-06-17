@@ -20,6 +20,7 @@ class ListVariationsTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
 
     public function setUp(): void
@@ -31,7 +32,7 @@ class ListVariationsTest extends TestCase
             $this->seed(VariationsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
     }
 
@@ -42,6 +43,7 @@ class ListVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $variation));
 
         $response->assertFetchedOne(
@@ -49,9 +51,9 @@ class ListVariationsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $variation->getRouteKey(),
                 'attributes' => [
-                    'name'        => $variation->name,
+                    'name' => $variation->name,
                     'performance' => $variation->performance,
-                    'slug'        => $variation->slug,
+                    'slug' => $variation->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $variation)
@@ -67,17 +69,18 @@ class ListVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
             $variations->map(
-                fn (Variation $variation) => [
+                fn(Variation $variation) => [
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $variation->getRouteKey(),
                     'attributes' => [
-                        'name'        => $variation->name,
+                        'name' => $variation->name,
                         'performance' => $variation->performance,
-                        'slug'        => $variation->slug,
+                        'slug' => $variation->slug,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $variation)

@@ -26,6 +26,7 @@ class IncludePhysicalConditionTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -36,7 +37,7 @@ class IncludePhysicalConditionTest extends TestCase
             $this->seed(PhysicalConditionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -49,6 +50,7 @@ class IncludePhysicalConditionTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $plan));
 
         $response->assertSee($plan->physicalCondition->getRouteKey());
@@ -75,6 +77,7 @@ class IncludePhysicalConditionTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_RELATED_ROUTE, $plan));
 
         $response->assertFetchedOne($plan->physicalCondition);

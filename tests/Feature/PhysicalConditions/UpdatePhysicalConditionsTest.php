@@ -25,6 +25,7 @@ class UpdatePhysicalConditionsTest extends TestCase
     const MODEL_DESCRIPTION_ATTRIBUTE_VALUE = 'description changed';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -35,7 +36,7 @@ class UpdatePhysicalConditionsTest extends TestCase
             $this->seed(PhysicalConditionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -76,6 +77,7 @@ class UpdatePhysicalConditionsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $physicalCondition->getRouteKey()));
 
         // Success (200)
@@ -107,6 +109,7 @@ class UpdatePhysicalConditionsTest extends TestCase
         $response = $this->actingAs($this->user)
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $physicalCondition->getRouteKey()));
 
         // Success (200)
@@ -138,6 +141,7 @@ class UpdatePhysicalConditionsTest extends TestCase
         $response = $this->actingAs($this->user)
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $physicalCondition->getRouteKey()));
 
         // Success (200)
@@ -169,6 +173,7 @@ class UpdatePhysicalConditionsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $physicalCondition->getRouteKey()));
 
         // Unprocessable Entity (422)

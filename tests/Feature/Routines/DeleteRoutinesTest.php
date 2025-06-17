@@ -18,6 +18,7 @@ class DeleteRoutinesTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -28,7 +29,7 @@ class DeleteRoutinesTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('user');
+        [$this->user, $this->token] = $this->createUserWithToken('user');
     }
 
     /** @test */
@@ -37,7 +38,12 @@ class DeleteRoutinesTest extends TestCase
         $routine = Routine::factory()->create();
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $routine->getRouteKey()));
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $routine->getRouteKey()
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -48,9 +54,14 @@ class DeleteRoutinesTest extends TestCase
     {
         $routine = Routine::factory()->create();
 
-        $response = $this->actingAs($this->user)
-            ->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $routine->getRouteKey()));
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $routine->getRouteKey()
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);

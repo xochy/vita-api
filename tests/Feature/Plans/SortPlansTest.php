@@ -24,6 +24,7 @@ class SortPlansTest extends TestCase
     const MODEL_SORT_PARAM_VALUE = 'name';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -33,7 +34,7 @@ class SortPlansTest extends TestCase
             $this->seed(RoleSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -42,10 +43,10 @@ class SortPlansTest extends TestCase
         Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()
             ->count(3)->state(new Sequence(
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
-            ))
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+                ))
             ->create();
 
         $url = route(
@@ -56,6 +57,7 @@ class SortPlansTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url)->assertSeeInOrder(
                 [
                     self::MODEL_ALFA_NAME,
@@ -71,10 +73,10 @@ class SortPlansTest extends TestCase
         Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()
             ->count(3)->state(new Sequence(
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
-                [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
-            ))
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_GAMA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_ALFA_NAME],
+                    [self::MODEL_SORT_PARAM_VALUE => self::MODEL_BETA_NAME],
+                ))
             ->create();
 
         $url = route(
@@ -85,6 +87,7 @@ class SortPlansTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url)->assertSeeInOrder(
                 [
                     self::MODEL_GAMA_NAME,
@@ -108,7 +111,9 @@ class SortPlansTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertError(
             400,

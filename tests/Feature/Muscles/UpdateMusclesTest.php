@@ -24,6 +24,7 @@ class UpdateMusclesTest extends TestCase
     const MODEL_DESCRIPTION_ATTRIBUTE_VALUE = 'description changed';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -34,7 +35,7 @@ class UpdateMusclesTest extends TestCase
             $this->seed(MusclesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -75,6 +76,7 @@ class UpdateMusclesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle->getRouteKey()));
 
         // Success (200)
@@ -105,6 +107,7 @@ class UpdateMusclesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle->getRouteKey()));
 
         // Success (200)
@@ -135,6 +138,7 @@ class UpdateMusclesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle->getRouteKey()));
 
         // Success (200)
@@ -166,6 +170,7 @@ class UpdateMusclesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle->getRouteKey()));
 
         // Unprocessable Entity (422)

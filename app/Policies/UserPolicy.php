@@ -86,7 +86,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): Response
     {
-        return $user->hasPermissionTo('force delete users')
+        return $user->hasPermissionTo('force delete users') && $user->id === $model->id
             ? Response::allow()
             : Response::deny('No tienes permiso para eliminar permanentemente usuarios');
     }

@@ -27,6 +27,7 @@ class IncludePlansTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -37,7 +38,7 @@ class IncludePlansTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -52,6 +53,7 @@ class IncludePlansTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
         $response->assertJsonFragment(
@@ -71,7 +73,7 @@ class IncludePlansTest extends TestCase
         $this->assertDatabaseHas(
             'plan_routine',
             [
-                'plan_id'    => $routine->plans[0]->id,
+                'plan_id' => $routine->plans[0]->id,
                 'routine_id' => $routine->id
             ]
         );
@@ -95,6 +97,7 @@ class IncludePlansTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $routine));
 
         $response->assertSee($routine->plans[0]->name);
@@ -118,7 +121,7 @@ class IncludePlansTest extends TestCase
         $this->assertDatabaseHas(
             'plan_routine',
             [
-                'plan_id'    => $routine->plans[0]->id,
+                'plan_id' => $routine->plans[0]->id,
                 'routine_id' => $routine->id
             ]
         );
@@ -126,7 +129,7 @@ class IncludePlansTest extends TestCase
         $this->assertDatabaseHas(
             'plan_routine',
             [
-                'plan_id'    => $routine->plans[1]->id,
+                'plan_id' => $routine->plans[1]->id,
                 'routine_id' => $routine->id
             ]
         );
@@ -134,7 +137,7 @@ class IncludePlansTest extends TestCase
         $this->assertDatabaseHas(
             'plan_routine',
             [
-                'plan_id'    => $routine->plans[2]->id,
+                'plan_id' => $routine->plans[2]->id,
                 'routine_id' => $routine->id
             ]
         );

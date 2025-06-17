@@ -36,6 +36,7 @@ class CreateVariationsTest extends TestCase
     const MODEL_IMAGE_ROUTE_PATH = 'app/public/1/';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
 
     // For making relationship test with 3 muscles
@@ -52,7 +53,7 @@ class CreateVariationsTest extends TestCase
             $this->seed(VariationsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
 
         // For making relationship test with 3 muscles
@@ -125,6 +126,7 @@ class CreateVariationsTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_WORKOUT_RELATIONSHIP_SINGLE_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
@@ -181,6 +183,7 @@ class CreateVariationsTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_WORKOUT_RELATIONSHIP_SINGLE_NAME)
             ->includePaths(self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
@@ -257,6 +260,7 @@ class CreateVariationsTest extends TestCase
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_WORKOUT_RELATIONSHIP_SINGLE_NAME)
             ->includePaths(self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
@@ -332,6 +336,7 @@ class CreateVariationsTest extends TestCase
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_WORKOUT_RELATIONSHIP_SINGLE_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Forbidden (403)
@@ -379,6 +384,7 @@ class CreateVariationsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_WORKOUT_RELATIONSHIP_SINGLE_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -426,6 +432,7 @@ class CreateVariationsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_WORKOUT_RELATIONSHIP_SINGLE_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)

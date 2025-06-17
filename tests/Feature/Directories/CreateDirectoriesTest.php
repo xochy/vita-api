@@ -24,6 +24,7 @@ class CreateDirectoriesTest extends TestCase
     const MODEL_ATTRIBUTE_NAME_POINTER_ASSERTION = 'data\/attributes\/name';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -34,7 +35,7 @@ class CreateDirectoriesTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -71,6 +72,7 @@ class CreateDirectoriesTest extends TestCase
                     'attributes' => $directory
                 ]
             )
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         $response->assertCreated();
@@ -100,6 +102,7 @@ class CreateDirectoriesTest extends TestCase
                     ]
                 ]
             )
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         $response->assertCreated();

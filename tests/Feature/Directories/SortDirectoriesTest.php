@@ -25,6 +25,7 @@ class SortDirectoriesTest extends TestCase
     const MODEL_SORT_PARAM_VALUE = 'name';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -35,7 +36,7 @@ class SortDirectoriesTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -57,6 +58,7 @@ class SortDirectoriesTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url)->assertSeeInOrder(
                 [
                     self::MODEL_ALFA_NAME,
@@ -85,6 +87,7 @@ class SortDirectoriesTest extends TestCase
         );
 
         $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url)->assertSeeInOrder(
                 [
                     self::MODEL_GAMA_NAME,
@@ -106,7 +109,10 @@ class SortDirectoriesTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertError(
             400,

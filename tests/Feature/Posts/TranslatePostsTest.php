@@ -22,6 +22,7 @@ class TranslatePostsTest extends TestCase
     const MODEL_EN_CONTENT = 'Post content in english';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -32,7 +33,7 @@ class TranslatePostsTest extends TestCase
             $this->seed(PostsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -60,6 +61,7 @@ class TranslatePostsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $post));
 
         $response->assertJsonFragment([
@@ -86,13 +88,14 @@ class TranslatePostsTest extends TestCase
             )
             ->withoutImage()
             ->create([
-                    'user_id' => $this->user->id,
-                ]);
+                'user_id' => $this->user->id,
+            ]);
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $post));
 
         $response->assertJsonFragment([
@@ -126,13 +129,14 @@ class TranslatePostsTest extends TestCase
             )
             ->withoutImage()
             ->create([
-                    'user_id' => $this->user->id,
-                ]);
+                'user_id' => $this->user->id,
+            ]);
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $post));
 
         $response->assertJsonFragment([
@@ -167,6 +171,7 @@ class TranslatePostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
@@ -208,6 +213,7 @@ class TranslatePostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);

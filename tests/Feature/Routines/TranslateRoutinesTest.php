@@ -20,6 +20,7 @@ class TranslateRoutinesTest extends TestCase
     const MODEL_EN_NAME = 'Back routine';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -30,7 +31,7 @@ class TranslateRoutinesTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -41,18 +42,19 @@ class TranslateRoutinesTest extends TestCase
                 'name' => self::MODEL_EN_NAME,
             ]
         )->hasTranslations(
-            1,
-            [
-                'locale'      => 'es',
-                'column'      => 'name',
-                'translation' => self::MODEL_ES_NAME,
-            ]
-        )->create();
+                1,
+                [
+                    'locale' => 'es',
+                    'column' => 'name',
+                    'translation' => self::MODEL_ES_NAME,
+                ]
+            )->create();
 
         // Make a request with spanish locale
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $routine));
 
         $response->assertFetchedOne(
@@ -97,6 +99,7 @@ class TranslateRoutinesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
@@ -104,11 +107,11 @@ class TranslateRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME,
                 'translationable_type' => Routine::class,
-                'translationable_id'   => $routine->id,
+                'translationable_id' => $routine->id,
             ]
         );
     }
@@ -120,8 +123,8 @@ class TranslateRoutinesTest extends TestCase
 
         $translation = $routine->translations()->create(
             [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_NAME,
             ]
         );
@@ -136,6 +139,7 @@ class TranslateRoutinesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);
@@ -143,11 +147,11 @@ class TranslateRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => 'Rutina de espalda actualizada',
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => 'Rutina de espalda actualizada',
                 'translationable_type' => Routine::class,
-                'translationable_id'   => $routine->id,
+                'translationable_id' => $routine->id,
             ]
         );
     }
