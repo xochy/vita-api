@@ -23,6 +23,7 @@ class UpdateCommentsTests extends TestCase
 
     protected User $user;
     protected Post $post;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -33,7 +34,8 @@ class UpdateCommentsTests extends TestCase
             $this->seed(CommentsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
+
         $this->post = Post::factory()->create([
             'user_id' => $this->user->id,
         ]);
@@ -44,14 +46,14 @@ class UpdateCommentsTests extends TestCase
     {
         $comment = Comment::factory()->create(
             [
-                'post_id' => $this->post->id,
-                'user_id' => $this->user->id,
+                'post_id' => (string) $this->post->id,
+                'user_id' => (string) $this->user->id,
             ]
         );
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
-            'id' => $comment->id,
+            'id' => (string) $comment->id,
             'attributes' => [
                 self::MODEL_ATTRIBUTE_CONTENT => self::MODEL_CONTENT_ATTRIBUTE_VALUE,
             ],
@@ -87,7 +89,13 @@ class UpdateCommentsTests extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $comment->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $comment->getRouteKey()
+                )
+            );
 
         // OK (200)
         $response->assertStatus(200);
@@ -95,10 +103,10 @@ class UpdateCommentsTests extends TestCase
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                'id'                          => $comment->id,
+                'id' => (string) $comment->id,
                 self::MODEL_ATTRIBUTE_CONTENT => self::MODEL_CONTENT_ATTRIBUTE_VALUE,
-                'post_id'                     => $this->post->id,
-                'user_id'                     => $this->user->id,
+                'post_id' => (string) $this->post->id,
+                'user_id' => (string) $this->user->id,
             ]
         );
     }

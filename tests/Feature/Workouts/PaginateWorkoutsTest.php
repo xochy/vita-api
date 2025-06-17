@@ -22,6 +22,7 @@ class PaginateWorkoutsTest extends TestCase
     const MODEL_NUMBER_PARAM_NAME = 'page[number]';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -32,7 +33,7 @@ class PaginateWorkoutsTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -49,7 +50,9 @@ class PaginateWorkoutsTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_NUMBER_PARAM_NAME)->get($url);
+            ->expects(self::MODEL_NUMBER_PARAM_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertJsonStructure(
             [

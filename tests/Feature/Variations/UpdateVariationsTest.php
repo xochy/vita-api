@@ -31,6 +31,7 @@ class UpdateVariationsTest extends TestCase
     const MODEL_PERFORMANCE_ATTRIBUTE_VALUE = 'performance changed';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
     protected UploadedFile $file;
 
@@ -43,7 +44,7 @@ class UpdateVariationsTest extends TestCase
             $this->seed(VariationsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
 
         Storage::disk('public')->deleteDirectory('.');
@@ -69,7 +70,12 @@ class UpdateVariationsTest extends TestCase
 
         $response = $this->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $variation->getRouteKey()));
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $variation->getRouteKey()
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -91,7 +97,13 @@ class UpdateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $variation->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $variation->getRouteKey()
+                )
+            );
 
         // Success (200)
         $response->assertStatus(200);
@@ -121,7 +133,13 @@ class UpdateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $variation->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $variation->getRouteKey()
+                )
+            );
 
         // Success (200)
         $response->assertStatus(200);
@@ -151,7 +169,13 @@ class UpdateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $variation->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $variation->getRouteKey()
+                )
+            );
 
         // Success (200)
         $response->assertStatus(200);
@@ -187,7 +211,13 @@ class UpdateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $variation->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $variation->getRouteKey()
+                )
+            );
 
         // Success (200)
         $response->assertStatus(200);
@@ -195,9 +225,9 @@ class UpdateVariationsTest extends TestCase
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                'id'          => $variation->getKey(),
-                'workout_id'  => $newWorkout->getKey(),
-                'name'        => $variation->name,
+                'id' => $variation->getKey(),
+                'workout_id' => $newWorkout->getKey(),
+                'name' => $variation->name,
                 'performance' => $variation->performance,
             ]
         );
@@ -230,7 +260,13 @@ class UpdateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $variation->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $variation->getRouteKey()
+                )
+            );
 
         // Success (200)
         $response->assertStatus(200);
@@ -239,7 +275,7 @@ class UpdateVariationsTest extends TestCase
             'muscle_variation',
             [
                 'variation_id' => $variation->getKey(),
-                'muscle_id'    => $muscles[0]->getKey(),
+                'muscle_id' => $muscles[0]->getKey(),
             ]
         );
 
@@ -247,7 +283,7 @@ class UpdateVariationsTest extends TestCase
             'muscle_variation',
             [
                 'variation_id' => $variation->getKey(),
-                'muscle_id'    => $muscles[1]->getKey(),
+                'muscle_id' => $muscles[1]->getKey(),
             ]
         );
     }
@@ -266,10 +302,10 @@ class UpdateVariationsTest extends TestCase
         $this->assertDatabaseHas(
             'media',
             [
-                'model_type'      => 'App\Models\Variation',
-                'model_id'        => $variation->getRouteKey(),
+                'model_type' => 'App\Models\Variation',
+                'model_id' => $variation->getRouteKey(),
                 'collection_name' => 'default',
-                'file_name'       => $fileName,
+                'file_name' => $fileName,
             ]
         );
 
@@ -289,7 +325,13 @@ class UpdateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
-            ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $variation->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->patch(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $variation->getRouteKey()
+                )
+            );
 
         // Success (200)
         $response->assertStatus(200);
@@ -298,7 +340,7 @@ class UpdateVariationsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $variation->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $variation->performance,
             ]
         );
@@ -306,10 +348,10 @@ class UpdateVariationsTest extends TestCase
         $this->assertDatabaseHas(
             'media',
             [
-                'model_type'      => 'App\Models\Variation',
-                'model_id'        => $variation->getRouteKey(),
+                'model_type' => 'App\Models\Variation',
+                'model_id' => $variation->getRouteKey(),
                 'collection_name' => 'default',
-                'file_name'       => self::MODEL_ATTRIBUTE_IMAGE_NAME,
+                'file_name' => self::MODEL_ATTRIBUTE_IMAGE_NAME,
             ]
         );
     }

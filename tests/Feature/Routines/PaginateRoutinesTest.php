@@ -21,6 +21,7 @@ class PaginateRoutinesTest extends TestCase
     const MODEL_NUMBER_PARAM_NAME = 'page[number]';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -31,7 +32,7 @@ class PaginateRoutinesTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('user');
+        [$this->user, $this->token] = $this->createUserWithToken('user');
     }
 
     /** @test */
@@ -42,12 +43,15 @@ class PaginateRoutinesTest extends TestCase
         $url = route(
             self::MODEL_MAIN_ACTION_ROUTE,
             [
-                self::MODEL_SIZE_PARAM_NAME => 2, self::MODEL_NUMBER_PARAM_NAME => 3
+                self::MODEL_SIZE_PARAM_NAME => 2,
+                self::MODEL_NUMBER_PARAM_NAME => 3
             ]
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_NUMBER_PARAM_NAME)->get($url);
+            ->expects(self::MODEL_NUMBER_PARAM_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertJsonStructure(
             [
@@ -60,25 +64,29 @@ class PaginateRoutinesTest extends TestCase
                 'first' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 1, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 1,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
-                'prev'  => route(
+                'prev' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 2, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 2,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
-                'next'  => route(
+                'next' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 4, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 4,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
-                'last'  => route(
+                'last' => route(
                     self::MODEL_MAIN_ACTION_ROUTE,
                     [
-                        self::MODEL_NUMBER_PARAM_NAME => 5, self::MODEL_SIZE_PARAM_NAME => 2
+                        self::MODEL_NUMBER_PARAM_NAME => 5,
+                        self::MODEL_SIZE_PARAM_NAME => 2
                     ]
                 ),
             ]

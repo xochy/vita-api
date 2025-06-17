@@ -15,8 +15,6 @@ class FilterGoalsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $user;
-
     const MODEL_SINGLE_NAME = 'goal';
     const MODEL_PLURAL_NAME = 'goals';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
@@ -40,6 +38,9 @@ class FilterGoalsTest extends TestCase
     const MODEL_FILTER_UNKNOWN_PARAM_NAME = 'filter[unknown]';
     const MODEL_FILTER_DESCRIPTION_PARAM_NAME = 'filter[description]';
 
+    protected User $user;
+    protected string $token;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -49,7 +50,7 @@ class FilterGoalsTest extends TestCase
             $this->seed(GoalsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -70,7 +71,9 @@ class FilterGoalsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -95,7 +98,9 @@ class FilterGoalsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION)
@@ -130,7 +135,9 @@ class FilterGoalsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
@@ -152,7 +159,9 @@ class FilterGoalsTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         // Bad Request
         $response->assertStatus(400);
@@ -176,7 +185,9 @@ class FilterGoalsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -201,7 +212,9 @@ class FilterGoalsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION)
@@ -225,7 +238,9 @@ class FilterGoalsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(2, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' '. self::MODEL_JI_NAME)

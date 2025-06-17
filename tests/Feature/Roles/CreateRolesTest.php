@@ -19,6 +19,7 @@ class CreateRolesTest extends TestCase
     const MODEL_ATTRIBUTE_DISPLAY_NAME = 'display_name';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -29,13 +30,13 @@ class CreateRolesTest extends TestCase
             $this->seed(RolesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
     public function unauthorized_users_cannot_create_roles()
     {
-        $user = User::factory()->create()->assignRole('admin');
+        [$user, $token] = $this->createUserWithToken();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -47,6 +48,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Forbidden (403)
@@ -71,6 +73,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Created (201)
@@ -79,9 +82,9 @@ class CreateRolesTest extends TestCase
         $this->assertDatabaseHas(
             'roles',
             [
-                'name'         => 'Developer',
+                'name' => 'Developer',
                 'display_name' => 'Desarrollador',
-                'default'      => false
+                'default' => false
             ]
         );
     }
@@ -99,6 +102,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Bad request (400)
@@ -125,6 +129,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Bad request (400)
@@ -151,6 +156,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Bad request (400)
@@ -177,6 +183,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Bad request (400)
@@ -211,6 +218,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Bad request (400)
@@ -245,6 +253,7 @@ class CreateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Created (201)
@@ -253,9 +262,9 @@ class CreateRolesTest extends TestCase
         $this->assertDatabaseHas(
             'roles',
             [
-                'name'         => 'Developer',
+                'name' => 'Developer',
                 'display_name' => 'Desarrollador',
-                'default'      => false
+                'default' => false
             ]
         );
 

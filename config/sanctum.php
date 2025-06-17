@@ -46,7 +46,15 @@ return [
     |
     */
 
-    'expiration' => 180,
+    'expiration' => env('SANCTUM_TOKEN_EXPIRATION', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Token Expiration Days (Custom)
+    |--------------------------------------------------------------------------
+    | Custom configuration for token expiration in days
+    */
+    'expiration_days' => (int) env('SANCTUM_TOKEN_EXPIRATION_DAYS', 7),
 
     /*
     |--------------------------------------------------------------------------

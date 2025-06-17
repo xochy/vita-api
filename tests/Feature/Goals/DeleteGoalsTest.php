@@ -15,6 +15,7 @@ class DeleteGoalsTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+    protected string $token;
 
     const MODEL_PLURAL_NAME = 'goals';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
@@ -28,7 +29,7 @@ class DeleteGoalsTest extends TestCase
             $this->seed(GoalsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -37,7 +38,12 @@ class DeleteGoalsTest extends TestCase
         $goal = Goal::factory()->create();
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $goal->getRouteKey()));
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $goal->getRouteKey()
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -50,7 +56,13 @@ class DeleteGoalsTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $goal->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $goal->getRouteKey()
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);

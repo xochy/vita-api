@@ -19,6 +19,7 @@ class ListCategoriesTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -29,7 +30,7 @@ class ListCategoriesTest extends TestCase
             $this->seed(CategoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -39,6 +40,7 @@ class ListCategoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
         $response->assertFetchedOne(
@@ -58,17 +60,18 @@ class ListCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_fetch_all_categories()
+    public function can_fetch_all_categories(): void
     {
         $categories = Category::factory()->times(3)->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
             $categories->map(
-                fn (Category $category) => [
+                fn(Category $category) => [
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $category->getRouteKey(),
                     'attributes' => [

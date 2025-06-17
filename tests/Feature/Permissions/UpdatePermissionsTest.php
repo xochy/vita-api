@@ -25,6 +25,7 @@ class UpdatePermissionsTest extends TestCase
     const MODEL_SUBJECT_ATTRIBUTE_VALUE = 'permissions';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -35,13 +36,13 @@ class UpdatePermissionsTest extends TestCase
             $this->seed(PermissionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
     public function unauthorized_users_cannot_update_permissions()
     {
-        $user = User::factory()->create()->assignRole('admin');
+        [$user, $token] = $this->createUserWithToken();
 
         $permission = Permission::findByName('delete permissions');
 
@@ -51,15 +52,16 @@ class UpdatePermissionsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'id' => (string) $permission->getRouteKey(),
             'attributes' => [
-                self::MODEL_ATTRIBUTE_NAME         => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_DISPLAY_NAME => self::MODEL_DISPLAY_NAME_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_ACTION       => self::MODEL_ACTION_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_SUBJECT      => self::MODEL_SUBJECT_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_ACTION => self::MODEL_ACTION_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_SUBJECT => self::MODEL_SUBJECT_ATTRIBUTE_VALUE,
             ]
         ];
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $token)
             ->patch(route('v1.permissions.updatePermission', $permission->getRouteKey()));
 
         // Forbidden (403)
@@ -82,15 +84,16 @@ class UpdatePermissionsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'id' => (string) $permission->getRouteKey(),
             'attributes' => [
-                self::MODEL_ATTRIBUTE_NAME         => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_DISPLAY_NAME => self::MODEL_DISPLAY_NAME_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_ACTION       => self::MODEL_ACTION_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_SUBJECT      => self::MODEL_SUBJECT_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_ACTION => self::MODEL_ACTION_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_SUBJECT => self::MODEL_SUBJECT_ATTRIBUTE_VALUE,
             ]
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.permissions.updatePermission', $permission->getRouteKey()));
 
         // Success (200)

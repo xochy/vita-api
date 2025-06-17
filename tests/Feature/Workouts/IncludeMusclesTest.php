@@ -29,6 +29,7 @@ class IncludeMusclesTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -39,7 +40,7 @@ class IncludeMusclesTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -57,6 +58,7 @@ class IncludeMusclesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $workout));
 
         $response->assertSee($workout->muscles[0]->name);
@@ -109,6 +111,7 @@ class IncludeMusclesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $workout));
 
         $response->assertSee($workout->muscles[0]->name);
@@ -155,6 +158,7 @@ class IncludeMusclesTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $workout));
 
         $this->assertDatabaseHas(

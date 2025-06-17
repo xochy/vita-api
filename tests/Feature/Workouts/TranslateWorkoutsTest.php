@@ -30,6 +30,7 @@ class TranslateWorkoutsTest extends TestCase
     const MODEL_EN_WARNINGS = 'Lower back warnings';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -40,7 +41,7 @@ class TranslateWorkoutsTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -48,18 +49,18 @@ class TranslateWorkoutsTest extends TestCase
     {
         $workout = Workout::factory(
             [
-                'name'        => self::MODEL_EN_NAME,
+                'name' => self::MODEL_EN_NAME,
                 'performance' => self::MODEL_EN_PERFORMANCE,
-                'comments'    => self::MODEL_EN_COMMENTS,
+                'comments' => self::MODEL_EN_COMMENTS,
                 'corrections' => self::MODEL_EN_CORRECTIONS,
-                'warnings'    => self::MODEL_EN_WARNINGS,
+                'warnings' => self::MODEL_EN_WARNINGS,
             ]
         )->forCategory()
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'name',
+                    'locale' => 'es',
+                    'column' => 'name',
                     'translation' => self::MODEL_ES_NAME,
                 ]
             )->create();
@@ -68,6 +69,7 @@ class TranslateWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
         $response->assertFetchedOne(
@@ -75,12 +77,12 @@ class TranslateWorkoutsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $workout->getRouteKey(),
                 'attributes' => [
-                    'name'        => self::MODEL_ES_NAME,
+                    'name' => self::MODEL_ES_NAME,
                     'performance' => $workout->performance,
-                    'comments'    => $workout->comments,
+                    'comments' => $workout->comments,
                     'corrections' => $workout->corrections,
-                    'warnings'    => $workout->warnings,
-                    'slug'        => $workout->slug,
+                    'warnings' => $workout->warnings,
+                    'slug' => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -97,18 +99,18 @@ class TranslateWorkoutsTest extends TestCase
     {
         $workout = Workout::factory(
             [
-                'name'        => self::MODEL_EN_NAME,
+                'name' => self::MODEL_EN_NAME,
                 'performance' => self::MODEL_EN_PERFORMANCE,
-                'comments'    => self::MODEL_EN_COMMENTS,
+                'comments' => self::MODEL_EN_COMMENTS,
                 'corrections' => self::MODEL_EN_CORRECTIONS,
-                'warnings'    => self::MODEL_EN_WARNINGS,
+                'warnings' => self::MODEL_EN_WARNINGS,
             ]
         )->forCategory()
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'performance',
+                    'locale' => 'es',
+                    'column' => 'performance',
                     'translation' => self::MODEL_ES_PERFORMANCE,
                 ]
             )->create();
@@ -117,6 +119,7 @@ class TranslateWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
         $response->assertFetchedOne(
@@ -124,12 +127,12 @@ class TranslateWorkoutsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $workout->getRouteKey(),
                 'attributes' => [
-                    'name'        => $workout->name,
+                    'name' => $workout->name,
                     'performance' => self::MODEL_ES_PERFORMANCE,
-                    'comments'    => $workout->comments,
+                    'comments' => $workout->comments,
                     'corrections' => $workout->corrections,
-                    'warnings'    => $workout->warnings,
-                    'slug'        => $workout->slug,
+                    'warnings' => $workout->warnings,
+                    'slug' => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -146,18 +149,18 @@ class TranslateWorkoutsTest extends TestCase
     {
         $workout = Workout::factory(
             [
-                'name'        => self::MODEL_EN_NAME,
+                'name' => self::MODEL_EN_NAME,
                 'performance' => self::MODEL_EN_PERFORMANCE,
-                'comments'    => self::MODEL_EN_COMMENTS,
+                'comments' => self::MODEL_EN_COMMENTS,
                 'corrections' => self::MODEL_EN_CORRECTIONS,
-                'warnings'    => self::MODEL_EN_WARNINGS,
+                'warnings' => self::MODEL_EN_WARNINGS,
             ]
         )->forCategory()
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'comments',
+                    'locale' => 'es',
+                    'column' => 'comments',
                     'translation' => self::MODEL_ES_COMMENTS,
                 ]
             )->create();
@@ -166,6 +169,7 @@ class TranslateWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
         $response->assertFetchedOne(
@@ -173,12 +177,12 @@ class TranslateWorkoutsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $workout->getRouteKey(),
                 'attributes' => [
-                    'name'        => $workout->name,
+                    'name' => $workout->name,
                     'performance' => $workout->performance,
-                    'comments'    => self::MODEL_ES_COMMENTS,
+                    'comments' => self::MODEL_ES_COMMENTS,
                     'corrections' => $workout->corrections,
-                    'warnings'    => $workout->warnings,
-                    'slug'        => $workout->slug,
+                    'warnings' => $workout->warnings,
+                    'slug' => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -195,18 +199,18 @@ class TranslateWorkoutsTest extends TestCase
     {
         $workout = Workout::factory(
             [
-                'name'        => self::MODEL_EN_NAME,
+                'name' => self::MODEL_EN_NAME,
                 'performance' => self::MODEL_EN_PERFORMANCE,
-                'comments'    => self::MODEL_EN_COMMENTS,
+                'comments' => self::MODEL_EN_COMMENTS,
                 'corrections' => self::MODEL_EN_CORRECTIONS,
-                'warnings'    => self::MODEL_EN_WARNINGS,
+                'warnings' => self::MODEL_EN_WARNINGS,
             ]
         )->forCategory()
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'corrections',
+                    'locale' => 'es',
+                    'column' => 'corrections',
                     'translation' => self::MODEL_ES_CORRECTIONS,
                 ]
             )->create();
@@ -215,6 +219,7 @@ class TranslateWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
         $response->assertFetchedOne(
@@ -222,12 +227,12 @@ class TranslateWorkoutsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $workout->getRouteKey(),
                 'attributes' => [
-                    'name'        => $workout->name,
+                    'name' => $workout->name,
                     'performance' => $workout->performance,
-                    'comments'    => $workout->comments,
+                    'comments' => $workout->comments,
                     'corrections' => self::MODEL_ES_CORRECTIONS,
-                    'warnings'    => $workout->warnings,
-                    'slug'        => $workout->slug,
+                    'warnings' => $workout->warnings,
+                    'slug' => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -244,18 +249,18 @@ class TranslateWorkoutsTest extends TestCase
     {
         $workout = Workout::factory(
             [
-                'name'        => self::MODEL_EN_NAME,
+                'name' => self::MODEL_EN_NAME,
                 'performance' => self::MODEL_EN_PERFORMANCE,
-                'comments'    => self::MODEL_EN_COMMENTS,
+                'comments' => self::MODEL_EN_COMMENTS,
                 'corrections' => self::MODEL_EN_CORRECTIONS,
-                'warnings'    => self::MODEL_EN_WARNINGS,
+                'warnings' => self::MODEL_EN_WARNINGS,
             ]
         )->forCategory()
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'warnings',
+                    'locale' => 'es',
+                    'column' => 'warnings',
                     'translation' => self::MODEL_ES_WARNINGS,
                 ]
             )->create();
@@ -264,6 +269,7 @@ class TranslateWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
         $response->assertFetchedOne(
@@ -271,12 +277,12 @@ class TranslateWorkoutsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $workout->getRouteKey(),
                 'attributes' => [
-                    'name'        => $workout->name,
+                    'name' => $workout->name,
                     'performance' => $workout->performance,
-                    'comments'    => $workout->comments,
+                    'comments' => $workout->comments,
                     'corrections' => $workout->corrections,
-                    'warnings'    => self::MODEL_ES_WARNINGS,
-                    'slug'        => $workout->slug,
+                    'warnings' => self::MODEL_ES_WARNINGS,
+                    'slug' => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -293,39 +299,39 @@ class TranslateWorkoutsTest extends TestCase
     {
         $workout = Workout::factory(
             [
-                'name'        => self::MODEL_EN_NAME,
+                'name' => self::MODEL_EN_NAME,
                 'performance' => self::MODEL_EN_PERFORMANCE,
-                'comments'    => self::MODEL_EN_COMMENTS,
+                'comments' => self::MODEL_EN_COMMENTS,
                 'corrections' => self::MODEL_EN_CORRECTIONS,
-                'warnings'    => self::MODEL_EN_WARNINGS,
+                'warnings' => self::MODEL_EN_WARNINGS,
             ]
         )->forCategory()
             ->hasTranslations(
                 5,
                 new Sequence(
                     [
-                        'locale'      => 'es',
-                        'column'      => 'name',
+                        'locale' => 'es',
+                        'column' => 'name',
                         'translation' => self::MODEL_ES_NAME
                     ],
                     [
-                        'locale'      => 'es',
-                        'column'      => 'performance',
+                        'locale' => 'es',
+                        'column' => 'performance',
                         'translation' => self::MODEL_ES_PERFORMANCE
                     ],
                     [
-                        'locale'      => 'es',
-                        'column'      => 'comments',
+                        'locale' => 'es',
+                        'column' => 'comments',
                         'translation' => self::MODEL_ES_COMMENTS
                     ],
                     [
-                        'locale'      => 'es',
-                        'column'      => 'corrections',
+                        'locale' => 'es',
+                        'column' => 'corrections',
                         'translation' => self::MODEL_ES_CORRECTIONS
                     ],
                     [
-                        'locale'      => 'es',
-                        'column'      => 'warnings',
+                        'locale' => 'es',
+                        'column' => 'warnings',
                         'translation' => self::MODEL_ES_WARNINGS
                     ]
                 )
@@ -335,6 +341,7 @@ class TranslateWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $workout));
 
         $response->assertFetchedOne(
@@ -342,12 +349,12 @@ class TranslateWorkoutsTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $workout->getRouteKey(),
                 'attributes' => [
-                    'name'        => self::MODEL_ES_NAME,
+                    'name' => self::MODEL_ES_NAME,
                     'performance' => self::MODEL_ES_PERFORMANCE,
-                    'comments'    => self::MODEL_ES_COMMENTS,
+                    'comments' => self::MODEL_ES_COMMENTS,
                     'corrections' => self::MODEL_ES_CORRECTIONS,
-                    'warnings'    => self::MODEL_ES_WARNINGS,
-                    'slug'        => $workout->slug,
+                    'warnings' => self::MODEL_ES_WARNINGS,
+                    'slug' => $workout->slug,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $workout)
@@ -383,6 +390,7 @@ class TranslateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
@@ -390,11 +398,11 @@ class TranslateWorkoutsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME,
                 'translationable_type' => Workout::class,
-                'translationable_id'   => $workout->id,
+                'translationable_id' => $workout->id,
             ]
         );
     }
@@ -406,8 +414,8 @@ class TranslateWorkoutsTest extends TestCase
 
         $translation = $workout->translations()->create(
             [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_NAME,
             ]
         );
@@ -422,6 +430,7 @@ class TranslateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);
@@ -429,11 +438,11 @@ class TranslateWorkoutsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME . ' actualizado',
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME . ' actualizado',
                 'translationable_type' => Workout::class,
-                'translationable_id'   => $workout->id,
+                'translationable_id' => $workout->id,
             ]
         );
     }

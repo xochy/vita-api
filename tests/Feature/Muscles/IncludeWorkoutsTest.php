@@ -29,6 +29,7 @@ class IncludeWorkoutsTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
+    protected string $token;
     protected Category $category;
 
     public function setUp(): void
@@ -40,7 +41,7 @@ class IncludeWorkoutsTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->category = Category::factory()->create();
     }
 
@@ -59,6 +60,7 @@ class IncludeWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle));
 
         $response->assertSee($muscle->workouts[0]->name);
@@ -111,6 +113,7 @@ class IncludeWorkoutsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle));
 
         $response->assertSee($muscle->workouts[0]->name);
@@ -157,14 +160,15 @@ class IncludeWorkoutsTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $muscle));
 
         $this->assertDatabaseHas(
             'muscle_workout',
             [
                 'workout_id' => $muscle->workouts[0]->id,
-                'muscle_id' => $muscle->id,
-                'priority' => MusclePriorityEnum::PRINCIPAL
+                'muscle_id'  => $muscle->id,
+                'priority'   => MusclePriorityEnum::PRINCIPAL
             ]
         );
 
@@ -172,8 +176,8 @@ class IncludeWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $muscle->workouts[1]->id,
-                'muscle_id' => $muscle->id,
-                'priority' => MusclePriorityEnum::SECONDARY
+                'muscle_id'  => $muscle->id,
+                'priority'   => MusclePriorityEnum::SECONDARY
             ]
         );
 
@@ -181,8 +185,8 @@ class IncludeWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $muscle->workouts[2]->id,
-                'muscle_id' => $muscle->id,
-                'priority' => MusclePriorityEnum::ANTAGONIST
+                'muscle_id'  => $muscle->id,
+                'priority'   => MusclePriorityEnum::ANTAGONIST
             ]
         );
     }

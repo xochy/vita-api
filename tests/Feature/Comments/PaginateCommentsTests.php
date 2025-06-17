@@ -23,6 +23,7 @@ class PaginateCommentsTests extends TestCase
 
     protected User $user;
     protected Post $post;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -33,7 +34,8 @@ class PaginateCommentsTests extends TestCase
             $this->seed(CommentsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
+
         $this->post = Post::factory()->create([
             'user_id' => $this->user->id,
         ]);
@@ -56,7 +58,9 @@ class PaginateCommentsTests extends TestCase
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_NUMBER_PARAM_NAME)->get($url);
+            ->expects(self::MODEL_NUMBER_PARAM_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertJsonStructure(
             [

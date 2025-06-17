@@ -19,6 +19,7 @@ class ListDirectoriesTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -29,7 +30,7 @@ class ListDirectoriesTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -39,6 +40,7 @@ class ListDirectoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $directory));
 
         $response->assertFetchedOne(
@@ -63,6 +65,7 @@ class ListDirectoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(

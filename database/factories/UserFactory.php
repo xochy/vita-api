@@ -57,4 +57,28 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Force the user to use metric measurements.
+     */
+    public function metric(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'system' => 'metric',
+            'weight' => fake()->randomFloat(2, 10, 200),  // kg
+            'height' => fake()->randomFloat(2, 0.5, 2.5), // meters
+        ]);
+    }
+
+    /**
+     * Force the user to use imperial measurements.
+     */
+    public function imperial(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'system' => 'imperial',
+            'weight' => fake()->randomFloat(2, 50, 400),  // lbs
+            'height' => fake()->randomFloat(2, 1.5, 8.5), // feet
+        ]);
+    }
 }

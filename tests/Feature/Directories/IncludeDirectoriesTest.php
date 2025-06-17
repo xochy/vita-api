@@ -26,6 +26,7 @@ class IncludeDirectoriesTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -36,7 +37,7 @@ class IncludeDirectoriesTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -51,19 +52,28 @@ class IncludeDirectoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $parentDirectory));
 
         $response->assertSee($parentDirectory->children[0]->slug);
 
         $response->assertJsonFragment(
             [
-                'related' => route(self::MODEL_RELATED_ROUTE, $parentDirectory)
+                'related' =>
+                    route(
+                        self::MODEL_RELATED_ROUTE,
+                        $parentDirectory
+                    )
             ]
         );
 
         $response->assertJsonFragment(
             [
-                'self' => route(self::MODEL_SELF_ROUTE, $parentDirectory)
+                'self' =>
+                    route(
+                        self::MODEL_SELF_ROUTE,
+                        $parentDirectory
+                    )
             ]
         );
     }
@@ -82,7 +92,14 @@ class IncludeDirectoriesTest extends TestCase
             ->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->get(route(self::MODEL_SHOW_RELATIONSHIP_ROUTE, $parentDirectory));
+            ->expects(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get(
+                route(
+                    self::MODEL_SHOW_RELATIONSHIP_ROUTE,
+                    $parentDirectory
+                )
+            );
 
         $response->assertJsonCount(3, 'data');
 
@@ -109,19 +126,33 @@ class IncludeDirectoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths('parent')
-            ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $childDirectory));
+            ->withHeader('Authorization', $this->token)
+            ->get(
+                route(
+                    self::MODEL_SHOW_ACTION_ROUTE,
+                    $childDirectory
+                )
+            );
 
         $response->assertSee($childDirectory->parent->slug);
 
         $response->assertJsonFragment(
             [
-                'related' => route(self::MODEL_RELATED_ROUTE, $childDirectory)
+                'related' =>
+                    route(
+                        self::MODEL_RELATED_ROUTE,
+                        $childDirectory
+                    )
             ]
         );
 
         $response->assertJsonFragment(
             [
-                'self' => route(self::MODEL_SELF_ROUTE, $childDirectory)
+                'self' =>
+                    route(
+                        self::MODEL_SELF_ROUTE,
+                        $childDirectory
+                    )
             ]
         );
     }

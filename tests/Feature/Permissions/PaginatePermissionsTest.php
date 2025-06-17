@@ -21,6 +21,7 @@ class PaginatePermissionsTest extends TestCase
     const MODEL_NUMBER_PARAM_NAME = 'page[number]';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -31,7 +32,7 @@ class PaginatePermissionsTest extends TestCase
             $this->seed(PermissionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
@@ -82,7 +83,9 @@ class PaginatePermissionsTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_PLURAL_NAME)->get($url);
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertJsonStructure(
             [

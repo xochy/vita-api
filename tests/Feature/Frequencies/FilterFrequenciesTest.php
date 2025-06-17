@@ -15,8 +15,6 @@ class FilterFrequenciesTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $user;
-
     const MODEL_SINGLE_NAME = 'frequency';
     const MODEL_PLURAL_NAME = 'frequencies';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
@@ -39,6 +37,9 @@ class FilterFrequenciesTest extends TestCase
     const MODEL_FILTER_UNKNOWN_PARAM_NAME = 'filter[unknown]';
     const MODEL_FILTER_DESCRIPTION_PARAM_NAME = 'filter[description]';
 
+    protected User $user;
+    protected string $token;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -48,7 +49,7 @@ class FilterFrequenciesTest extends TestCase
             $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken('admin');
     }
 
     /** @test */
@@ -69,7 +70,9 @@ class FilterFrequenciesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -94,7 +97,9 @@ class FilterFrequenciesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION)
@@ -129,7 +134,9 @@ class FilterFrequenciesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
@@ -151,7 +158,9 @@ class FilterFrequenciesTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         // Bad Request
         $response->assertStatus(400);
@@ -175,7 +184,9 @@ class FilterFrequenciesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -200,7 +211,9 @@ class FilterFrequenciesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION)
@@ -224,7 +237,9 @@ class FilterFrequenciesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(2, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' '. self::MODEL_PI_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' '. self::MODEL_JI_NAME)

@@ -22,6 +22,7 @@ class PaginateVariationsTest extends TestCase
     const MODEL_NUMBER_PARAM_NAME = 'page[number]';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
 
     public function setUp(): void
@@ -33,7 +34,7 @@ class PaginateVariationsTest extends TestCase
             $this->seed(VariationsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
     }
 
@@ -51,7 +52,9 @@ class PaginateVariationsTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects(self::MODEL_NUMBER_PARAM_NAME)->get($url);
+            ->expects(self::MODEL_NUMBER_PARAM_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertJsonStructure(
             [

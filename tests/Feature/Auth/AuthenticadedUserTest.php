@@ -19,6 +19,7 @@ class AuthenticadedUserTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -29,7 +30,7 @@ class AuthenticadedUserTest extends TestCase
             $this->seed(UsersPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken('admin');
     }
 
     /** @test */
@@ -50,6 +51,7 @@ class AuthenticadedUserTest extends TestCase
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $user));
 
         $response->assertFetchedOne(
@@ -75,6 +77,7 @@ class AuthenticadedUserTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $user));
 
         // Forbidden (403)

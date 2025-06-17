@@ -40,6 +40,7 @@ class FilterVariationsTest extends TestCase
     const MODEL_FILTER_PERFORMANCE_PARAM_NAME = 'filter[performance]';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
 
     public function setUp(): void
@@ -51,7 +52,7 @@ class FilterVariationsTest extends TestCase
             $this->seed(VariationsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
     }
 
@@ -75,7 +76,9 @@ class FilterVariationsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -102,7 +105,9 @@ class FilterVariationsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE)
@@ -139,7 +144,9 @@ class FilterVariationsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE)
@@ -160,6 +167,7 @@ class FilterVariationsTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url);
 
         // Bad Request
@@ -174,6 +182,7 @@ class FilterVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get($url);
 
         // Bad Request
@@ -207,7 +216,9 @@ class FilterVariationsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+        ->withHeader('Authorization', $this->token)
+        ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -234,7 +245,9 @@ class FilterVariationsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_PERFORMANCE)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_PERFORMANCE)
@@ -261,7 +274,9 @@ class FilterVariationsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(2, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME)
@@ -288,7 +303,9 @@ class FilterVariationsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(2, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME)

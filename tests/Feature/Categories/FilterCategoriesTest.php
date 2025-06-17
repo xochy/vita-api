@@ -39,6 +39,7 @@ class FilterCategoriesTest extends TestCase
     const MODEL_FILTER_DESCRIPTION_PARAM_NAME = 'filter[description]';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -49,7 +50,7 @@ class FilterCategoriesTest extends TestCase
             $this->seed(CategoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -72,7 +73,9 @@ class FilterCategoriesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -99,7 +102,9 @@ class FilterCategoriesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION)
@@ -136,7 +141,9 @@ class FilterCategoriesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
@@ -157,6 +164,7 @@ class FilterCategoriesTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url);
 
         // Bad Request
@@ -171,6 +179,7 @@ class FilterCategoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get($url);
 
         // Bad Request
@@ -204,7 +213,9 @@ class FilterCategoriesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -231,7 +242,9 @@ class FilterCategoriesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_DESCRIPTION)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_DESCRIPTION)
@@ -258,7 +271,9 @@ class FilterCategoriesTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(2, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_NAME)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_NAME)

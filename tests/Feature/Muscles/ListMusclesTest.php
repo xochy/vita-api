@@ -19,6 +19,7 @@ class ListMusclesTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -29,16 +30,17 @@ class ListMusclesTest extends TestCase
             $this->seed(MusclesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
-    public function it_can_fetch_single_muscle()
+    public function it_can_fetch_single_muscle(): void
     {
         $muscle = Muscle::factory()->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
         $response->assertFetchedOne(
@@ -58,12 +60,13 @@ class ListMusclesTest extends TestCase
     }
 
     /** @test */
-    public function can_fetch_all_muscles()
+    public function can_fetch_all_muscles(): void
     {
         $muscles = Muscle::factory()->count(3)->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(

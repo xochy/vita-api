@@ -24,6 +24,7 @@ class UpdatePostsTest extends TestCase
     const MODEL_CONTENT_ATTRIBUTE_VALUE = 'content changed';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -34,7 +35,7 @@ class UpdatePostsTest extends TestCase
             $this->seed(PostsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -79,6 +80,7 @@ class UpdatePostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $post->getRouteKey()));
 
         // Success (200)
@@ -114,6 +116,7 @@ class UpdatePostsTest extends TestCase
 
         $response = $this->actingAs($admin)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $post->getRouteKey()));
 
         // Forbidden (403)
@@ -137,6 +140,7 @@ class UpdatePostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $post->getRouteKey()));
 
         // Success (200)
@@ -169,6 +173,7 @@ class UpdatePostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $post->getRouteKey()));
 
         // Success (200)
@@ -202,6 +207,7 @@ class UpdatePostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $post->getRouteKey()));
 
         // Unprocessable Entity (422)
@@ -229,6 +235,7 @@ class UpdatePostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $post->getRouteKey()));
 
         // Unprocessable Entity (422)

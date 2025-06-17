@@ -38,6 +38,7 @@ class UpdateWorkoutsTest extends TestCase
     const MODEL_WARNINGS_ATTRIBUTE_VALUE = 'warnings changed';
 
     protected User $user;
+    protected string $token;
     protected UploadedFile $file;
 
     public function setUp(): void
@@ -49,7 +50,7 @@ class UpdateWorkoutsTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
 
         Storage::disk('public')->deleteDirectory('.');
 
@@ -65,11 +66,11 @@ class UpdateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'id' => (string) $workout->getRouteKey(),
             'attributes' => [
-                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_COMMENTS => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_WARNINGS => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
             ]
         ];
 
@@ -90,16 +91,17 @@ class UpdateWorkoutsTest extends TestCase
             'type' => self::MODEL_PLURAL_NAME,
             'id' => (string) $workout->getRouteKey(),
             'attributes' => [
-                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_COMMENTS => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_WARNINGS => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
             ]
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -109,11 +111,11 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $workout->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_COMMENTS => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_WARNINGS => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
             ]
         );
     }
@@ -133,6 +135,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -142,11 +145,11 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $workout->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout->comments,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout->warnings,
             ]
         );
     }
@@ -166,6 +169,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -175,11 +179,11 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $workout->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_NAME => $workout->name,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => self::MODEL_PERFORMANCE_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout->comments,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout->warnings,
             ]
         );
     }
@@ -199,6 +203,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -208,11 +213,11 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $workout->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_NAME => $workout->name,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-                self::MODEL_ATTRIBUTE_COMMENTS    => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_COMMENTS => self::MODEL_COMMENTS_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout->warnings,
             ]
         );
     }
@@ -232,6 +237,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -241,11 +247,11 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $workout->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_NAME => $workout->name,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout->comments,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => self::MODEL_CORRECTIONS_ATTRIBUTE_VALUE,
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout->warnings,
             ]
         );
     }
@@ -265,6 +271,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -274,11 +281,11 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $workout->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_NAME => $workout->name,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout->comments,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-                self::MODEL_ATTRIBUTE_WARNINGS    => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_WARNINGS => self::MODEL_WARNINGS_ATTRIBUTE_VALUE,
             ]
         );
     }
@@ -304,6 +311,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -312,13 +320,13 @@ class UpdateWorkoutsTest extends TestCase
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                'id'          => $workout->getRouteKey(),
+                'id' => $workout->getRouteKey(),
                 'category_id' => $newCategory->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => $workout->name,
+                self::MODEL_ATTRIBUTE_NAME => $workout->name,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout->comments,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout->warnings,
             ]
         );
     }
@@ -378,6 +386,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -387,8 +396,8 @@ class UpdateWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $workout->getRouteKey(),
-                'muscle_id'  => $muscles[0]->getRouteKey(),
-                'priority'   => MusclePriorityEnum::PRINCIPAL
+                'muscle_id' => $muscles[0]->getRouteKey(),
+                'priority' => MusclePriorityEnum::PRINCIPAL
             ]
         );
 
@@ -396,8 +405,8 @@ class UpdateWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $workout->getRouteKey(),
-                'muscle_id'  => $muscles[1]->getRouteKey(),
-                'priority'   => MusclePriorityEnum::SECONDARY
+                'muscle_id' => $muscles[1]->getRouteKey(),
+                'priority' => MusclePriorityEnum::SECONDARY
             ]
         );
 
@@ -405,8 +414,8 @@ class UpdateWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $workout->getRouteKey(),
-                'muscle_id'  => $muscles[2]->getRouteKey(),
-                'priority'   => MusclePriorityEnum::ANTAGONIST
+                'muscle_id' => $muscles[2]->getRouteKey(),
+                'priority' => MusclePriorityEnum::ANTAGONIST
             ]
         );
 
@@ -448,6 +457,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($dataToEdit)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -457,8 +467,8 @@ class UpdateWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $workout->getRouteKey(),
-                'muscle_id'  => $muscles[0]->getRouteKey(),
-                'priority'   => MusclePriorityEnum::ANTAGONIST
+                'muscle_id' => $muscles[0]->getRouteKey(),
+                'priority' => MusclePriorityEnum::ANTAGONIST
             ]
         );
 
@@ -466,8 +476,8 @@ class UpdateWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $workout->getRouteKey(),
-                'muscle_id'  => $muscles[1]->getRouteKey(),
-                'priority'   => MusclePriorityEnum::PRINCIPAL
+                'muscle_id' => $muscles[1]->getRouteKey(),
+                'priority' => MusclePriorityEnum::PRINCIPAL
             ]
         );
 
@@ -475,8 +485,8 @@ class UpdateWorkoutsTest extends TestCase
             'muscle_workout',
             [
                 'workout_id' => $workout->getRouteKey(),
-                'muscle_id'  => $muscles[2]->getRouteKey(),
-                'priority'   => MusclePriorityEnum::ANTAGONIST
+                'muscle_id' => $muscles[2]->getRouteKey(),
+                'priority' => MusclePriorityEnum::ANTAGONIST
             ]
         );
     }
@@ -495,10 +505,10 @@ class UpdateWorkoutsTest extends TestCase
         $this->assertDatabaseHas(
             'media',
             [
-                'model_type'      => 'App\Models\Workout',
-                'model_id'        => $workout->getRouteKey(),
+                'model_type' => 'App\Models\Workout',
+                'model_id' => $workout->getRouteKey(),
                 'collection_name' => 'default',
-                'file_name'       => $fileName,
+                'file_name' => $fileName,
             ]
         );
 
@@ -518,6 +528,7 @@ class UpdateWorkoutsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $workout->getRouteKey()));
 
         // Success (200)
@@ -527,21 +538,21 @@ class UpdateWorkoutsTest extends TestCase
             self::MODEL_PLURAL_NAME,
             [
                 'id' => $workout->getRouteKey(),
-                self::MODEL_ATTRIBUTE_NAME        => self::MODEL_NAME_ATTRIBUTE_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_NAME_ATTRIBUTE_VALUE,
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $workout->performance,
-                self::MODEL_ATTRIBUTE_COMMENTS    => $workout->comments,
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout->comments,
                 self::MODEL_ATTRIBUTE_CORRECTIONS => $workout->corrections,
-                self::MODEL_ATTRIBUTE_WARNINGS    => $workout->warnings,
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout->warnings,
             ]
         );
 
         $this->assertDatabaseHas(
             'media',
             [
-                'model_type'      => 'App\Models\Workout',
-                'model_id'        => $workout->getRouteKey(),
+                'model_type' => 'App\Models\Workout',
+                'model_id' => $workout->getRouteKey(),
                 'collection_name' => 'default',
-                'file_name'       => self::MODEL_ATTRIBUTE_IMAGE_NAME,
+                'file_name' => self::MODEL_ATTRIBUTE_IMAGE_NAME,
             ]
         );
     }

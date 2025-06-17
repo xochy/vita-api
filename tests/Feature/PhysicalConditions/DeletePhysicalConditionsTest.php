@@ -19,6 +19,7 @@ class DeletePhysicalConditionsTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -29,7 +30,7 @@ class DeletePhysicalConditionsTest extends TestCase
             $this->seed(PhysicalConditionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -38,7 +39,12 @@ class DeletePhysicalConditionsTest extends TestCase
         $physicalCondition = PhysicalCondition::factory()->create();
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $physicalCondition->getRouteKey()));
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $physicalCondition->getRouteKey()
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -51,7 +57,13 @@ class DeletePhysicalConditionsTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $physicalCondition->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $physicalCondition->getRouteKey()
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);

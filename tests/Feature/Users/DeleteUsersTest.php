@@ -17,7 +17,8 @@ class DeleteUsersTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
-    protected User $superAdmin;
+    protected string $token;
+
 
     public function setUp(): void
     {
@@ -28,8 +29,7 @@ class DeleteUsersTest extends TestCase
             $this->seed(UsersPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('user');
-        $this->superAdmin = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('user');
     }
 
     /** @test */
@@ -38,7 +38,12 @@ class DeleteUsersTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $user
+                )
+            );
 
         // Unauthorized (401)
         $response->assertStatus(401);
@@ -51,7 +56,13 @@ class DeleteUsersTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $user
+                )
+            );
 
         // Forbidden (403)
         $response->assertStatus(403);
@@ -61,7 +72,13 @@ class DeleteUsersTest extends TestCase
     public function authenticated_users_can_delete_itself()
     {
         $response = $this->actingAs($this->user)->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $this->user));
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $this->user
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);

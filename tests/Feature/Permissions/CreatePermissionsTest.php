@@ -24,6 +24,7 @@ class CreatePermissionsTest extends TestCase
     const MODEL_ATTRIBUTE_DISPLAY_NAME_VALUE = 'Crear artículos';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -34,26 +35,27 @@ class CreatePermissionsTest extends TestCase
             $this->seed(PermissionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
     public function unauthorized_users_cannot_create_roles()
     {
-        $user = User::factory()->create()->assignRole('admin');
+        [$user, $token] = $this->createUserWithToken();
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => [
-                self::MODEL_ATTRIBUTE_NAME         => self::MODEL_ATTRIBUTE_NAME_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_ATTRIBUTE_NAME_VALUE,
                 self::MODEL_ATTRIBUTE_DISPLAY_NAME => self::MODEL_ATTRIBUTE_DISPLAY_NAME_VALUE,
-                self::MODEL_ATTRIBUTE_ACTION       => 'create',
-                self::MODEL_ATTRIBUTE_SUBJECT      => 'articles',
+                self::MODEL_ATTRIBUTE_ACTION => 'create',
+                self::MODEL_ATTRIBUTE_SUBJECT => 'articles',
             ]
         ];
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Forbidden (403)
@@ -71,15 +73,16 @@ class CreatePermissionsTest extends TestCase
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => [
-                self::MODEL_ATTRIBUTE_NAME         => self::MODEL_ATTRIBUTE_NAME_VALUE,
+                self::MODEL_ATTRIBUTE_NAME => self::MODEL_ATTRIBUTE_NAME_VALUE,
                 self::MODEL_ATTRIBUTE_DISPLAY_NAME => self::MODEL_ATTRIBUTE_DISPLAY_NAME_VALUE,
-                self::MODEL_ATTRIBUTE_ACTION       => 'create',
-                self::MODEL_ATTRIBUTE_SUBJECT      => 'articles',
+                self::MODEL_ATTRIBUTE_ACTION => 'create',
+                self::MODEL_ATTRIBUTE_SUBJECT => 'articles',
             ]
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Created (201)
@@ -88,10 +91,10 @@ class CreatePermissionsTest extends TestCase
         $this->assertDatabaseHas(
             'permissions',
             [
-                'name'         => self::MODEL_ATTRIBUTE_NAME_VALUE,
+                'name' => self::MODEL_ATTRIBUTE_NAME_VALUE,
                 'display_name' => self::MODEL_ATTRIBUTE_DISPLAY_NAME_VALUE,
-                'action'       => 'create',
-                'subject'      => 'articles',
+                'action' => 'create',
+                'subject' => 'articles',
             ]
         );
     }

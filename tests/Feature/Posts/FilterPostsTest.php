@@ -39,6 +39,7 @@ class FilterPostsTest extends TestCase
     const MODEL_FILTER_CONTENT_PARAM_NAME = 'filter[content]';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -49,7 +50,7 @@ class FilterPostsTest extends TestCase
             $this->seed(PostsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -79,7 +80,9 @@ class FilterPostsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_TITLE)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_TITLE)
@@ -113,7 +116,9 @@ class FilterPostsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CONTENT)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CONTENT)
@@ -151,7 +156,9 @@ class FilterPostsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_TITLE)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CONTENT)
@@ -172,6 +179,7 @@ class FilterPostsTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get($url);
 
         // Bad Request (400)
@@ -186,6 +194,7 @@ class FilterPostsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get($url);
 
         // Bad Request
@@ -226,7 +235,9 @@ class FilterPostsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_TITLE)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_TITLE)
@@ -260,7 +271,9 @@ class FilterPostsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CONTENT)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_CONTENT)
@@ -297,7 +310,9 @@ class FilterPostsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_TITLE)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_CONTENT)
@@ -330,7 +345,9 @@ class FilterPostsTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(2, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_PI_TITLE)
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_JI_TITLE)

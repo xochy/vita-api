@@ -18,6 +18,7 @@ class ListRolesTest extends TestCase
     const MODEL_INDEX_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.index';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -28,7 +29,7 @@ class ListRolesTest extends TestCase
             $this->seed(RolesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
@@ -38,6 +39,7 @@ class ListRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $role));
 
         $response->assertFetchedOne(
@@ -45,9 +47,9 @@ class ListRolesTest extends TestCase
                 'type' => self::MODEL_PLURAL_NAME,
                 'id' => (string) $role->getRouteKey(),
                 'attributes' => [
-                    'name'         => $role->name,
+                    'name' => $role->name,
                     'display_name' => $role->display_name,
-                    'default'      => $role->default,
+                    'default' => $role->default,
                 ],
                 'links' => [
                     'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $role)
@@ -63,17 +65,18 @@ class ListRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
             $roles->map(
-                fn (Role $role) => [
+                fn(Role $role) => [
                     'type' => self::MODEL_PLURAL_NAME,
                     'id' => (string) $role->getRouteKey(),
                     'attributes' => [
-                        'name'         => $role->name,
+                        'name' => $role->name,
                         'display_name' => $role->display_name,
-                        'default'      => $role->default,
+                        'default' => $role->default,
                     ],
                     'links' => [
                         'self' => route(self::MODEL_SHOW_ACTION_ROUTE, $role)

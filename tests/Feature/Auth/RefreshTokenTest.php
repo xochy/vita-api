@@ -18,6 +18,7 @@ class RefreshTokenTest extends TestCase
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
 
     protected User $user;
+    protected string $token;
     protected Carbon $pastDay;
     protected Carbon $tomorrowDay;
     protected array $permissions;
@@ -30,7 +31,7 @@ class RefreshTokenTest extends TestCase
             $this->seed(RoleSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken('admin');
 
         $this->pastDay = now()->subDays(1);
         $this->tomorrowDay = now()->addDays(1);
@@ -87,8 +88,9 @@ class RefreshTokenTest extends TestCase
             ->withHeader('Authorization', 'Bearer ' . $token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $category));
 
+        // Unauthorized (401)
         $response->assertError(
-            400,
+            401,
             [
                 'detail' => __('auth.token_expired')
             ]

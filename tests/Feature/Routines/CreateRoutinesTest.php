@@ -27,6 +27,7 @@ class CreateRoutinesTest extends TestCase
     const MODEL_ATTRIBUTE_NAME = 'name';
 
     protected User $user;
+    protected string $token;
     protected Category $category;
 
     // For making relationship test with 3 workouts
@@ -43,7 +44,7 @@ class CreateRoutinesTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('user');
+        [$this->user, $this->token] = $this->createUserWithToken('user');
         $this->category = Category::factory()->create();
 
         // For making relationship test with 3 muscles
@@ -57,7 +58,7 @@ class CreateRoutinesTest extends TestCase
     {
         $routine = array_filter(Routine::factory()->raw());
 
-        $data =  [
+        $data = [
             'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $routine
         ];
@@ -86,6 +87,7 @@ class CreateRoutinesTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
@@ -110,9 +112,9 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout1->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series'      => 3,
+                                    'series' => 3,
                                     'repetitions' => 10,
-                                    'time'        => 60
+                                    'time' => 60
                                 ]
                             ]
                         ]
@@ -124,6 +126,7 @@ class CreateRoutinesTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_MANY_WORKOUTS_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
@@ -141,11 +144,11 @@ class CreateRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id'  => $routineId,
-                'workout_id'  => $this->workout1->getRouteKey(),
-                'series'      => 3,
+                'routine_id' => $routineId,
+                'workout_id' => $this->workout1->getRouteKey(),
+                'series' => 3,
                 'repetitions' => 10,
-                'time'        => 60
+                'time' => 60
             ]
         );
     }
@@ -168,9 +171,9 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout1->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series'      => 3,
+                                    'series' => 3,
                                     'repetitions' => 10,
-                                    'time'        => 60
+                                    'time' => 60
                                 ]
                             ]
                         ],
@@ -179,9 +182,9 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout2->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series'      => 3,
+                                    'series' => 3,
                                     'repetitions' => 10,
-                                    'time'        => 60
+                                    'time' => 60
                                 ]
                             ]
                         ],
@@ -190,9 +193,9 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout3->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series'      => 3,
+                                    'series' => 3,
                                     'repetitions' => 10,
-                                    'time'        => 60
+                                    'time' => 60
                                 ]
                             ]
                         ]
@@ -204,6 +207,7 @@ class CreateRoutinesTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_MANY_WORKOUTS_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
@@ -221,33 +225,33 @@ class CreateRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id'  => $routineId,
-                'workout_id'  => $this->workout1->getRouteKey(),
-                'series'      => 3,
+                'routine_id' => $routineId,
+                'workout_id' => $this->workout1->getRouteKey(),
+                'series' => 3,
                 'repetitions' => 10,
-                'time'        => 60
+                'time' => 60
             ]
         );
 
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id'  => $routineId,
-                'workout_id'  => $this->workout2->getRouteKey(),
-                'series'      => 3,
+                'routine_id' => $routineId,
+                'workout_id' => $this->workout2->getRouteKey(),
+                'series' => 3,
                 'repetitions' => 10,
-                'time'        => 60
+                'time' => 60
             ]
         );
 
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id'  => $routineId,
-                'workout_id'  => $this->workout3->getRouteKey(),
-                'series'      => 3,
+                'routine_id' => $routineId,
+                'workout_id' => $this->workout3->getRouteKey(),
+                'series' => 3,
                 'repetitions' => 10,
-                'time'        => 60
+                'time' => 60
             ]
         );
     }
@@ -270,6 +274,7 @@ class CreateRoutinesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)

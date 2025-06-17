@@ -20,6 +20,7 @@ class TranslatePlansTest extends TestCase
     const MODEL_EN_NAME = 'Weight loss plan';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -30,7 +31,7 @@ class TranslatePlansTest extends TestCase
             $this->seed(PlansPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -44,8 +45,8 @@ class TranslatePlansTest extends TestCase
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'name',
+                    'locale' => 'es',
+                    'column' => 'name',
                     'translation' => self::MODEL_ES_NAME,
                 ]
             )->create();
@@ -54,6 +55,7 @@ class TranslatePlansTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $plan));
 
         $response->assertFetchedOne(
@@ -74,7 +76,7 @@ class TranslatePlansTest extends TestCase
     /** @test */
     public function translations_can_be_associated_to_plans()
     {
-        $plan =  Plan::factory()
+        $plan = Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()->create();
 
         $data = [
@@ -96,6 +98,7 @@ class TranslatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
@@ -103,11 +106,11 @@ class TranslatePlansTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME,
                 'translationable_type' => Plan::class,
-                'translationable_id'   => $plan->id,
+                'translationable_id' => $plan->id,
             ]
         );
     }
@@ -120,8 +123,8 @@ class TranslatePlansTest extends TestCase
 
         $translation = $plan->translations()->create(
             [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_NAME,
             ]
         );
@@ -136,6 +139,7 @@ class TranslatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);
@@ -143,11 +147,11 @@ class TranslatePlansTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => 'Plan para subir de peso actualizado',
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => 'Plan para subir de peso actualizado',
                 'translationable_type' => Plan::class,
-                'translationable_id'   => $plan->id,
+                'translationable_id' => $plan->id,
             ]
         );
     }

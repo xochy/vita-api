@@ -26,6 +26,7 @@ class IncludeUsersTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -36,7 +37,7 @@ class IncludeUsersTest extends TestCase
             $this->seed(UsersPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -49,6 +50,7 @@ class IncludeUsersTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $plan));
 
         $response->assertJsonFragment(
@@ -85,6 +87,7 @@ class IncludeUsersTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $plan));
 
         $response->assertJsonFragment(

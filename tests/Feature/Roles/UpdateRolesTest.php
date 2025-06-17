@@ -20,6 +20,7 @@ class UpdateRolesTest extends TestCase
     const MODEL_DISPLAY_NAME_ATTRIBUTE_VALUE = 'display name changed';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -30,19 +31,19 @@ class UpdateRolesTest extends TestCase
             $this->seed(RolesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
     public function unauthorized_users_cannot_update_roles()
     {
-        $user = User::factory()->create()->assignRole('admin');
+        [$user, $token] = $this->createUserWithToken();
 
         Role::create(
             [
-                'name'         => 'Developer',
+                'name' => 'Developer',
                 'display_name' => 'Desarrollador',
-                'default'      => true
+                'default' => true
             ]
         );
 
@@ -61,6 +62,7 @@ class UpdateRolesTest extends TestCase
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $token)
             ->patch(route('v1.roles.updateRole', $role->getRouteKey()));
 
         // Forbidden (403)
@@ -77,9 +79,9 @@ class UpdateRolesTest extends TestCase
     {
         Role::create(
             [
-                'name'         => 'Developer',
+                'name' => 'Developer',
                 'display_name' => 'Desarrollador',
-                'default'      => true
+                'default' => true
             ]
         );
 
@@ -98,6 +100,7 @@ class UpdateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.roles.updateRole', $role->getRouteKey()));
 
         // Success (200)
@@ -114,9 +117,9 @@ class UpdateRolesTest extends TestCase
     {
         Role::create(
             [
-                'name'         => 'Developer',
+                'name' => 'Developer',
                 'display_name' => 'Desarrollador',
-                'default'      => true
+                'default' => true
             ]
         );
 
@@ -135,6 +138,7 @@ class UpdateRolesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.roles.updateRole', $role->getRouteKey()));
 
         // Wrong request (400)

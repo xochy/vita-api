@@ -23,6 +23,7 @@ class TranslateVariationsTest extends TestCase
     const MODEL_EN_PERFORMANCE = 'Lower back performance';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
 
     public function setUp(): void
@@ -34,7 +35,7 @@ class TranslateVariationsTest extends TestCase
             $this->seed(VariationsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
     }
 
@@ -50,8 +51,8 @@ class TranslateVariationsTest extends TestCase
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'name',
+                    'locale' => 'es',
+                    'column' => 'name',
                     'translation' => self::MODEL_ES_NAME,
                 ]
             )
@@ -61,6 +62,7 @@ class TranslateVariationsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $variation));
 
         $response->assertFetchedOne(
@@ -93,8 +95,8 @@ class TranslateVariationsTest extends TestCase
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'en',
-                    'column'      => 'performance',
+                    'locale' => 'en',
+                    'column' => 'performance',
                     'translation' => self::MODEL_EN_PERFORMANCE,
                 ]
             )
@@ -104,6 +106,7 @@ class TranslateVariationsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'en')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $variation));
 
         $response->assertFetchedOne(
@@ -136,16 +139,16 @@ class TranslateVariationsTest extends TestCase
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'name',
+                    'locale' => 'es',
+                    'column' => 'name',
                     'translation' => self::MODEL_ES_NAME,
                 ]
             )
             ->hasTranslations(
                 1,
                 [
-                    'locale'      => 'es',
-                    'column'      => 'performance',
+                    'locale' => 'es',
+                    'column' => 'performance',
                     'translation' => self::MODEL_ES_PERFORMANCE,
                 ]
             )
@@ -155,6 +158,7 @@ class TranslateVariationsTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $variation));
 
         $response->assertFetchedOne(
@@ -199,6 +203,7 @@ class TranslateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
@@ -206,11 +211,11 @@ class TranslateVariationsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME,
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME,
                 'translationable_type' => Variation::class,
-                'translationable_id'   => $variation->id,
+                'translationable_id' => $variation->id,
             ]
         );
     }
@@ -222,8 +227,8 @@ class TranslateVariationsTest extends TestCase
 
         $translation = $variation->translations()->create(
             [
-                'locale'      => 'es',
-                'column'      => 'name',
+                'locale' => 'es',
+                'column' => 'name',
                 'translation' => self::MODEL_ES_NAME,
             ]
         );
@@ -238,6 +243,7 @@ class TranslateVariationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.translations.update', $translation));
 
         $response->assertStatus(200);
@@ -245,11 +251,11 @@ class TranslateVariationsTest extends TestCase
         $this->assertDatabaseHas(
             'translations',
             [
-                'locale'               => 'es',
-                'column'               => 'name',
-                'translation'          => self::MODEL_ES_NAME . ' actualizado',
+                'locale' => 'es',
+                'column' => 'name',
+                'translation' => self::MODEL_ES_NAME . ' actualizado',
                 'translationable_type' => Variation::class,
-                'translationable_id'   => $variation->id,
+                'translationable_id' => $variation->id,
             ]
         );
     }

@@ -37,6 +37,7 @@ class FilterPlansTest extends TestCase
     const MODEL_FILTER_UNKNOWN_PARAM_NAME = 'filter[unknown]';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -46,7 +47,7 @@ class FilterPlansTest extends TestCase
             $this->seed(RoleSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -55,10 +56,10 @@ class FilterPlansTest extends TestCase
         Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()
             ->count(3)->state(new Sequence(
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
-            ))
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
+                ))
             ->create();
 
         $url = route(
@@ -68,7 +69,9 @@ class FilterPlansTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)
@@ -89,7 +92,9 @@ class FilterPlansTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         // Bad Request
         $response->assertStatus(400);
@@ -101,10 +106,10 @@ class FilterPlansTest extends TestCase
         Plan::factory()
             ->forGoal()->forFrequency()->forPhysicalCondition()
             ->count(3)->state(new Sequence(
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
-                ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
-            ))
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME],
+                    ['name' => self::MODEL_SINGLE_NAME . ' ' . self::MODEL_GAMA_NAME],
+                ))
             ->create();
 
         $url = route(
@@ -114,7 +119,9 @@ class FilterPlansTest extends TestCase
             ]
         );
 
-        $this->actingAs($this->user)->jsonApi()->get($url)
+        $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url)
             ->assertJsonCount(1, 'data')
             ->assertSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_ALFA_NAME)
             ->assertDontSee(self::MODEL_SINGLE_NAME . ' ' . self::MODEL_BETA_NAME)

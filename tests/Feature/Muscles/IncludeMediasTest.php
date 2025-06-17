@@ -26,6 +26,7 @@ class IncludeMediasTest extends TestCase
     const MODEL_FIEL_IMAGE_NAME_2 = 'muscle-image2.jpg';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -36,7 +37,7 @@ class IncludeMediasTest extends TestCase
             $this->seed(MusclesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
 
         Storage::fake('public');
     }
@@ -56,6 +57,7 @@ class IncludeMediasTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)
+            ->withHeader('Authorization', $this->token)
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
@@ -104,6 +106,7 @@ class IncludeMediasTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)
+            ->withHeader('Authorization', $this->token)
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
@@ -164,6 +167,7 @@ class IncludeMediasTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)
+            ->withHeader('Authorization', $this->token)
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
@@ -198,12 +202,12 @@ class IncludeMediasTest extends TestCase
         );
 
         $response = $this->postJson(
-            route(
-                self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
-                $muscle
-            ),
-            $formData
-        );
+                route(
+                    self::MODEL_UPLOAD_FILE_ACTION_ROUTE,
+                    $muscle
+                ),
+                $formData
+            );
 
         $response->assertStatus(401); // Unauthorized
     }
@@ -223,6 +227,7 @@ class IncludeMediasTest extends TestCase
         // Download the file
         $response = $this->actingAs($this->user)
             ->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get(
                 route(
                     self::MODEL_DOWNLOAD_FILE_ACTION_ROUTE,
@@ -254,6 +259,7 @@ class IncludeMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get(
                 route(
                     self::MODEL_DOWNLOAD_FILE_ACTION_ROUTE,
@@ -281,6 +287,7 @@ class IncludeMediasTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get(
                 route(
                     self::MODEL_DOWNLOAD_FILE_ACTION_ROUTE,
@@ -305,6 +312,7 @@ class IncludeMediasTest extends TestCase
     {
         $response = $this->actingAs($this->user)
             ->jsonApi()
+            ->withHeader('Authorization', $this->token)
             ->get(
                 route(
                     self::MODEL_DOWNLOAD_FILE_ACTION_ROUTE,
@@ -338,6 +346,7 @@ class IncludeMediasTest extends TestCase
         );
 
         $response = $this->actingAs($this->user)
+            ->withHeader('Authorization', $this->token)
             ->postJson(
                 route(
                     self::MODEL_UPLOAD_FILE_ACTION_ROUTE,

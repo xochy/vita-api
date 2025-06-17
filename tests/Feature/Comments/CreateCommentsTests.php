@@ -24,6 +24,7 @@ class CreateCommentsTests extends TestCase
 
     protected User $user;
     protected Post $post;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -34,7 +35,8 @@ class CreateCommentsTests extends TestCase
             $this->seed(CommentsPermissionsSeeders::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
+
         $this->post = Post::factory()->create([
             'user_id' => $this->user->id,
         ]);
@@ -81,6 +83,7 @@ class CreateCommentsTests extends TestCase
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         $response->assertCreated();
@@ -121,6 +124,7 @@ class CreateCommentsTests extends TestCase
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -161,6 +165,7 @@ class CreateCommentsTests extends TestCase
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -201,6 +206,7 @@ class CreateCommentsTests extends TestCase
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -237,6 +243,7 @@ class CreateCommentsTests extends TestCase
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Not Found (404)
@@ -265,6 +272,7 @@ class CreateCommentsTests extends TestCase
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)

@@ -14,8 +14,6 @@ class UpdateFrequenciesTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $user;
-
     const MODEL_PLURAL_NAME = 'frequencies';
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.update';
 
@@ -24,6 +22,9 @@ class UpdateFrequenciesTest extends TestCase
 
     const MODEL_NAME_ATTRIBUTE_VALUE = 'name changed';
     const MODEL_DESCRIPTION_ATTRIBUTE_VALUE = 'description changed';
+
+    protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -34,7 +35,7 @@ class UpdateFrequenciesTest extends TestCase
             $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -75,6 +76,7 @@ class UpdateFrequenciesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $frequency->getRouteKey()));
 
         // Success (200)
@@ -106,6 +108,7 @@ class UpdateFrequenciesTest extends TestCase
         $response = $this->actingAs($this->user)
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $frequency->getRouteKey()));
 
         // Success (200)
@@ -137,6 +140,7 @@ class UpdateFrequenciesTest extends TestCase
         $response = $this->actingAs($this->user)
             ->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $frequency->getRouteKey()));
 
         // Success (200)
@@ -168,6 +172,7 @@ class UpdateFrequenciesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $frequency->getRouteKey()));
 
         // Unprocessable Entity (422)

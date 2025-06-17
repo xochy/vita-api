@@ -27,6 +27,7 @@ class IncludeRoutinesTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME . '.show';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -37,7 +38,7 @@ class IncludeRoutinesTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -50,6 +51,7 @@ class IncludeRoutinesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $plan));
 
         $response->assertJsonFragment(
@@ -69,7 +71,7 @@ class IncludeRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             'plan_routine',
             [
-                'plan_id'    => $plan->id,
+                'plan_id' => $plan->id,
                 'routine_id' => $plan->routines->first()->id
             ]
         );
@@ -86,6 +88,7 @@ class IncludeRoutinesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $plan));
 
         $response->assertJsonFragment(
@@ -108,7 +111,7 @@ class IncludeRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             'plan_routine',
             [
-                'plan_id'    => $plan->id,
+                'plan_id' => $plan->id,
                 'routine_id' => $plan->routines[0]->id
             ]
         );
@@ -116,7 +119,7 @@ class IncludeRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             'plan_routine',
             [
-                'plan_id'    => $plan->id,
+                'plan_id' => $plan->id,
                 'routine_id' => $plan->routines[1]->id
             ]
         );

@@ -25,6 +25,7 @@ class SortFrequenciesTest extends TestCase
     const MODEL_SORT_PARAM_VALUE = 'name';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -35,7 +36,7 @@ class SortFrequenciesTest extends TestCase
             $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -58,6 +59,7 @@ class SortFrequenciesTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get($url)
             ->assertJsonPath('data.0.attributes.name', self::MODEL_ALFA_NAME)
             ->assertJsonPath('data.1.attributes.name', self::MODEL_BETA_NAME)
@@ -84,6 +86,7 @@ class SortFrequenciesTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get($url)
             ->assertJsonPath('data.0.attributes.name', self::MODEL_GAMA_NAME)
             ->assertJsonPath('data.1.attributes.name', self::MODEL_BETA_NAME)
@@ -102,7 +105,9 @@ class SortFrequenciesTest extends TestCase
             ]
         );
 
-        $response = $this->actingAs($this->user)->jsonApi()->get($url);
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->withHeader('Authorization', $this->token)
+            ->get($url);
 
         $response->assertError(
             400,

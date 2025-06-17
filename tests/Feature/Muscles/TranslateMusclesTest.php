@@ -23,6 +23,7 @@ class TranslateMusclesTest extends TestCase
     const MODEL_EN_DESCRIPTION = 'Muscle description in english';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -33,7 +34,7 @@ class TranslateMusclesTest extends TestCase
             $this->seed(MusclesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -57,6 +58,7 @@ class TranslateMusclesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
         $response->assertFetchedOne(
@@ -99,6 +101,7 @@ class TranslateMusclesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
         $response->assertFetchedOne(
@@ -148,6 +151,7 @@ class TranslateMusclesTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $muscle));
 
         $response->assertFetchedOne(
@@ -193,6 +197,7 @@ class TranslateMusclesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route('v1.translations.store'));
 
         $response->assertCreated();
@@ -230,6 +235,7 @@ class TranslateMusclesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects('translations')->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route('v1.translations.update', $transaltion));
 
         $response->assertStatus(200);

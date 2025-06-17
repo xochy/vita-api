@@ -22,6 +22,7 @@ class UpdateUsersTest extends TestCase
     const MODEL_NAME_ATTRIBUTE_VALUE = 'name changed';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -32,7 +33,7 @@ class UpdateUsersTest extends TestCase
             $this->seed(UsersPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -59,8 +60,8 @@ class UpdateUsersTest extends TestCase
     /** @test */
     public function authenticated_users_cannot_update_other_users()
     {
-        $userOwner = User::factory()->create()->assignRole('user');
-        $otherUser = User::factory()->create()->assignRole('user');
+        [$userOwner, $token] = $this->createUserWithToken('user');
+        [$otherUser] = $this->createUserWithToken('user');
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -72,6 +73,7 @@ class UpdateUsersTest extends TestCase
 
         $response = $this->actingAs($otherUser)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $userOwner));
 
         // Forbidden (403)
@@ -81,7 +83,7 @@ class UpdateUsersTest extends TestCase
     /** @test */
     public function authenticated_users_can_update_itself()
     {
-        $user = User::factory()->create()->assignRole('user');
+        [$user, $token] = $this->createUserWithToken('user');
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -93,6 +95,8 @@ class UpdateUsersTest extends TestCase
 
         $response = $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
         // Success (200)

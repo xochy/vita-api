@@ -19,6 +19,7 @@ class SoftDeleteUsersTest extends TestCase
     const MODEL_ATTRIBUTE_DELETED_AT = 'deletedAt';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -56,8 +57,8 @@ class SoftDeleteUsersTest extends TestCase
     /** @test */
     public function authenticated_users_cannot_soft_delete_other_users()
     {
-        $admin = User::factory()->create()->assignRole('admin');
-        $user = User::factory()->create()->assignRole('user');
+        [$admin, $token] = $this->createUserWithToken();
+        [$user] = $this->createUserWithToken('user');
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -69,6 +70,7 @@ class SoftDeleteUsersTest extends TestCase
 
         $response = $this->actingAs($admin)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
         // Forbidden (403)
@@ -80,7 +82,7 @@ class SoftDeleteUsersTest extends TestCase
     /** @test */
     public function authenticated_users_can_soft_delete_itself()
     {
-        $user = User::factory()->create()->assignRole('user');
+        [$user, $token] = $this->createUserWithToken('user');
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -92,6 +94,8 @@ class SoftDeleteUsersTest extends TestCase
 
         $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
         $this->assertSoftDeleted(
@@ -105,10 +109,12 @@ class SoftDeleteUsersTest extends TestCase
     /** @test */
     public function cannot_fetch_soft_deleted_users()
     {
-        $user = User::factory()->create()->assignRole('user');
+        [$user, $token] = $this->createUserWithToken('user');
 
         $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $token)
             ->get(route('v1.users.show', $user))
             ->assertFetchedOne($user);
 
@@ -124,6 +130,8 @@ class SoftDeleteUsersTest extends TestCase
 
         $this->actingAs($user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $user));
 
         $this->assertSoftDeleted(
@@ -136,7 +144,7 @@ class SoftDeleteUsersTest extends TestCase
         $this->assertDatabaseHas(
             'users',
             [
-                'id'         => $user->getRouteKey(),
+                'id' => $user->getRouteKey(),
                 'deleted_at' => $date->format('Y-m-d H:i:s')
             ]
         );

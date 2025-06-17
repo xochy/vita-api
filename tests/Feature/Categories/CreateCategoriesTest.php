@@ -27,6 +27,7 @@ class CreateCategoriesTest extends TestCase
     const MODEL_ATTRIBUTE_DESCRIPTION_POINTER_ASSERTION = 'data\/attributes\/description';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -37,7 +38,7 @@ class CreateCategoriesTest extends TestCase
             $this->seed(CategoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -73,13 +74,14 @@ class CreateCategoriesTest extends TestCase
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
         $this->assertDatabaseHas(
             self::MODEL_PLURAL_NAME,
             [
-                self::MODEL_ATTRIBUTE_NAME        => $category[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_NAME => $category[self::MODEL_ATTRIBUTE_NAME],
                 self::MODEL_ATTRIBUTE_DESCRIPTION => $category[self::MODEL_ATTRIBUTE_DESCRIPTION],
             ]
         );
@@ -95,12 +97,13 @@ class CreateCategoriesTest extends TestCase
         );
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $category
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -127,12 +130,13 @@ class CreateCategoriesTest extends TestCase
         );
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $category
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -155,7 +159,7 @@ class CreateCategoriesTest extends TestCase
         $category = Category::factory()->create();
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => array_filter(Category::factory()->raw(
                 [
                     'name' => $category->name
@@ -165,6 +169,7 @@ class CreateCategoriesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -191,13 +196,14 @@ class CreateCategoriesTest extends TestCase
         );
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $category
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->withHeader('Locale', 'es')
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Locale', 'es')
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -224,12 +230,13 @@ class CreateCategoriesTest extends TestCase
         );
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $category
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -256,12 +263,13 @@ class CreateCategoriesTest extends TestCase
         );
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $category
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -288,12 +296,13 @@ class CreateCategoriesTest extends TestCase
         );
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $category
         ];
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)

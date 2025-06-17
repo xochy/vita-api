@@ -25,6 +25,7 @@ class UpdatePlansTest extends TestCase
     const MODEL_NAME_ATTRIBUTE_VALUE = 'name changed';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -35,7 +36,7 @@ class UpdatePlansTest extends TestCase
             $this->seed(PlansPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -78,6 +79,7 @@ class UpdatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
 
         // Success (200)
@@ -116,6 +118,7 @@ class UpdatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
 
         // Success (200)
@@ -154,6 +157,7 @@ class UpdatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
 
         // Success (200)
@@ -192,6 +196,7 @@ class UpdatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $plan->getRouteKey()));
 
         // Success (200)

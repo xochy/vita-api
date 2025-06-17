@@ -21,6 +21,7 @@ class UpdateRoutinesTest extends TestCase
     const MODEL_NAME_ATTRIBUTE_VALUE = 'name changed';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -31,7 +32,7 @@ class UpdateRoutinesTest extends TestCase
             $this->seed(RoutinesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('user');
+        [$this->user, $this->token] = $this->createUserWithToken('user');
     }
 
     /** @test */
@@ -70,6 +71,7 @@ class UpdateRoutinesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->patch(route(self::MODEL_MAIN_ACTION_ROUTE, $routine->getRouteKey()));
 
         // Success (200)

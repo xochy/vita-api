@@ -30,6 +30,7 @@ class CreatePlansTest extends TestCase
 
     protected User $user;
     protected Goal $goal;
+    protected string $token;
     protected Frequency $frequency;
     protected PhysicalCondition $physicalCondition;
 
@@ -42,7 +43,7 @@ class CreatePlansTest extends TestCase
             $this->seed(PlansPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('user');
+        [$this->user, $this->token] = $this->createUserWithToken();
 
         // Models for relationships
         $this->goal = Goal::factory()->create();
@@ -76,7 +77,7 @@ class CreatePlansTest extends TestCase
         $plan = array_filter(Plan::factory()->raw());
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $plan,
             'relationships' => [
                 self::MODEL_INCLUDE_GOAL_RELATIONSHIP_SINGLE_NAME => [
@@ -103,6 +104,7 @@ class CreatePlansTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::MODEL_INCLUDE_GOAL_RELATIONSHIP_SINGLE_NAME)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
 
@@ -129,7 +131,7 @@ class CreatePlansTest extends TestCase
         );
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $plan,
             'relationships' => [
                 self::MODEL_INCLUDE_GOAL_RELATIONSHIP_SINGLE_NAME => [
@@ -155,6 +157,7 @@ class CreatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -175,7 +178,7 @@ class CreatePlansTest extends TestCase
         $plan = Plan::factory()->raw();
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $plan,
             'relationships' => [
                 self::MODEL_INCLUDE_FREQUENCY_RELATIONSHIP_SINGLE_NAME => [
@@ -195,6 +198,7 @@ class CreatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -215,7 +219,7 @@ class CreatePlansTest extends TestCase
         $plan = Plan::factory()->raw();
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $plan,
             'relationships' => [
                 self::MODEL_INCLUDE_GOAL_RELATIONSHIP_SINGLE_NAME => [
@@ -235,6 +239,7 @@ class CreatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)
@@ -255,7 +260,7 @@ class CreatePlansTest extends TestCase
         $plan = Plan::factory()->raw();
 
         $data = [
-            'type'       => self::MODEL_PLURAL_NAME,
+            'type' => self::MODEL_PLURAL_NAME,
             'attributes' => $plan,
             'relationships' => [
                 self::MODEL_INCLUDE_GOAL_RELATIONSHIP_SINGLE_NAME => [
@@ -275,6 +280,7 @@ class CreatePlansTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE));
 
         // Unprocessable Entity (422)

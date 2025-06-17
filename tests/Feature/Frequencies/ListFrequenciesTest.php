@@ -15,6 +15,7 @@ class ListFrequenciesTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+    protected string $token;
 
     const MODEL_PLURAL_NAME = 'frequencies';
     const MODEL_SHOW_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
@@ -29,7 +30,7 @@ class ListFrequenciesTest extends TestCase
             $this->seed(FrequenciesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -39,6 +40,7 @@ class ListFrequenciesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $frequency));
 
         $response->assertFetchedOne(
@@ -64,6 +66,7 @@ class ListFrequenciesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE));
 
         $response->assertFetchedMany(
@@ -119,6 +122,7 @@ class ListFrequenciesTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_INDEX_ACTION_ROUTE, $params));
 
         $response->assertFetchedMany(

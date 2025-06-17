@@ -28,6 +28,7 @@ class IncludeWorkoutTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
 
     public function setUp(): void
@@ -40,7 +41,7 @@ class IncludeWorkoutTest extends TestCase
             $this->seed(WorkoutsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
     }
 
@@ -52,6 +53,7 @@ class IncludeWorkoutTest extends TestCase
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $variation));
 
         $response->assertSee($variation->workout->getRouteKey());
@@ -75,6 +77,7 @@ class IncludeWorkoutTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_INCLUDE_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SELF_ROUTE, $variation));
 
         $response->assertFetchedOne($variation->workout);

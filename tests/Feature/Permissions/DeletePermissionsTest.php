@@ -18,6 +18,7 @@ class DeletePermissionsTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.deletePermission';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -28,18 +29,24 @@ class DeletePermissionsTest extends TestCase
             $this->seed(PermissionsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('superAdmin');
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
     }
 
     /** @test */
     public function unauthorized_users_cannot_delete_permissions()
     {
-        $user = User::factory()->create()->assignRole('admin');
+        [$user, $token] = $this->createUserWithToken();
 
         $permission = Permission::findByName('read permissions');
 
         $response = $this->actingAs($user)->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $permission->getRouteKey()));
+            ->withHeader('Authorization', $token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $permission->getRouteKey()
+                )
+            );
 
         // Forbidden (403)
         $response->assertError(
@@ -56,7 +63,13 @@ class DeletePermissionsTest extends TestCase
         $permission = Permission::findByName('read permissions');
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $permission->getRouteKey()));
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $permission->getRouteKey()
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);

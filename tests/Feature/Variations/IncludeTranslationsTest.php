@@ -32,6 +32,7 @@ class IncludeTranslationsTest extends TestCase
         . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
 
     protected User $user;
+    protected string $token;
     protected Workout $workout;
 
     public function setUp(): void
@@ -43,7 +44,7 @@ class IncludeTranslationsTest extends TestCase
             $this->seed(VariationsPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
         $this->workout = Workout::factory()->forCategory()->create();
     }
 
@@ -75,6 +76,7 @@ class IncludeTranslationsTest extends TestCase
 
         $response = $this->actingAs($this->user)->jsonApi()
             ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_ACTION_ROUTE, $variation));
 
         $response->assertSee($variation->translations[0]->slug);
@@ -119,7 +121,8 @@ class IncludeTranslationsTest extends TestCase
             )->create();
 
         $response = $this->actingAs($this->user)->jsonApi()
-            ->expects('translations')
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
             ->get(route(self::MODEL_SHOW_RELATIONSHIP_ROUTE, $variation));
 
         $response->assertJsonCount(2, 'data');

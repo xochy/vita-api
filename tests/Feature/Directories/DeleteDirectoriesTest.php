@@ -18,6 +18,7 @@ class DeleteDirectoriesTest extends TestCase
     const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.destroy';
 
     protected User $user;
+    protected string $token;
 
     public function setUp(): void
     {
@@ -28,7 +29,7 @@ class DeleteDirectoriesTest extends TestCase
             $this->seed(DirectoriesPermissionsSeeder::class);
         }
 
-        $this->user = User::factory()->create()->assignRole('admin');
+        [$this->user, $this->token] = $this->createUserWithToken();
     }
 
     /** @test */
@@ -48,9 +49,15 @@ class DeleteDirectoriesTest extends TestCase
     {
         $directory = Directory::factory()->create();
 
-        $response = $this->actingAs($this->user)
-            ->jsonApi()
-            ->delete(route(self::MODEL_MAIN_ACTION_ROUTE, $directory->getRouteKey()));
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->delete(
+                route(
+                    self::MODEL_MAIN_ACTION_ROUTE,
+                    $directory->getRouteKey()
+                )
+            );
 
         // No Content (204)
         $response->assertStatus(204);
