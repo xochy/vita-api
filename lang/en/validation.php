@@ -135,6 +135,7 @@ return [
     'prohibited_if' => 'The :attribute field is prohibited when :other is :value.',
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
+    'range_format' => 'The :attribute field must have the format "number–number" or "number–number seg/min".',
     'regex' => 'The :attribute field format is invalid.',
     'real_integer' => 'The :attribute field must be integer type.',
     'real_integer_range' => 'The :attribute field must be between :min and :max.',
@@ -169,6 +170,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Validation Language Lines for Custom Rules
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used for custom validation rules that
+    | are not included in the default Laravel validation rules. You can add
+    | your own custom validation messages here.
+    |
+    */
+
+    'user_not_exists' => 'The specified user does not exist.',
+    'gender_invalid' => 'Gender must be: male, female or other.',
+    'age_min' => 'Minimum age is 13 years.',
+    'age_max' => 'Maximum age is 100 years.',
+    'goal_invalid' => 'Goal must be one of: lose weight, gain muscle, maintain, strength, endurance.',
+    'level_invalid' => 'Level must be: beginner, intermediate or advanced.',
+    'equipment_required' => 'You must select at least one equipment.',
+    'equipment_not_exists' => 'One or more selected equipment do not exist.',
+    'equipment_duplicate' => 'Equipment cannot be repeated.',
+    'muscle_required' => 'You must select at least one muscle group.',
+    'muscle_not_exists' => 'One or more selected muscle groups do not exist.',
+    'muscle_duplicate' => 'Muscle groups cannot be repeated.',
+
+    /*
+    |--------------------------------------------------------------------------
     | Custom Validation Language Lines
     |--------------------------------------------------------------------------
     |
@@ -181,6 +206,22 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+        ],
+        'workouts.*.meta.pivot.series' => [
+            'required' => 'The series value for each workout is required.',
+            'string'   => 'The series value for each workout must be a string.',
+        ],
+        'workouts.*.meta.pivot.repetitions' => [
+            'required' => 'The repetitions value for each workout is required.',
+            'string'   => 'The repetitions value for each workout must be a string.',
+        ],
+        'workouts.*.meta.pivot.time' => [
+            'required' => 'The time value for each workout is required.',
+            'string'   => 'The time value for each workout must be a string.',
+        ],
+        'workouts.*.meta.pivot.rest' => [
+            'required' => 'The rest value for each workout is required.',
+            'string'   => 'The rest value for each workout must be a string.',
         ],
     ],
 

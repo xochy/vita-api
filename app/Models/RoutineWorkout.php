@@ -11,7 +11,7 @@ class RoutineWorkout extends Pivot
      *
      * @var array
      */
-    protected $fillable = ['series', 'repetitions', 'time'];
+    protected $fillable = ['series', 'repetitions', 'time', 'rest'];
 
     /**
      * Indicates if the IDs are auto-incrementing.

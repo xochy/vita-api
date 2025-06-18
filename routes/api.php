@@ -7,6 +7,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VariationController;
 use App\Http\Controllers\WorkoutController;
@@ -78,11 +79,15 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         });
 
     // Definitions for Routine model
-    $server->resource('routines', JsonApiController::class)
+    $server->resource('routines', RoutineController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('plans');
             $relationships->hasMany('workouts');
             $relationships->hasMany('translations');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('generate', 'generate');
+            $actions->post('propose', 'propose');
         });
 
     // Definitions for Frequency model

@@ -2,13 +2,12 @@
 
 namespace App\JsonApi\V1\Routines;
 
-use Illuminate\Validation\Rule;
+use App\Rules\RangeFormatRule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
 class RoutineRequest extends ResourceRequest
 {
-
     /**
      * Get the validation rules for the resource.
      *
@@ -30,18 +29,19 @@ class RoutineRequest extends ResourceRequest
             ],
             'workouts.*.meta.pivot.series' => [
                 'required',
-                'integer',
-                'numeric'
+                new RangeFormatRule(),
             ],
             'workouts.*.meta.pivot.repetitions' => [
                 'required',
-                'integer',
-                'numeric'
+                new RangeFormatRule(),
             ],
             'workouts.*.meta.pivot.time' => [
                 'required',
-                'integer',
-                'numeric'
+                new RangeFormatRule(),
+            ],
+            'workouts.*.meta.pivot.rest' => [
+                'required',
+                new RangeFormatRule(),
             ],
         ];
     }

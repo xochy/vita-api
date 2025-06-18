@@ -41,7 +41,7 @@ class RoutineSchema extends Schema
             // Relationships
             BelongsToMany::make('workouts')->fields(
                 [
-                    'series', 'repetitions', 'time'
+                    'series', 'repetitions', 'time', 'rest'
                 ]
             ),
             BelongsToMany::make('plans'),
