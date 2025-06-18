@@ -132,4 +132,36 @@ class WorkoutPolicy
     {
         return $user->can('read workouts');
     }
+
+    /**
+     * Determine whether the user can update the workout's variations.
+     */
+    public function viewEquipments(User $user, Workout $workout): bool
+    {
+        return $user->can('read workouts');
+    }
+
+    /**
+     * Determine whether the user can update the workout's equipments relationship.
+     */
+    public function updateEquipments(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can attach equipments to the workout.
+     */
+    public function attachEquipments(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can detach equipments from the workout.
+     */
+    public function detachEquipments(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
 }

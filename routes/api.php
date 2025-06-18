@@ -41,6 +41,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     // Definitions for Equipment model
     $server->resource('equipments', JsonApiController::class)
         ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('workouts');
             $relationships->hasMany('translations');
         });
 
@@ -63,6 +64,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('category');
             $relationships->hasMany('muscles');
             $relationships->hasMany('routines');
+            $relationships->hasMany('equipments');
             $relationships->hasMany('variations');
             $relationships->hasMany('translations');
         });

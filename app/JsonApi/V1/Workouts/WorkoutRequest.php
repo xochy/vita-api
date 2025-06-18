@@ -3,6 +3,7 @@
 namespace App\JsonApi\V1\Workouts;
 
 use App\Enums\MusclePriorityEnum;
+use App\Rules\JsonArrayIn;
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
@@ -23,6 +24,10 @@ class WorkoutRequest extends ResourceRequest
                 'required',
                 'string',
                 Rule::in(['Free weights', 'Other exercises', 'Machines']),
+            ],
+            'levels' => [
+                'required',
+                new JsonArrayIn(['beginner', 'intermediate', 'advanced'], false)
             ],
             'name' => [
                 'required',
@@ -61,6 +66,9 @@ class WorkoutRequest extends ResourceRequest
                 'required',
                 'string',
                 Rule::in(MusclePriorityEnum::getAllValues()),
+            ],
+            'equipments' => [
+                JsonApiRule::toMany()
             ],
         ];
     }

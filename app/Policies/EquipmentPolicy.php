@@ -76,4 +76,12 @@ class EquipmentPolicy
     {
         return true;
     }
+
+    /**
+     * Determine whether the user can update the workout's variations.
+     */
+    public function viewWorkouts(User $user, Equipment $equipment): bool
+    {
+        return $user->can('read equipments');
+    }
 }

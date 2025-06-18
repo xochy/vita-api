@@ -35,6 +35,7 @@ class WorkoutSchema extends Schema
         return [
             ID::make(),
             Str::make('group'),
+            Str::make('levels'),
             Str::make('name')->sortable(),
             Str::make('performance'),
             Str::make('comments'),
@@ -54,6 +55,7 @@ class WorkoutSchema extends Schema
                     'priority'
                 ]
             ),
+            BelongsToMany::make('equipments'),
             BelongsToMany::make('routines'),
             HasMany::make('translations'),
             HasMany::make('variations'),

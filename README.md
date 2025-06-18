@@ -1005,3 +1005,179 @@ abstract class TestCase extends BaseTestCase
     // More functions if needed
 }
 ```
+
+# Equipments and Workouts Relationships Guide
+
+## Problem: BadMethodCallException with hasAttached()
+
+When using Laravel factories with many-to-many relationships, you might encounter this error:
+
+```
+BadMethodCallException: Call to undefined method App\Models\Workout::equipment()
+```
+
+This occurs when the factory method `hasAttached()` doesn't match your model's relationship method name.
+
+## Root Cause
+
+If your model has a relationship method named `equipments()` (plural):
+
+```php
+public function equipments(): BelongsToMany
+{
+    return $this->belongsToMany(Equipment::class, 'equipment_workout');
+}
+```
+
+But you're calling:
+
+```php
+$workout = Workout::factory()
+    ->hasAttached(Equipment::factory()->count(2))
+    ->create();
+```
+
+Laravel tries to find a method called `equipment()` (singular) which doesn't exist.
+
+## Solutions
+
+### Solution 1: Use `has()` method (Recommended)
+
+```php
+$workout = Workout::factory()
+    ->forCategory()
+    ->has(Equipment::factory()->count(2), 'equipments')
+    ->create();
+```
+
+### Solution 2: Use `hasAttached()` with explicit relationship name
+
+```php
+$workout = Workout::factory()
+    ->forCategory()
+    ->hasAttached(
+        Equipment::factory()->count(2),
+        'equipments'
+    )
+    ->create();
+```
+
+### Solution 3: Add factory methods to WorkoutFactory
+
+```php
+// In your WorkoutFactory.php
+public function withEquipments(int $count = 2): static
+{
+    return $this->hasAttached(
+        Equipment::factory()->count($count),
+        'equipments'
+    );
+}
+
+public function withSpecificEquipments(array $equipmentIds): static
+{
+    return $this->hasAttached(
+        Equipment::whereIn('id', $equipmentIds)->get(),
+        'equipments'
+    );
+}
+
+// Usage:
+$workout = Workout::factory()
+    ->forCategory()
+    ->withEquipments(3)
+    ->create();
+```
+
+### Solution 4: Use afterCreating callback
+
+```php
+// In WorkoutFactory.php
+public function withRandomEquipments(int $count = 2): static
+{
+    return $this->afterCreating(function (Workout $workout) use ($count) {
+        $equipments = Equipment::factory()->count($count)->create();
+        $workout->equipments()->attach($equipments);
+    });
+}
+
+// Usage:
+$workout = Workout::factory()
+    ->forCategory()
+    ->withRandomEquipments(3)
+    ->create();
+```
+
+## Complete Working Examples
+
+### ✅ These work:
+
+```php
+// Method 1: Using has() with relationship name
+$workout = Workout::factory()
+    ->forCategory()
+    ->has(Equipment::factory()->count(2), 'equipments')
+    ->create();
+
+// Method 2: Using hasAttached with explicit relationship name
+$workout = Workout::factory()
+    ->forCategory()
+    ->hasAttached(
+        Equipment::factory()->count(2),
+        'equipments'
+    )
+    ->create();
+
+// Method 3: Create first, then attach
+$workout = Workout::factory()->forCategory()->create();
+$equipments = Equipment::factory()->count(2)->create();
+$workout->equipments()->attach($equipments);
+
+// Method 4: Using existing equipment
+$existingEquipments = Equipment::limit(2)->get();
+$workout = Workout::factory()
+    ->forCategory()
+    ->hasAttached($existingEquipments, 'equipments')
+    ->create();
+
+// Method 5: With pivot data (if needed)
+$workout = Workout::factory()
+    ->forCategory()
+    ->hasAttached(
+        Equipment::factory()->count(2),
+        'equipments',
+        ['created_at' => now(), 'updated_at' => now()]
+    )
+    ->create();
+```
+
+### ❌ These don't work:
+
+```php
+// Missing relationship name
+$workout->hasAttached(Equipment::factory()->count(2))
+
+// Method doesn't exist (it's equipments, not equipment)
+$workout->equipment()
+```
+
+## Key Takeaways
+
+1. **Relationship method names matter**: Laravel factories need to know the exact relationship method name
+2. **Use explicit relationship names**: Always specify the relationship name when it's not obvious
+3. **Prefer `has()` over `hasAttached()`**: It's more readable and follows Laravel conventions
+4. **Create factory states**: For complex relationships, create dedicated factory methods
+5. **Test your factories**: Always test factory relationships to catch naming issues early
+
+## Best Practices
+
+1. **Consistent naming**: Use consistent plural/singular naming for relationships
+2. **Factory states**: Create specific factory states for different relationship scenarios
+3. **Documentation**: Document complex factory relationships for team members
+4. **Testing**: Include factory relationship tests in your test suite
+
+## Related Laravel Documentation
+
+- [Database Testing](https://laravel.com/docs/database-testing#factory-relationships)
+- [Eloquent Relationships](https://laravel.com/docs/eloquent-relationships#many-to-many)
+- [Model Factories](https://laravel.com/docs/database-testing#defining-model-factories)
