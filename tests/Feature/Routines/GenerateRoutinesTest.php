@@ -61,6 +61,20 @@ class GenerateRoutinesTest extends TestCase
     }
 
     /** @test */
+    public function gender_is_required_for_proposing_routines()
+    {
+        $data = $this->getRoutineProposalData();
+        unset($data['gender']);
+
+        $response = $this->jsonApi()
+            ->withHeaders(['Authorization' => $this->token])
+            ->withData($data)
+            ->post(route(self::MODEL_PROPOSE_ACTION_ROUTE));
+
+        dd($response->json());
+    }
+
+    /** @test */
     public function can_generate_routines()
     {
         $data = $this->getRoutineProposalData();
@@ -96,6 +110,8 @@ class GenerateRoutinesTest extends TestCase
             ]);
         }
     }
+
+
 
     protected function getRoutineProposalData(array $overrides = []): array
     {

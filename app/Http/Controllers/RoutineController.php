@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProposeRoutineRequest;
 use App\Services\RoutineGeneratorService;
 use Illuminate\Http\Request;
 use LaravelJsonApi\Core\Responses\DataResponse;
@@ -28,16 +29,18 @@ class RoutineController extends Controller
         $this->routineGeneratorService = $routineGeneratorService;
     }
 
-    public function propose(Request $request)
+    public function propose(ProposeRoutineRequest $request)
     {
+        $data = $request->getRoutineData();
+
         $workouts = $this->routineGeneratorService->propose(
-            $request['data']['user_id'],
-            $request['data']['gender'],
-            $request['data']['age'],
-            $request['data']['goal'],
-            $request['data']['level'],
-            $request['data']['equipment_ids'],
-            $request['data']['muscle_ids']
+            $data['user_id'],
+            $data['gender'],
+            $data['age'],
+            $data['goal'],
+            $data['level'],
+            $data['equipment_ids'],
+            $data['muscle_ids']
         );
 
         return DataResponse::make($workouts);

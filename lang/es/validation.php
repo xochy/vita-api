@@ -171,6 +171,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Validation Language Lines for Custom Rules
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used for custom validation rules that
+    | are not included in the default Laravel validation rules. You can add
+    | your own custom validation messages here.
+    |
+    */
+
+    'user_not_exists' => 'El usuario especificado no existe.',
+    'gender_invalid' => 'El género debe ser: male, female u other.',
+    'age_min' => 'La edad mínima es 13 años.',
+    'age_max' => 'La edad máxima es 100 años.',
+    'goal_invalid' => 'El objetivo debe ser uno de: lose weight, gain muscle, gain strength.',
+    'level_invalid' => 'El nivel debe ser: beginner, intermediate o advanced.',
+    'equipment_required' => 'Debe seleccionar al menos un equipo.',
+    'equipment_not_exists' => 'Uno o más equipos seleccionados no existen.',
+    'equipment_duplicate' => 'No se pueden repetir equipos.',
+    'muscle_required' => 'Debe seleccionar al menos un grupo muscular.',
+    'muscle_not_exists' => 'Uno o más grupos musculares seleccionados no existen.',
+    'muscle_duplicate' => 'No se pueden repetir grupos musculares.',
+
+    /*
+    |--------------------------------------------------------------------------
     | Custom Validation Language Lines
     |--------------------------------------------------------------------------
     |

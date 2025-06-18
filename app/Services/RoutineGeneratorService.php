@@ -10,6 +10,7 @@ use LaravelJsonApi\Core\Exceptions\JsonApiException;
 
 class RoutineGeneratorService
 {
+    //! OPTIONAL USER ID FOR ROUTINE
     public function propose(int $userId, string $gender, int $age, string $goal, string $level, array $equipmentIds, array $muscleIds): Collection
     {
         $workouts = $this->findMatchingWorkouts($level, $equipmentIds, $muscleIds);
@@ -26,7 +27,7 @@ class RoutineGeneratorService
         return $workouts;
     }
 
-    public function generate($name,$workoutIds): Routine
+    public function generate($name, $workoutIds): Routine
     {
         // Validar que workoutIds sea un array
         if (!is_array($workoutIds) || empty($workoutIds)) {
