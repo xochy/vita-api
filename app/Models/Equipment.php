@@ -6,6 +6,7 @@ use App\Models\Traits\Mutators\EquipmentMutators;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str as SupportStr;
 use Spatie\MediaLibrary\HasMedia;
@@ -31,6 +32,23 @@ class Equipment extends Model implements HasMedia
             ->saveSlugsTo('slug');
     }
 
+    /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Get the workouts associated with the equipment.
+     *
+     * This function establishes a many-to-many relationship between Equipment and Workout.
+     * It means that each Equipment can be associated with multiple Workouts.
+     *
+     * @return BelongsToMany
+     */
+    public function workouts(): BelongsToMany
+    {
+        return $this->belongsToMany(Workout::class, 'equipment_workout');
+    }
+
     /**
      * Get the translations associated with the equipment.
      *
@@ -43,6 +61,10 @@ class Equipment extends Model implements HasMedia
     {
         return $this->morphMany(Translation::class, 'translationable');
     }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   Scopes                                   */
+    /* -------------------------------------------------------------------------- */
 
     /**
      * Scope a query to only include equipment with a given name.

@@ -21,6 +21,7 @@ return [
     'alpha' => 'El campo :attribute solo debe contener letras.',
     'alpha_dash' => 'El campo :attribute solo debe contener letras, números, guiones y guiones bajos.',
     'alpha_num' => 'El campo :attribute solo debe contener letras y números.',
+    'allowed_values' => 'El campo :attribute contiene valores no válidos. Los valores permitidos son: :values.',
     'array' => 'El campo :attribute debe ser un arreglo.',
     'ascii' => 'El campo :attribute solo debe contener caracteres alfanuméricos de un solo byte y símbolos.',
     'before' => 'El campo :attribute debe ser una fecha anterior a :date.',
@@ -48,6 +49,7 @@ return [
     'distinct' => 'El campo :attribute tiene un valor duplicado.',
     'doesnt_end_with' => 'El campo :attribute no debe terminar con ninguno de los siguientes: :values.',
     'doesnt_start_with' => 'El campo :attribute no debe comenzar con ninguno de los siguientes: :values.',
+    'duplicated' => 'El campo :attribute no debe contener valores duplicados.',
     'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
     'ends_with' => 'El campo :attribute debe terminar con uno de los siguientes: :values.',
     'enum' => 'El :attribute seleccionado es inválido.',
@@ -76,6 +78,8 @@ return [
     'ipv4' => 'El campo :attribute debe ser una dirección IPv4 válida.',
     'ipv6' => 'El campo :attribute debe ser una dirección IPv6 válida.',
     'json' => 'El campo :attribute debe ser una cadena JSON válida.',
+    'json_decode_error' => 'El campo :attribute debe ser un JSON válido.',
+
     'list' => 'El campo :attribute debe ser una lista.',
     'lowercase' => 'El campo :attribute debe estar en minúsculas.',
     'lt' => [
