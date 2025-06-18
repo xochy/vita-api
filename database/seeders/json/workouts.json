@@ -71,7 +71,29 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Barbell"
+            },
+            {
+                "name": "Bench"
+            },
+            {
+                "name": "Dumbbells"
+            },
+            {
+                "name": "Machines"
+            },
+            {
+                "name": "Bodyweight"
+            }
+        ],
+        "levels": [
+            "beginner",
+            "intermediate",
+            "advanced"
+        ]
     },
     {
         "name": "Incline bench press",
@@ -149,7 +171,19 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Dumbbells"
+            },
+            {
+                "name": "Bodyweight"
+            }
+        ],
+        "levels": [
+            "intermediate",
+            "advanced"
+        ]
     },
     {
         "name": "Decline bench press",
@@ -227,7 +261,16 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Dumbbells"
+            }
+        ],
+        "levels": [
+            "intermediate",
+            "advanced"
+        ]
     },
     {
         "name": "Dumbbell press",
@@ -301,7 +344,18 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Dumbbells"
+            },
+            {
+                "name": "Bench"
+            }
+        ],
+        "levels": [
+            "advanced"
+        ]
     },
     {
         "name": "Flyes / Dummbell flyes",
@@ -387,7 +441,23 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Dumbbells"
+            },
+            {
+                "name": "Machines"
+            },
+            {
+                "name": "Bench"
+            }
+        ],
+        "levels": [
+            "beginner",
+            "intermediate",
+            "advanced"
+        ]
     },
     {
         "name": "Push-ups",
@@ -461,7 +531,23 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Machines"
+            },
+            {
+                "name": "Dumbbells"
+            },
+            {
+                "name": "Bench"
+            }
+        ],
+        "levels": [
+            "beginner",
+            "intermediate",
+            "advanced"
+        ]
     },
     {
         "name": "Parallel dips",
@@ -543,7 +629,21 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Dumbbells"
+            },
+            {
+                "name": "Bench"
+            },
+            {
+                "name": "Machines"
+            }
+        ],
+        "levels": [
+            "advanced"
+        ]
     },
     {
         "name": "Dumbbell pullover",
@@ -621,6 +721,21 @@
             }
         ],
         "category": "Chest",
-        "group": "Free weights"
+        "group": "Free weights",
+        "equipments": [
+            {
+                "name": "Kettlebells"
+            },
+            {
+                "name": "Bands"
+            },
+            {
+                "name": "Barbell"
+            }
+        ],
+        "levels": [
+            "intermediate",
+            "advanced"
+        ]
     }
 ]

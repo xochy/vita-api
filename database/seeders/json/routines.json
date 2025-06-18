@@ -11,27 +11,31 @@
         "workouts": [
             {
                 "workout": "Bench press",
-                "series": 4,
-                "repetitions": 8,
-                "time": 12
+                "series": "3-5",
+                "repetitions": "6-10",
+                "time": "45-60 seg",
+                "rest": "2-3 min"
             },
             {
                 "workout": "Incline bench press",
-                "series": 4,
-                "repetitions": 8,
-                "time": 12
+                "series": "4-5",
+                "repetitions": "8-12",
+                "time": "30-45 seg",
+                "rest": "90 seg"
             },
             {
                 "workout": "Decline bench press",
-                "series": 4,
-                "repetitions": 8,
-                "time": 12
+                "series": "3-4",
+                "repetitions": "10-15",
+                "time": "20-35 seg",
+                "rest": "1-2 min"
             },
             {
                 "workout": "Dumbbell press",
-                "series": 4,
-                "repetitions": 8,
-                "time": 12
+                "series": "4-6",
+                "repetitions": "8-10",
+                "time": "40 seg",
+                "rest": "2-4 min"
             }
         ]
     }

@@ -53,6 +53,7 @@ class RoutineSeeder extends Seeder
                 'series'      => $workout['series'],
                 'repetitions' => $workout['repetitions'],
                 'time'        => $workout['time'],
+                'rest'        => $workout['rest'],
             ];
         });
 

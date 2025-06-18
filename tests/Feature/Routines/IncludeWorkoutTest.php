@@ -51,7 +51,7 @@ class IncludeWorkoutTest extends TestCase
         $routine = Routine::factory()
             ->hasAttached(
                 Workout::factory()->for($this->category),
-                ['series' => 3, 'repetitions' => 10, 'time' => 10]
+                ['series' => 3, 'repetitions' => 10, 'time' => 10, 'rest' => 60]
             )
             ->create();
 
@@ -80,15 +80,15 @@ class IncludeWorkoutTest extends TestCase
         $routine = Routine::factory()
             ->hasAttached(
                 Workout::factory()->for($this->category),
-                ['series' => 3, 'repetitions' => 10, 'time' => 10]
+                ['series' => 3, 'repetitions' => 10, 'time' => 10, 'rest' => 60]
             )
             ->hasAttached(
                 Workout::factory()->for($this->category),
-                ['series' => 5, 'repetitions' => 12, 'time' => 15]
+                ['series' => 5, 'repetitions' => 12, 'time' => 15, 'rest' => 90]
             )
             ->hasAttached(
                 Workout::factory()->for($this->category),
-                ['series' => 4, 'repetitions' => 8, 'time' => 12]
+                ['series' => 4, 'repetitions' => 8, 'time' => 12, 'rest' => 75]
             )
             ->create();
 
@@ -121,15 +121,15 @@ class IncludeWorkoutTest extends TestCase
         $routine = Routine::factory()
             ->hasAttached(
                 Workout::factory()->for($this->category),
-                ['series' => 3, 'repetitions' => 10, 'time' => 10]
+                ['series' => 3, 'repetitions' => 10, 'time' => 10, 'rest' => 60]
             )
             ->hasAttached(
                 Workout::factory()->for($this->category),
-                ['series' => 5, 'repetitions' => 12, 'time' => 15]
+                ['series' => 5, 'repetitions' => 12, 'time' => 15, 'rest' => 90]
             )
             ->hasAttached(
                 Workout::factory()->for($this->category),
-                ['series' => 4, 'repetitions' => 8, 'time' => 12]
+                ['series' => 4, 'repetitions' => 8, 'time' => 12, 'rest' => 75]
             )
             ->create();
 
@@ -157,7 +157,8 @@ class IncludeWorkoutTest extends TestCase
                 'routine_id' => $routine->id,
                 'series' => 3,
                 'repetitions' => 10,
-                'time' => 10
+                'time' => 10,
+                'rest' => 60
             ]
         );
 
@@ -167,7 +168,8 @@ class IncludeWorkoutTest extends TestCase
                 'routine_id' => $routine->id,
                 'series' => 5,
                 'repetitions' => 12,
-                'time' => 15
+                'time' => 15,
+                'rest' => 90
             ]
         );
 
@@ -177,7 +179,8 @@ class IncludeWorkoutTest extends TestCase
                 'routine_id' => $routine->id,
                 'series' => 4,
                 'repetitions' => 8,
-                'time' => 12
+                'time' => 12,
+                'rest' => 75
             ]
         );
     }

@@ -44,6 +44,7 @@ class CreateWorkoutsTest extends TestCase
     const MODEL_ATTRIBUTE_IMAGE = 'image';
     const MODEL_ATTRIBUTE_LEVELS = 'levels';
     const MODEL_IMAGE_ROUTE_PATH = 'app/public/1/';
+    const MODEL_LEVELS_ATTRIBUTE = '/data/attributes/levels';
 
     protected User $user;
     protected string $token;
@@ -730,7 +731,7 @@ class CreateWorkoutsTest extends TestCase
         $response->assertError(
             422,
             [
-                'source' => ['pointer' => '/data/attributes/levels'],
+                'source' => ['pointer' => self::MODEL_LEVELS_ATTRIBUTE],
                 'detail' => __('validation.allowed_values', [
                     'attribute' => 'levels',
                     'values' => 'beginner, intermediate, advanced'
@@ -781,7 +782,7 @@ class CreateWorkoutsTest extends TestCase
         $response->assertError(
             422,
             [
-                'source' => ['pointer' => '/data/attributes/levels'],
+                'source' => ['pointer' => self::MODEL_LEVELS_ATTRIBUTE],
                 'detail' => __('validation.json_decode_error', ['attribute' => 'levels'])
             ]
         );
@@ -829,7 +830,7 @@ class CreateWorkoutsTest extends TestCase
         $response->assertError(
             422,
             [
-                'source' => ['pointer' => '/data/attributes/levels'],
+                'source' => ['pointer' => self::MODEL_LEVELS_ATTRIBUTE],
                 'detail' => __('validation.array', [
                     'attribute' => 'levels',
                 ])
@@ -879,7 +880,7 @@ class CreateWorkoutsTest extends TestCase
         $response->assertError(
             422,
             [
-                'source' => ['pointer' => '/data/attributes/levels'],
+                'source' => ['pointer' => self::MODEL_LEVELS_ATTRIBUTE],
                 'detail' => __('validation.duplicated', ['attribute' => 'levels'])
             ]
         );

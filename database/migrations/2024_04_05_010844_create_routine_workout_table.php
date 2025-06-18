@@ -19,9 +19,10 @@ return new class extends Migration
             $table->foreignId('workout_id')->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->tinyInteger('series');
-            $table->tinyInteger('repetitions');
-            $table->tinyInteger('time');
+            $table->string('series', 50);
+            $table->string('repetitions', 50);
+            $table->string('time', 50);
+            $table->string('rest', 50);
         });
     }
 

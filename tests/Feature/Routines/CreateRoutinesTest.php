@@ -112,9 +112,10 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout1->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series' => 3,
-                                    'repetitions' => 10,
-                                    'time' => 60
+                                    'series'      => '3-6',
+                                    'repetitions' => '8-10',
+                                    'time'        => '15-60 seg',
+                                    'rest'        => '2-4 min'
                                 ]
                             ]
                         ]
@@ -126,6 +127,7 @@ class CreateRoutinesTest extends TestCase
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_MANY_WORKOUTS_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('locale', 'es')
             ->withHeader('Authorization', $this->token)
             ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
             ->assertCreated();
@@ -144,11 +146,12 @@ class CreateRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id' => $routineId,
-                'workout_id' => $this->workout1->getRouteKey(),
-                'series' => 3,
-                'repetitions' => 10,
-                'time' => 60
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout1->getRouteKey(),
+                'series'      => '3-6',
+                'repetitions' => '8-10',
+                'time'        => '15-60 seg',
+                'rest'        => '2-4 min'
             ]
         );
     }
@@ -171,9 +174,10 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout1->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series' => 3,
-                                    'repetitions' => 10,
-                                    'time' => 60
+                                    'series'      => '3-6',
+                                    'repetitions' => '8-10',
+                                    'time'        => '15-45 seg',
+                                    'rest'        => '2-5 min'
                                 ]
                             ]
                         ],
@@ -182,9 +186,10 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout2->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series' => 3,
-                                    'repetitions' => 10,
-                                    'time' => 60
+                                    'series'      => '3-6',
+                                    'repetitions' => '8-10',
+                                    'time'        => '61 seg',
+                                    'rest'        => '125 min'
                                 ]
                             ]
                         ],
@@ -193,9 +198,10 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout3->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series' => 3,
-                                    'repetitions' => 10,
-                                    'time' => 60
+                                    'series'      => '3-6',
+                                    'repetitions' => '8-10',
+                                    'time'        => '60 seg',
+                                    'rest'        => '120 min'
                                 ]
                             ]
                         ]
@@ -225,33 +231,36 @@ class CreateRoutinesTest extends TestCase
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id' => $routineId,
-                'workout_id' => $this->workout1->getRouteKey(),
-                'series' => 3,
-                'repetitions' => 10,
-                'time' => 60
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout1->getRouteKey(),
+                'series'      => '3-6',
+                'repetitions' => '8-10',
+                'time'        => '15-45 seg',
+                'rest'        => '2-5 min'
             ]
         );
 
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id' => $routineId,
-                'workout_id' => $this->workout2->getRouteKey(),
-                'series' => 3,
-                'repetitions' => 10,
-                'time' => 60
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout2->getRouteKey(),
+                'series'      => '3-6',
+                'repetitions' => '8-10',
+                'time'        => '61 seg',
+                'rest'        => '125 min'
             ]
         );
 
         $this->assertDatabaseHas(
             self::PIVOT_TABLE_ROUTINE_WORKOUT,
             [
-                'routine_id' => $routineId,
-                'workout_id' => $this->workout3->getRouteKey(),
-                'series' => 3,
-                'repetitions' => 10,
-                'time' => 60
+                'routine_id'  => $routineId,
+                'workout_id'  => $this->workout3->getRouteKey(),
+                'series'      => '3-6',
+                'repetitions' => '8-10',
+                'time'        => '60 seg',
+                'rest'        => '120 min'
             ]
         );
     }

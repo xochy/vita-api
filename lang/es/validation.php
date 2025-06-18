@@ -136,6 +136,7 @@ return [
     'prohibited_if' => 'El campo :attribute está prohibido cuando :other es :value.',
     'prohibited_unless' => 'El campo :attribute está prohibido a menos que :other esté en :values.',
     'prohibits' => 'El campo :attribute prohíbe que :other esté presente.',
+    'range_format' => 'El campo :attribute debe tener el formato "número–número" o "número–número seg/min".',
     'regex' => 'El formato del campo :attribute es inválido.',
     'real_integer' => 'El campo :attribute debe ser de tipo entero.',
     'real_integer_range' => 'El campo :attribute debe estar entre :min y :max.',
@@ -186,6 +187,23 @@ return [
         'email'    => [
             'unique' => 'El :attribute ya ha sido registrado.',
         ],
+        'workouts.*.meta.pivot.series' => [
+            'required' => 'El valor de series para cada ejercicio es obligatorio.',
+            'string'   => 'El valor de series para cada ejercicio debe ser una cadena.',
+        ],
+        'workouts.*.meta.pivot.repetitions' => [
+            'required' => 'El valor de repeticiones para cada ejercicio es obligatorio.',
+            'string'   => 'El valor de repeticiones para cada ejercicio debe ser una cadena.',
+        ],
+        'workouts.*.meta.pivot.time' => [
+            'required' => 'El valor de tiempo para cada ejercicio es obligatorio.',
+            'string'   => 'El valor de tiempo para cada ejercicio debe ser una cadena.',
+        ],
+        'workouts.*.meta.pivot.rest' => [
+            'required' => 'El valor de descanso para cada ejercicio es obligatorio.',
+            'string'   => 'El valor de descanso para cada ejercicio debe ser una cadena.',
+        ],
+
     ],
 
     /*
