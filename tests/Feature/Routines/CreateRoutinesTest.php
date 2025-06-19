@@ -112,10 +112,10 @@ class CreateRoutinesTest extends TestCase
                             'id' => (string) $this->workout1->getRouteKey(),
                             'meta' => [
                                 'pivot' => [
-                                    'series'      => '3-6',
-                                    'repetitions' => '8-10',
-                                    'time'        => '15-60 seg',
-                                    'rest'        => '2-4 min'
+                                    'series'      => '3 - 6',
+                                    'repetitions' => '8 - 10',
+                                    'time'        => '15 - 60 seg',
+                                    'rest'        => '2 - 4 min'
                                 ]
                             ]
                         ]
@@ -148,10 +148,10 @@ class CreateRoutinesTest extends TestCase
             [
                 'routine_id'  => $routineId,
                 'workout_id'  => $this->workout1->getRouteKey(),
-                'series'      => '3-6',
-                'repetitions' => '8-10',
-                'time'        => '15-60 seg',
-                'rest'        => '2-4 min'
+                'series'      => '3 - 6',
+                'repetitions' => '8 - 10',
+                'time'        => '15 - 60 seg',
+                'rest'        => '2 - 4 min'
             ]
         );
     }

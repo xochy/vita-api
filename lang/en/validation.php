@@ -180,17 +180,6 @@ return [
     */
 
     'user_not_exists' => 'The specified user does not exist.',
-    'gender_invalid' => 'Gender must be: male, female or other.',
-    'age_min' => 'Minimum age is 13 years.',
-    'age_max' => 'Maximum age is 100 years.',
-    'goal_invalid' => 'Goal must be one of: lose weight, gain muscle, maintain, strength, endurance.',
-    'level_invalid' => 'Level must be: beginner, intermediate or advanced.',
-    'equipment_required' => 'You must select at least one equipment.',
-    'equipment_not_exists' => 'One or more selected equipment do not exist.',
-    'equipment_duplicate' => 'Equipment cannot be repeated.',
-    'muscle_required' => 'You must select at least one muscle group.',
-    'muscle_not_exists' => 'One or more selected muscle groups do not exist.',
-    'muscle_duplicate' => 'Muscle groups cannot be repeated.',
 
     /*
     |--------------------------------------------------------------------------
@@ -247,6 +236,13 @@ return [
         'display_name'   => 'display name',
         'filename'       => 'file name',
         'firebase_token' => 'Firebase token',
+        'equipment_ids'  => 'equipment IDs',
+        'equipment_id'   => 'equipment',
+        'muscle_ids'     => 'muscle IDs',
+        'muscle_id'      => 'muscle',
+        'workout_ids'    => 'workout IDs',
+        'workout_id'     => 'workout',
+        'user_id'        => 'user ID',
     ],
 
 ];

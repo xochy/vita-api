@@ -102,6 +102,19 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the routines associated with the user.
+     *
+     * This function establishes a belongsToMany relationship between User and Routine.
+     * It means that each User belongs to many Routines.
+     *
+     * @return BelongsToMany
+     */
+    public function routines(): BelongsToMany
+    {
+        return $this->belongsToMany(Routine::class);
+    }
+
+    /**
      * Get the posts associated with the user.
      *
      * This function establishes a hasMany relationship between User and Post.

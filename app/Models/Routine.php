@@ -69,6 +69,19 @@ class Routine extends Model
     }
 
     /**
+     * Get the users associated with the routine.
+     *
+     * This function establishes a belongsToMany relationship between Routine and User.
+     * It means that each Routine belongs to many Users.
+     *
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
      * Get the translations associated with the routine.
      *
      * This function establishes a morphMany relationship between Routine and Translation.

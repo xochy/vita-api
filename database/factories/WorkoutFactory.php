@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 
 
 /**

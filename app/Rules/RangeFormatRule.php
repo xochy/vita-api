@@ -24,9 +24,21 @@ class RangeFormatRule implements ValidationRule
 
         // Patrón regex para validar la estructura
         // Acepta: número–número seguido opcionalmente de espacio y unidad (seg, min)
-        $pattern = '/^(\d+[–\-]\d+|\d+\s+(seg|min))(\s+(seg|min))?$/';
+        $patterns = [
+            '/^\d+\s*-\s*\d+\s*(seg|min)?$/', // 10-20, 10 - 20, 10-20 seg, 10 - 20 min
+            '/^\d+\s*(seg|min)$/',            // 10 seg, 10 min
+            '/^\d+[–]\d+$/',                  // 10–20 (en dash)
+        ];
 
-        if (!preg_match($pattern, $value)) {
+        $matched = false;
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $value)) {
+                $matched = true;
+                break;
+            }
+        }
+
+        if (!$matched) {
             $fail(__('validation.range_format', [
                 'attribute' => __('validation.attributes.' . $attribute)
             ]));
