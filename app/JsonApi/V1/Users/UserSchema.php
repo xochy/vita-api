@@ -56,6 +56,7 @@ class UserSchema extends Schema
             // Relationships
             BelongsToMany::make('plans'),
             BelongsToMany::make('roles'),
+            BelongsToMany::make('routines'),
             BelongsToMany::make('relatedRoles')->type('roles'),
         ];
     }

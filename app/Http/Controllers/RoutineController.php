@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GenerateRoutineRequest;
 use App\Http\Requests\ProposeRoutineRequest;
 use App\Services\RoutineGeneratorService;
 use Illuminate\Http\Request;
@@ -31,25 +32,25 @@ class RoutineController extends Controller
 
     public function propose(ProposeRoutineRequest $request)
     {
-        $data = $request->getRoutineData();
+        $data = $request->getProposedData();
 
         $workouts = $this->routineGeneratorService->propose(
-            $data['user_id'],
-            $data['gender'],
-            $data['age'],
-            $data['goal'],
             $data['level'],
             $data['equipment_ids'],
-            $data['muscle_ids']
+            $data['muscle_ids'],
         );
 
         return DataResponse::make($workouts);
     }
 
-    public function generate(Request $request)
+    public function generate(GenerateRoutineRequest $request)
     {
         $routine = $this->routineGeneratorService->generate(
+            $request['data']['user_id'],
             $request['data']['name'],
+            $request['data']['gender'],
+            $request['data']['age'],
+            $request['data']['goal'],
             $request['data']['workout_ids']
         );
 

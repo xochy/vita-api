@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Workouts;
 
-use App\Models\Category;
 use App\Models\User;
 use App\Models\Workout;
 use Database\Seeders\permissionsSeeders\WorkoutsPermissionsSeeder;

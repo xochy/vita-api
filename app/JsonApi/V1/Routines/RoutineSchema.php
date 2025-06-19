@@ -45,6 +45,7 @@ class RoutineSchema extends Schema
                 ]
             ),
             BelongsToMany::make('plans'),
+            BelongsToMany::make('users'),
             HasMany::make('translations'),
         ];
     }
