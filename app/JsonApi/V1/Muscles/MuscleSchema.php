@@ -44,7 +44,8 @@ class MuscleSchema extends Schema
             BelongsToMany::make('variations'),
 
             HasMany::make('translations'),
-            HasMany::make('medias', 'media')->type('medias'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 

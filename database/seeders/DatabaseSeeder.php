@@ -12,7 +12,7 @@ use Database\Seeders\permissionsSeeders\MusclesPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PermissionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PhysicalConditionsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\PlansPermissionsSeeder;
-use Database\Seeders\permissionsSeeders\PostsPermissionsSeeders;
+use Database\Seeders\permissionsSeeders\PostsPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\RolesPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\RoutinesPermissionsSeeder;
 use Database\Seeders\permissionsSeeders\TranslationsPermissionsSeeder;
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
                     // models permissions seeders
                 GoalsPermissionsSeeder::class,
                 PlansPermissionsSeeder::class,
-                PostsPermissionsSeeders::class,
+                PostsPermissionsSeeder::class,
                 MusclesPermissionsSeeder::class,
                 RoutinesPermissionsSeeder::class,
                 WorkoutsPermissionsSeeder::class,

@@ -58,7 +58,8 @@ protected array $with = ['goal'];
             BelongsToMany::make('routines'),
 
             HasMany::make('translations'),
-            HasMany::make('medias', 'media')->type('medias'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 

@@ -6,7 +6,7 @@ use App\Traits\PermissionSeederTrait;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PostsPermissionsSeeders extends Seeder
+class PostsPermissionsSeeder extends Seeder
 {
     use PermissionSeederTrait;
 

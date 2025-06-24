@@ -51,10 +51,12 @@ class VariationSeeder extends Seeder
 
         $workoutId = $this->getWorkoutIdByName($workout);
 
-        $variation = Variation::factory()->create(array_merge(
-            $variationData,
-            ['workout_id' => $workoutId]
-        ));
+        $variation = Variation::factory()
+            ->withCustomImage('variation_image.webp', 300, 300)
+            ->create(array_merge(
+                $variationData,
+                ['workout_id' => $workoutId]
+            ));
 
         $this->attachMusclesToVariation($variation, $muscles);
         $this->handleTranslations($variation, $translations);

@@ -44,6 +44,9 @@ class EquipmentSchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('description'),
+            Str::make('imageUrl')->extractUsing(
+                static fn($model) => $model->getFirstMediaUrl('images')
+            )->readOnly(),
             Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -51,6 +54,8 @@ class EquipmentSchema extends Schema
             // Relationships
             HasMany::make('translations'),
             BelongsToMany::make('workouts'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 
