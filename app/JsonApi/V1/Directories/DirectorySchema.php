@@ -43,7 +43,8 @@ class DirectorySchema extends Schema
             BelongsTo::make('parent')->type('directories'),
             HasMany::make('subdirectories', 'children')->type('directories'),
 
-            HasMany::make('medias', 'media')->type('medias'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 

@@ -77,11 +77,13 @@ class WorkoutSeeder extends Seeder
 
         $categoryId = $this->getCategoryIdByName($category);
 
-        $workout = Workout::factory()->create(array_merge(
-            $workoutData,
-            ['category_id' => $categoryId],
-            ['levels' => json_encode($workoutData['levels'] ?? [])]
-        ));
+        $workout = Workout::factory()
+            ->withCustomImage('workout_image.webp', 300, 300)
+            ->create(array_merge(
+                $workoutData,
+                ['category_id' => $categoryId],
+                ['levels' => json_encode($workoutData['levels'] ?? [])]
+            ));
 
         $this->attachMusclesToWorkout($workout, $muscles);
         $this->attachEquipmentsToWorkout($workout, $equipments);

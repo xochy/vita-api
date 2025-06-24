@@ -16,7 +16,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Equipment extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, InteractsWithMedia, EquipmentMutators;
+    use HasFactory, HasSlug, EquipmentMutators, InteractsWithMedia;
 
     protected $table = 'equipments';
 

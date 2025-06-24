@@ -4,7 +4,7 @@ namespace Tests\Feature\Posts;
 
 use App\Models\Post;
 use App\Models\User;
-use Database\Seeders\permissionsSeeders\PostsPermissionsSeeders;
+use Database\Seeders\permissionsSeeders\PostsPermissionsSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
@@ -26,7 +26,7 @@ class DeletePostsTest extends TestCase
 
         if (!Role::whereName('admin')->exists()) {
             $this->seed(RoleSeeder::class);
-            $this->seed(PostsPermissionsSeeders::class);
+            $this->seed(PostsPermissionsSeeder::class);
 
         }
 

@@ -3,64 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipment;
-use App\Http\Requests\StoreEquipmentRequest;
-use App\Http\Requests\UpdateEquipmentRequest;
+use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
-class EquipmentController extends Controller
+class EquipmentController extends BaseMediaController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    use Actions\FetchMany;
+    use Actions\FetchOne;
+    use Actions\Store;
+    use Actions\Update;
+    use Actions\Destroy;
+    use Actions\FetchRelated;
+    use Actions\FetchRelationship;
+    use Actions\UpdateRelationship;
+    use Actions\AttachRelationship;
+    use Actions\DetachRelationship;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    protected function getModelClass(): string
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEquipmentRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Equipment $equipment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Equipment $equipment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEquipmentRequest $request, Equipment $equipment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Equipment $equipment)
-    {
-        //
+        return Equipment::class;
     }
 }

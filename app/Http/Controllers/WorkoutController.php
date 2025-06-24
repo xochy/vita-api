@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\JsonApi\V1\Workouts\WorkoutRequest;
 use App\Models\Workout;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
-class WorkoutController extends Controller
+class WorkoutController extends BaseMediaController
 {
     use Actions\FetchMany;
     use Actions\FetchOne;
@@ -20,23 +18,8 @@ class WorkoutController extends Controller
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
 
-    /**
-     * Save the image when the workout is saved. This method is called after the
-     * workout is saved. If the image is not present in the request, it does nothing.
-     *
-     * @param Workout $workout
-     * @param WorkoutRequest $request
-     *
-     * @return void
-     */
-    public function saved(Workout $workout, WorkoutRequest $request): void
+    protected function getModelClass(): string
     {
-        if (!isset($request->data['attributes']['image'])) {
-            return;
-        }
-
-        $workout
-            ->addMedia($request->data['attributes']['image'])
-            ->toMediaCollection();
+        return Workout::class;
     }
 }

@@ -67,15 +67,7 @@ class CreateVariationsTest extends TestCase
     /** @test */
     public function guests_users_cannot_create_variations()
     {
-        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
-
-        $variation = array_filter(
-            Variation::factory()->raw(
-                [
-                    self::MODEL_ATTRIBUTE_IMAGE => $file
-                ]
-            )
-        );
+        $variation = array_filter(Variation::factory()->raw());
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -90,23 +82,12 @@ class CreateVariationsTest extends TestCase
         $response->assertStatus(401);
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $variation);
-
-        // Verify that the image was not saved
-        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_admin_can_create_variations_including_workout()
     {
-        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
-
-        $variation = array_filter(
-            Variation::factory()->raw(
-                [
-                    self::MODEL_ATTRIBUTE_IMAGE => $file
-                ]
-            )
-        );
+        $variation = array_filter(Variation::factory()->raw());
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $variation);
 
@@ -122,6 +103,8 @@ class CreateVariationsTest extends TestCase
                 ],
             ]
         ];
+
+        dd(json_encode($data));
 
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
@@ -139,22 +122,12 @@ class CreateVariationsTest extends TestCase
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $variation[self::MODEL_ATTRIBUTE_PERFORMANCE],
             ]
         );
-
-        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_admin_can_create_variations_including_muscles()
     {
-        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
-
-        $variation = array_filter(
-            Variation::factory()->raw(
-                [
-                    self::MODEL_ATTRIBUTE_IMAGE => $file
-                ]
-            )
-        );
+        $variation = array_filter(Variation::factory()->raw());
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $variation);
 
@@ -208,22 +181,12 @@ class CreateVariationsTest extends TestCase
                 'variation_id' => $variationId,
             ]
         );
-
-        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_admin_can_create_variations_including_3_muscles()
     {
-        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
-
-        $variation = array_filter(
-            Variation::factory()->raw(
-                [
-                    self::MODEL_ATTRIBUTE_IMAGE => $file
-                ]
-            )
-        );
+        $variation = array_filter(Variation::factory()->raw());
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $variation);
 
@@ -301,22 +264,12 @@ class CreateVariationsTest extends TestCase
                 'variation_id' => $variationId,
             ]
         );
-
-        $this->assertFileExists(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function authenticated_users_as_user_cannot_create_variations()
     {
-        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
-
-        $variation = array_filter(
-            Variation::factory()->raw(
-                [
-                    self::MODEL_ATTRIBUTE_IMAGE => $file
-                ]
-            )
-        );
+        $variation = array_filter(Variation::factory()->raw());
 
         $data = [
             'type' => self::MODEL_PLURAL_NAME,
@@ -349,21 +302,15 @@ class CreateVariationsTest extends TestCase
                 self::MODEL_ATTRIBUTE_PERFORMANCE => $variation[self::MODEL_ATTRIBUTE_PERFORMANCE],
             ]
         );
-
-        // Verify that the image was not saved
-        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function variation_name_is_required()
     {
-        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
-
         $variation = array_filter(
             Variation::factory()->raw(
                 [
-                    self::MODEL_ATTRIBUTE_NAME => '',
-                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                    self::MODEL_ATTRIBUTE_NAME => ''
                 ]
             )
         );
@@ -397,21 +344,15 @@ class CreateVariationsTest extends TestCase
         );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $variation);
-
-        // Verify that the image was not saved
-        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 
     /** @test */
     public function variation_performance_is_required()
     {
-        $file = UploadedFile::fake()->image($fileName = Str::uuid()->toString() . '.jpg');
-
         $variation = array_filter(
             Variation::factory()->raw(
                 [
-                    self::MODEL_ATTRIBUTE_PERFORMANCE => '',
-                    self::MODEL_ATTRIBUTE_IMAGE => $file
+                    self::MODEL_ATTRIBUTE_PERFORMANCE => ''
                 ]
             )
         );
@@ -445,8 +386,5 @@ class CreateVariationsTest extends TestCase
         );
 
         $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $variation);
-
-        // Verify that the image was not saved
-        $this->assertFileDoesNotExist(storage_path(self::MODEL_IMAGE_ROUTE_PATH . $fileName));
     }
 }

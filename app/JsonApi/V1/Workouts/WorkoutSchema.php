@@ -59,6 +59,8 @@ class WorkoutSchema extends Schema
             BelongsToMany::make('routines'),
             HasMany::make('translations'),
             HasMany::make('variations'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 

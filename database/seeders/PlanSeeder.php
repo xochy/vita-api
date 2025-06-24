@@ -63,14 +63,16 @@ class PlanSeeder extends Seeder
 
     private function createPlan(array $planData, int $goalId, int $frequencyId, int $physicalConditionId): Plan
     {
-        return Plan::factory()->create(array_merge(
-            $planData,
-            [
-                'goal_id' => $goalId,
-                'frequency_id' => $frequencyId,
-                'physical_condition_id' => $physicalConditionId
-            ]
-        ));
+        return Plan::factory()
+            ->withCustomImage('plan_image.webp', 300, 300)
+            ->create(array_merge(
+                $planData,
+                [
+                    'goal_id' => $goalId,
+                    'frequency_id' => $frequencyId,
+                    'physical_condition_id' => $physicalConditionId
+                ]
+            ));
     }
 
     private function handleTranslations(Plan $plan, array $translations): void

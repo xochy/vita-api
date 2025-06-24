@@ -44,6 +44,8 @@ class VariationSchema extends Schema
             BelongsTo::make('workout'),
             BelongsToMany::make('muscles'),
             HasMany::make('translations'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 

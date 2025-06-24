@@ -50,7 +50,8 @@ class PostSchema extends Schema
             BelongsTo::make('user'),
             HasMany::make('comments'),
             HasMany::make('translations'),
-            HasMany::make('medias', 'media')->type('medias'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 

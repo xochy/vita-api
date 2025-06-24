@@ -41,7 +41,10 @@ class EquipmentSeeder extends Seeder
         $translations = $equipmentData['translations'];
         unset($equipmentData['translations']);
 
-        $equipment = Equipment::factory($equipmentData)->create();
+        $equipment = Equipment::factory($equipmentData)
+            ->withCustomImage('post_image.webp', 120, 120)
+            ->create();
+
         $this->handleTranslations($equipment, $translations);
     }
 }

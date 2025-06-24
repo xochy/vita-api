@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DirectoryController;
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MuscleController;
 use App\Http\Controllers\PermissionController;
@@ -40,10 +41,14 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         });
 
     // Definitions for Equipment model
-    $server->resource('equipments', JsonApiController::class)
+    $server->resource('equipments', EquipmentController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasMany('workouts');
             $relationships->hasMany('translations');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('upload-files', 'uploadFiles');
+            $actions->get(DOWNLOAD_FILE_ROUTE, 'downloadFile');
         });
 
     // Definitions for Muscle model
@@ -68,6 +73,10 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasMany('equipments');
             $relationships->hasMany('variations');
             $relationships->hasMany('translations');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('upload-files', 'uploadFiles');
+            $actions->get(DOWNLOAD_FILE_ROUTE, 'downloadFile');
         });
 
     // Definitions for Variation model
@@ -76,6 +85,10 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('workout');
             $relationships->hasMany('muscles');
             $relationships->hasMany('translations');
+        })
+        ->actions(function (ActionRegistrar $actions) {
+            $actions->post('upload-files', 'uploadFiles');
+            $actions->get(DOWNLOAD_FILE_ROUTE, 'downloadFile');
         });
 
     // Definitions for Routine model
@@ -120,7 +133,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
         })
         ->actions(function (ActionRegistrar $actions) {
             $actions->post('upload-files', 'uploadFiles');
-            $actions->get('download-file/{id}/{mediaId}', 'downloadFile');
+            $actions->get(DOWNLOAD_FILE_ROUTE, 'downloadFile');
         });
 
     // Definitions for User model

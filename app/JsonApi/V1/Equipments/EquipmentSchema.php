@@ -51,6 +51,8 @@ class EquipmentSchema extends Schema
             // Relationships
             HasMany::make('translations'),
             BelongsToMany::make('workouts'),
+            HasMany::make('medias', 'media')
+                ->type('medias'),
         ];
     }
 

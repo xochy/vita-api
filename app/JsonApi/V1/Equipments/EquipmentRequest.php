@@ -21,7 +21,7 @@ class EquipmentRequest extends ResourceRequest
                 'required',
                 'string',
                 'max:100',
-                Rule::unique('categories', 'name')->ignore($this->route('category')),
+                Rule::unique('equipments', 'name')->ignore($this->route('equipment')),
             ],
             'description' => [
                 'required',

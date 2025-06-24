@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Muscle;
-use App\Models\Post;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
 class MuscleController extends BaseMediaController
