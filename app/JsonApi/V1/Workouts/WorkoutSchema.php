@@ -41,9 +41,9 @@ class WorkoutSchema extends Schema
             Str::make('comments'),
             Str::make('corrections'),
             Str::make('warnings'),
-            Str::make('image')->extractUsing(
-                static fn($model) => $model->getFirstMediaUrl()
-            ),
+            Str::make('imageUrl')->extractUsing(
+                static fn($model) => $model->getFirstMediaUrl('images')
+            )->readOnly(),
             Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

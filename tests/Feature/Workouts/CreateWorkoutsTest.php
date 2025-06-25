@@ -405,6 +405,154 @@ class CreateWorkoutsTest extends TestCase
     }
 
     /** @test */
+    public function authenticated_users_as_admin_can_create_workouts_including_category_muscles_and_equipments()
+    {
+        $workout = array_filter(Workout::factory()->raw());
+
+        $this->assertDatabaseMissing(self::MODEL_PLURAL_NAME, $workout);
+
+        $data = [
+            'type' => self::MODEL_PLURAL_NAME,
+            'attributes' => $workout,
+            'relationships' => [
+                self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME => [
+                    'data' => [
+                        'type' => self::BELONGS_TO_CATEGORY_RELATIONSHIP_PLURAL_NAME,
+                        'id' => (string) $this->category->getRouteKey()
+                    ]
+                ],
+                self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME => [
+                    'data' => [
+                        [
+                            'type' => self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME,
+                            'id' => (string) $this->muscle1->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::PRINCIPAL
+                                ]
+                            ]
+                        ],
+                        [
+                            'type' => self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME,
+                            'id' => (string) $this->muscle2->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::SECONDARY
+                                ]
+                            ]
+                        ],
+                        [
+                            'type' => self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME,
+                            'id' => (string) $this->muscle3->getRouteKey(),
+                            'meta' => [
+                                'pivot' => [
+                                    'priority' => MusclePriorityEnum::ANTAGONIST
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                self::BELONGS_TO_MANY_EQUIPMENTS_RELATIONSHIP_PLURAL_NAME => [
+                    'data' => [
+                        [
+                            'type' => self::BELONGS_TO_MANY_EQUIPMENTS_RELATIONSHIP_PLURAL_NAME,
+                            'id' => (string) $this->equipment1->getRouteKey()
+                        ],
+                        [
+                            'type' => self::BELONGS_TO_MANY_EQUIPMENTS_RELATIONSHIP_PLURAL_NAME,
+                            'id' => (string) $this->equipment2->getRouteKey()
+                        ],
+                        [
+                            'type' => self::BELONGS_TO_MANY_EQUIPMENTS_RELATIONSHIP_PLURAL_NAME,
+                            'id' => (string) $this->equipment3->getRouteKey()
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        dd(json_encode($data));
+
+        $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)->withData($data)
+            ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
+            ->includePaths(self::BELONGS_TO_MANY_MUSCLES_RELATIONSHIP_PLURAL_NAME)
+            ->includePaths(self::BELONGS_TO_MANY_EQUIPMENTS_RELATIONSHIP_PLURAL_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->post(route(self::MODEL_MAIN_ACTION_ROUTE))
+            ->assertCreated();
+
+        $workoutId = Workout::whereName($workout[self::MODEL_ATTRIBUTE_NAME])->first()->getRouteKey();
+
+        // Verify BelongsTo relationship with category model and Workout data
+        $this->assertDatabaseHas(
+            self::MODEL_PLURAL_NAME,
+            [
+                'id' => $workoutId,
+                'category_id' => $this->category->getRouteKey(),
+                self::MODEL_ATTRIBUTE_NAME => $workout[self::MODEL_ATTRIBUTE_NAME],
+                self::MODEL_ATTRIBUTE_PERFORMANCE => $workout[self::MODEL_ATTRIBUTE_PERFORMANCE],
+                self::MODEL_ATTRIBUTE_COMMENTS => $workout[self::MODEL_ATTRIBUTE_COMMENTS],
+                self::MODEL_ATTRIBUTE_CORRECTIONS => $workout[self::MODEL_ATTRIBUTE_CORRECTIONS],
+                self::MODEL_ATTRIBUTE_WARNINGS => $workout[self::MODEL_ATTRIBUTE_WARNINGS],
+            ]
+        );
+
+        // Verify BelongsToMany relationship with Muscle model
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_MUSCLE_WORKOUT,
+            [
+                'muscle_id' => $this->muscle1->getRouteKey(),
+                'workout_id' => $workoutId,
+                'priority' => MusclePriorityEnum::PRINCIPAL
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_MUSCLE_WORKOUT,
+            [
+                'muscle_id' => $this->muscle2->getRouteKey(),
+                'workout_id' => $workoutId,
+                'priority' => MusclePriorityEnum::SECONDARY
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_MUSCLE_WORKOUT,
+            [
+                'muscle_id' => $this->muscle3->getRouteKey(),
+                'workout_id' => $workoutId,
+                'priority' => MusclePriorityEnum::ANTAGONIST
+            ]
+        );
+
+        // Verify BelongsToMany relationship with Equipment model
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_EQUIPMENT_WORKOUT,
+            [
+                'equipment_id' => $this->equipment1->getRouteKey(),
+                'workout_id' => $workoutId
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_EQUIPMENT_WORKOUT,
+            [
+                'equipment_id' => $this->equipment2->getRouteKey(),
+                'workout_id' => $workoutId
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            self::PIVOT_TABLE_EQUIPMENT_WORKOUT,
+            [
+                'equipment_id' => $this->equipment3->getRouteKey(),
+                'workout_id' => $workoutId
+            ]
+        );
+    }
+
+    /** @test */
     public function authenticated_users_as_user_cannot_create_workouts()
     {
         $workout = array_filter(Workout::factory()->raw());

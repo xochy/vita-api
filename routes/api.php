@@ -68,6 +68,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     $server->resource('workouts', WorkoutController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('category');
+            $relationships->hasMany('medias');
             $relationships->hasMany('muscles');
             $relationships->hasMany('routines');
             $relationships->hasMany('equipments');
@@ -213,8 +214,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     // Definitions for Post model
     $server->resource('posts', PostController::class)
         ->relationships(function (Relationships $relationships) {
-            $relationships->hasMany('comments');
             $relationships->hasOne('user');
+            $relationships->hasMany('comments');
             $relationships->hasMany('medias');
         })
         ->actions(function (ActionRegistrar $actions) {
