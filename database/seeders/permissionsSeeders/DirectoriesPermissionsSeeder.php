@@ -18,21 +18,7 @@ class DirectoriesPermissionsSeeder extends Seeder
     public function run(): void
     {
         DB::transaction(function () {
-            $this->clearStoragePublicDirectory();
             $this->processPermission('seeders/json/permissions/directoriesPermissions.json');
         });
-    }
-
-    /**
-     * Clear the storage/app/public directory.
-     * @return void
-     */
-    private function clearStoragePublicDirectory(): void
-    {
-        $directory = storage_path('app/public');
-
-        if (File::exists($directory)) {
-            File::cleanDirectory($directory);
-        }
     }
 }

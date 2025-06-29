@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Routine;
 use App\Models\User;
 use App\Models\Workout;
 use Illuminate\Auth\Access\Response;
@@ -163,5 +164,45 @@ class WorkoutPolicy
     public function detachEquipments(User $user, Workout $workout): bool
     {
         return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can view the workout's routines.
+     */
+    public function viewRoutines(User $user, Workout $workout): bool
+    {
+        return $user->can('read routines');
+    }
+
+    /**
+     * Determine whether the user can update the model's routines relationship.
+     */
+    public function updateRoutines(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can attach routines to the workout.
+     */
+    public function attachRoutines(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can detach routines from the workout.
+     */
+    public function detachRoutines(User $user, Workout $workout): bool
+    {
+        return $user->can('update workouts');
+    }
+
+    /**
+     * Determine whether the user can view the comments of the post.
+     */
+    public function viewMedias(User $user, Workout $workout): bool
+    {
+        return $user->can('read workouts');
     }
 }

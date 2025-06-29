@@ -36,6 +36,9 @@ class VariationSchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('performance'),
+            Str::make('imageUrl')->extractUsing(
+                static fn($model) => $model->getFirstMediaUrl('images')
+            )->readOnly(),
             Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
