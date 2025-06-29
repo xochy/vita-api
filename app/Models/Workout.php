@@ -94,13 +94,21 @@ class Workout extends Model implements HasMedia
     }
 
     /**
-     * Get the equipment associated with the workout.
+     * Get the routines associated with the workout.
      *
-     * This function establishes a belongsToMany relationship between Workout and Equipment.
-     * It means that each Workout can have many pieces of Equipment.
+     * This function establishes a belongsToMany relationship between Workout and Routine.
+     * It means that each Workout can have many Routines.
      *
      * @return BelongsToMany
      */
+    public function routines(): BelongsToMany
+    {
+        return $this->belongsToMany(Routine::class)
+            ->withPivot('series', 'repetitions', 'time', 'rest')
+            ->using(RoutineWorkout::class)
+            ->as('routine_workout');
+    }
+
     public function equipments(): BelongsToMany
     {
         return $this->belongsToMany(Equipment::class, 'equipment_workout');
