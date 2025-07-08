@@ -2,10 +2,7 @@
 
 namespace App\JsonApi\V1\Workouts;
 
-// Asegúrate de que esta línea exista y apunte a la clase correcta
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany as EloquentBelongsToMany;
 use App\JsonApi\V1\Helpers\BelongsToMany;
-use App\JsonApi\V1\Pitvots\PriorityPivot;
 use App\Models\Workout;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
@@ -54,7 +51,11 @@ class WorkoutSchema extends Schema
             // Relationships
             BelongsTo::make('category'),
             BelongsToMany::make('muscles')
-                ->fields(new PriorityPivot()),
+                ->fields(
+                    [
+                        'priority'
+                    ]
+                ),
             BelongsToMany::make('equipments'),
             BelongsToMany::make('routines'),
             HasMany::make('translations'),

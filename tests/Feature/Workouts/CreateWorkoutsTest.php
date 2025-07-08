@@ -471,8 +471,6 @@ class CreateWorkoutsTest extends TestCase
             ]
         ];
 
-        dd(json_encode($data));
-
         $this->actingAs($this->user)->jsonApi()
             ->expects(self::MODEL_PLURAL_NAME)->withData($data)
             ->includePaths(self::BELONGS_TO_CATEGORY_RELATIONSHIP_SINGLE_NAME)
