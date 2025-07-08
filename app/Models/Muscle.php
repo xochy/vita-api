@@ -52,7 +52,9 @@ class Muscle extends Model implements HasMedia
     public function workouts(): BelongsToMany
     {
         return $this->belongsToMany(Workout::class)
-            ->withPivot('priority');
+            ->withPivot('priority')
+            ->using(MuscleWorkout::class)
+            ->as('muscle_workout');
     }
 
     /**

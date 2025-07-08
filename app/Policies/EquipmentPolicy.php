@@ -84,4 +84,20 @@ class EquipmentPolicy
     {
         return $user->can('read equipments');
     }
+
+    /**
+     * Determine whether the user can view the equipment's translations.
+     */
+    public function viewTranslations(User $user, Equipment $equipment): bool
+    {
+        return $user->can('read equipments');
+    }
+
+    /**
+     * Determine whether the user can view the comments of the post.
+     */
+    public function viewMedias(User $user, Equipment $equipment): bool
+    {
+        return $user->can('read equipments');
+    }
 }

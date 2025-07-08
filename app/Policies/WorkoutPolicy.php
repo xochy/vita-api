@@ -198,6 +198,10 @@ class WorkoutPolicy
         return $user->can('update workouts');
     }
 
+    /* -------------------------------------------------------------------------- */
+    /*                      Policies for medias relationships                     */
+    /* -------------------------------------------------------------------------- */
+
     /**
      * Determine whether the user can view the comments of the post.
      */

@@ -101,6 +101,9 @@ class MusclePolicy
         return $user->can('read muscles');
     }
 
+    /**
+     * Determine whether the user can view the muscle's medias.
+     */
     public function viewMedias(User $user, Muscle $muscle): bool
     {
         return $user->can('read muscles');

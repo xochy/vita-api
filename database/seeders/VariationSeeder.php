@@ -52,7 +52,7 @@ class VariationSeeder extends Seeder
         $workoutId = $this->getWorkoutIdByName($workout);
 
         $variation = Variation::factory()
-            ->withCustomImage('variation_image.webp', 300, 300)
+            ->withCustomImage('variation_image.webp', 300, 300, 'variations-images')
             ->create(array_merge(
                 $variationData,
                 ['workout_id' => $workoutId]

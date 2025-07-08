@@ -8,11 +8,13 @@ trait HasImageStates
 {
     /**
      * State para posts con imagen por defecto
+     *
+     * @param string|null $collectionName El nombre de la colección de medios (opcional).
      */
-    public function withDefaultImage(): static
+    public function withDefaultImage(?string $collectionName = null): static
     {
-        return $this->afterCreating(function ($model) {
-            $this->createDefaultImage($model);
+        return $this->afterCreating(function ($model) use ($collectionName) {
+            $this->createDefaultImage($model, $collectionName);
         });
     }
 
@@ -28,11 +30,16 @@ trait HasImageStates
 
     /**
      * State para posts con imagen personalizada
+     *
+     * @param string $filename Nombre del archivo de la imagen.
+     * @param int $width Ancho de la imagen.
+     * @param int $height Alto de la imagen.
+     * @param string|null $collectionName El nombre de la colección de medios (opcional).
      */
-    public function withCustomImage(string $filename, int $width = 200, int $height = 200): static
+    public function withCustomImage(string $filename, int $width = 200, int $height = 200, ?string $collectionName = null): static
     {
         return $this->afterCreating(
-            function ($model) use ($filename, $width, $height) {
+            function ($model) use ($filename, $width, $height, $collectionName) {
                 $imageName = $filename ?? $this->getDefaultImageName($model) . '.webp';
 
                 $file = UploadedFile::fake()->image(
@@ -45,15 +52,18 @@ trait HasImageStates
 
                 $model->addMedia($file)
                     ->preservingOriginal()
-                    ->toMediaCollection($this->getImageCollection());
+                    ->toMediaCollection($collectionName ?? $this->getImageCollection());
             }
         );
     }
 
     /**
      * Create default image for the model
+     *
+     * @param mixed $model El modelo Eloquent.
+     * @param string|null $collectionName El nombre de la colección de medios (opcional).
      */
-    private function createDefaultImage($model): void
+    private function createDefaultImage($model, ?string $collectionName = null): void
     {
         $file = UploadedFile::fake()->image(
             $this->getDefaultImageName($model) . '.webp',
@@ -65,7 +75,7 @@ trait HasImageStates
 
         $model->addMedia($file)
             ->preservingOriginal()
-            ->toMediaCollection($this->getImageCollection());
+            ->toMediaCollection($collectionName ?? $this->getImageCollection());
     }
 
     /**

@@ -139,10 +139,26 @@ class PlanPolicy
         return $user->can(self::UPDATE_PLANS_PERMISSION);
     }
 
+    /* -------------------------------------------------------------------------- */
+    /*                    Policies for Translation relationship                   */
+    /* -------------------------------------------------------------------------- */
+
     /**
      * Determine whether the user can view the plan's translations.
      */
     public function viewTranslations(User $user, Plan $plan): bool
+    {
+        return $user->can('read plans');
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                      Policies for medias relationships                     */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Determine whether the user can view the plan's medias.
+     */
+    public function viewMedias(User $user, Plan $plan): bool
     {
         return $user->can('read plans');
     }

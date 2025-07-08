@@ -39,7 +39,7 @@ class PostSchema extends Schema
                 ->on('user')
                 ->readOnly(),
             Str::make('imageUrl')->extractUsing(
-                static fn($model) => $model->getFirstMediaUrl('images')
+                static fn($model) => $model->getFirstMediaUrl('posts-images')
             )->readOnly(),
             Str::make('slug')->readOnly(),
             DateTime::make('publishedAt', 'published_at')->sortable(),

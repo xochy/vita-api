@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Database\Factories\Traits\HasImageStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MuscleFactory extends Factory
 {
+    use HasImageStates;
+    
     /**
      * Define the model's default state.
      *

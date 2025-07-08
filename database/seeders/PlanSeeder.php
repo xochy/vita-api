@@ -64,7 +64,7 @@ class PlanSeeder extends Seeder
     private function createPlan(array $planData, int $goalId, int $frequencyId, int $physicalConditionId): Plan
     {
         return Plan::factory()
-            ->withCustomImage('plan_image.webp', 300, 300)
+            ->withCustomImage('plan_image.webp', 300, 300, 'plans-images')
             ->create(array_merge(
                 $planData,
                 [

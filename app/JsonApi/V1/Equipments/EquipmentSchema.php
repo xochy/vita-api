@@ -45,7 +45,7 @@ class EquipmentSchema extends Schema
             Str::make('name')->sortable(),
             Str::make('description'),
             Str::make('imageUrl')->extractUsing(
-                static fn($model) => $model->getFirstMediaUrl('images')
+                static fn($model) => $model->getFirstMediaUrl('equipments-images')
             )->readOnly(),
             Str::make('slug')->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),

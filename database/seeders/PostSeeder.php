@@ -46,7 +46,7 @@ class PostSeeder extends Seeder
         unset($postData['user']);
 
         $post = Post::factory($postData)
-            ->withCustomImage('post_image.webp', 300, 300)
+            ->withCustomImage('post_image.webp', 300, 300, 'posts-images')
             ->create();
 
         $this->handleTranslations($post, $translations);

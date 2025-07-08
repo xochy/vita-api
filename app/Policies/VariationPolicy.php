@@ -100,4 +100,16 @@ class VariationPolicy
     {
         return $user->can('read variations');
     }
+
+    /* -------------------------------------------------------------------------- */
+    /*                      Policies for medias relationships                     */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Determine whether the user can view the variation's medias.
+     */
+    public function viewMedias(User $user, Variation $variation): bool
+    {
+        return $user->can('read variations');
+    }
 }

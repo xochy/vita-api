@@ -43,6 +43,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     // Definitions for Equipment model
     $server->resource('equipments', EquipmentController::class)
         ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('medias');
             $relationships->hasMany('workouts');
             $relationships->hasMany('translations');
         })
@@ -54,10 +55,10 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     // Definitions for Muscle model
     $server->resource('muscles', MuscleController::class)
         ->relationships(function (Relationships $relationships) {
+            $relationships->hasMany('medias');
             $relationships->hasMany('workouts');
             $relationships->hasMany('variations');
             $relationships->hasMany('translations');
-            $relationships->hasMany('medias');
         })
         ->actions(function (ActionRegistrar $actions) {
             $actions->post('upload-files', 'uploadFiles');
@@ -84,6 +85,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     $server->resource('variations', VariationController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('workout');
+            $relationships->hasMany('medias');
             $relationships->hasMany('muscles');
             $relationships->hasMany('translations');
         })
@@ -129,6 +131,7 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
             $relationships->hasOne('frequency');
             $relationships->hasOne('physicalCondition');
             $relationships->hasMany('users');
+            $relationships->hasMany('medias');
             $relationships->hasMany('routines');
             $relationships->hasMany('translations');
         })
@@ -215,8 +218,8 @@ JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar 
     $server->resource('posts', PostController::class)
         ->relationships(function (Relationships $relationships) {
             $relationships->hasOne('user');
-            $relationships->hasMany('comments');
             $relationships->hasMany('medias');
+            $relationships->hasMany('comments');
         })
         ->actions(function (ActionRegistrar $actions) {
             $actions->post('upload-files', 'uploadFiles');

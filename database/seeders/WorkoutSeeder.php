@@ -78,7 +78,7 @@ class WorkoutSeeder extends Seeder
         $categoryId = $this->getCategoryIdByName($category);
 
         $workout = Workout::factory()
-            ->withCustomImage('workout_image.webp', 300, 300)
+            ->withCustomImage('workout_image.webp', 300, 300, 'workouts-images')
             ->create(array_merge(
                 $workoutData,
                 ['category_id' => $categoryId],

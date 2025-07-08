@@ -89,8 +89,12 @@ class PostPolicy
         return $user->can('read posts');
     }
 
+    /* -------------------------------------------------------------------------- */
+    /*                      Policies for medias relationships                     */
+    /* -------------------------------------------------------------------------- */
+
     /**
-     * Determine whether the user can view the medias of the post.
+     * Determine whether the user can view the post's medias.
      */
     public function viewMedias(User $user, Post $post): bool
     {

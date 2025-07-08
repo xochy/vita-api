@@ -42,7 +42,7 @@ class EquipmentSeeder extends Seeder
         unset($equipmentData['translations']);
 
         $equipment = Equipment::factory($equipmentData)
-            ->withCustomImage('post_image.webp', 120, 120)
+            ->withCustomImage('equipment_image.webp', 120, 120, 'equipments-images')
             ->create();
 
         $this->handleTranslations($equipment, $translations);

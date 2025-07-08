@@ -40,7 +40,11 @@ class MuscleSchema extends Schema
             DateTime::make('updatedAt')->sortable()->readOnly(),
 
             // Relationships
-            BelongsToMany::make('workouts'),
+            BelongsToMany::make('workouts')->fields(
+                [
+                    'priority'
+                ]
+            ),
             BelongsToMany::make('variations'),
 
             HasMany::make('translations'),

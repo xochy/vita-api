@@ -37,6 +37,8 @@ class MuscleSeeder extends Seeder
 
     private function createMuscle(array $muscleData): Muscle
     {
-        return Muscle::factory($muscleData)->create();
+        return Muscle::factory($muscleData)
+            ->withCustomImage('muscle_image.webp', 300, 300, 'muscles-images')
+            ->create();
     }
 }
