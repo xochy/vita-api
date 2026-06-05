@@ -1,0 +1,68 @@
+[
+    {
+        "name": "read users",
+        "display_name": "Leer usuarios",
+        "action": "read",
+        "subject": "user",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create users",
+        "display_name": "Crear usuarios",
+        "action": "create",
+        "subject": "user",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "update users",
+        "display_name": "Actualizar usuarios",
+        "action": "update",
+        "subject": "user",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "delete users",
+        "display_name": "Eliminar usuarios",
+        "action": "delete",
+        "subject": "user",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "restore users",
+        "display_name": "Restaurar usuarios",
+        "action": "restore",
+        "subject": "user",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "force delete users",
+        "display_name": "Eliminar permanentemente usuarios",
+        "action": "forceDelete",
+        "subject": "user",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    }
+]

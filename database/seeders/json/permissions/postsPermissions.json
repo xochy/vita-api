@@ -1,0 +1,74 @@
+[
+    {
+        "name": "read posts",
+        "display_name": "Leer publicaciones",
+        "action": "read",
+        "subject": "post",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "show posts",
+        "display_name": "Mostrar publicaciones",
+        "action": "show",
+        "subject": "post",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create posts",
+        "display_name": "Crear publicaciones",
+        "action": "create",
+        "subject": "post",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "update posts",
+        "display_name": "Actualizar publicaciones",
+        "action": "update",
+        "subject": "post",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "delete posts",
+        "display_name": "Eliminar publicaciones",
+        "action": "delete",
+        "subject": "post",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "restore posts",
+        "display_name": "Restaurar publicaciones",
+        "action": "restore",
+        "subject": "post",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    },
+    {
+        "name": "force delete posts",
+        "display_name": "Eliminar permanentemente publicaciones",
+        "action": "forceDelete",
+        "subject": "post",
+        "roles": [
+            "superAdmin",
+            "admin"
+        ]
+    }
+]

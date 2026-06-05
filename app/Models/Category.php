@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use App\Models\Traits\Mutators\CategoryMutators;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Category extends Model
 {
-    use HasFactory, Sluggable, SluggableScopeHelpers;
+    use HasFactory, HasSlug, CategoryMutators;
 
     /**
      * The attributes that are mass assignable.
@@ -20,36 +24,88 @@ class Category extends Model
     protected $fillable = ['name', 'description'];
 
     /**
-     * Return the sluggable configuration array for this model.
+     * Get the options for generating the slug.
      *
-     * @return array
+     * @return SlugOptions
      */
-    public function sluggable(): array
+    public function getSlugOptions() : SlugOptions
     {
-        return [
-            'slug' => [
-                'source' => 'slugForSave'
-            ]
-        ];
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                Relationships                               */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Get the workouts associated with the category.
+     *
+     * This function establishes a hasMany relationship between Category and Workout.
+     * It means that each Category has many Workouts.
+     *
+     * @return HasMany
+     */
+    public function workouts(): HasMany
+    {
+        return $this->hasMany(Workout::class);
     }
 
     /**
-     * Return the slug for this model.
+     * Get the translations associated with the category.
      *
-     * @return string
+     * This function establishes a morphMany relationship between Category and Translation.
+     * It means that each Category has many Translations.
+     *
+     * @return MorphMany
      */
-    public function getSlugForSaveAttribute(): string
+    public function translations(): MorphMany
     {
-        return Str::uuid();
+        return $this->morphMany(Translation::class, 'translationable');
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   Scopes                                   */
+    /* -------------------------------------------------------------------------- */
+
+    /**
+     * Scope a query to only include users with a given name.
+     *
+     * @param Builder $query
+     * @param string $value
+     * @return void
+     */
+    public function scopeName(Builder $query, string $value): void
+    {
+        $query->where('name', 'LIKE', "%{$value}%");
     }
 
     /**
-     * Get the route key for the model.
+     * Scope a query to only include users with a given description.
      *
-     * @return string
+     * @param Builder $query
+     * @param string $value
+     * @return void
      */
-    public function getRouteKeyName()
+    public function scopeDescription(Builder $query, string $value): void
     {
-        return 'slug';
+        $query->where('description', 'LIKE', "%{$value}%");
+    }
+
+    /**
+     * Scope a query to only include users with a given search term.
+     *
+     * @param Builder $query
+     * @param string $values
+     * @return void
+     */
+    public function scopeSearch(Builder $query, string $values): void
+    {
+        foreach (Str::of($values)->explode(' ') as $value) {
+
+            $query->orWhere('name', 'LIKE', "%{$value}%")
+                ->orWhere('description', 'LIKE', "%{$value}%");
+        }
     }
 }

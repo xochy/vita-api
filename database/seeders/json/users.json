@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Super Admin",
+        "email": "superadmin@mail.com",
+        "password": "password",
+        "role": "superAdmin"
+    },
+    {
+        "name": "Admin",
+        "email": "admin@mail.com",
+        "password": "password",
+        "role": "admin"
+    },
+    {
+        "name": "User",
+        "email": "user@mail.com",
+        "password": "password",
+        "role": "user",
+        "plans": [
+            {
+                "name": "Lost weight"
+            },
+            {
+                "name": "Gain muscle"
+            }
+        ]
+    }
+]

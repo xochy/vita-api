@@ -1,0 +1,114 @@
+[
+    {
+        "name": "Barbell",
+        "description": "A barbell is a long bar with weights attached to each end, used for strength training exercises. It allows for a wide range of movements, including squats, deadlifts, and bench presses.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Barra"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Una barra es una barra larga con pesas unidas a cada extremo, utilizada para ejercicios de entrenamiento de fuerza. Permite una amplia gama de movimientos, incluidos sentadillas, peso muerto y press de banca."
+            }
+        ]
+    },
+    {
+        "name": "Dumbbells",
+        "description": "Dumbbells are handheld weights that come in various sizes and shapes, used for strength training. They allow for a wide range of exercises, including curls, presses, and rows.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Mancuernas"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Las mancuernas son pesas de mano que vienen en varios tama\u00f1os y formas, utilizadas para entrenamiento de fuerza. Permiten una amplia gama de ejercicios, incluidos curls, presses y remos."
+            }
+        ]
+    },
+    {
+        "name": "Bodyweight",
+        "description": "Bodyweight exercises use the individual's own weight as resistance, requiring no additional equipment. Examples include push-ups, pull-ups, and squats.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Peso corporal"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de peso corporal utilizan el peso del individuo como resistencia, sin requerir equipo adicional. Ejemplos incluyen flexiones, dominadas y sentadillas."
+            }
+        ]
+    },
+    {
+        "name": "Machines",
+        "description": "Strength training machines are specialized equipment designed to target specific muscle groups. They provide guided movements and adjustable resistance, making them suitable for beginners and advanced users.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "M\u00e1quinas"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Las m\u00e1quinas de entrenamiento de fuerza son equipos especializados diseñados para apuntar a grupos musculares específicos. Proporcionan movimientos guiados y resistencia ajustable, lo que las hace adecuadas para principiantes y usuarios avanzados."
+            }
+        ]
+    },
+    {
+        "name": "Kettlebells",
+        "description": "Kettlebells are cast iron weights with a handle, used for strength training and conditioning. They allow for dynamic movements, such as swings, snatches, and cleans.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pesas rusas"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Las pesas rusas son pesas de hierro fundido con un mango, utilizadas para entrenamiento de fuerza y acondicionamiento. Permiten movimientos din\u00e1micos, como oscilaciones, arranques y limpiezas."
+            }
+        ]
+    },
+    {
+        "name": "Cables",
+        "description": "Cable machines use a system of pulleys and weights to provide resistance for strength training exercises. They allow for a wide range of movements and can target multiple muscle groups.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Cables"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Las m\u00e1quinas de cables utilizan un sistema de poleas y pesas para proporcionar resistencia para ejercicios de entrenamiento de fuerza. Permiten una amplia gama de movimientos y pueden apuntar a varios grupos musculares."
+            }
+        ]
+    },
+    {
+        "name": "Bands",
+        "description": "Resistance bands are elastic bands used for strength training and rehabilitation. They provide variable resistance and can be used for a wide range of exercises, including stretching and strengthening.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Bandas"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Las bandas de resistencia son bandas el\u00e1sticas utilizadas para entrenamiento de fuerza y rehabilitaci\u00f3n. Proporcionan resistencia variable y pueden usarse para una amplia gama de ejercicios, incluidos estiramientos y fortalecimiento."
+            }
+        ]
+    }
+]

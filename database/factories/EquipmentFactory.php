@@ -1,0 +1,27 @@
+<?php
+
+namespace Database\Factories;
+
+use Database\Factories\Traits\HasImageStates;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Equipment>
+ */
+class EquipmentFactory extends Factory
+{
+    use HasImageStates;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->unique()->bothify('Equipment-?###'),
+            'description' => fake()->paragraph(2),
+        ];
+    }
+}

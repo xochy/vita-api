@@ -1,0 +1,130 @@
+[
+    {
+        "name": "Chest",
+        "description": "Chest exercises typically target the pectoral muscles and involve movements like pressing and fly variations. They aim to build strength and muscle mass in the upper body, improving overall chest definition and power.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pecho"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de pecho suelen apuntar a los m\u00fasculos pectorales e implican movimientos como prensas y variaciones de vuelo. Su objetivo es construir fuerza y masa muscular en la parte superior del cuerpo, mejorando la definici\u00f3n y la potencia general del pecho."
+            }
+        ]
+    },
+    {
+        "name": "Back",
+        "description": "Back exercises typically focus on the latissimus dorsi, trapezius, rhomboids, and erector spinae muscles to improve strength, posture, and overall upper body support. Common movements include rows, pull-ups, and deadlifts.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Espalda"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de espalda suelen centrarse en los m\u00fasculos latissimus dorsi, trapecio, romboides y erector spinae para mejorar la fuerza, la postura y el soporte general del cuerpo superior. Los movimientos comunes incluyen filas, dominadas y peso muerto."
+            }
+        ]
+    },
+    {
+        "name": "Neck and shoulders",
+        "description": "Neck and shoulder exercises target the muscles of the neck, shoulders, and upper back, including the trapezius, deltoids, and levator scapulae. These exercises help improve posture, reduce neck and shoulder pain, and enhance upper body strength.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Cuello y hombros"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de cuello y hombros apuntan a los m\u00fasculos del cuello, hombros y espalda alta, incluidos el trapecio, los deltoides y el elevador de la esc\u00e1pula. Estos ejercicios ayudan a mejorar la postura, reducir el dolor de cuello y hombros y mejorar la fuerza del cuerpo superior."
+            }
+        ]
+    },
+    {
+        "name": "Biceps",
+        "description": "Bicep exercises typically involve curling movements to target the bicep brachii muscle, focusing on flexing the elbow. Common examples include bicep curls with dumbbells, barbells, or resistance bands.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "B\u00edceps"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de b\u00edceps suelen implicar movimientos de curling para apuntar al m\u00fasculo b\u00edceps braquial, centr\u00e1ndose en la flexi\u00f3n del codo. Ejemplos comunes incluyen curl de b\u00edceps con mancuernas, barras o bandas de resistencia."
+            }
+        ]
+    },
+    {
+        "name": "Triceps",
+        "description": "Tricep exercises typically involve extension movements to target the tricep brachii muscle, focusing on extending the elbow. Common examples include tricep dips, tricep extensions, and tricep pushdowns.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Tr\u00edceps"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de tr\u00edceps suelen implicar movimientos de extensi\u00f3n para apuntar al m\u00fasculo tr\u00edceps braquial, centr\u00e1ndose en la extensi\u00f3n del codo. Ejemplos comunes incluyen dips de tr\u00edceps, extensiones de tr\u00edceps y pushdowns de tr\u00edceps."
+            }
+        ]
+    },
+    {
+        "name": "Forearms",
+        "description": "Forearm exercises typically target the muscles of the forearm, including the flexor and extensor muscles. Common exercises include wrist curls, reverse wrist curls, and hammer curls to improve grip strength and forearm size.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Antebrazos"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de antebrazos suelen apuntar a los m\u00fasculos del antebrazo, incluidos los m\u00fasculos flexores y extensores. Los ejercicios comunes incluyen curl de mu\u00f1eca, curl de mu\u00f1eca inverso y curl de martillo para mejorar la fuerza de agarre y el tama\u00f1o del antebrazo."
+            }
+        ]
+    },
+    {
+        "name": "Legs",
+        "description": "Leg exercises typically target the quadriceps, hamstrings, calves, and glutes, including movements like squats, lunges, deadlifts, and calf raises. These exercises help build strength, improve stability, and enhance overall lower body performance.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Piernas"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios de piernas suelen apuntar a los cu\u00e1driceps, isquiotibiales, pantorrillas y gl\u00fateos, incluidos movimientos como sentadillas, estocadas, peso muerto y elevaciones de pantorrillas. Estos ejercicios ayudan a construir fuerza, mejorar la estabilidad y mejorar el rendimiento general de la parte inferior del cuerpo."
+            }
+        ]
+    },
+    {
+        "name": "Abdomen and lower back",
+        "description": "Abdominal and lower back exercises target the core muscles, including the rectus abdominis, obliques, and erector spinae, to improve core strength, stability, and posture. Common exercises include planks, crunches, and back extensions.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Abdomen y parte baja de la espalda"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Los ejercicios abdominales y de la parte baja de la espalda apuntan a los m\u00fasculos centrales, incluidos el recto abdominal, los oblicuos y el erector de la columna, para mejorar la fuerza central, la estabilidad y la postura. Los ejercicios comunes incluyen planchas, abdominales y extensiones de espalda."
+            }
+        ]
+    }
+]

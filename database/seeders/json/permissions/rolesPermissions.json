@@ -1,0 +1,56 @@
+[
+    {
+        "name": "read roles",
+        "display_name": "Leer roles",
+        "action": "read",
+        "subject": "role",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "create roles",
+        "display_name": "Crear roles",
+        "action": "create",
+        "subject": "role",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "update roles",
+        "display_name": "Actualizar roles",
+        "action": "update",
+        "subject": "role",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "delete roles",
+        "display_name": "Eliminar roles",
+        "action": "delete",
+        "subject": "role",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "restore roles",
+        "display_name": "Restaurar roles",
+        "action": "restore",
+        "subject": "role",
+        "roles": [
+            "superAdmin"
+        ]
+    },
+    {
+        "name": "force delete roles",
+        "display_name": "Eliminar permanentemente roles",
+        "action": "forceDelete",
+        "subject": "role",
+        "roles": [
+            "superAdmin"
+        ]
+    }
+]

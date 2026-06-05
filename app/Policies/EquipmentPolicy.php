@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Equipment;
+use App\Models\User;
+use Illuminate\Auth\Access\Response;
+
+class EquipmentPolicy
+{
+    /**
+     * Determine whether the user have all permissions.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('superAdmin')) {
+            return true;
+        }
+    }
+
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, Equipment $equipment): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Equipment $equipment): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Equipment $equipment): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function restore(User $user, Equipment $equipment): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, Equipment $equipment): bool
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can update the workout's variations.
+     */
+    public function viewWorkouts(User $user, Equipment $equipment): bool
+    {
+        return $user->can('read equipments');
+    }
+
+    /**
+     * Determine whether the user can view the equipment's translations.
+     */
+    public function viewTranslations(User $user, Equipment $equipment): bool
+    {
+        return $user->can('read equipments');
+    }
+
+    /**
+     * Determine whether the user can view the comments of the post.
+     */
+    public function viewMedias(User $user, Equipment $equipment): bool
+    {
+        return $user->can('read equipments');
+    }
+}

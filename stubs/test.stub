@@ -1,0 +1,35 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\User;
+use Database\Seeders\RoleSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
+
+class {{ class }} extends TestCase
+{
+    use RefreshDatabase;
+
+    protected User $user;
+    protected string $token;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        if (!Role::whereName('admin')->exists()) {
+            $this->seed(RoleSeeder::class);
+            // TODO: add seed permissions model class here
+        }
+
+        [$this->user, $this->token] = $this->createUserWithToken();
+    }
+
+    /** @test */
+    public function it_can_test()
+    {
+        //
+    }
+}

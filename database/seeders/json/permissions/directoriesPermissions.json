@@ -1,0 +1,68 @@
+[
+    {
+        "name": "read directories",
+        "display_name": "Leer directorios",
+        "action": "read",
+        "subject": "directory",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "create directories",
+        "display_name": "Crear directorios",
+        "action": "create",
+        "subject": "directory",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "update directories",
+        "display_name": "Actualizar directorios",
+        "action": "update",
+        "subject": "directory",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "delete directories",
+        "display_name": "Eliminar directorios",
+        "action": "delete",
+        "subject": "directory",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "restore directories",
+        "display_name": "Restaurar directorios",
+        "action": "restore",
+        "subject": "directory",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    },
+    {
+        "name": "force delete directories",
+        "display_name": "Eliminar permanentemente directorios",
+        "action": "forceDelete",
+        "subject": "directory",
+        "roles": [
+            "superAdmin",
+            "admin",
+            "user"
+        ]
+    }
+]

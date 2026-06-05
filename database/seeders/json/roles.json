@@ -1,0 +1,17 @@
+[
+    {
+        "name": "superAdmin",
+        "display_name": "Super Admininstrador",
+        "default": true
+    },
+    {
+        "name": "admin",
+        "display_name": "Administrador",
+        "default": true
+    },
+    {
+        "name": "user",
+        "display_name": "usuario",
+        "default": true
+    }
+]

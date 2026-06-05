@@ -1,0 +1,163 @@
+[
+    {
+        "name": "Initial or Beginner",
+        "description": "Someone who is starting a training program and may have low initial fitness, endurance, and strength.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Inicial o Principiante"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Alguien que est\u00e1 comenzando un programa de entrenamiento y puede tener una baja condici\u00f3n f\u00edsica, resistencia y fuerza iniciales."
+            }
+        ]
+    },
+    {
+        "name": "Intermediate",
+        "description": "Indicates a level of fitness that has improved from the initial state but has not yet reached an advanced level. Can perform certain exercises and activities with greater ease.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Intermedio"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Indica un nivel de condici\u00f3n f\u00edsica que ha mejorado desde el estado inicial pero a\u00fan no ha alcanzado un nivel avanzado. Puede realizar ciertos ejercicios y actividades con mayor facilidad."
+            }
+        ]
+    },
+    {
+        "name": "Advanced",
+        "description": "Refers to a person with a significant level of fitness. Can handle intense workouts, has advanced strength, endurance, and flexibility.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Avanzado"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Se refiere a una persona con un nivel significativo de condici\u00f3n f\u00edsica. Puede manejar entrenamientos intensos, tiene fuerza, resistencia y flexibilidad avanzadas."
+            }
+        ]
+    },
+    {
+        "name": "Maintenance",
+        "description": "People who have already achieved their fitness goals and are following a training plan to maintain their current physical state.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Mantenimiento"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Personas que ya han alcanzado sus objetivos de condici\u00f3n f\u00edsica y siguen un plan de entrenamiento para mantener su estado f\u00edsico actual."
+            }
+        ]
+    },
+    {
+        "name": "Recovery",
+        "description": "Someone who is in the process of recovering from an injury or illness and needs a tailored training program to gradually improve their physical condition.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Recuperaci\u00f3n"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Alguien que est\u00e1 en proceso de recuperaci\u00f3n de una lesi\u00f3n o enfermedad y necesita un programa de entrenamiento personalizado para mejorar gradualmente su condici\u00f3n f\u00edsica."
+            }
+        ]
+    },
+    {
+        "name": "Specialized",
+        "description": "A fitness state focused on specific goals, such as preparing for a sports competition, gaining muscle mass, losing weight, etc.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Especializado"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Un estado de condici\u00f3n f\u00edsica centrado en objetivos espec\u00edficos, como prepararse para una competici\u00f3n deportiva, ganar masa muscular, perder peso, etc."
+            }
+        ]
+    },
+    {
+        "name": "Rehabilitation",
+        "description": "For those who have gone through an injury, surgery, or other physical limitation and need a specialized training program for recovery.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Rehabilitaci\u00f3n"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Para aquellos que han pasado por una lesi\u00f3n, cirug\u00eda u otra limitaci\u00f3n f\u00edsica y necesitan un programa de entrenamiento especializado para la recuperaci\u00f3n."
+            }
+        ]
+    },
+    {
+        "name": "Cross-Training",
+        "description": "Incorporating different forms of training to improve overall fitness and avoid monotony.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento Cruzado"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Incorporar diferentes formas de entrenamiento para mejorar la condici\u00f3n f\u00edsica general y evitar la monoton\u00eda."
+            }
+        ]
+    },
+    {
+        "name": "Pre-Competition",
+        "description": "A specific fitness state for those who are preparing for a competition, with a focus on optimizing performance.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Pre-Competencia"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Un estado de condici\u00f3n f\u00edsica espec\u00edfico para aquellos que se est\u00e1n preparando para una competencia, con un enfoque en optimizar el rendimiento."
+            }
+        ]
+
+    },
+    {
+        "name": "Health Maintenance",
+        "description": "For individuals seeking to maintain a basic level of fitness for overall health, without specific performance goals.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Mantenimiento de la Salud"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Para personas que buscan mantener un nivel b\u00e1sico de condici\u00f3n f\u00edsica para la salud general, sin objetivos de rendimiento espec\u00edficos."
+            }
+        ]
+    }
+]

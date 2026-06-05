@@ -1,0 +1,274 @@
+[
+    {
+        "name": "3 times per week",
+        "description": "Frequency of sessions per week suitable for beginners or those with busy schedules.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "3 veces por semana"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de sesiones por semana adecuada para principiantes o personas con horarios ocupados."
+            }
+        ]
+    },
+    {
+        "name": "4-5 times per week",
+        "description": "Common frequency of sessions per week for most general training programs.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "4-5 veces por semana"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia com\u00fan de sesiones por semana para la mayor\u00eda de los programas de entrenamiento generales."
+            }
+        ]
+    },
+    {
+        "name": "6-7 times per week",
+        "description": "Frequency of sessions per week for those with specific goals such as weight loss or sports performance.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "6-7 veces por semana"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de sesiones por semana para aquellos con objetivos espec\u00edficos como la p\u00e9rdida de peso o el rendimiento deportivo."
+            }
+        ]
+    },
+    {
+        "name": "Full body training",
+        "description": "Frequency per muscle group that covers all muscle groups in each session (2-3 times per week).",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento de cuerpo completo"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia por grupo muscular que cubre todos los grupos musculares en cada sesi\u00f3n (2-3 veces por semana)."
+            }
+        ]
+    },
+    {
+        "name": "Muscle group split",
+        "description": "Frequency per muscle group that focuses on a specific group per session (legs, back, chest, etc.), allowing more focus on each group (4-6 times per week).",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Divisi\u00f3n de grupos musculares"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia por grupo muscular que se centra en un grupo espec\u00edfico por sesi\u00f3n (piernas, espalda, pecho, etc.), permitiendo m\u00e1s enfoque en cada grupo (4-6 veces por semana)."
+            }
+        ]
+    },
+    {
+        "name": "Daily cardio sessions",
+        "description": "Frequency to improve cardiovascular health.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Sesiones diarias de cardio"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia para mejorar la salud cardiovascular."
+            }
+        ]
+    },
+    {
+        "name": "Intermittent cardio",
+        "description": "Cardio frequency that alternates cardio sessions with strength training (3-5 times per week).",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Cardio intermitente"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de cardio que alterna sesiones de cardio con entrenamiento de fuerza (3-5 veces por semana)."
+            }
+        ]
+    },
+    {
+        "name": "Full rest days",
+        "description": "Frequency of important rest for recovery, especially after intense sessions.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "D\u00edas completos de descanso"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de descanso importante para la recuperaci\u00f3n, especialmente despu\u00e9s de sesiones intensas."
+            }
+        ]
+    },
+    {
+        "name": "Active training on rest days",
+        "description": "Frequency of rest that includes lighter activities such as walking or yoga.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento activo en d\u00edas de descanso"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de descanso que incluye actividades m\u00e1s ligeras como caminar o yoga."
+            }
+        ]
+    },
+    {
+        "name": "Consistent daily training",
+        "description": "Frequency of routine change that consists of the same routine every day.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento diario constante"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de cambio de rutina que consiste en la misma rutina todos los d\u00edas."
+            }
+        ]
+    },
+    {
+        "name": "Weekly or monthly variability",
+        "description": "Frequency of routine change that involves regular changes in exercises, repetitions, sets, or training type.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Variabilidad semanal o mensual"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de cambio de rutina que implica cambios regulares en ejercicios, repeticiones, series o tipo de entrenamiento."
+            }
+        ]
+    },
+    {
+        "name": "High-intensity interval training (HIIT)",
+        "description": "Frequency of intensity that involves shorter but intense sessions (2-3 times per week).",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento de intervalos de alta intensidad (HIIT)"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de intensidad que implica sesiones m\u00e1s cortas pero intensas (2-3 veces por semana)."
+            }
+        ]
+    },
+    {
+        "name": "Moderate training",
+        "description": "Frequency of intensity that involves longer sessions at moderate intensity (3-5 times per week).",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento moderado"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de intensidad que implica sesiones m\u00e1s largas a intensidad moderada (3-5 veces por semana)."
+            }
+        ]
+    },
+    {
+        "name": "Linear training",
+        "description": "Frequency of periodization that involves a gradual increase in intensity or load over time.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento lineal"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de periodizaci\u00f3n que implica un aumento gradual de la intensidad o carga con el tiempo."
+            }
+        ]
+    },
+    {
+        "name": "Undulating or cyclic training",
+        "description": "Frequency of periodization that involves variations in intensity and volume in different phases of the program.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Entrenamiento ondulado o c\u00edclico"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de periodizaci\u00f3n que implica variaciones en la intensidad y el volumen en diferentes fases del programa."
+            }
+        ]
+    },
+    {
+        "name": "Regular tracking",
+        "description": "Frequency of evaluation that involves assessing progress every 4-6 weeks.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Seguimiento regular"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de evaluaci\u00f3n que implica evaluar el progreso cada 4-6 semanas."
+            }
+        ]
+    },
+    {
+        "name": "Less frequent evaluations",
+        "description": "Frequency of evaluation ideal for long-term programs with longer-term goals.",
+        "translations": [
+            {
+                "locale": "es",
+                "column": "name",
+                "translation": "Evaluaciones menos frecuentes"
+            },
+            {
+                "locale": "es",
+                "column": "description",
+                "translation": "Frecuencia de evaluaci\u00f3n ideal para programas a largo plazo con objetivos a m\u00e1s largo plazo."
+            }
+        ]
+    }
+]

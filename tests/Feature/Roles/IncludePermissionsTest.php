@@ -1,0 +1,81 @@
+<?php
+
+namespace Tests\Feature\Roles;
+
+use App\Models\User;
+use Database\Seeders\permissionsSeeders\RolesPermissionsSeeder;
+use Database\Seeders\RoleSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
+
+class IncludePermissionsTest extends TestCase
+{
+    use RefreshDatabase;
+
+    const MODEL_PLURAL_NAME = 'roles';
+    const MODEL_INCLUDE_RELATIONSHIP_NAME = 'permissions';
+    const MODEL_MAIN_ACTION_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME . '.show';
+
+    const MODEL_RELATED_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME
+        . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME;
+
+    const MODEL_SELF_ROUTE = 'v1.' . self::MODEL_PLURAL_NAME
+        . '.' . self::MODEL_INCLUDE_RELATIONSHIP_NAME . '.show';
+
+    protected User $user;
+    protected string $token;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        if (!Role::whereName('admin')->exists()) {
+            $this->seed(RoleSeeder::class);
+            $this->seed(RolesPermissionsSeeder::class);
+        }
+
+        [$this->user, $this->token] = $this->createUserWithToken('superAdmin');
+    }
+
+    /** @test */
+    public function role_can_include_permissions()
+    {
+        $role = Role::findByName('superAdmin');
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $role));
+
+        $response->assertJsonFragment(
+            [
+                'related' => route(self::MODEL_RELATED_ROUTE, $role)
+            ]
+        );
+
+        $response->assertJsonFragment(
+            [
+                'self' => route(self::MODEL_SELF_ROUTE, $role)
+            ]
+        );
+    }
+
+    /** @test */
+    public function roles_can_fetch_related_permissions()
+    {
+        $role = Role::findByName('superAdmin');
+
+        $response = $this->actingAs($this->user)->jsonApi()
+            ->expects(self::MODEL_PLURAL_NAME)
+            ->includePaths(self::MODEL_INCLUDE_RELATIONSHIP_NAME)
+            ->withHeader('Authorization', $this->token)
+            ->get(route(self::MODEL_MAIN_ACTION_ROUTE, $role));
+
+        $permissions = $role->permissions()->get()->toArray();
+
+        foreach ($permissions as $permission) {
+            $response->assertSee($permission['name']);
+        }
+    }
+}
