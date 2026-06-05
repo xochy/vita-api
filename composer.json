@@ -2,13 +2,15 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "kreait/firebase-php": "^7.18",
-        "laravel-json-api/laravel": "^5.1",
-        "laravel/framework": "^11.0",
+        "cviebrock/eloquent-sluggable": "^11.0",
+        "laravel/framework": "^11.54",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "paxha/laravel-recursive-relationships": "^1.1",
